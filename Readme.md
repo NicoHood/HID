@@ -44,7 +44,7 @@ Connect GND and MOSI2 to deactivate HID function on Uno/Mega**
 To install the new bootloader connect your Arduino to your PC and put it into DFU mode.
 See [this](http://arduino.cc/en/Hacking/DFUProgramming8U2) and [this](http://forum.arduino.cc/index.php?topic=111.0)
 and also [this](http://andrewmemory.wordpress.com/2011/04/14/upgrading-the-arduino-uno-8u2-using-flip/) on how to upload
-the hey file to your Arduino. Some notes here: The Arduino R3 doesnt need a resistor or so, just connect the two pins near
+the hex file to your Arduino. Some notes here: The Arduino R3 doesnt need a resistor or so, just connect the two pins near
 the USB B jack. Choose atmega16u2 for the new R3 version. For older version you need to check the links.
 
 Upload the hex file to your Arduino. It doesnt care if its a Uno/Mega/Mega ADK. It will just work the same.
