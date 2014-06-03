@@ -6,7 +6,8 @@ Disappointed that the Uno doesnt support this at all and the Micro/Leonardo only
 Introducing the Arduino HID Project that gives you everything you need for that.
 No need for extra hardware. You just need one of the Arduinos and an USB cable.
 
-**You can upload new sketches to the Uno/Mega and dont need to reflash the firmware**
+**Main difference is that you can upload new sketches to the Uno/Mega and dont need to reflash the firmware**
+Before you had to upload a sketch, flash the firmware, test, flash the firmware, upload, flash again. Thats all gone!
 
 Features
 ========
