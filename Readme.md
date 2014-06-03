@@ -38,7 +38,7 @@ Download the library and rename the folder. See [this instruction](http://arduin
 [NicoHoodProtocol](https://github.com/NicoHood/NicoHoodProtocol) library needed for the Uno/Mega!
 
 **Always release buttons to not cause any erros. Replug USB cable to reset the values if anything went wrong.
-Connect GND and MOSI2 to deactivate HID function on Uno/Mega**
+Connect GND and MOSI2 to deactivate HID function on Uno/Mega (see picture)**
 
 **Arduino Uno/Mega only**
 
