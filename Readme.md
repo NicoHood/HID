@@ -40,12 +40,13 @@ Download the library and rename the folder. See [this instruction](http://arduin
 **Always release buttons to not cause any erros. Replug USB cable to reset the values if anything went wrong.
 Connect GND and MOSI2 to deactivate HID function on Uno/Mega**
 
-*Arduino Uno/Mega only*
+**Arduino Uno/Mega only**
+
 To install the new bootloader connect your Arduino to your PC and put it into DFU mode.
-See [this](http://arduino.cc/en/Hacking/DFUProgramming8U2) and [this](http://forum.arduino.cc/index.php?topic=111.0)
-and also [this](http://andrewmemory.wordpress.com/2011/04/14/upgrading-the-arduino-uno-8u2-using-flip/) on how to upload
-the hex file to your Arduino. Some notes here: The Arduino R3 doesnt need a resistor or so, just connect the two pins near
-the USB B jack. Choose atmega16u2 for the new R3 version. For older version you need to check the links.
+See [this in general](http://arduino.cc/en/Hacking/DFUProgramming8U2) and
+[this for windows](http://nicohood.wordpress.com/2014/06/03/install-new-firmwares-with-dfu-and-flip-on-arduino-unomega-r3/)
+on how to upload the hex file to your Arduino. Some notes here: The Arduino R3 doesnt need a resistor or so, just connect the two pins near
+the USB B jack. Choose atmega16u2 for the new R3 version. For older version you need to check google.
 
 Upload the hex file to your Arduino. It doesnt care if its a Uno/Mega/Mega ADK. It will just work the same.
 Unplug the Arduino if it sais successful and plug it back in. You cannot destroy anything here and you can always
@@ -87,15 +88,13 @@ For donations please contact me on my blog :)
 Todo
 ====
 Micro/Leonardo library
-License!!!
 Remove debug leds
-Add more devices
+Add more devices (even more?)
 Add ICSP Programmer function
-Add rumble support
-Add Xbox Support
+Add rumble support (very hard)
+Add Xbox Support (too hard)
 Add Midi Support
 Add Report Out function (for Keyboard Leds etc)
-To deactivate the HID function bridge Pin x with x
 
 Known Bugs
 ==========
