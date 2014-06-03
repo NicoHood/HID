@@ -8,7 +8,7 @@ No need for extra hardware. You just need one of the Arduinos and an USB cable.
 
 Features
 ========
-Use your *Arduino Uno, Mega, Micro, Leonardo or Micro Pro* as Generic HID Device and still be able to upload sketches how you are used to do.
+Use your **Arduino Uno, Mega, Micro, Leonardo or Micro Pro** as Generic HID Device and still be able to upload sketches how you are used to do.
 This project provides a new bootloader for the 8u2/16u2 and HID libraries Arduino Uno/Mega and Micro/Leonardo.
 I also corrected some bugs in the original sources.
 
@@ -37,8 +37,8 @@ Download the library and rename the folder. See [this instruction](http://arduin
 
 [NicoHoodProtocol](https://github.com/NicoHood/NicoHoodProtocol) library needed for the Uno/Mega!
 
-*Always release buttons to not cause any erros. Replug USB cable to reset the values if anything went wrong.
-Connect GND and MOSI2 to deactivate HID function on Uno/Mega*
+**Always release buttons to not cause any erros. Replug USB cable to reset the values if anything went wrong.
+Connect GND and MOSI2 to deactivate HID function on Uno/Mega**
 
 *Arduino Uno/Mega only*
 To install the new bootloader connect your Arduino to your PC and put it into DFU mode.
