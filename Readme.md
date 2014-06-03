@@ -73,25 +73,17 @@ http://downloads.arduino.cc/arduino-avr-toolchain-nightly-gcc-4.8.1-windows.zip
 This library wouldnt be possible without
 ========================================
 
-[Lufa 140302 from Dean Camera](http://www.fourwalledcubicle.com/LUFA.php)
-
-[Darran's HID Projects] (https://github.com/harlequin-tech/arduino-usb)
-
-[Connor's Joystick for the Leonardo](http://www.imaginaryindustries.com/blog/?p=80)
-
-[Stefan Jones Multimedia Keys Example](http://stefanjones.ca/blog/arduino-leonardo-remote-multimedia-keys/)
-
-[Athanasios Douitsis Multimedia Keys Example](https://github.com/aduitsis/ardumultimedia)
-
-[The Original Arduino Sources](https://github.com/arduino/Arduino/tree/master/hardware/arduino/firmwares/atmegaxxu2/arduino-usbserial)
-
-A lot of searching through the web
-
-The awesome official Arduino IRC chat!
-
-[The NicoHood Protocol ^.^](https://github.com/NicoHood/NicoHoodProtocol)
-
-For donations please contact me on my blog :)
+* [Lufa 140302 from Dean Camera](http://www.fourwalledcubicle.com/LUFA.php)
+* [Darran's HID Projects] (https://github.com/harlequin-tech/arduino-usb)
+* [Connor's Joystick for the Leonardo](http://www.imaginaryindustries.com/blog/?p=80)
+* [Stefan Jones Multimedia Keys Example](http://stefanjones.ca/blog/arduino-leonardo-remote-multimedia-keys/)
+* [Athanasios Douitsis Multimedia Keys Example](https://github.com/aduitsis/ardumultimedia)
+* [The Original Arduino Sources](https://github.com/arduino/Arduino/tree/master/hardware/arduino/firmwares/atmegaxxu2/arduino-usbserial)
+* [USBlyzer](http://www.usblyzer.com/)
+* A lot of searching through the web
+* The awesome official Arduino IRC chat!
+* [The NicoHood Protocol ^.^](https://github.com/NicoHood/NicoHoodProtocol)
+* For donations please contact me on my blog :)
 
 Todo
 ====
@@ -115,6 +107,8 @@ Not tested on the 8u2
 If you get a checksum Error after Uploading please message me and send me the whole project.
 Same if your Arduino crashes and dont want to upload sketches anymore (Replug usb fixes this).
 These bugs occured while devoloping the bootloader and should be fixed. Just in case it happens again I noted it here.
+
+Oh and by the way: I also removed some bugs from the official firmware.
 
 Version History
 ===============
