@@ -74,27 +74,35 @@ This library wouldnt be possible without
 ========================================
 
 [Lufa 140302 from Dean Camera](http://www.fourwalledcubicle.com/LUFA.php)
+
 [Darran's HID Projects] (https://github.com/harlequin-tech/arduino-usb)
+
 [Connor's Joystick for the Leonardo](http://www.imaginaryindustries.com/blog/?p=80)
+
 [Stefan Jones Multimedia Keys Example](http://stefanjones.ca/blog/arduino-leonardo-remote-multimedia-keys/)
+
 [Athanasios Douitsis Multimedia Keys Example](https://github.com/aduitsis/ardumultimedia)
+
 [The Original Arduino Sources](https://github.com/arduino/Arduino/tree/master/hardware/arduino/firmwares/atmegaxxu2/arduino-usbserial)
+
 A lot of searching through the web
+
 The awesome official Arduino IRC chat!
+
 [The NicoHood Protocol ^.^](https://github.com/NicoHood/NicoHoodProtocol)
 
 For donations please contact me on my blog :)
 
 Todo
 ====
-Micro/Leonardo library
-Remove debug leds
-Add more devices (even more?)
-Add ICSP Programmer function
-Add rumble support (very hard)
-Add Xbox Support (too hard)
-Add Midi Support
-Add Report Out function (for Keyboard Leds etc)
+* Micro/Leonardo library
+* Remove debug leds
+* Add more devices (even more?)
+* Add ICSP Programmer function
+* Add rumble support (very hard)
+* Add Xbox Support (too hard)
+* Add Midi Support
+* Add Report Out function (for Keyboard Leds etc)
 
 Known Bugs
 ==========
@@ -148,7 +156,9 @@ While developing i had that much trouble that i had to change the PID. No way to
 So be careful if you change the source on your own with important PIDs.
 Therefore uninstall the divers for any device or just dont touch the HID reports.
 
-You need to install avr-gcc for compiling
+The Bootloader was coded with Windows7 and Visual Studio and compiled with a Raspberry Pi.
+
+You need to install avr-gcc for compiling.
 ```
 sudo apt-get install avr-gcc
 ```
