@@ -25,23 +25,6 @@ THE SOFTWARE.
 #define HID_REPORTS_H
 
 //================================================================================
-//Settings
-//================================================================================
-
-// deactive unnecessary stuff for Leonardo/Micro
-// reports needs to be <=255 bytes for leonardo/micro!
-#define HID_MOUSE_ENABLE 54
-#define HID_KEYBOARD_ENABLE 65
-//#define HID_RAWKEYBOARD_ENABLE 30
-#define HID_MEDIA_ENABLE 25
-#define HID_SYSTEM_ENABLE 24
-#define HID_GAMEPAD1_ENABLE 71
-//#define HID_GAMEPAD2_ENABLE 71
-//#define HID_JOYSTICK1_ENABLE 51
-//#define HID_JOYSTICK2_ENABLE 51
-//#define HID_MIDI_ENABLE
-
-//================================================================================
 //Definitions
 //================================================================================
 

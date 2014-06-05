@@ -131,16 +131,16 @@ const u8 _hidReportDescriptor[] = {
 	0x29, 0x65,                    //   USAGE_MAXIMUM (Keyboard Application)
 	0x81, 0x00,                    //   INPUT (Data,Ary,Abs)
 	// LEDs for num lock etc
-	0x05, 0x08,   /*   USAGE_PAGE (LEDs) */
-	0x19, 0x01,   /*   USAGE_MINIMUM (Num Lock) */
-	0x29, 0x05,   /*   USAGE_MAXIMUM (Kana) */
-	0x95, 0x05,   /*   REPORT_COUNT (5) */
-	0x75, 0x01,   /*   REPORT_SIZE (1) */
-	0x91, 0x02,   /*   OUTPUT (Data,Var,Abs) */
+	//0x05, 0x08,   /*   USAGE_PAGE (LEDs) */
+	//0x19, 0x01,   /*   USAGE_MINIMUM (Num Lock) */
+	//0x29, 0x05,   /*   USAGE_MAXIMUM (Kana) */
+	//0x95, 0x05,   /*   REPORT_COUNT (5) */
+	//0x75, 0x01,   /*   REPORT_SIZE (1) */
+	//0x91, 0x02,   /*   OUTPUT (Data,Var,Abs) */
 	// Reserved 3 bits
-	0x95, 0x01,   /*   REPORT_COUNT (1) */
-	0x75, 0x03,   /*   REPORT_SIZE (3) */
-	0x91, 0x03,   /*   OUTPUT (Cnst,Var,Abs) */
+	//0x95, 0x01,   /*   REPORT_COUNT (1) */
+	//0x75, 0x03,   /*   REPORT_SIZE (3) */
+	//0x91, 0x03,   /*   OUTPUT (Cnst,Var,Abs) */
 	// end
 	0xc0,                          // END_COLLECTION
 #endif
