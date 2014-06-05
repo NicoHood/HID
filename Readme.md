@@ -9,6 +9,8 @@ No need for extra hardware. You just need one of the Arduinos and an USB cable.
 **Main difference is that you can upload new sketches to the Uno/Mega and dont need to reflash the firmware.**
 Before you had to upload a sketch, flash the firmware, test, flash the firmware, upload, flash again. Thats all gone!
 
+**For the Leonardo/Micro it is 'just' new device stuff, no need for a bootloader.**
+
 Features
 ========
 Use your **Arduino Uno, Mega, Micro, Leonardo or Micro Pro** as Generic HID Device and still be able to upload sketches how you are used to do.
