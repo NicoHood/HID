@@ -122,11 +122,10 @@ Todo
 * Remove debug leds
 * Add more devices (even more?)
 * Add ICSP Programmer function
-* Add Led support
-* Add How does it work?
+* Add Led/SPI support
 * Add rumble support (very hard)
 * Add Xbox Support (too hard)
-* Add Midi Support
+* Add Midi  (you want that?)
 * Add Report Out function (for Keyboard Leds etc)
 * RAW HID
 

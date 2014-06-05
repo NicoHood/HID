@@ -37,17 +37,12 @@ void setup() {
 }
 
 void loop() {
-  // press a button to put pc into standby mode/wake up
+  // press a button to put pc into standby mode
   if (!digitalRead(pinButton)) {
     digitalWrite(pinLed, HIGH);
 
     // See list below for more definitions or the official usb documentation
-    static bool on = true;
-    if (on)
-      System.write(SYSTEM_SLEEP);
-    else
-      // System Wakeup is currently not working for Arduino Uno/Mega.
-      System.write(SYSTEM_WAKE_UP);
+    System.write(SYSTEM_SLEEP);
 
     // simple debounce
     delay(300);
