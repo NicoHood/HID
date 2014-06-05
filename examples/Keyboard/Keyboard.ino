@@ -1,13 +1,14 @@
 /*
 Copyright (c) 2014 NicoHood
-See the readme for credit to other people.
+ See the readme for credit to other people.
+ 
+ Keyboard example
+ */
 
-Keyboard example
-*/
-
-// The protocol ist still needed for Uno/Mega here
-#include <NicoHoodProtocol.h>
+// not needed for Leonardo/Micro
 #include <HID.h>
+
+// for Leonardo/Micro: make sure to activate desired USB functions in HID_Reports.h
 
 const int pinLed = 13;
 const int pinButton = 8;
@@ -20,6 +21,7 @@ void setup() {
   // Make sure to end your special HIDs before, this does not clear them!
   // You need this baud for the HID library but still can use other bauds
   // without HID functions.
+  // not needed for Leonardo/Micro, Serial will not be set
   HID.begin();
 
   // Sends a clean report to the host. This is important because
@@ -33,6 +35,7 @@ void setup() {
   // just logout (no shutdown needed).
   Keyboard.begin();
 }
+
 
 void loop() {
   // press a button to write some text to your pc
@@ -61,45 +64,45 @@ void loop() {
 
 /*
 Definitions:
-
-KEY_LEFT_CTRL
-KEY_LEFT_SHIFT
-KEY_LEFT_ALT
-KEY_LEFT_GUI
-KEY_RIGHT_CTRL
-KEY_RIGHT_SHIFT
-KEY_RIGHT_ALT
-KEY_RIGHT_GUI
-
-KEY_UP_ARROW
-KEY_DOWN_ARROW
-KEY_LEFT_ARROW
-KEY_RIGHT_ARROW
-KEY_BACKSPACE
-KEY_TAB
-KEY_RETURN
-KEY_ESC
-KEY_INSERT
-KEY_DELETE
-KEY_PAGE_UP
-KEY_PAGE_DOWN
-KEY_HOME
-KEY_END
-KEY_CAPS_LOCK
-KEY_F1
-KEY_F2
-KEY_F3
-KEY_F4
-KEY_F5
-KEY_F6
-KEY_F7
-KEY_F8
-KEY_F9
-KEY_F10
-KEY_F11
-KEY_F12
-
-KEY_PRINT
-KEY_SCROLL_LOCK
-KEY_PAUSE
-*/
+ 
+ KEY_LEFT_CTRL
+ KEY_LEFT_SHIFT
+ KEY_LEFT_ALT
+ KEY_LEFT_GUI
+ KEY_RIGHT_CTRL
+ KEY_RIGHT_SHIFT
+ KEY_RIGHT_ALT
+ KEY_RIGHT_GUI
+ 
+ KEY_UP_ARROW
+ KEY_DOWN_ARROW
+ KEY_LEFT_ARROW
+ KEY_RIGHT_ARROW
+ KEY_BACKSPACE
+ KEY_TAB
+ KEY_RETURN
+ KEY_ESC
+ KEY_INSERT
+ KEY_DELETE
+ KEY_PAGE_UP
+ KEY_PAGE_DOWN
+ KEY_HOME
+ KEY_END
+ KEY_CAPS_LOCK
+ KEY_F1
+ KEY_F2
+ KEY_F3
+ KEY_F4
+ KEY_F5
+ KEY_F6
+ KEY_F7
+ KEY_F8
+ KEY_F9
+ KEY_F10
+ KEY_F11
+ KEY_F12
+ 
+ KEY_PRINT
+ KEY_SCROLL_LOCK
+ KEY_PAUSE
+ */

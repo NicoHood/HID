@@ -41,6 +41,16 @@ THE SOFTWARE.
 
 const USB_Descriptor_HIDReport_Datatype_t PROGMEM HIDReport[] =
 {
+	// activate all by default
+#define HID_MOUSE_ENABLE 54
+#define HID_KEYBOARD_ENABLE 65
+#define HID_RAWKEYBOARD_ENABLE 30
+#define HID_MEDIA_ENABLE 25
+#define HID_SYSTEM_ENABLE 24
+#define HID_GAMEPAD1_ENABLE 71
+#define HID_GAMEPAD2_ENABLE 71
+#define HID_JOYSTICK1_ENABLE 51
+#define HID_JOYSTICK2_ENABLE 51
 
 #ifdef HID_MOUSE_ENABLE
 	// Mouse

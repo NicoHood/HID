@@ -26,23 +26,50 @@ THE SOFTWARE.
 
 #include <Arduino.h>
 #include "HID_Reports.h"
-// somehow you need to declare it in the main program too
-#include <NicoHoodProtocol.h>
+
+#ifdef USBCON
+#include "Platform.h"
+#include "USBAPI.h"
+#include "USBDesc.h"
+#endif
 
 //================================================================================
 // HID
 //================================================================================
 
+//NHP Definitions
+
+// Start Mask
+#define NHP_MASK_START		0xC0 //B11|000000 the two MSB bits
+#define NHP_MASK_LEAD		0xC0 //B11|000000
+#define NHP_MASK_DATA		0x00 //B0|0000000 only the first MSB is important
+#define NHP_MASK_END		0x80 //B10|000000
+
+// Content Mask
+#define NHP_MASK_LENGTH		0x38 //B00|111|000
+#define NHP_MASK_COMMAND	0x0F //B0000|1111
+#define NHP_MASK_DATA_7BIT	0x7F //B0|1111111
+#define NHP_MASK_DATA_4BIT	0x0F //B0000|1111
+#define NHP_MASK_DATA_3BIT	0x07 //B00000|111
+#define NHP_MASK_ADDRESS	0x3F //B00|111111
+
+// Reserved Addresses
+#define NHP_ADDRESS_CONTROL 0x01
+
+// Reserved Usages
+#define NHP_USAGE_ARDUINOHID 0x01
+
 class HID_{
 public:
-	inline HID_(void){}
-	inline void begin(void){Serial.begin(115200);}
-	inline void end(void){Serial.end();}
+	HID_(void);
+	void begin(void);
+	void end(void);
 
 	// everything public for your own modifications
-	NHProtocol NHPHID;
 	void sendReport(uint8_t ReportID, const void* HIDReport, uint8_t length);
 private:
+	// simple copy/modification of the NicoHoodProtocol writechecksum function
+	void NHPwriteChecksum(uint8_t address, uint16_t indata);
 };
 extern HID_ HID;
 
@@ -233,8 +260,8 @@ public:
 	System_(void);
 	void begin(void);
 	void end(void);
-	void write(uint16_t s);
-	void press(uint16_t s);
+	void write(uint8_t s);
+	void press(uint8_t s);
 	void release(void);
 	void releaseAll(void);
 };

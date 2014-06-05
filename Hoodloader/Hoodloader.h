@@ -48,7 +48,7 @@ THE SOFTWARE.
 #include <LUFA/Version.h>
 #include <LUFA/Drivers/Peripheral/Serial.h>
 
-#include "../../NicoHoodProtocol/NicoHoodProtocol_c.h"
+#include "Lib/NicoHoodProtocol_c.h"
 
 /* Macros: */
 

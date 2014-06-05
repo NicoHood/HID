@@ -5,9 +5,10 @@ See the readme for credit to other people.
 Media example
 */
 
-// The protocol ist still needed for Uno/Mega here
-#include <NicoHoodProtocol.h>
+// not needed for Leonardo/Micro
 #include <HID.h>
+
+// for Leonardo/Micro: make sure to activate desired USB functions in HID_Reports.h
 
 const int pinLed = 13;
 const int pinButton = 8;
@@ -20,6 +21,7 @@ void setup() {
   // Make sure to end your special HIDs before, this does not clear them!
   // You need this baud for the HID library but still can use other bauds
   // without HID functions.
+  // not needed for Leonardo/Micro, Serial will not be set
   HID.begin();
 
   // Sends a clean report to the host. This is important because
