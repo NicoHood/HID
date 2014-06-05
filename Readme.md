@@ -39,14 +39,14 @@ Download the library and **move and replace** all 4 .h/cpp files from the downlo
 ```
 Installation_path\hardware\arduino\cores\arduino
 ```
-**I strongly recommend to install the library like this.** You can use the normal way but this will only work for Uno/Mega.
+**I strongly recommend to install the library like this.** You can use the normal way but this will only works for Uno/Mega.
 To not get in conflict with the normal library installation you need to remove it from your normal library path, if you did so.
 Now you are able to use the library with all kind of Arduinos. The HID include and HID.begin() is optional for Leonardo/Micro
-but necessary for Uno/Mega.
+but necessary for Uno/Mega. I'd recommend to use it every time so you can port the library from one to another device.
 
 #### Leonardo/Micro only
 **Edit HID_Reports.h to de/activate usb functions.** Each function will take some flash,
-so if you want to save flah deactivate everything you dont need.
+so if you want to save flash deactivate everything you dont need.
 By default Mouse, Keyboard, Media, System, Gamepad1 is activated.
 You cannot use more than 255 bytes HID report on the leonardo/micro.
 The number after each definition tells you the size of each report.
@@ -70,6 +70,8 @@ Also see [this tutorial](http://arduino.cc/en/guide/windows) on how to install t
 If you want it to be recognized as Uno/Mega edit the makefile. I dont recommend this to know what
 Bootloader is currently on your Board.
 
+For Arduino Mega2560 I recommend the nightly IDE. [See Issue on Github.](https://github.com/arduino/Arduino/issues/1071)
+
 #### For all Arduinos
 You are ready to use the libraries. Just have a look at the examples and test it out.
 The libraries will work for all Arduinos listed above but it will use 2 different HID libraries.
@@ -79,15 +81,6 @@ normal sketches without HID. The HID include and HID.begin() is not needed for L
 
 Always release buttons to not cause any erros. Replug USB cable to reset the values if anything went wrong.
 Connect GND and MOSI2 to deactivate HID function on Uno/Mega (see picture)
-
-For Arduino Mega2560 I recommend the nightly IDE. See Issue on Github.
-```
-https://github.com/arduino/Arduino/issues/1071
-http://downloads.arduino.cc/arduino-avr-toolchain-nightly-gcc-4.8.1-linux32.tgz
-http://downloads.arduino.cc/arduino-avr-toolchain-nightly-gcc-4.8.1-linux64.tgz
-http://downloads.arduino.cc/arduino-avr-toolchain-nightly-gcc-4.8.1-macosx.zip
-http://downloads.arduino.cc/arduino-avr-toolchain-nightly-gcc-4.8.1-windows.zip
-```
 
 How does it work
 ================
@@ -139,7 +132,7 @@ Todo
 
 Known Bugs
 ==========
-System Wakeup is currently not working!
+System Wakeup is currently not working on all versions!
 
 Not tested on the 8u2 (message me if it works!)
 
@@ -197,11 +190,16 @@ So be careful if you change the source on your own with important PIDs.
 Therefore uninstall the divers for any device or just dont touch the HID reports.
 
 The Bootloader was coded with Windows7 and Visual Studio and compiled with a Raspberry Pi.
+To recompile just hit the makefile in /Hoodloader/make.
 
 You need to install avr-gcc for compiling.
 ```
 sudo apt-get install avr-gcc
 ```
+
+The difference between the Leonardo/Micro and Uno/Mega is that the HID Class is different. All other classes are the same.
+The Leonardo/Micro Version uses USBAPI.h and no Serial while the Uno/Mega Version uses Serial.
+You can also modify the library to send HID reports to other devices. Just modify the HID Class.
 
 To uninstall the drivers on windows you need [registrar](http://www.resplendence.com/registrar).
 Delete these entrys (my gamepad driver with the PID was still broken. If you know how to fix this message me):
