@@ -47,7 +47,7 @@ Now you are able to use the library with all kind of Arduinos. The HID include a
 but necessary for Uno/Mega. I'd recommend to use it every time so you can port the library from one to another device.
 
 #### Leonardo/Micro only
-**Edit HID_Reports.h to de/activate usb functions.** Each function will take some flash,
+**Edit HID.h to de/activate usb functions.** Each function will take some flash,
 so if you want to save flash deactivate everything you dont need.
 By default Mouse, Keyboard, Media, System, Gamepad1 is activated.
 You cannot use more than 255 bytes HID report on the leonardo/micro.
