@@ -161,7 +161,8 @@ int main(void)
 				// if a reading finished succesfull without valid checksum or an error occured (ignore a reset)
 				if(NHPgetErrorLevel()&(~NHP_INPUT_RESET)){
 					// check if previous reading was a valid Control Address and write it down
-					checkNHPControlAddressError();
+					if(HIDReportState.ID)
+						checkNHPControlAddressError();
 
 					// Write the last invalid signals. This will not write a possible new lead to keep
 					// it for the next reading. This is implemented in the Protocol itself.
@@ -177,7 +178,8 @@ int main(void)
 			if (PulseMSRemaining.TxLEDPulse && !(--PulseMSRemaining.TxLEDPulse)){
 
 				// check if previous reading was a valid Control Address and write it down
-				checkNHPControlAddressError();
+				if(HIDReportState.ID)
+					checkNHPControlAddressError();
 
 				// only write if there is input (ignore a reset)
 				if(!(NHPgetErrorLevel() & NHP_INPUT_RESET)){
@@ -272,7 +274,8 @@ void checkNHPProtocol(RingBuff_Data_t input){
 		if(NHPgetAddress()==NHP_ADDRESS_CONTROL && NHPgetChecksumData1() & NHP_USAGE_ARDUINOHID){
 
 			// check if previous reading was a valid Control Address and write it down
-			checkNHPControlAddressError();
+			if(HIDReportState.ID)
+				checkNHPControlAddressError();
 
 			// get the new report ID and reset the buffer
 			HIDReportState.ID = NHPgetChecksumData0();
@@ -321,7 +324,7 @@ void checkNHPProtocol(RingBuff_Data_t input){
 
 			default : 
 				// error
-				HIDReportState.ID=0;
+				checkNHPControlAddressError();
 				break;
 			} //end switch
 
@@ -367,23 +370,20 @@ void checkNHPProtocol(RingBuff_Data_t input){
 }
 
 void checkNHPControlAddressError(void){
-	// if previous input was a valid control address (very unlikely)
-	if(HIDReportState.ID){
-		// only write if it was just before, maybe it was a random valid address
-		// but if we already received some data we handle this as corrupted data and just
-		// discard all the bytes
-		if(HIDReportState.recvlength==0){
-			// write the cached buffer (recreate protocol)
-			NHPwriteChecksum(NHP_ADDRESS_CONTROL, (NHP_USAGE_ARDUINOHID<<8) | HIDReportState.ID);
-			for(int i = 0; i< NHPwritelength; i++){
-				bool CurrentDTRState = (VirtualSerial_CDC_Interface.State.ControlLineStates.HostToDevice & CDC_CONTROL_LINE_OUT_DTR); //new <--
-				if(CurrentDTRState)
-					CDC_Device_SendByte(&VirtualSerial_CDC_Interface, NHPwritebuffer[i]);
-			}
+	// only write if it was just before, maybe it was a random valid address
+	// but if we already received some data we handle this as corrupted data and just
+	// discard all the bytes
+	if(HIDReportState.recvlength==0){
+		// write the cached buffer (recreate protocol)
+		NHPwriteChecksum(NHP_ADDRESS_CONTROL, (NHP_USAGE_ARDUINOHID<<8) | HIDReportState.ID);
+		for(int i = 0; i< NHPwritelength; i++){
+			bool CurrentDTRState = (VirtualSerial_CDC_Interface.State.ControlLineStates.HostToDevice & CDC_CONTROL_LINE_OUT_DTR); //new <--
+			if(CurrentDTRState)
+				CDC_Device_SendByte(&VirtualSerial_CDC_Interface, NHPwritebuffer[i]);
 		}
-		// reset any pending HID reports
-		HIDReportState.ID=0;
 	}
+	// reset any pending HID reports
+	HIDReportState.ID=0;
 }
 
 /** Event handler for the library USB Connection event. */
