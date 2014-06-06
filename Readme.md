@@ -66,7 +66,7 @@ For a Flip dll error install the drivers manually from the flip directory.
 Upload the hex file to your Arduino. It doesnt care if its a Uno/Mega/Mega ADK. It will just work the same.
 Unplug the Arduino if it sais successful and plug it back in. You cannot destroy anything here and you can always
 switch back to the original firmware which is included with the download.
-You need to install new drivers for the new device on Windows. Actually they are not new, its just an .inf file that tells
+**You need to install new drivers for the new device on Windows.** Actually they are not new, its just an .inf file that tells
 Windows to use its built in CDC Serial driver. Ironically Microsoft never signed its own driver.
 Also see [this tutorial](http://arduino.cc/en/guide/windows) on how to install the drivers.
 If you want it to be recognized as Uno/Mega edit the makefile. I dont recommend this to know what
