@@ -75,13 +75,13 @@ Bootloader is currently on your Board.
 For Arduino Mega2560 I recommend the nightly IDE. [See Issue on Github.](https://github.com/arduino/Arduino/issues/1071)
 
 #### For all Arduinos
-You are ready to use the libraries. Just have a look at the examples and test it out.
+You are ready to use the libraries. **Just have a look at the examples and test it out.**
 The libraries will work for all Arduinos listed above but it will use 2 different HID libraries.
-On Arduino/Mega you can only use baud 115200 for HID due to programming reasons. Its not bad anyway
+**On Arduino/Mega you can only use baud 115200 for HID** due to programming reasons. Its not bad anyway
 because its the fastest baud and you want fast HID recognition. You still can use any other baud for
 normal sketches without HID. The HID include and HID.begin() is not needed for Leonardo/Micro.
 
-Always release buttons to not cause any erros. Replug USB cable to reset the values if anything went wrong.
+**Always release buttons to not cause any erros.** Replug USB cable to reset the values if anything went wrong.
 Connect GND and MOSI2 to deactivate HID function on Uno/Mega (see picture)
 
 How does it work
