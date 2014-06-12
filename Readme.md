@@ -137,6 +137,8 @@ System Wakeup is currently not working on all versions!
 
 Not tested on the 8u2 (message me if it works!)
 
+Not tested on the Due (message me if it works!)
+
 If you get a checksum Error after Uploading please message me and send me the whole project.
 Same if your Arduino crashes and dont want to upload sketches anymore (Replug usb fixes this).
 These bugs occured while devoloping the bootloader and should be fixed. Just in case it happens again I noted it here.
