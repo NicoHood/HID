@@ -133,6 +133,8 @@ Todo
 
 Known Bugs
 ==========
+Gamepad/Joystick seems to have a bug after a few updates, going to fix it. (uno/mega only)
+
 System Wakeup is currently not working on all versions!
 
 Not tested on the 8u2 (message me if it works!)
