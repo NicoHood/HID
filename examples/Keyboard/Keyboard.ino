@@ -3,6 +3,8 @@ Copyright (c) 2014 NicoHood
  See the readme for credit to other people.
  
  Keyboard example
+ Press a button to write some text to your pc. After 10 button presses it will pres ctrl+alt+del.
+ See official documentation for more infos
  */
 
 // not needed for Leonardo/Micro
@@ -38,7 +40,6 @@ void setup() {
 
 
 void loop() {
-  // press a button to write some text to your pc
   if (!digitalRead(pinButton)) {
     digitalWrite(pinLed, HIGH);
 

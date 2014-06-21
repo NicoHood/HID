@@ -3,6 +3,7 @@ Copyright (c) 2014 NicoHood
 See the readme for credit to other people.
 
 Joystick example
+Press a button and demonstrate Joystick actions
 */
 
 // not needed for Leonardo/Micro
@@ -37,7 +38,6 @@ void setup() {
 }
 
 void loop() {
-  // press a button and demonstrate Joystick actions
   if (!digitalRead(pinButton)) {
     digitalWrite(pinLed, HIGH);
 

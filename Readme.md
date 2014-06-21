@@ -1,4 +1,4 @@
-Arduino HID Project BETA 1.1
+Arduino HID Project BETA 1.2
 ===================
 Dont you always wanted to turn your Arduino in a Generic HID device like a Keyboard or a Gamepad?
 Disappointed that the Uno doesnt support this at all and the Micro/Leonardo only Mouse + Keyboard?
@@ -39,8 +39,11 @@ Installation Leonardo/Micro/Uno/Mega
 ====================================
 Download the library and **move and replace** all 4 .h/cpp files from the download folder to:
 ```
-Installation_path\hardware\arduino\cores\arduino
+C:\Arduino\arduino-1.0.5-r2\hardware\arduino\cores\arduino
+C:\Arduino\arduino-1.5.6-r2\hardware\arduino\avr\cores\arduino
 ```
+The installation path may differ to yours. Version 1.5.x may not work for nightly builds later on.
+
 **I strongly recommend to install the library like this.** You can use the normal way but this will only works for Uno/Mega.
 To not get in conflict with the normal library installation you need to remove it from your normal library path, if you did so.
 Now you are able to use the library with all kind of Arduinos. The HID include and HID.begin() is optional for Leonardo/Micro
@@ -121,14 +124,14 @@ This library wouldnt be possible without
 
 Todo
 ====
-* Remove debug leds
+* Remove debug stuff (shouldnt effect anything for you)
 * Add more devices (even more?)
 * Add ICSP Programmer function
-* Add Led/SPI support
+* Add Led/SPI support (discarded, not needed, too slow)
 * Add rumble support (very hard)
 * Add Xbox Support (too hard)
-* Add Midi  (you want that?)
-* Add Report Out function (for Keyboard Leds etc)
+* Add Midi  (do you want that?)
+* Add Report Out function (for Keyboard Leds etc, maybe the 4 pin header?)
 * RAW HID
 
 Known Bugs
@@ -152,6 +155,13 @@ Oh and by the way: I also removed some bugs from the official firmware.
 Version History
 ===============
 ```
+1.2 Beta Release (xx.06.2014)
+* Added 1.0.x/1.5.x support
+* Bugfixes in the Hoodloader:
+  * Sometimes HID Devices weren't updating when using more than 1 Device (set forcewrite to true)
+  * Fast updates crashed the bootloader (ram usage was too much, set CDC buffer from 128 to 100 byte each)
+* Minor file structure changes
+
 1.1 Beta Release (05.06.2014)
 * Added Leonardo/Micro support
 * Included NicoHoodProtocol

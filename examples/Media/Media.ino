@@ -3,6 +3,7 @@ Copyright (c) 2014 NicoHood
 See the readme for credit to other people.
 
 Media example
+Press a button to play/pause music player
 */
 
 // not needed for Leonardo/Micro
@@ -37,7 +38,6 @@ void setup() {
 }
 
 void loop() {
-  // press a button to play/pause music player
   if (!digitalRead(pinButton)) {
     digitalWrite(pinLed, HIGH);
 

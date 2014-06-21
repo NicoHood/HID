@@ -124,27 +124,30 @@ int main(void)
 
 	GlobalInterruptEnable();
 
-	// Protocolsetup
+	// HID Setup
 	HIDReportState.recvlength=0;
 	HIDReportState.ID=0;
 
 	// Debug
-	DDRB |= 0x08; //led out
-	DDRB |= 0x02; //led out
+	//DDRB |= 0x08; //led out
+	//DDRB |= 0x02; //led out
+	//DDRB |= 0x80; // DEBUG <--
+	//DDRB &=~0x40;
+	//PORTB |= 0x40;
 
 	for (;;)
 	{
-		/* Only try to read in bytes from the CDC interface if the transmit buffer is not full */
+		// Only try to read in bytes from the CDC interface if the transmit buffer is not full
 		if (!(RingBuffer_IsFull(&USBtoUSART_Buffer)))
 		{	
 			int16_t ReceivedByte = CDC_Device_ReceiveByte(&VirtualSerial_CDC_Interface);
 
-			/* Read bytes from the USB OUT endpoint into the USART transmit buffer */
+			// Read bytes from the USB OUT endpoint into the USART transmit buffer
 			if (!(ReceivedByte < 0))
 				RingBuffer_Insert(&USBtoUSART_Buffer, ReceivedByte);
 		}
 
-		/* Check if the UART receive buffer flush timer has expired or the buffer is nearly full */
+		// Check if the UART receive buffer flush timer has expired or the buffer is nearly full
 		RingBuff_Count_t BufferCount = RingBuffer_GetCount(&USARTtoUSB_Buffer);
 		if ((TIFR0 & (1 << TOV0)) || (BufferCount > BUFFER_NEARLY_FULL))
 		{
@@ -155,8 +158,9 @@ int main(void)
 				PulseMSRemaining.TxLEDPulse = TX_RX_LED_PULSE_MS;
 			}
 
-			/* Read bytes from the USART receive buffer*/
+			// Read bytes from the USART receive buffer
 			while (BufferCount--){
+
 				//new Protocol check<--
 				// if a reading finished succesfull without valid checksum or an error occured (ignore a reset)
 				if(NHPgetErrorLevel()&(~NHP_INPUT_RESET)){
@@ -172,6 +176,7 @@ int main(void)
 				//read newest byte and check for Protocol
 				RingBuff_Data_t  b = RingBuffer_Remove(&USARTtoUSB_Buffer);
 				checkNHPProtocol(b);
+
 			}
 
 			// if reading has timed out write the buffers down the serial and turn off the led
@@ -192,16 +197,16 @@ int main(void)
 				// do not write again in the while loop above anyways
 				NHPreset();
 
-				/* Turn off TX LED(s) once the TX pulse period has elapsed */
+				// Turn off TX LED(s) once the TX pulse period has elapsed
 				LEDs_TurnOffLEDs(LEDMASK_TX);
 			}
 
-			/* Turn off RX LED(s) once the RX pulse period has elapsed */
+			// Turn off RX LED(s) once the RX pulse period has elapsed
 			if (PulseMSRemaining.RxLEDPulse && !(--PulseMSRemaining.RxLEDPulse))
 				LEDs_TurnOffLEDs(LEDMASK_RX);
 		}
 
-		/* Load the next byte from the USART transmit buffer into the USART */
+		// Load the next byte from the USART transmit buffer into the USART
 		if (!(RingBuffer_IsEmpty(&USBtoUSART_Buffer))) {
 			Serial_SendByte(RingBuffer_Remove(&USBtoUSART_Buffer)); //<--new syntax
 
@@ -212,6 +217,7 @@ int main(void)
 		//new Send reports <--
 		CDC_Device_USBTask(&VirtualSerial_CDC_Interface);
 		USB_USBTask();
+
 	}
 }
 
@@ -291,29 +297,29 @@ void checkNHPProtocol(RingBuff_Data_t input){
 
 			case HID_REPORTID_KeyboardReport:
 				HIDReportState.length=sizeof(HID_KeyboardReport_Data_t);
-				HIDReportState.forcewrite=false;
+				HIDReportState.forcewrite=true; // set to true because of some bugs with joystick 1+2
 				break;
 
 			case HID_REPORTID_MediaReport:
 				HIDReportState.length=sizeof(HID_MediaReport_Data_t);
-				HIDReportState.forcewrite=false;
+				HIDReportState.forcewrite=true;
 				break;
 
 			case HID_REPORTID_SystemReport:
 				HIDReportState.length=sizeof(HID_SystemReport_Data_t);
-				HIDReportState.forcewrite=false;
+				HIDReportState.forcewrite=true;
 				break;
 
 			case HID_REPORTID_Gamepad1Report:
 			case HID_REPORTID_Gamepad2Report:
 				HIDReportState.length=sizeof(HID_GamepadReport_Data_t);
-				HIDReportState.forcewrite=false;
+				HIDReportState.forcewrite=true;
 				break;
 
 			case HID_REPORTID_Joystick1Report:
 			case HID_REPORTID_Joystick2Report:
 				HIDReportState.length=sizeof(HID_JoystickReport_Data_t);
-				HIDReportState.forcewrite=false;
+				HIDReportState.forcewrite=true;
 				break;
 
 				// not supported yet <--

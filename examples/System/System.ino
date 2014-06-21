@@ -3,6 +3,7 @@ Copyright (c) 2014 NicoHood
 See the readme for credit to other people.
 
 System example
+Press a button to put pc into standby mode
 */
 
 // not needed for Leonardo/Micro
@@ -37,7 +38,6 @@ void setup() {
 }
 
 void loop() {
-  // press a button to put pc into standby mode
   if (!digitalRead(pinButton)) {
     digitalWrite(pinLed, HIGH);
 

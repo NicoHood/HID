@@ -33,7 +33,7 @@ F_USB        = $(F_CPU)
 OPTIMIZATION = s
 TARGET       = Hoodloader
 SRC          = $(TARGET).c Descriptors.c Lib/NicoHoodProtocol_c.c $(LUFA_SRC_USB) $(LUFA_SRC_USBCLASS)
-LUFA_PATH    = ../lufa-LUFA-140302/LUFA
+LUFA_PATH    = ./lufa-LUFA-140302/LUFA
 CC_FLAGS     = -DUSE_LUFA_CONFIG_HEADER -IConfig/ $(ARDUNIOHID_OPTS)
 LD_FLAGS     =
 

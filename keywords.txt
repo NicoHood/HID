@@ -18,6 +18,7 @@ write	KEYWORD2
 press	KEYWORD2
 isPressed	KEYWORD2
 releaseAll	KEYWORD2
+buttons	KEYWORD2
 xAxis	KEYWORD2
 yAxis	KEYWORD2
 zAxis	KEYWORD2

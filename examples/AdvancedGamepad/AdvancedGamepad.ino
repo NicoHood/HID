@@ -2,8 +2,7 @@
 Copyright (c) 2014 NicoHood
  See the readme for credit to other people.
  
- Mouse example
- Press a button to click with mouse. See official documentation for more infos
+ Advanced Gamepad example
  */
 
 // not needed for Leonardo/Micro
@@ -14,6 +13,9 @@ Copyright (c) 2014 NicoHood
 const int pinLed = 13;
 const int pinButton = 8;
 
+// see HID_Reports.h for all data structures
+HID_GamepadReport_Data_t Gamepadreport;
+
 void setup() {
   pinMode(pinLed, OUTPUT);
   pinMode(pinButton, INPUT_PULLUP);
@@ -22,7 +24,7 @@ void setup() {
   // Make sure to end your special HIDs before, this does not clear them!
   // You need this baud for the HID library but still can use other bauds
   // without HID functions.
-  // not needed for Leonardo/Micro, Serial will not be set
+  // not needed for Leonado/Micro, Serial will not be set
   HID.begin();
 
   // Sends a clean report to the host. This is important because
@@ -34,16 +36,27 @@ void setup() {
   // or see readme for turning off HID functions.
   // If you did anything wrong (keyboard is doing weird stuff)
   // just logout (no shutdown needed).
-  Mouse.begin();
+  memset(&Gamepadreport, 0, sizeof(Gamepadreport));
+  HID.sendReport(HID_REPORTID_Gamepad1Report, &Gamepadreport, sizeof(Gamepadreport));
 }
 
 void loop() {
   if (!digitalRead(pinButton)) {
     digitalWrite(pinLed, HIGH);
 
-    // Same use as the official library, pretty much self explaining
-    Mouse.click();
-    Serial.println("Serial port is still working and not glitching out");
+    // This demo is actually made for advanced users to show them how they can write an own report.
+    // This might be useful for a Gamepad if you want to edit the values direct on your own. 
+
+    // count with buttons binary
+    static uint32_t count = 0;
+    Gamepadreport.whole32[0] = count++;
+
+    // move x/y Axis to a new position (16bit)
+    Gamepadreport.whole16[2] = (random(0xFFFF));
+
+    // functions before only set the values
+    // this writes the report to the host
+    HID.sendReport(HID_REPORTID_Gamepad1Report, &Gamepadreport, sizeof(Gamepadreport));
 
     // simple debounce
     delay(300);
@@ -51,13 +64,4 @@ void loop() {
   }
 }
 
-/*
-Definitions:
- 
- MOUSE_LEFT
- MOUSE_RIGHT
- MOUSE_MIDDLE
- MOUSE_PREV
- MOUSE_NEXT
- */
 
