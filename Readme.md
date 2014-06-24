@@ -71,7 +71,8 @@ Unplug the Arduino if it sais successful and plug it back in. You cannot destroy
 switch back to the original firmware which is included with the download.
 **You need to install new drivers for the new device on Windows.** Actually they are not new, its just an .inf file that tells
 Windows to use its built in CDC Serial driver. Ironically Microsoft never signed its own driver.
-Also see [this tutorial](http://arduino.cc/en/guide/windows) on how to install the drivers.
+Also see [this tutorial](http://arduino.cc/en/guide/windows) on how to install the drivers (rightclick the .inf file and hit install).
+[How to install drivers for Windows 8/8.1](https://learn.sparkfun.com/tutorials/disabling-driver-signature-on-windows-8/disabling-signed-driver-enforcement-on-windows-8).
 If you want it to be recognized as Uno/Mega edit the makefile. I dont recommend this to know what
 Bootloader is currently on your Board.
 
