@@ -1,4 +1,4 @@
-Arduino HID Project BETA 1.2
+Arduino HID Project BETA 1.3
 ===================
 Dont you always wanted to turn your Arduino in a Generic HID device like a Keyboard or a Gamepad?
 Disappointed that the Uno doesnt support this at all and the Micro/Leonardo only Mouse + Keyboard?
@@ -21,7 +21,8 @@ Software includes:
 
 * Arduino HID Uno/Mega library
 * Arduino HID Micro/Leonardo library
-* Arduino HID Bootloader (Hoodloader)
+* Arduino HID Bootloader (Hoodloader) + driver
+*Compatible with Linux/Mac/Windows XP/7/8.1*
 
 The following devices are supported:
 
@@ -33,11 +34,13 @@ The following devices are supported:
 * 2 Joysticks (2 buttons, 2 10bit axis)
 
 Projects can be found here:
-http://nicohood.wordpress.com/
+* [Gamecube to PC adapter](https://github.com/NicoHood/Nintendo)
+* [Other projects](http://nicohood.wordpress.com/)
 
 Installation Leonardo/Micro/Uno/Mega
 ====================================
-Download the library and **move and replace** all 4 .h/cpp files from the download folder to:
+Download the library and install like you are used to.
+Then **move and replace** all files from the folder that matches your Arduino IDE version to one of these paths:
 ```
 C:\Arduino\arduino-1.0.5-r2\hardware\arduino\cores\arduino
 C:\Arduino\arduino-1.5.6-r2\hardware\arduino\avr\cores\arduino
@@ -127,38 +130,47 @@ Todo
 ====
 * Remove debug stuff (shouldnt effect anything for you)
 * Add more devices (even more?)
-* Add ICSP Programmer function
+* Add Midi  (do you want that?)
+* Add ICSP Programmer function (ram limit is a problem)
 * Add Led/SPI support (discarded, not needed, too slow)
 * Add rumble support (very hard)
 * Add Xbox Support (too hard)
-* Add Midi  (do you want that?)
 * Add Report Out function (for Keyboard Leds etc, maybe the 4 pin header?)
 * RAW HID
 
 Known Bugs
 ==========
+XBMC 13.1 (a Media Center) uses Gamepad input. Its seems to not work and cause weird errors.
+Even with a standard Gamepad i have these errors. Just want to mention it here.
+
 System Wakeup is currently not working on all versions!
 
-Not tested on the 8u2 (message me if it works!)
+Not tested on the 8u2 (should only work without DFU due to size. message me if it works!)
 
 Not tested on the Due (message me if it works!)
 
 If you get a checksum Error after Uploading please message me and send me the whole project.
 Same if your Arduino crashes and dont want to upload sketches anymore (Replug usb fixes this).
 These bugs occured while devoloping the bootloader and should be fixed. Just in case it happens again I noted it here.
+USB can behave weird, so please check your code for errors first. If you cannot find a mistake open a Github issue.
 
-HID only works with baud 115200 because there is no "programming finished" indicator. If you dont use HID you can still choose the baud of your choice
+HID only works with baud 115200 (on Uno/Mega) because there is no "programming finished" indicator. If you dont use HID you can still choose the baud of your choice.
 
 Oh and by the way: I also removed some bugs from the official firmware.
 
 Version History
 ===============
 ```
-1.2 Beta Release (xx.06.2014)
+1.3 Beta Release (01.07.2014)
+* Bugfixes in the Hoodloader:
+ * Improved ram usage
+* **Important NHP fix inside the HID Class**
+
+1.2 Beta Release (22.06.2014)
 * Added 1.0.x/1.5.x support
 * Bugfixes in the Hoodloader:
-  * Sometimes HID Devices weren't updating when using more than 1 Device (set forcewrite to true)
-  * Fast updates crashed the bootloader (ram usage was too much, set CDC buffer from 128 to 100 byte each)
+ * Sometimes HID Devices weren't updating when using more than 1 Device (set forcewrite to true)
+ * Fast updates crashed the bootloader (too much ram usage, set CDC buffer from 128b to 100b each)
 * Minor file structure changes
 
 1.1 Beta Release (05.06.2014)

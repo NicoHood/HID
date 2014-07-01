@@ -376,7 +376,7 @@ const USB_Descriptor_Device_t PROGMEM DeviceDescriptor =
 	//.VendorID               = 0x2341, // Arduino
 	//.ProductID          	= 0x0043, // Arduino Uno
 
-	.ReleaseNumber          = VERSION_BCD(0,1,2),
+	.ReleaseNumber          = VERSION_BCD(0,1,3),
 
 	.ManufacturerStrIndex   = STRING_ID_Manufacturer,
 	.ProductStrIndex        = STRING_ID_Product,

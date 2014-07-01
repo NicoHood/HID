@@ -77,6 +77,9 @@ THE SOFTWARE.
 // Reserved Usages
 #define NHP_USAGE_ARDUINOHID 0x01
 
+// Serial to write Protocol data to. Default: Serial
+#define HID_SERIAL Serial
+
 class HID_{
 public:
 	HID_(void);

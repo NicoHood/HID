@@ -39,11 +39,10 @@ static RingBuff_t USARTtoUSB_Buffer;
 
 /** Pulse generation counters to keep track of the number of milliseconds remaining for each pulse type */
 //new important ram fix!! <--
-static volatile struct
-{
+static volatile struct{
 	uint8_t TxLEDPulse; /**< Milliseconds remaining for data Tx LED pulse */
 	uint8_t RxLEDPulse; /**< Milliseconds remaining for data Rx LED pulse */
-	uint8_t PingPongLEDPulse; /**< Milliseconds remaining for enumeration Tx/Rx ping-pong LED pulse */
+	//uint8_t PingPongLEDPulse; /**< Milliseconds remaining for enumeration Tx/Rx ping-pong LED pulse */
 } PulseMSRemaining;
 
 
@@ -55,31 +54,27 @@ USB_ClassInfo_CDC_Device_t VirtualSerial_CDC_Interface =
 {
 	.Config =
 	{
-		.ControlInterfaceNumber         = INTERFACE_ID_CDC_CCI,
-		.DataINEndpoint                 =
+		.ControlInterfaceNumber = INTERFACE_ID_CDC_CCI,
+		.DataINEndpoint =
 		{
-			.Address                = CDC_TX_EPADDR,
-			.Size                   = CDC_TXRX_EPSIZE,
-			.Banks                  = 1,
+			.Address = CDC_TX_EPADDR,
+			.Size = CDC_TXRX_EPSIZE,
+			.Banks = 1,
 		},
-		.DataOUTEndpoint                =
+		.DataOUTEndpoint =
 			{
-				.Address                = CDC_RX_EPADDR,
-				.Size                   = CDC_TXRX_EPSIZE,
-				.Banks                  = 1,
+				.Address = CDC_RX_EPADDR,
+				.Size = CDC_TXRX_EPSIZE,
+				.Banks = 1,
 			},
-			.NotificationEndpoint           =
+			.NotificationEndpoint =
 				{
-					.Address                = CDC_NOTIFICATION_EPADDR,
-					.Size                   = CDC_NOTIFICATION_EPSIZE,
-					.Banks                  = 1,
+					.Address = CDC_NOTIFICATION_EPADDR,
+					.Size = CDC_NOTIFICATION_EPSIZE,
+					.Banks = 1,
 				},
 	},
 };
-
-/** Buffer to hold the previously generated HID report, for comparison purposes inside the HID class driver. */
-static uint8_t PrevHIDReportBuffer[sizeof(HID_HIDReport_Data_t)];
-static uint8_t CurrentHIDReportBuffer[sizeof(HID_HIDReport_Data_t)];
 
 static struct{
 	// variable to perform a "HID flush" and to indicate what report should be written down
@@ -89,7 +84,7 @@ static struct{
 	// number of bytes received
 	uint8_t recvlength;
 	// should the report been written even if nothing changed? important for mouse
-	bool forcewrite;
+	//bool forcewrite; // always true, removed
 } HIDReportState;
 
 /** LUFA HID Class driver interface configuration and state information. This structure is
@@ -100,17 +95,20 @@ USB_ClassInfo_HID_Device_t Device_HID_Interface =
 {
 	.Config =
 	{
-		.InterfaceNumber              = INTERFACE_ID_HID,
-		.ReportINEndpoint             =
+		.InterfaceNumber = INTERFACE_ID_HID,
+		.ReportINEndpoint =
 		{
-			.Address              = HID_IN_EPADDR,
-			.Size                 = HID_EPSIZE,
-			.Banks                = 1,
+			.Address = HID_IN_EPADDR,
+			.Size = HID_EPSIZE,
+			.Banks = 1,
 		},
-		.PrevReportINBuffer           = PrevHIDReportBuffer,
-		.PrevReportINBufferSize       = sizeof(PrevHIDReportBuffer),
+		.PrevReportINBuffer = NULL,
+		.PrevReportINBufferSize = sizeof(HID_HIDReport_Data_t),
 	},
 };
+
+/** Buffer to hold the previously generated HID report, for comparison purposes inside the HID class driver. */
+static uint8_t HIDReportBuffer[sizeof(HID_HIDReport_Data_t)];
 
 /** Main program entry point. This routine contains the overall program flow, including initial
 *  setup of all components and the main program loop.
@@ -125,8 +123,8 @@ int main(void)
 	GlobalInterruptEnable();
 
 	// HID Setup
-	HIDReportState.recvlength=0;
-	HIDReportState.ID=0;
+	HIDReportState.recvlength = 0;
+	HIDReportState.ID = 0;
 
 	// Debug
 	//DDRB |= 0x08; //led out
@@ -139,7 +137,7 @@ int main(void)
 	{
 		// Only try to read in bytes from the CDC interface if the transmit buffer is not full
 		if (!(RingBuffer_IsFull(&USBtoUSART_Buffer)))
-		{	
+		{
 			int16_t ReceivedByte = CDC_Device_ReceiveByte(&VirtualSerial_CDC_Interface);
 
 			// Read bytes from the USB OUT endpoint into the USART transmit buffer
@@ -163,15 +161,15 @@ int main(void)
 
 				//new Protocol check<--
 				// if a reading finished succesfull without valid checksum or an error occured (ignore a reset)
-				if(NHPgetErrorLevel()&(~NHP_INPUT_RESET)){
+				if (NHPgetErrorLevel()&(~NHP_INPUT_RESET)){
 					// check if previous reading was a valid Control Address and write it down
-					if(HIDReportState.ID)
+					if (HIDReportState.ID)
 						checkNHPControlAddressError();
 
 					// Write the last invalid signals. This will not write a possible new lead to keep
 					// it for the next reading. This is implemented in the Protocol itself.
 					writeNHPreadBuffer(NHPreadlength);
-				}	
+				}
 
 				//read newest byte and check for Protocol
 				RingBuff_Data_t  b = RingBuffer_Remove(&USARTtoUSB_Buffer);
@@ -183,15 +181,15 @@ int main(void)
 			if (PulseMSRemaining.TxLEDPulse && !(--PulseMSRemaining.TxLEDPulse)){
 
 				// check if previous reading was a valid Control Address and write it down
-				if(HIDReportState.ID)
+				if (HIDReportState.ID)
 					checkNHPControlAddressError();
 
 				// only write if there is input (ignore a reset)
-				if(!(NHPgetErrorLevel() & NHP_INPUT_RESET)){
+				if (!(NHPgetErrorLevel() & NHP_INPUT_RESET)){
 					// Lead errors are not in the buff length to keep them for next reading.
 					// But we want to write it down now after timeout.
-					uint8_t len= NHPreadlength;
-					if(NHPgetErrorLevel()& NHP_ERR_LEAD) len++;
+					uint8_t len = NHPreadlength;
+					if (NHPgetErrorLevel()& NHP_ERR_LEAD) len++;
 					writeNHPreadBuffer(len);
 				}
 				// do not write again in the while loop above anyways
@@ -238,6 +236,8 @@ void SetupHardware(void)
 	UCSR1A = 0;
 	UCSR1C = 0;
 
+	// these are values for 115200 i just read them from manual change
+	// its needed to start with baud 115200 on powerup
 	UCSR1C = ((1 << UCSZ11) | (1 << UCSZ10)); //C: 0x06
 	UCSR1A = (1 << U2X1); //A: 0x02
 	UCSR1B = ((1 << RXCIE1) | (1 << TXEN1) | (1 << RXEN1)); //B: 0x98
@@ -251,7 +251,7 @@ void SetupHardware(void)
 
 	/* Pull target /RESET line high */
 	AVR_RESET_LINE_PORT |= AVR_RESET_LINE_MASK;
-	AVR_RESET_LINE_DDR  |= AVR_RESET_LINE_MASK;
+	AVR_RESET_LINE_DDR |= AVR_RESET_LINE_MASK;
 
 	// Hardwaresetup to turn off the HID function with shorting the MOSI pin with GND next to it
 	AVR_NO_HID_DDR &= ~AVR_NO_HID_MASK; // Input
@@ -260,66 +260,68 @@ void SetupHardware(void)
 
 /** Writes the NHP read buffer with the given length */
 void writeNHPreadBuffer(uint8_t length){
-	for(int i=0; i<length;i++){
+	for (int i = 0; i < length; i++){
 		bool CurrentDTRState = (VirtualSerial_CDC_Interface.State.ControlLineStates.HostToDevice & CDC_CONTROL_LINE_OUT_DTR); //new <--
-		if(CurrentDTRState)
+		if (CurrentDTRState)
 			CDC_Device_SendByte(&VirtualSerial_CDC_Interface, NHPreadbuffer[i]);
 	}
 }
 
 /** Checks for a valid protocol input and writes HID report */
 void checkNHPProtocol(RingBuff_Data_t input){
-	if(NHPreadChecksum(input)){
+	if (NHPreadChecksum(input)){
 		// only process signal if HID is turned on
 		// make sure that no report is still active (like holding down a keyboard key)!
-		// remove later? <--
-		if(!(AVR_NO_HID_PIN & AVR_NO_HID_MASK))
+		// Or dont recognize if baud is not 115200 to ensure that there is no conflict with other bauds
+		// Secound != 0 is for starting from powerup when no lineEncoding is set
+		if (!(AVR_NO_HID_PIN & AVR_NO_HID_MASK) || 
+			VirtualSerial_CDC_Interface.State.LineEncoding.BaudRateBPS != 115200 && VirtualSerial_CDC_Interface.State.LineEncoding.BaudRateBPS != 0)
 			return;
 
 		// nearly the same priciple like the Protocol itself: check for control address
-		if(NHPgetAddress()==NHP_ADDRESS_CONTROL && NHPgetChecksumData1() & NHP_USAGE_ARDUINOHID){
+		if (NHPgetAddress() == NHP_ADDRESS_CONTROL && NHPgetChecksumData1() & NHP_USAGE_ARDUINOHID){
 
 			// check if previous reading was a valid Control Address and write it down
-			if(HIDReportState.ID)
+			if (HIDReportState.ID)
 				checkNHPControlAddressError();
 
 			// get the new report ID and reset the buffer
 			HIDReportState.ID = NHPgetChecksumData0();
-			HIDReportState.recvlength=0;
-			memset(CurrentHIDReportBuffer, 0, sizeof(CurrentHIDReportBuffer));
+			HIDReportState.recvlength = 0;
+			memset(HIDReportBuffer, 0, sizeof(HIDReportBuffer));
 
 			/* Determine which interface must have its report generated */
-			switch(HIDReportState.ID){
+			switch (HIDReportState.ID){
 			case HID_REPORTID_MouseReport:
-				HIDReportState.length=sizeof(HID_MouseReport_Data_t);
-				HIDReportState.forcewrite=true;
+				HIDReportState.length = sizeof(HID_MouseReport_Data_t);
+				//HIDReportState.forcewrite = true;
 				break;
 
 			case HID_REPORTID_KeyboardReport:
-				HIDReportState.length=sizeof(HID_KeyboardReport_Data_t);
-				HIDReportState.forcewrite=true; // set to true because of some bugs with joystick 1+2
+				HIDReportState.length = sizeof(HID_KeyboardReport_Data_t);
+				//HIDReportState.forcewrite = true; // set to true because of some bugs with joystick 1+2
 				break;
 
 			case HID_REPORTID_MediaReport:
-				HIDReportState.length=sizeof(HID_MediaReport_Data_t);
-				HIDReportState.forcewrite=true;
+				HIDReportState.length = sizeof(HID_MediaReport_Data_t);
+				//HIDReportState.forcewrite = true;
 				break;
 
 			case HID_REPORTID_SystemReport:
-				HIDReportState.length=sizeof(HID_SystemReport_Data_t);
-				HIDReportState.forcewrite=true;
+				HIDReportState.length = sizeof(HID_SystemReport_Data_t);
+				//HIDReportState.forcewrite = true;
 				break;
 
 			case HID_REPORTID_Gamepad1Report:
 			case HID_REPORTID_Gamepad2Report:
-				HIDReportState.length=sizeof(HID_GamepadReport_Data_t);
-				HIDReportState.forcewrite=true;
+				HIDReportState.length = sizeof(HID_GamepadReport_Data_t);
+				//HIDReportState.forcewrite = true;
 				break;
 
 			case HID_REPORTID_Joystick1Report:
 			case HID_REPORTID_Joystick2Report:
-				HIDReportState.length=sizeof(HID_JoystickReport_Data_t);
-				HIDReportState.forcewrite=true;
+				HIDReportState.length = sizeof(HID_JoystickReport_Data_t);
+				//HIDReportState.forcewrite = true;
 				break;
 
 				// not supported yet <--
@@ -328,7 +330,7 @@ void checkNHPProtocol(RingBuff_Data_t input){
 				//HID_Report_ForceWrite=false;
 				//break;
 
-			default : 
+			default:
 				// error
 				checkNHPControlAddressError();
 				break;
@@ -339,22 +341,22 @@ void checkNHPProtocol(RingBuff_Data_t input){
 			NHPreset();
 		} // end if control address byte
 
-		else if(HIDReportState.ID){
+		else if (HIDReportState.ID){
 			// check if the new Address is in correct order of HID reports.
 			// the first 2 bytes are sent with Address 2 and so on.
-			if(NHPgetAddress()==(((HIDReportState.recvlength+2)/2)+1)){
+			if (NHPgetAddress() == (((HIDReportState.recvlength + 2) / 2) + 1)){
 				// save the first byte
-				CurrentHIDReportBuffer[HIDReportState.recvlength++]=NHPgetChecksumData0();
+				HIDReportBuffer[HIDReportState.recvlength++] = NHPgetChecksumData0();
 
 				// if there is another byte we need (for odd max HID reports important
 				// to not write over the buff array)
-				if(HIDReportState.length!=HIDReportState.recvlength)
-					CurrentHIDReportBuffer[HIDReportState.recvlength++]=NHPgetChecksumData1();
+				if (HIDReportState.length != HIDReportState.recvlength)
+					HIDReportBuffer[HIDReportState.recvlength++] = NHPgetChecksumData1();
 
 				// we are ready to submit the new report to the usb host
-				if(HIDReportState.length==HIDReportState.recvlength){
+				if (HIDReportState.length == HIDReportState.recvlength){
 					// TODO timeout? <--
-					while(HIDReportState.ID)
+					while (HIDReportState.ID)
 						HID_Device_USBTask(&Device_HID_Interface);
 				}
 				// The Protocol received a valid signal with inverse checksum
@@ -379,17 +381,19 @@ void checkNHPControlAddressError(void){
 	// only write if it was just before, maybe it was a random valid address
 	// but if we already received some data we handle this as corrupted data and just
 	// discard all the bytes
-	if(HIDReportState.recvlength==0){
+	if (HIDReportState.recvlength == 0){
 		// write the cached buffer (recreate protocol)
-		NHPwriteChecksum(NHP_ADDRESS_CONTROL, (NHP_USAGE_ARDUINOHID<<8) | HIDReportState.ID);
-		for(int i = 0; i< NHPwritelength; i++){
+		uint8_t buff[6];
+		uint8_t length = NHPwriteChecksum(NHP_ADDRESS_CONTROL, (NHP_USAGE_ARDUINOHID << 8) | HIDReportState.ID, buff);
+		for (int i = 0; i < length; i++){
 			bool CurrentDTRState = (VirtualSerial_CDC_Interface.State.ControlLineStates.HostToDevice & CDC_CONTROL_LINE_OUT_DTR); //new <--
-			if(CurrentDTRState)
-				CDC_Device_SendByte(&VirtualSerial_CDC_Interface, NHPwritebuffer[i]);
+			if (CurrentDTRState)
+				CDC_Device_SendByte(&VirtualSerial_CDC_Interface, buff[i]);
 		}
 	}
 	// reset any pending HID reports
-	HIDReportState.ID=0;
+	HIDReportState.ID = 0;
+	HIDReportState.recvlength = 0; //just to be sure if you call HID_Task by accident
 }
 
 /** Event handler for the library USB Connection event. */
@@ -436,10 +440,10 @@ void EVENT_CDC_Device_LineEncodingChanged(USB_ClassInfo_CDC_Device_t* const CDCI
 	switch (CDCInterfaceInfo->State.LineEncoding.ParityType)
 	{
 	case CDC_PARITY_Odd:
-		ConfigMask = ((1 << UPM11) | (1 << UPM10));	
+		ConfigMask = ((1 << UPM11) | (1 << UPM10));
 		break;
 	case CDC_PARITY_Even:
-		ConfigMask = (1 << UPM11);		
+		ConfigMask = (1 << UPM11);
 		break;
 	}
 
@@ -465,10 +469,10 @@ void EVENT_CDC_Device_LineEncodingChanged(USB_ClassInfo_CDC_Device_t* const CDCI
 	UCSR1A = 0;
 	UCSR1C = 0;
 
-	/* Special case 57600 baud for compatibility with the ATmega328 bootloader. */	
-	UBRR1  = (CDCInterfaceInfo->State.LineEncoding.BaudRateBPS == 57600)
+	/* Special case 57600 baud for compatibility with the ATmega328 bootloader. */
+	UBRR1 = (CDCInterfaceInfo->State.LineEncoding.BaudRateBPS == 57600)
 		? SERIAL_UBBRVAL(CDCInterfaceInfo->State.LineEncoding.BaudRateBPS)
-		: SERIAL_2X_UBBRVAL(CDCInterfaceInfo->State.LineEncoding.BaudRateBPS);	
+		: SERIAL_2X_UBBRVAL(CDCInterfaceInfo->State.LineEncoding.BaudRateBPS);
 
 	UCSR1C = ConfigMask;
 	UCSR1A = (CDCInterfaceInfo->State.LineEncoding.BaudRateBPS == 57600) ? 0 : (1 << U2X1);
@@ -528,17 +532,20 @@ void EVENT_USB_Device_StartOfFrame(void)
 *  \return Boolean \c true to force the sending of the report, \c false to let the library determine if it needs to be sent
 */
 bool CALLBACK_HID_Device_CreateHIDReport(USB_ClassInfo_HID_Device_t* const HIDInterfaceInfo,
-										 uint8_t* const ReportID,
-										 const uint8_t ReportType,
-										 void* ReportData,
-										 uint16_t* const ReportSize)
+	uint8_t* const ReportID,
+	const uint8_t ReportType,
+	void* ReportData,
+	uint16_t* const ReportSize)
 {
 	//write report and reset ID
-	memcpy(ReportData, CurrentHIDReportBuffer, HIDReportState.length);
-	*ReportID   = HIDReportState.ID;
+	memcpy(ReportData, HIDReportBuffer, HIDReportState.length);
+	*ReportID = HIDReportState.ID;
 	*ReportSize = HIDReportState.length;
-	HIDReportState.ID=0;
-	return HIDReportState.forcewrite;
+	HIDReportState.ID = 0;
+	HIDReportState.recvlength = 0; //just to be sure if you call HID_Task by accident
+	// always return true, because we cannot compare with >1 report due to ram limit
+	// this will forcewrite the report everytime
+	return true; 
 }
 
 /** HID class driver callback function for the processing of HID reports from the host.
@@ -550,10 +557,10 @@ bool CALLBACK_HID_Device_CreateHIDReport(USB_ClassInfo_HID_Device_t* const HIDIn
 *  \param[in] ReportSize  Size in bytes of the received HID report
 */
 void CALLBACK_HID_Device_ProcessHIDReport(USB_ClassInfo_HID_Device_t* const HIDInterfaceInfo,
-										  const uint8_t ReportID,
-										  const uint8_t ReportType,
-										  const void* ReportData,
-										  const uint16_t ReportSize)
+	const uint8_t ReportID,
+	const uint8_t ReportType,
+	const void* ReportData,
+	const uint16_t ReportSize)
 {
 	// Unused (but mandatory for the HID class driver) in this demo, since there are no Host->Device reports
 	//	uint8_t* LEDReport = (uint8_t*)ReportData;

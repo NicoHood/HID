@@ -88,18 +88,17 @@ uint8_t  NHPgetErrorLevel(void);
 // buffer for read/write operations
 extern uint8_t NHPreadbuffer[6];
 extern uint8_t NHPreadlength;
-//extern uint8_t NHPwritebuffer[6];
-//extern uint8_t NHPwritelength;
+extern uint8_t NHPwritebuffer[6];
+extern uint8_t NHPwritelength;
 void NHPresetreadbuffer(void);
-//void NHPresetwritebuffer(void);
+void NHPresetwritebuffer(void);
 
 // general multifunctional read/write functions
 void NHPreset(void);
 bool NHPread(uint8_t input);
 bool NHPreadChecksum(uint8_t input);
-uint8_t NHPwriteCommand(uint8_t command); // returns the command
-// returns the length, writes data to the passed in buff (6 bytes max)
-uint8_t NHPwriteAddress(uint8_t address, uint32_t data, uint8_t* buff); 
-uint8_t NHPwriteChecksum(uint8_t address, uint16_t data, uint8_t* buff);
+void NHPwriteCommand(uint8_t command);
+void NHPwriteAddress(uint8_t address, uint32_t data);
+void NHPwriteChecksum(uint8_t address, uint16_t data);
 
 #endif

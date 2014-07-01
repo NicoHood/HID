@@ -19,14 +19,15 @@ MCU_DFU = atmega8u2
 F_CPU = 16000000
 BOARD  = USER
 
-#Vendor ID from lufa
-#Product ID created my own
+#Vendor ID from lufa       0x03EB
+#Product ID created my own 0x4E68
 ARDUNIOHID_OPTS  = -DHOODLOADER_VID=0x03EB
 ARDUNIOHID_OPTS += -DHOODLOADER_PID=0x4E68
 #You can also use the native Arduino VID and PID
 #VendorID  Arduino      0x2341
 #ProductID Arduino Uno  0x0001
 #ProductID Arduino Mega 0x0010
+
 
 ARCH         = AVR8
 F_USB        = $(F_CPU)

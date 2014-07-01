@@ -369,9 +369,9 @@ const u8 _hidReportDescriptor[] = {
 extern const HIDDescriptor _hidInterface PROGMEM;
 const HIDDescriptor _hidInterface =
 {
-	D_INTERFACE(HID_INTERFACE,1,3,0,0),
+	D_INTERFACE(HID_INTERFACE, 1, 3, 0, 0),
 	D_HIDREPORT(sizeof(_hidReportDescriptor)),
-	D_ENDPOINT(USB_ENDPOINT_IN (HID_ENDPOINT_INT),USB_ENDPOINT_TYPE_INTERRUPT,0x40,0x01)
+	D_ENDPOINT(USB_ENDPOINT_IN(HID_ENDPOINT_INT), USB_ENDPOINT_TYPE_INTERRUPT, 0x40, 0x01)
 };
 
 //================================================================================
@@ -386,18 +386,18 @@ u8 _hid_idle = 1;
 int WEAK HID_GetInterface(u8* interfaceNum)
 {
 	interfaceNum[0] += 1;	// uses 1
-	return USB_SendControl(TRANSFER_PGM,&_hidInterface,sizeof(_hidInterface));
+	return USB_SendControl(TRANSFER_PGM, &_hidInterface, sizeof(_hidInterface));
 }
 
 int WEAK HID_GetDescriptor(int /* i */)
 {
-	return USB_SendControl(TRANSFER_PGM,_hidReportDescriptor,sizeof(_hidReportDescriptor));
+	return USB_SendControl(TRANSFER_PGM, _hidReportDescriptor, sizeof(_hidReportDescriptor));
 }
 
 void WEAK HID_SendReport(u8 id, const void* data, int len)
 {
 	USB_Send(HID_TX, &id, 1);
-	USB_Send(HID_TX | TRANSFER_RELEASE,data,len);
+	USB_Send(HID_TX | TRANSFER_RELEASE, data, len);
 }
 
 bool WEAK HID_Setup(Setup& setup)
@@ -450,25 +450,25 @@ HID_::HID_(void){
 }
 
 void HID_::begin(void){
-	Serial.begin(115200);
+	HID_SERIAL.begin(115200);
 }
 
 void HID_::end(void){
-	Serial.end();
+	HID_SERIAL.end();
 }
 
 void HID_::sendReport(uint8_t ReportID, const void* HIDReport, uint8_t length){
 	// write the Report via Protocol and checksum. 16bit for each sending
 	// send control address
-	NHPwriteChecksum(NHP_ADDRESS_CONTROL, (NHP_USAGE_ARDUINOHID<<8)|ReportID);
+	NHPwriteChecksum(NHP_ADDRESS_CONTROL, (NHP_USAGE_ARDUINOHID << 8) | ReportID);
 	const uint8_t* report = (const uint8_t*)HIDReport;
-	for(int i = 0; i<length;i++){
-		uint8_t data0=report[i++];
-		uint8_t data1=0;
-		if(i!=length)
-			data1=report[i];
+	for (int i = 0; i < length; i++){
+		uint8_t data0 = report[i++];
+		uint8_t data1 = 0;
+		if (i != length)
+			data1 = report[i];
 		// valid HID reports start at Address 2
-		NHPwriteChecksum(2+i/2,(data1<<8) | data0);
+		NHPwriteChecksum(2 + i / 2, (data1 << 8) | data0);
 	}
 }
 #endif /* if defined(USBCON) */
@@ -476,49 +476,54 @@ void HID_::sendReport(uint8_t ReportID, const void* HIDReport, uint8_t length){
 // simple copy/modification of the NicoHoodProtocol writechecksum function
 void HID_::NHPwriteChecksum(uint8_t address, uint16_t indata){
 	// writes two bytes with its inverse
-	uint32_t temp=~indata;
-	uint32_t data=(temp<<16)|indata;
+	uint32_t temp = ~indata;
+	uint32_t data = (temp << 16) | indata;
 
 	// buffer for write operation
 	uint8_t writebuffer[6];
 
 	// start with the maximum size of blocks
-	uint8_t blocks=7;
+	uint8_t blocks = 7;
 
 	// check for the first 7 bit block that doesnt fit into the first 3 bits
-	while(blocks>2){
-		uint8_t nextvalue=(data>>(7*(blocks-3)));
-		if(nextvalue>NHP_MASK_DATA_3BIT){
+	while (blocks > 2){
+		uint8_t nextvalue = (data >> (7 * (blocks - 3)));
+
+		if (nextvalue > NHP_MASK_DATA_3BIT){
 			// special case for the MSB
-			if(blocks==7) {
+			if (blocks == 7) {
 				writebuffer[0] = nextvalue;
 				blocks--;
 			}
+			// this block is too big, write this into the next data block
 			break;
 		}
 		else{
-			// write the possible first 3 bits and check again after
+			// write the possible first 3 bits and check again after if zero
 			writebuffer[0] = nextvalue;
 			blocks--;
+			// we have our first bits, stop (nonzero)
+			if (nextvalue)
+				break;
 		}
 	}
 
 	// write the rest of the data bits
-	uint8_t datablocks=blocks-2;
-	while(datablocks>0){
+	uint8_t datablocks = blocks - 2;
+	while (datablocks > 0){
 		writebuffer[datablocks] = data & NHP_MASK_DATA_7BIT;
-		data>>=7;
+		data >>= 7;
 		datablocks--;
 	}
 
 	// write lead + length mask
-	writebuffer[0] |= NHP_MASK_LEAD | (blocks <<3);
+	writebuffer[0] |= NHP_MASK_LEAD | (blocks << 3);
 
 	// write end mask
-	writebuffer[blocks-1] = NHP_MASK_END | ((address-1) & NHP_MASK_ADDRESS);
+	writebuffer[blocks - 1] = NHP_MASK_END | ((address - 1) & NHP_MASK_ADDRESS);
 
 	// write the buffer
-	Serial.write(writebuffer, blocks);
+	HID_SERIAL.write(writebuffer, blocks);
 }
 
 //================================================================================
@@ -542,22 +547,22 @@ void Mouse_::end(void){
 
 void Mouse_::click(uint8_t b){
 	_report.buttons = b;
-	move(0,0,0);
+	move(0, 0, 0);
 	_report.buttons = 0;
-	move(0,0,0);
+	move(0, 0, 0);
 }
 
 void Mouse_::move(signed char x, signed char y, signed char wheel){
-	_report.xAxis=x;
-	_report.yAxis=y;
-	_report.wheel=wheel;
+	_report.xAxis = x;
+	_report.yAxis = y;
+	_report.wheel = wheel;
 	HID.sendReport(HID_REPORTID_MouseReport, &_report, sizeof(HID_MouseReport_Data_t));
 }
 
 void Mouse_::buttons(uint8_t b){
 	if (b != _report.buttons)	{
 		_report.buttons = b;
-		move(0,0,0);
+		move(0, 0, 0);
 	}
 }
 
@@ -574,7 +579,7 @@ void Mouse_::releaseAll(void){
 }
 
 bool Mouse_::isPressed(uint8_t b){
-	if ((b & _report.buttons) > 0) 
+	if ((b & _report.buttons) > 0)
 		return true;
 	return false;
 }
@@ -599,7 +604,7 @@ void Keyboard_::end(void){
 }
 
 extern
-	const uint8_t _asciimap[128] PROGMEM;
+const uint8_t _asciimap[128] PROGMEM;
 
 #define SHIFT 0x80
 const uint8_t _asciimap[128] =
@@ -638,17 +643,17 @@ const uint8_t _asciimap[128] =
 	0x00,             // US 
 
 	0x2c,		   //  ' '
-	0x1e|SHIFT,	   // !
-	0x34|SHIFT,	   // "
-	0x20|SHIFT,    // #
-	0x21|SHIFT,    // $
-	0x22|SHIFT,    // %
-	0x24|SHIFT,    // &
+	0x1e | SHIFT,	   // !
+	0x34 | SHIFT,	   // "
+	0x20 | SHIFT,    // #
+	0x21 | SHIFT,    // $
+	0x22 | SHIFT,    // %
+	0x24 | SHIFT,    // &
 	0x34,          // '
-	0x26|SHIFT,    // (
-	0x27|SHIFT,    // )
-	0x25|SHIFT,    // *
-	0x2e|SHIFT,    // +
+	0x26 | SHIFT,    // (
+	0x27 | SHIFT,    // )
+	0x25 | SHIFT,    // *
+	0x2e | SHIFT,    // +
 	0x36,          // ,
 	0x2d,          // -
 	0x37,          // .
@@ -663,44 +668,44 @@ const uint8_t _asciimap[128] =
 	0x24,          // 7
 	0x25,          // 8
 	0x26,          // 9
-	0x33|SHIFT,      // :
+	0x33 | SHIFT,      // :
 	0x33,          // ;
-	0x36|SHIFT,      // <
+	0x36 | SHIFT,      // <
 	0x2e,          // =
-	0x37|SHIFT,      // >
-	0x38|SHIFT,      // ?
-	0x1f|SHIFT,      // @
-	0x04|SHIFT,      // A
-	0x05|SHIFT,      // B
-	0x06|SHIFT,      // C
-	0x07|SHIFT,      // D
-	0x08|SHIFT,      // E
-	0x09|SHIFT,      // F
-	0x0a|SHIFT,      // G
-	0x0b|SHIFT,      // H
-	0x0c|SHIFT,      // I
-	0x0d|SHIFT,      // J
-	0x0e|SHIFT,      // K
-	0x0f|SHIFT,      // L
-	0x10|SHIFT,      // M
-	0x11|SHIFT,      // N
-	0x12|SHIFT,      // O
-	0x13|SHIFT,      // P
-	0x14|SHIFT,      // Q
-	0x15|SHIFT,      // R
-	0x16|SHIFT,      // S
-	0x17|SHIFT,      // T
-	0x18|SHIFT,      // U
-	0x19|SHIFT,      // V
-	0x1a|SHIFT,      // W
-	0x1b|SHIFT,      // X
-	0x1c|SHIFT,      // Y
-	0x1d|SHIFT,      // Z
+	0x37 | SHIFT,      // >
+	0x38 | SHIFT,      // ?
+	0x1f | SHIFT,      // @
+	0x04 | SHIFT,      // A
+	0x05 | SHIFT,      // B
+	0x06 | SHIFT,      // C
+	0x07 | SHIFT,      // D
+	0x08 | SHIFT,      // E
+	0x09 | SHIFT,      // F
+	0x0a | SHIFT,      // G
+	0x0b | SHIFT,      // H
+	0x0c | SHIFT,      // I
+	0x0d | SHIFT,      // J
+	0x0e | SHIFT,      // K
+	0x0f | SHIFT,      // L
+	0x10 | SHIFT,      // M
+	0x11 | SHIFT,      // N
+	0x12 | SHIFT,      // O
+	0x13 | SHIFT,      // P
+	0x14 | SHIFT,      // Q
+	0x15 | SHIFT,      // R
+	0x16 | SHIFT,      // S
+	0x17 | SHIFT,      // T
+	0x18 | SHIFT,      // U
+	0x19 | SHIFT,      // V
+	0x1a | SHIFT,      // W
+	0x1b | SHIFT,      // X
+	0x1c | SHIFT,      // Y
+	0x1d | SHIFT,      // Z
 	0x2f,          // [
 	0x31,          // bslash
 	0x30,          // ]
-	0x23|SHIFT,    // ^
-	0x2d|SHIFT,    // _
+	0x23 | SHIFT,    // ^
+	0x2d | SHIFT,    // _
 	0x35,          // `
 	0x04,          // a
 	0x05,          // b
@@ -728,10 +733,10 @@ const uint8_t _asciimap[128] =
 	0x1b,          // x
 	0x1c,          // y
 	0x1d,          // z
-	0x2f|SHIFT,    // 
-	0x31|SHIFT,    // |
-	0x30|SHIFT,    // }
-	0x35|SHIFT,    // ~
+	0x2f | SHIFT,    // 
+	0x31 | SHIFT,    // |
+	0x30 | SHIFT,    // }
+	0x35 | SHIFT,    // ~
 	0				// DEL
 };
 
@@ -739,7 +744,7 @@ const uint8_t _asciimap[128] =
 //uint8_t USBPutChar(uint8_t c);
 
 size_t Keyboard_::write(uint8_t c)
-{	
+{
 	uint8_t p = press(c);		// Keydown
 	//uint8_t r = 
 	release(c);		// Keyup
@@ -750,15 +755,17 @@ size_t Keyboard_::write(uint8_t c)
 // to the persistent key report and sends the report.  Because of the way 
 // USB HID works, the host acts like the key remains pressed until we 
 // call release(), releaseAll(), or otherwise clear the report and resend.
-size_t Keyboard_::press(uint8_t k) 
+size_t Keyboard_::press(uint8_t k)
 {
 	uint8_t i;
 	if (k >= 136) {			// it's a non-printing key (not a modifier)
 		k = k - 136;
-	} else if (k >= 128) {	// it's a modifier key
-		_report.modifiers |= (1<<(k-128));
+	}
+	else if (k >= 128) {	// it's a modifier key
+		_report.modifiers |= (1 << (k - 128));
 		k = 0;
-	} else {				// it's a printing key
+	}
+	else {				// it's a printing key
 		k = pgm_read_byte(_asciimap + k);
 		if (!k) {
 			setWriteError();
@@ -772,20 +779,20 @@ size_t Keyboard_::press(uint8_t k)
 
 	// Add k to the key report only if it's not already present
 	// and if there is an empty slot.
-	if (_report.keys[0] != k && _report.keys[1] != k && 
+	if (_report.keys[0] != k && _report.keys[1] != k &&
 		_report.keys[2] != k && _report.keys[3] != k &&
 		_report.keys[4] != k && _report.keys[5] != k) {
 
-			for (i=0; i<6; i++) {
-				if (_report.keys[i] == 0x00) {
-					_report.keys[i] = k;
-					break;
-				}
+		for (i = 0; i < 6; i++) {
+			if (_report.keys[i] == 0x00) {
+				_report.keys[i] = k;
+				break;
 			}
-			if (i == 6) {
-				setWriteError();
-				return 0;
-			}	
+		}
+		if (i == 6) {
+			setWriteError();
+			return 0;
+		}
 	}
 	HID.sendReport(HID_REPORTID_KeyboardReport, &_report, sizeof(_report));
 	return 1;
@@ -794,15 +801,17 @@ size_t Keyboard_::press(uint8_t k)
 // release() takes the specified key out of the persistent key report and
 // sends the report.  This tells the OS the key is no longer pressed and that
 // it shouldn't be repeated any more.
-size_t Keyboard_::release(uint8_t k) 
+size_t Keyboard_::release(uint8_t k)
 {
 	uint8_t i;
 	if (k >= 136) {			// it's a non-printing key (not a modifier)
 		k = k - 136;
-	} else if (k >= 128) {	// it's a modifier key
-		_report.modifiers &= ~(1<<(k-128));
+	}
+	else if (k >= 128) {	// it's a modifier key
+		_report.modifiers &= ~(1 << (k - 128));
 		k = 0;
-	} else {				// it's a printing key
+	}
+	else {				// it's a printing key
 		k = pgm_read_byte(_asciimap + k);
 		if (!k) {
 			return 0;
@@ -815,7 +824,7 @@ size_t Keyboard_::release(uint8_t k)
 
 	// Test the key report to see if k is present.  Clear it if it exists.
 	// Check all positions in case the key is present more than once (which it shouldn't be)
-	for (i=0; i<6; i++) {
+	for (i = 0; i < 6; i++) {
 		if (0 != k && _report.keys[i] == k) {
 			_report.keys[i] = 0x00;
 		}
@@ -855,8 +864,8 @@ void Media_::write(uint16_t m){
 
 void Media_::press(uint16_t m){
 	// search for a free spot
-	for (int i=0; i<sizeof(HID_MediaReport_Data_t)/2; i++) {
-		if(_report.whole16[i] == 0x00) {
+	for (int i = 0; i < sizeof(HID_MediaReport_Data_t) / 2; i++) {
+		if (_report.whole16[i] == 0x00) {
 			_report.whole16[i] = m;
 			break;
 		}
@@ -866,7 +875,7 @@ void Media_::press(uint16_t m){
 
 void Media_::release(uint16_t m){
 	// search and release the keypress
-	for (int i=0; i<sizeof(HID_MediaReport_Data_t)/2; i++) {
+	for (int i = 0; i < sizeof(HID_MediaReport_Data_t) / 2; i++) {
 		if (_report.whole16[i] == m) {
 			_report.whole16[i] = 0x00;
 			// no break to delete multiple keys
@@ -941,15 +950,15 @@ void Gamepad_::write(void){
 }
 
 void Gamepad_::press(uint8_t b){
-	_report.buttons|=(uint32_t)1<<(b-1);
+	_report.buttons |= (uint32_t)1 << (b - 1);
 }
 
 void Gamepad_::release(uint8_t b){
-	_report.buttons&=~((uint32_t)1<<(b-1));
+	_report.buttons &= ~((uint32_t)1 << (b - 1));
 }
 
 void Gamepad_::releaseAll(void){
-	_report.buttons=0;
+	_report.buttons = 0;
 }
 
 //================================================================================
@@ -978,16 +987,16 @@ void Joystick_::write(void){
 }
 
 void Joystick_::press(uint8_t b){
-	if(b==1) _report.button1=1;
-	else if(b==2) _report.button2=1;
+	if (b == 1) _report.button1 = 1;
+	else if (b == 2) _report.button2 = 1;
 }
 
 void Joystick_::release(uint8_t b){
-	if(b==1) _report.button1=0;
-	else if(b==2) _report.button2=0;
+	if (b == 1) _report.button1 = 0;
+	else if (b == 2) _report.button2 = 0;
 }
 
 void Joystick_::releaseAll(void){
-	_report.button1=0;
-	_report.button2=0;
+	_report.button1 = 0;
+	_report.button2 = 0;
 }
