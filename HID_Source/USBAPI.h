@@ -47,7 +47,7 @@ extern USBDevice_ USBDevice;
 //	Serial over CDC (Serial1 is the physical port)
 
 // v1.5.7 or newer
-#if Arduino >= 157
+#if ARDUINO >= 157
 struct ring_buffer;
 
 #if (RAMEND < 1000)
@@ -84,7 +84,7 @@ extern Serial_ Serial;
 #define HAVE_CDCSERIAL
 
 // v1.5.0 - v1.5.6
-#elif Arduino >= 150
+#elif ARDUINO >= 150
 struct ring_buffer;
 
 #if (RAMEND < 1000)
@@ -118,7 +118,7 @@ extern Serial_ Serial;
 #define HAVE_CDCSERIAL
 
 // v1.0.1 - v1.0.x
-#elif Arduino > 100
+#elif ARDUINO > 100
 class Serial_ : public Stream
 {
 private:

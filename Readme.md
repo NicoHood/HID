@@ -167,6 +167,9 @@ Oh and by the way: I also removed some bugs from the official firmware.
 Version History
 ===============
 ```
+1.4.1 Beta Release (10.07.2014)
+* #define Bugfix in USBAPI.h
+
 1.4 Beta Release (10.07.2014)
 * Bugfixes in the Hoodloader:
  * Added Lite Version with less ram usage
