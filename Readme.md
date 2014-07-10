@@ -167,7 +167,7 @@ Oh and by the way: I also removed some bugs from the official firmware.
 Version History
 ===============
 ```
-1.4 Beta Release (xx.07.2014)
+1.4 Beta Release (10.07.2014)
 * Bugfixes in the Hoodloader:
  * Added Lite Version with less ram usage
  * Changed PIDs, edited driver file
