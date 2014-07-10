@@ -17,7 +17,7 @@ Use your **Arduino Uno, Mega, Micro, Leonardo or Micro Pro** as Generic HID Devi
 This project provides a new bootloader for the 8u2/16u2 and HID libraries Arduino Uno/Mega and Micro/Leonardo.
 I also corrected some bugs in the original sources.
 
-Software includes:
+**Software includes:**
 
 * Arduino HID Uno/Mega library
 * Arduino HID Micro/Leonardo library
@@ -25,7 +25,7 @@ Software includes:
 * Compatible with Linux/Mac/Windows XP/7/8.1*
 * Compatible with IDE 1.0.x - 1.5.7 (newer versions might need an update)
 
-The following devices are supported:
+**The following devices are supported:**
 
 * Keyboard (modifiers + 6 keys)
 * Mouse (5 buttons, move, wheel)
@@ -34,7 +34,7 @@ The following devices are supported:
 * 2 Gamepads (32 buttons, 6 16bit axis, 2 D-Pads)
 * 2 Joysticks (2 buttons, 2 10bit axis)
 
-Projects can be found here:
+**Projects can be found here:**
 * [Gamecube to PC adapter](https://github.com/NicoHood/Nintendo)
 * [Other projects](http://nicohood.wordpress.com/)
 
