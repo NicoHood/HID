@@ -1,1 +1,0 @@
-See http://nicohood.wordpress.com/ for tutorials and projects

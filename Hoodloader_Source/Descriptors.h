@@ -32,7 +32,7 @@ THE SOFTWARE.
 /* Includes: */
 #include <avr/pgmspace.h>
 #include <LUFA/Drivers/USB/USB.h>
-#include <Lib/HID_Reports.h>
+#include <../HID_Source/HID_Reports.h>
 
 /* Macros: */
 /** Endpoint address of the CDC device-to-host notification IN endpoint. */

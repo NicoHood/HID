@@ -275,7 +275,7 @@ void checkNHPProtocol(RingBuff_Data_t input){
 		// Or dont recognize if baud is not 115200 to ensure that there is no conflict with other bauds
 		// Secound != 0 is for starting from powerup when no lineEncoding is set
 		if (!(AVR_NO_HID_PIN & AVR_NO_HID_MASK) || 
-			VirtualSerial_CDC_Interface.State.LineEncoding.BaudRateBPS != 115200 && VirtualSerial_CDC_Interface.State.LineEncoding.BaudRateBPS != 0)
+			(VirtualSerial_CDC_Interface.State.LineEncoding.BaudRateBPS != 115200 && VirtualSerial_CDC_Interface.State.LineEncoding.BaudRateBPS != 0))
 			return;
 
 		// nearly the same priciple like the Protocol itself: check for control address

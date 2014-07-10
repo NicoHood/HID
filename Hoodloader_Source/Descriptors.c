@@ -376,7 +376,7 @@ const USB_Descriptor_Device_t PROGMEM DeviceDescriptor =
 	//.VendorID               = 0x2341, // Arduino
 	//.ProductID          	= 0x0043, // Arduino Uno
 
-	.ReleaseNumber          = VERSION_BCD(0,1,3),
+	.ReleaseNumber = VERSION_BCD(HOODLOADER_V1, HOODLOADER_V2, HOODLOADER_V3), //0,1,4 for example, passed by makefile
 
 	.ManufacturerStrIndex   = STRING_ID_Manufacturer,
 	.ProductStrIndex        = STRING_ID_Product,
@@ -564,7 +564,14 @@ const USB_Descriptor_String_t PROGMEM ManufacturerString = USB_STRING_DESCRIPTOR
 *  and is read out upon request by the host when the appropriate string ID is requested, listed in the Device
 *  Descriptor.
 */
+#if (HOODLOADER_PID == HOODLOADER)
 const USB_Descriptor_String_t PROGMEM ProductString = USB_STRING_DESCRIPTOR(L"Arduino Hoodloader Beta");
+#elif (HOODLOADER_PID == HOODLOADER_LITE)
+const USB_Descriptor_String_t PROGMEM ProductString = USB_STRING_DESCRIPTOR(L"Arduino Hoodloader-Lite Beta");
+#else
+const USB_Descriptor_String_t PROGMEM ProductString = USB_STRING_DESCRIPTOR(L"Lufa Device");
+#endif
+
 
 
 /** This function is called by the library when in device mode, and must be overridden (see library "USB Descriptors"
