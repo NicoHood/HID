@@ -149,6 +149,8 @@ Sometimes the Problem is just that Windows messes up the PID, so changing to Lit
 XBMC 13.1 (a Media Center) uses Gamepad input. Its seems to not work and may cause weird errors.
 Even with a standard Gamepad I have these errors. Just want to mention it here.
 
+Arduino as ISP is currently broken
+
 System Wakeup is currently not working on all versions!
 
 Not tested on the 8u2 (should only work without DFU due to size. message me if it works!)
