@@ -74,21 +74,19 @@ To **install the new bootloader** connect your Arduino to your PC via USB and se
 For Arduino Mega2560 I recommend (in general) the IDE 1.5.7 or higher. [See Issue on Github.](https://github.com/arduino/Arduino/issues/1071)
 [Or this Issue.)(http://forum.arduino.cc/index.php?topic=126160.0)
 
-#### For all Arduinos
-
-
 Usage
 =====
 You are ready to use the libraries. **Just have a look at the examples and test it out.** They are pretty much self explaining.
 All examples use a button on pin 8 and show the basic usage of the libraries.
 The libraries will work for all Arduinos listed above but it will use 2 different HID libraries (automatically).
 
+The HID include and HID.begin() is not needed for **Leonardo/Micro** but I'd recommend
+to use it every time so you can port the library from one to another device.
+
 **On Arduino/Mega you can only use baud 115200 for HID** due to programming reasons. Its not bad anyway
 because its the fastest baud and you want fast HID recognition. You still can use any other baud for
-normal sketches without HID. HID.begin() starts the Serial at baud 115200 on Arduino Uno/Mega. Do not call Serial.begin() again.
-
-The HID include and HID.begin() is not needed for Leonardo/Micro but I'd recommend
-to use it every time so you can port the library from one to another device.
+normal sketches without but HID wont work. If you try nevertheless it will output Serial crap to the Monitor.
+HID.begin() starts the Serial at baud 115200 on Arduino Uno/Mega. Do not call Serial.begin() again.
 
 **Always release buttons to not cause any erros.** Replug USB cable to reset the values if anything went wrong.
 See [Deactivate HID function](https://github.com/NicoHood/Hoodloader) if you need to fully disable HID again.
@@ -173,6 +171,10 @@ Oh and by the way: I also removed some bugs from the official firmware.
 Version History
 ===============
 ```
+1.7.1 Beta Release (09.08.2014)
+* Changes in the Hoodloader:
+ * Fixed HID deactivation bug
+
 1.7 Beta Release (09.08.2014)
 * Changes in the Hoodloader:
  * Works as ISP now. See the [Hoodloader Repository](https://github.com/NicoHood/Hoodloader) for more information.
