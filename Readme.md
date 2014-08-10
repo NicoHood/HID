@@ -30,7 +30,7 @@ I also corrected some bugs in the original sources.
 
 **The following devices are supported:**
 
-* Keyboard (modifiers + 6 keys)
+* Keyboard (modifiers + 6 keys pressed at the same time)
 * Mouse (5 buttons, move, wheel)
 * Media Keys (4 keys for music player and more)
 * System Key (for PC standby/shutdown)
@@ -43,7 +43,7 @@ I also corrected some bugs in the original sources.
 
 Installation Leonardo/Micro/Uno/Mega
 ====================================
-Download the library and install like you are used to (access the examples and save the firmware).
+Download the library and install like you are used to (access the examples, keywords.txt with IDE).
 Then **move and replace** all files from "HID_Source" to the folder that matches your Arduino IDE version to one of these paths
 (depending on your version):
 ```
@@ -91,7 +91,7 @@ HID.begin() starts the Serial at baud 115200 on Arduino Uno/Mega. Do not call Se
 **Always release buttons to not cause any erros.** Replug USB cable to reset the values if anything went wrong.
 See [Deactivate HID function](https://github.com/NicoHood/Hoodloader) if you need to fully disable HID again.
 
-For Arduino as ISP usage (optional, has nothing to do with HID) see [Hoodloader repository](https://github.com/NicoHood/Hoodloader).
+For Arduino as ISP usage (optional, has nothing to do with HID function) see [Hoodloader repository](https://github.com/NicoHood/Hoodloader).
 
 How it works
 ============
@@ -130,7 +130,7 @@ Known Bugs
 System Wakeup is currently not working on all versions!
 System Shutdown is only working on Windows systems.
 
-RawHID only works on Uno/Mega.
+RawHID only works on Uno/Mega. It still has some bugs.
 
 Programming Arduino Mega with ISP doesnt work because of fuses. Burning Bootloader error is fixed with IDE 1.5.7 or higher (avrdude bug)!
 See this for more information: http://forum.arduino.cc/index.php?topic=126160.0
@@ -171,11 +171,21 @@ Oh and by the way: I also removed some bugs from the official firmware.
 Version History
 ===============
 ```
-1.7.1 Beta Release (09.08.2014)
+1.7.3 Beta Release (10.08.2014)
+* Changes in the Hoodloader:
+ * Fixed HID flush bug (1.6 - 1.7.2)
+
+1.7.2 Beta Release (10.08.2014)
+* Changes in the Hoodloader:
+ * Added Lite version for 8u2
+ * Added Versions that show up as Uno/Mega (not recommended)
+ * Makefile and structure changes
+
+1.7.1 Beta Release (10.08.2014)
 * Changes in the Hoodloader:
  * Fixed HID deactivation bug
 
-1.7 Beta Release (09.08.2014)
+1.7 Beta Release (10.08.2014)
 * Changes in the Hoodloader:
  * Works as ISP now. See the [Hoodloader Repository](https://github.com/NicoHood/Hoodloader) for more information.
  * Exceeded 8kb limit. For flashing a 8u2 use v1.6 please!

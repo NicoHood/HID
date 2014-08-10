@@ -111,7 +111,7 @@ public:
 	void begin(void);
 	void end(void);
 	void click(uint8_t b = MOUSE_LEFT);
-	void move(signed char x, signed char y, signed char wheel = 0);	
+	void move(signed char x, signed char y, signed char wheel = 0);
 	void press(uint8_t b = MOUSE_LEFT);		// press LEFT by default
 	void release(uint8_t b = MOUSE_LEFT);	// release LEFT by default
 	void releaseAll(void);
@@ -236,10 +236,11 @@ extern Keyboard_ Keyboard;
 class RawHID_ : public Print{
 public:
 	RawHID_(void);
+	inline void begin(void){ /*empty*/ }
+	inline void end(void){ /*empty*/ }
 	using Print::write; // to get the String version of write
 	size_t write(uint8_t b);
 	size_t write(const uint8_t *buffer, size_t size);
-
 };
 extern RawHID_ RawHID;
 
@@ -315,15 +316,15 @@ public:
 	void press(uint8_t b);
 	void release(uint8_t b);
 	void releaseAll(void);
-	inline void buttons(uint32_t b){ _report.buttons=b; }
-	inline void xAxis(uint16_t a){ _report.xAxis=a; }
-	inline void yAxis(uint16_t a){ _report.yAxis=a; }
-	inline void zAxis(uint16_t a){ _report.zAxis=a; }
-	inline void rxAxis(uint16_t a){ _report.rxAxis=a; }
-	inline void ryAxis(uint16_t a){ _report.ryAxis=a; }
-	inline void rzAxis(uint16_t a){ _report.rzAxis=a; }
-	inline void dPad1(uint8_t d){ _report.dPad1=d; }
-	inline void dPad2(uint8_t d){ _report.dPad2=d; }
+	inline void buttons(uint32_t b){ _report.buttons = b; }
+	inline void xAxis(uint16_t a){ _report.xAxis = a; }
+	inline void yAxis(uint16_t a){ _report.yAxis = a; }
+	inline void zAxis(uint16_t a){ _report.zAxis = a; }
+	inline void rxAxis(uint16_t a){ _report.rxAxis = a; }
+	inline void ryAxis(uint16_t a){ _report.ryAxis = a; }
+	inline void rzAxis(uint16_t a){ _report.rzAxis = a; }
+	inline void dPad1(uint8_t d){ _report.dPad1 = d; }
+	inline void dPad2(uint8_t d){ _report.dPad2 = d; }
 private:
 	HID_GamepadReport_Data_t _report;
 	uint8_t _reportID;
@@ -344,9 +345,9 @@ public:
 	void press(uint8_t b);
 	void release(uint8_t b);
 	void releaseAll(void);
-	inline void buttons(uint8_t b){ _report.buttons=b; }
-	inline void xAxis(uint16_t a){ _report.xAxis=a; }
-	inline void yAxis(uint16_t a){ _report.yAxis=a; }
+	inline void buttons(uint8_t b){ _report.buttons = b; }
+	inline void xAxis(uint16_t a){ _report.xAxis = a; }
+	inline void yAxis(uint16_t a){ _report.yAxis = a; }
 
 private:
 	HID_JoystickReport_Data_t _report;
