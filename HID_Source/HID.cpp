@@ -55,14 +55,6 @@ void HID_::sendReport(uint8_t ReportID, const void* HIDReport, uint8_t length){
 
 //	HID report descriptor
 
-#define LSB(_x) ((_x) & 0xFF)
-#define MSB(_x) ((_x) >> 8)
-
-#define RAWHID_USAGE_PAGE	0xFFC0
-#define RAWHID_USAGE		0x0C00
-#define RAWHID_TX_SIZE 64
-#define RAWHID_RX_SIZE 64
-
 extern const u8 _hidReportDescriptor[] PROGMEM;
 const u8 _hidReportDescriptor[] = {
 
@@ -147,20 +139,20 @@ const u8 _hidReportDescriptor[] = {
 
 #ifdef HID_RAWKEYBOARD_ENABLE
 	// RAW HID
-	0x06, 0xC0, 0xFF,
-	0x0A, 0x00, 0x0C,
+	0x06, LSB(RAWHID_USAGE_PAGE), MSB(RAWHID_USAGE_PAGE),	// 30
+	0x0A, LSB(RAWHID_USAGE), MSB(RAWHID_USAGE),
 
 	0xA1, 0x01,								// Collection 0x01
-	0x85, HID_REPORTID_RawKeyboardReport,	// REPORT_ID
+	0x85, HID_REPORTID_RawKeyboardReport,   // REPORT_ID
 	0x75, 0x08,								// report size = 8 bits
 	0x15, 0x00,								// logical minimum = 0
 	0x26, 0xFF, 0x00,						// logical maximum = 255
 
-	0x95, 64,								// report count TX
+	0x95, RAWHID_TX_SIZE,					// report count TX
 	0x09, 0x01,								// usage
 	0x81, 0x02,								// Input (array)
 
-	0x95, 64,								// report count RX
+	0x95, RAWHID_RX_SIZE,					// report count RX
 	0x09, 0x02,								// usage
 	0x91, 0x02,								// Output (array)
 	0xC0,									// end collection
@@ -836,6 +828,36 @@ size_t Keyboard_::release(uint8_t k)
 
 void Keyboard_::releaseAll(void){
 	begin();
+}
+
+//================================================================================
+// RawHID
+//================================================================================
+
+RawHID_ RawHID;
+
+RawHID_::RawHID_(void){
+	// empty
+}
+
+size_t RawHID_::write(uint8_t b){
+	write(&b, 1);
+}
+
+size_t RawHID_::write(const uint8_t *buffer, size_t size){
+	size_t bytesleft = size;
+	// first work through the buffer thats already there
+	while (bytesleft >= RAWHID_RX_SIZE){
+		HID.sendReport(HID_REPORTID_RawKeyboardReport, &buffer[size - bytesleft], RAWHID_RX_SIZE);
+		bytesleft -= RAWHID_RX_SIZE;
+	}
+	// write down the other bytes and fill with zeros
+	if (bytesleft){
+		uint8_t rest[RAWHID_RX_SIZE];
+		memcpy(rest, &buffer[size - bytesleft], bytesleft);
+		memset(&rest[bytesleft], 0, RAWHID_RX_SIZE - bytesleft);
+		HID.sendReport(HID_REPORTID_RawKeyboardReport, &rest, RAWHID_RX_SIZE);
+	}
 }
 
 //================================================================================

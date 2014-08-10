@@ -1,4 +1,4 @@
-Arduino HID Project BETA 1.5
+Arduino HID Project BETA 1.7
 ============================
 Dont you always wanted to turn your Arduino in a Generic HID device like a Keyboard or a Gamepad?
 Disappointed that the Uno doesnt support this at all and the Micro/Leonardo only Mouse + Keyboard?
@@ -11,6 +11,8 @@ Before you had to upload a sketch, flash the firmware, test, flash the firmware,
 
 **For the Leonardo/Micro it is 'just' new device stuff, no need for a bootloader.**
 
+[Hoodloader Repository moved here.](https://github.com/NicoHood/Hoodloader)
+
 Features
 ========
 Use your **Arduino Uno, Mega, Micro, Leonardo or Micro Pro** as Generic HID Device and still be able to upload sketches how you are used to do.
@@ -22,6 +24,7 @@ I also corrected some bugs in the original sources.
 * Arduino HID Uno/Mega library
 * Arduino HID Micro/Leonardo library
 * Arduino HID Bootloader (Hoodloader) + driver
+* Arduino as ISP with the 16u2 (Hoodloader only, [more information](https://github.com/NicoHood/Hoodloader))
 * Compatible with Linux/Mac/Windows XP/7/8.1*
 * Compatible with IDE 1.0.x - 1.5.7 (newer versions might need an update)
 
@@ -40,7 +43,7 @@ I also corrected some bugs in the original sources.
 
 Installation Leonardo/Micro/Uno/Mega
 ====================================
-Download the library and install like you are used to.
+Download the library and install like you are used to (access the examples and save the firmware).
 Then **move and replace** all files from "HID_Source" to the folder that matches your Arduino IDE version to one of these paths
 (depending on your version):
 ```
@@ -51,11 +54,12 @@ C:\Arduino\arduino-1.5.7\hardware\arduino\avr\cores\arduino
 The installation path may differ to yours. Newer Versions than 1.5.7 may not work.
 
 **I strongly recommend to install the library like this. Otherwise it wont work.**
-Now you are able to use the library with all kind of Arduinos. The HID include and HID.begin() is optional for Leonardo/Micro
-but necessary for Uno/Mega. I'd recommend to use it every time so you can port the library from one to another device.
 
 #### Leonardo/Micro only
-**Edit HID.h to de/activate usb functions.** Each function will take some flash,
+**Edit HID.h to de/activate usb functions.**
+By default Mouse, Keyboard, Media, System, Gamepad1 is activated.
+
+Each function will take some flash,
 so if you want to save flash deactivate everything you dont need.
 By default Mouse, Keyboard, Media, System, Gamepad1 is activated.
 You cannot use more than 255 bytes HID report on the Leonardo/Micro.
@@ -63,57 +67,41 @@ The number after each definition tells you the size of each report.
 I have no idea why you cannot use more than 255 bytes (yet), its a bug in the Arduino code.
 
 #### Uno/Mega only
-To **install the new bootloader** connect your Arduino to your PC and put it into DFU mode.
+To **install the new bootloader** connect your Arduino to your PC via USB and see
+[Hoodloader installing instructions](https://github.com/NicoHood/Hoodloader).
 **You can always switch back to the original firmware, nothing to break.**
-See the readme in the Firmware folder for Windows or [this general (outdated) tutorial](http://arduino.cc/en/Hacking/DFUProgramming8U2)
-on how to upload the hex file to your Arduino. Some notes here: The Arduino R3 doesnt need a resistor or so, just connect the two pins near
-the USB B jack. Choose atmega16u2 for the new R3 version. For older version you need to check Google. It might not work on older Arduinos.
-For a Flip dll error install the drivers manually from the flip directory (see readme)
-
-Upload the hex file to your Arduino. It doesnt care if its a Uno/Mega. It will just work the same.
-Unplug the Arduino if it says successful and plug it back in. You cannot destroy anything here and you can always
-switch back to the original firmware which is included with the download.
-**You need to install new drivers for the new device on Windows.** Actually they are not new, its just an .inf file that tells
-Windows to use its built in CDC Serial driver. Ironically Microsoft never signed its own driver.
-Also see [this tutorial](http://arduino.cc/en/guide/windows) on how to install the drivers (rightclick the .inf file and hit install).
-[How to install drivers for Windows 8/8.1](https://learn.sparkfun.com/tutorials/disabling-driver-signature-on-windows-8/disabling-signed-driver-enforcement-on-windows-8).
-If you want it to be recognized as Uno/Mega edit the makefile and recompile. I dont recommend this to know what
-Bootloader currently is on your Board.
 
 For Arduino Mega2560 I recommend (in general) the IDE 1.5.7 or higher. [See Issue on Github.](https://github.com/arduino/Arduino/issues/1071)
+[Or this Issue.)(http://forum.arduino.cc/index.php?topic=126160.0)
 
 #### For all Arduinos
-You are ready to use the libraries. **Just have a look at the examples and test it out.**
+
+
+Usage
+=====
+You are ready to use the libraries. **Just have a look at the examples and test it out.** They are pretty much self explaining.
 All examples use a button on pin 8 and show the basic usage of the libraries.
-The libraries will work for all Arduinos listed above but it will use 2 different HID libraries (automated).
+The libraries will work for all Arduinos listed above but it will use 2 different HID libraries (automatically).
+
 **On Arduino/Mega you can only use baud 115200 for HID** due to programming reasons. Its not bad anyway
 because its the fastest baud and you want fast HID recognition. You still can use any other baud for
-normal sketches without HID. The HID include and HID.begin() is not needed for Leonardo/Micro but recommended.
-HID.begin() starts the Serial at baud 115200 on Arduino Uno/Mega. Do not call Serial.begin() again.
+normal sketches without HID. HID.begin() starts the Serial at baud 115200 on Arduino Uno/Mega. Do not call Serial.begin() again.
+
+The HID include and HID.begin() is not needed for Leonardo/Micro but I'd recommend
+to use it every time so you can port the library from one to another device.
 
 **Always release buttons to not cause any erros.** Replug USB cable to reset the values if anything went wrong.
-Connect GND and MOSI2 to deactivate HID function on Uno/Mega (see readme in /Firmwares)
+See [Deactivate HID function](https://github.com/NicoHood/Hoodloader) if you need to fully disable HID again.
+
+For Arduino as ISP usage (optional, has nothing to do with HID) see [Hoodloader repository](https://github.com/NicoHood/Hoodloader).
 
 How it works
 ============
 For the Leonardo/Micro its just a modified version of the HID descriptor and Classes for the new devices.
 Its not that complicated, everything you need is in the main 4 .h/cpp files.
 
-For the Uno/Mega you need a special Bootloader. Why? Because the Uno/Mega has 2 chips on board.
-The 328/2560 and 16u2 on each. And the only communication between the 16u2 and the main chip is via Serial.
-But the Serial is also used to program the chip. So what I do here is to filter out all Serial Data that comes in
-via the NicoHoodProtocol (NHP). There is an indicator address 1 which contains the beginning and the Report ID.
-If the following Serial information is Address 2 with a valid checksum the report will be created and sent if its
-finished successful. If any error occurred within the first 2 Protocol Addresses the information will be sent via Serial.
-The Program should forward this information because it could be a normal information. Everything above 2 Addresses that goes
-wrong wont be sent and discarded due to a normal wrong HID report. Normally you dont have to worry about getting weird HID
-presses. You need to send exactly 6 bytes with the special Numbers and another 6 bytes for the first information with checksum
-and complete the full report. You might get weird Serial output if you hit the exact 12 bytes without timeout of a few milliseconds.
-And if the reading timed out the Data will also be forwarded. And if you only send Ascii Code the Information is forwarded instantly
-because the NHP filters that out instantly (see documentation of the NHP). So filtering should be fine and dont block :)
-
-To sum it up: Serial information is grabbed by the "man in the middle" and you dont have to worry to get any wrong report.
-See picture in readme (/Firmwares) how to deactivate HID function by hardware.
+For the Uno/Mega you need a special Bootloader. Why? See [Hoodloader repository](https://github.com/NicoHood/Hoodloader).
+To sum it up: Serial information is grabbed by the "man in the middle, 16u2" and you dont have to worry to get any wrong Serial stuff via USB.
 
 This library wouldnt be possible without
 ========================================
@@ -133,17 +121,21 @@ This library wouldnt be possible without
 Ideas for the future
 ====================
 * Add more devices (even more?)
-* Add Midi  (do you want that?)
-* Add ICSP Programmer function (ram limit is a problem)
+* Add Midi (no more free Endpoints)
 * Add Led/SPI support (discarded, not needed, too slow)
-* Add rumble support (very hard)
+* Add HID rumble support (very hard)
 * Add Xbox Support (too hard)
 * Add Report Out function (for Keyboard Leds etc, maybe the 4 pin header?)
-* RAW HID
 
 Known Bugs
 ==========
 System Wakeup is currently not working on all versions!
+System Shutdown is only working on Windows systems.
+
+RawHID only works on Uno/Mega.
+
+Programming Arduino Mega with ISP doesnt work because of fuses. Burning Bootloader error is fixed with IDE 1.5.7 or higher (avrdude bug)!
+See this for more information: http://forum.arduino.cc/index.php?topic=126160.0
 
 Feel free to open an Issue on Github if you find a bug. Or message me via my [blog](http://nicohood.wordpress.com/)!
 
@@ -151,6 +143,8 @@ Known Issues
 ============
 
 **Do not name your sketch HID.ino, this wont work!**
+
+**Do not use HID in interrupts because it uses the Serial. Your Arduino can crash!**
 
 **If you get a checksum error after uploading please message me and send me the whole project.**
 Same if your Arduino crashes and dont want to upload sketches anymore (Replug usb fixes this).
@@ -166,7 +160,7 @@ If you dont use HID you can still choose the baud of your choice.
 XBMC 13.1 (a Media Center) uses Gamepad input. Its seems to not work and may cause weird errors.
 Even with a standard Gamepad I have these errors. Just want to mention it here.
 
-Not tested on the 8u2 (should only work without DFU due to size. message me if it works!)
+Not tested on the 8u2 (should only work without DFU and v1.6 due to size. message me if it works!)
 
 Not tested on the Due (message me if it works!)
 
@@ -179,6 +173,18 @@ Oh and by the way: I also removed some bugs from the official firmware.
 Version History
 ===============
 ```
+1.7 Beta Release (09.08.2014)
+* Changes in the Hoodloader:
+ * Works as ISP now. See the [Hoodloader Repository](https://github.com/NicoHood/Hoodloader) for more information.
+ * Exceeded 8kb limit. For flashing a 8u2 use v1.6 please!
+* Changed Readme text
+
+1.6 Beta Release (09.08.2014)
+* Bugfixes in the Hoodloader:
+ * Changed HID management (not blocking that much, faster)
+ * added RawHID in/out (HID to Serial)
+* Added RawHID Class and example
+
 1.5 Beta Release (21.07.2014)
 * Moved Hoodloader source to a [separate Github page](https://github.com/NicoHood/Hoodloader)
 * Bugfixes in the Hoodloader:
@@ -267,7 +273,7 @@ https://support.microsoft.com/kb/315539
 
 The Hootloader was coded with Windows7 and Visual Studio and compiled with a Raspberry Pi.
 Lufa version 140302 is included!
-**To recompile see instructions in [Hoodloader Repository](https://github.com/NicoHood/Hoodloader) **
+**To recompile see instructions in [Hoodloader Repository](https://github.com/NicoHood/Hoodloader).**
 
 The difference between the Leonardo/Micro and Uno/Mega is that the HID Class is different. All other classes are the same.
 The Leonardo/Micro Version uses USBAPI.h and no Serial while the Uno/Mega Version uses Serial.

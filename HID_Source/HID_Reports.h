@@ -28,7 +28,13 @@ THE SOFTWARE.
 //Definitions
 //================================================================================
 
-// empty
+#define LSB(_x) ((_x) & 0xFF)
+#define MSB(_x) ((_x) >> 8)
+
+#define RAWHID_USAGE_PAGE	0xFFC0 // recommended: 0xFF00 to 0xFFFF
+#define RAWHID_USAGE		0x0C00 // recommended: 0x0100 to 0xFFFF
+#define RAWHID_TX_SIZE 63 // 1 byte for report ID
+#define RAWHID_RX_SIZE 63 // 1 byte for report ID
 
 //================================================================================
 //Report Typedefinitions
@@ -62,6 +68,15 @@ typedef union{
 		uint8_t keys[6];
 	};
 } HID_KeyboardReport_Data_t;
+
+
+typedef union{
+	// a 32 byte buffer for rx or tx
+	uint8_t whole8[RAWHID_TX_SIZE];
+	uint16_t whole16[RAWHID_TX_SIZE / 2];
+	uint32_t whole32[RAWHID_TX_SIZE / 4];
+	uint8_t buff[RAWHID_TX_SIZE];
+} HID_RawKeyboardReport_Data_t;
 
 
 typedef union{
@@ -168,6 +183,7 @@ typedef union{
 typedef union{
 	HID_MouseReport_Data_t Mouse;
 	HID_KeyboardReport_Data_t Keyboard;
+	HID_RawKeyboardReport_Data_t RawKeyboard;
 	HID_MediaReport_Data_t Media;
 	HID_GamepadReport_Data_t Gamepad1;
 	HID_GamepadReport_Data_t Gamepad2;
@@ -178,15 +194,15 @@ typedef union{
 
 /** Enum for the HID report IDs used in the device. */
 typedef enum{
-	HID_REPORTID_MouseReport     = 0x01, /**< Report ID for the Mouse report within the device. */
-	HID_REPORTID_KeyboardReport  = 0x02, /**< Report ID for the Keyboard report within the device. */
-	HID_REPORTID_RawKeyboardReport=0x03, /**< Report ID for the Raw Keyboard report within the device. */
-	HID_REPORTID_MediaReport	 = 0x04, /**< Report ID for the Media report within the device. */
-	HID_REPORTID_SystemReport	 = 0x05, /**< Report ID for the Power report within the device. */
-	HID_REPORTID_Gamepad1Report  = 0x06, /**< Report ID for the Gamepad1 report within the device. */
-	HID_REPORTID_Gamepad2Report	 = 0x07, /**< Report ID for the Gamepad2 report within the device. */
-	HID_REPORTID_Joystick1Report = 0x08, /**< Report ID for the Joystick1 report within the device. */
-	HID_REPORTID_Joystick2Report = 0x09, /**< Report ID for the Joystick2 report within the device. */
+	HID_REPORTID_MouseReport		= 0x01, /**< Report ID for the Mouse report within the device. */
+	HID_REPORTID_KeyboardReport		= 0x02, /**< Report ID for the Keyboard report within the device. */
+	HID_REPORTID_RawKeyboardReport	= 0x03, /**< Report ID for the Raw Keyboard report within the device. */
+	HID_REPORTID_MediaReport		= 0x04, /**< Report ID for the Media report within the device. */
+	HID_REPORTID_SystemReport		= 0x05, /**< Report ID for the Power report within the device. */
+	HID_REPORTID_Gamepad1Report		= 0x06, /**< Report ID for the Gamepad1 report within the device. */
+	HID_REPORTID_Gamepad2Report		= 0x07, /**< Report ID for the Gamepad2 report within the device. */
+	HID_REPORTID_Joystick1Report	= 0x08, /**< Report ID for the Joystick1 report within the device. */
+	HID_REPORTID_Joystick2Report	= 0x09, /**< Report ID for the Joystick2 report within the device. */
 } HID_Report_IDs;
 
 #endif

@@ -1,0 +1,8 @@
+arduino16u2asisp.name=16u2 as ISP
+arduino16u2asisp.communication=serial
+arduino16u2asisp.protocol=stk500v1
+arduino16u2asisp.speed=1
+arduino16u2asisp.program.protocol=stk500v1
+arduino16u2asisp.program.speed=1
+arduino16u2asisp.program.tool=avrdude
+arduino16u2asisp.program.extra_params=-P{serial.port} -b{program.speed}

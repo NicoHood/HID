@@ -230,6 +230,20 @@ private:
 extern Keyboard_ Keyboard;
 
 //================================================================================
+// RawHID
+//================================================================================
+
+class RawHID_ : public Print{
+public:
+	RawHID_(void);
+	using Print::write; // to get the String version of write
+	size_t write(uint8_t b);
+	size_t write(const uint8_t *buffer, size_t size);
+
+};
+extern RawHID_ RawHID;
+
+//================================================================================
 // Media
 //================================================================================
 
