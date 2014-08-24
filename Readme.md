@@ -32,7 +32,7 @@ I also corrected some bugs in the original sources.
 
 * Keyboard (modifiers + 6 keys pressed at the same time)
 * Mouse (5 buttons, move, wheel)
-* Media Keys (4 keys for music player and more)
+* Media Keys (4 keys for music player, webbrowser and more)
 * System Key (for PC standby/shutdown)
 * 2 Gamepads (32 buttons, 6 16bit axis, 2 D-Pads)
 * 2 Joysticks (2 buttons, 2 10bit axis)
@@ -52,6 +52,7 @@ C:\Arduino\arduino-1.5.6-r2\hardware\arduino\avr\cores\arduino
 C:\Arduino\arduino-1.5.7\hardware\arduino\avr\cores\arduino
 ```
 The installation path may differ to yours. Newer Versions than 1.5.7 may not work.
+Restart the IDE!
 
 **I strongly recommend to install the library like this. Otherwise it wont work.**
 

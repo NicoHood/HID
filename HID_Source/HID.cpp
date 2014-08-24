@@ -164,13 +164,16 @@ const u8 _hidReportDescriptor[] = {
 	0x09, 0x01,						// usage -- consumer control
 	0xA1, 0x01,						// collection (application)
 	0x85, HID_REPORTID_MediaReport, // report id
+	//0x05, 0x0C, // usage page (consumer)
+
 	// 4 media Keys
 	0x15, 0x00,						//logical minimum
-	0x26, 0xFF, 0xFF,				//logical maximum (3ff)
+	0x26, 0xFF, 0x03,				//logical maximum (3ff)
 	0x19, 0x00,						// usage minimum (0)
-	0x2A, 0xFF, 0xFF,				//usage maximum (3ff)
+	0x2A, 0xFF, 0x03, //usage maximum (3ff)
 	0x95, 0x04,						//report count (4)
 	0x75, 0x10,						//report size (16)
+
 	0x81, 0x00,						//input
 	0xC0,							//end collection
 #endif
@@ -195,7 +198,7 @@ const u8 _hidReportDescriptor[] = {
 #ifdef HID_GAMEPAD1_ENABLE
 	// Gamepad1
 	0x05, 0x01,							// USAGE_PAGE (Generic Desktop)
-	0x09, 0x05,							// USAGE (Game Pad)
+	0x09, 0x04,							// USAGE (Joystick)
 	0xa1, 0x01,							// COLLECTION (Application)
 	0x85, HID_REPORTID_Gamepad1Report,	//   REPORT_ID
 	// 32 Buttons
@@ -248,7 +251,7 @@ const u8 _hidReportDescriptor[] = {
 #ifdef HID_GAMEPAD2_ENABLE
 	// Gamepad2
 	0x05, 0x01,							// USAGE_PAGE (Generic Desktop)
-	0x09, 0x05,							// USAGE (Game Pad)
+	0x09, 0x04,							// USAGE (Joystick)
 	0xa1, 0x01,							// COLLECTION (Application)
 	0x85, HID_REPORTID_Gamepad2Report,	//   REPORT_ID
 	// 32 Buttons
