@@ -288,6 +288,7 @@ const u8 _hidReportDescriptor[] = {
 	0xc0,								// END_COLLECTION
 #endif
 
+
 #ifdef HID_GAMEPAD1_ENABLE
 	// Gamepad1
 	0x05, 0x01,							// USAGE_PAGE (Generic Desktop)
@@ -303,19 +304,25 @@ const u8 _hidReportDescriptor[] = {
 	0x75, 0x01,							//   REPORT_SIZE (1)
 	0x95, 0x20,							//   REPORT_COUNT (32)
 	0x81, 0x02,							//   INPUT (Data,Var,Abs)
-	// 6 16bit Axis
+	// 4 16bit Axis
 	0x05, 0x01,							//   USAGE_PAGE (Generic Desktop)
 	0xa1, 0x00,							//   COLLECTION (Physical)
 	0x09, 0x30,							//     USAGE (X)
 	0x09, 0x31,							//     USAGE (Y)
-	0x09, 0x32,							//     USAGE (Z)
 	0x09, 0x33,							//     USAGE (Rx)
 	0x09, 0x34,							//     USAGE (Ry)
-	0x09, 0x35,							//     USAGE (Rz)
-	0x15, 0x00,							//     LOGICAL_MINIMUM (0)
-	0x27, 0xff, 0xff, 0x00, 0x00,		//     LOGICAL_MAXIMUM (65535)
+	0x16, 0x00, 0x80,					//     LOGICAL_MINIMUM (-32768)
+	0x26, 0xFF, 0x7F,					//     LOGICAL_MAXIMUM (32767)
 	0x75, 0x10,							//     REPORT_SIZE (16)
-	0x95, 0x06,							//     REPORT_COUNT (6)
+	0x95, 0x04,							//     REPORT_COUNT (4)
+	0x81, 0x02,							//     INPUT (Data,Var,Abs)
+	// 2 8bit Axis
+	0x09, 0x32,							//     USAGE (Z)
+	0x09, 0x35,							//     USAGE (Rz)
+	0x15, 0x80,							//     LOGICAL_MINIMUM (-128)
+	0x25, 0x7F,							//     LOGICAL_MAXIMUM (127)
+	0x75, 0x08,							//     REPORT_SIZE (8)
+	0x95, 0x02,							//     REPORT_COUNT (2)
 	0x81, 0x02,							//     INPUT (Data,Var,Abs)
 	0xc0,								//   END_COLLECTION
 	// 2 Hat Switches
@@ -356,19 +363,25 @@ const u8 _hidReportDescriptor[] = {
 	0x75, 0x01,							//   REPORT_SIZE (1)
 	0x95, 0x20,							//   REPORT_COUNT (32)
 	0x81, 0x02,							//   INPUT (Data,Var,Abs)
-	// 6 16bit Axis
+	// 4 16bit Axis
 	0x05, 0x01,							//   USAGE_PAGE (Generic Desktop)
 	0xa1, 0x00,							//   COLLECTION (Physical)
 	0x09, 0x30,							//     USAGE (X)
 	0x09, 0x31,							//     USAGE (Y)
-	0x09, 0x32,							//     USAGE (Z)
 	0x09, 0x33,							//     USAGE (Rx)
 	0x09, 0x34,							//     USAGE (Ry)
-	0x09, 0x35,							//     USAGE (Rz)
-	0x15, 0x00,							//     LOGICAL_MINIMUM (0)
-	0x27, 0xff, 0xff, 0x00, 0x00,		//     LOGICAL_MAXIMUM (65535)
+	0x16, 0x00, 0x80,					//     LOGICAL_MINIMUM (-32768)
+	0x26, 0xFF, 0x7F,					//     LOGICAL_MAXIMUM (32767)
 	0x75, 0x10,							//     REPORT_SIZE (16)
-	0x95, 0x06,							//     REPORT_COUNT (6)
+	0x95, 0x04,							//     REPORT_COUNT (4)
+	0x81, 0x02,							//     INPUT (Data,Var,Abs)
+	// 2 8bit Axis
+	0x09, 0x32,							//     USAGE (Z)
+	0x09, 0x35,							//     USAGE (Rz)
+	0x15, 0x80,							//     LOGICAL_MINIMUM (-128)
+	0x25, 0x7F,							//     LOGICAL_MAXIMUM (127)
+	0x75, 0x08,							//     REPORT_SIZE (8)
+	0x95, 0x02,							//     REPORT_COUNT (2)
 	0x81, 0x02,							//     INPUT (Data,Var,Abs)
 	0xc0,								//   END_COLLECTION
 	// 2 Hat Switches
