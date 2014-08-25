@@ -33,8 +33,8 @@ THE SOFTWARE.
 
 #define RAWHID_USAGE_PAGE	0xFFC0 // recommended: 0xFF00 to 0xFFFF
 #define RAWHID_USAGE		0x0C00 // recommended: 0x0100 to 0xFFFF
-#define RAWHID_TX_SIZE 63 // 1 byte for report ID
-#define RAWHID_RX_SIZE 63 // 1 byte for report ID
+#define RAWHID_TX_SIZE 15 // 1 byte for report ID
+#define RAWHID_RX_SIZE 15 // 1 byte for report ID
 
 //================================================================================
 //Report Typedefinitions
@@ -43,12 +43,12 @@ THE SOFTWARE.
 typedef union{
 	// mouse report: 5 buttons, position, wheel
 	uint8_t whole8[4];
-	uint16_t whole16[4/2];
-	uint32_t whole32[4/4];
+	uint16_t whole16[4 / 2];
+	uint32_t whole32[4 / 4];
 
 	struct{
-		uint8_t buttons:5;
-		uint8_t reserved:3;
+		uint8_t buttons : 5;
+		uint8_t reserved : 3;
 		int8_t xAxis;
 		int8_t yAxis;
 		int8_t wheel;
@@ -59,8 +59,8 @@ typedef union{
 typedef union{
 	// Low level key report: up to 6 keys and shift, ctrl etc at once
 	uint8_t whole8[8];
-	uint16_t whole16[8/2];
-	uint32_t whole32[8/4];
+	uint16_t whole16[8 / 2];
+	uint32_t whole32[8 / 4];
 
 	struct{
 		uint8_t modifiers;
@@ -82,8 +82,8 @@ typedef union{
 typedef union{
 	// every usable media key possible. Only one at the same time.
 	uint8_t whole8[8];
-	uint16_t whole16[8/2];
-	uint32_t whole32[8/4];
+	uint16_t whole16[8 / 2];
+	uint32_t whole32[8 / 4];
 
 	struct{
 		uint16_t key1;
@@ -103,63 +103,58 @@ typedef union{
 
 typedef union {
 	// 32 Buttons, 6 Axis, 2 D-Pads
-	uint8_t whole8[17];
-	uint16_t whole16[17/2];
-	uint32_t whole32[17/4];
+	uint8_t whole8[15];
+	uint16_t whole16[15 / 2];
+	uint32_t whole32[15 / 4];
 	uint32_t buttons;
 
 	struct{
-		uint8_t button1 :1;
-		uint8_t button2 :1;
-		uint8_t button3 :1;
-		uint8_t button4 :1;
-		uint8_t button5 :1;
-		uint8_t button6 :1;
-		uint8_t button7 :1;
-		uint8_t button8 :1;
+		uint8_t button1 : 1;
+		uint8_t button2 : 1;
+		uint8_t button3 : 1;
+		uint8_t button4 : 1;
+		uint8_t button5 : 1;
+		uint8_t button6 : 1;
+		uint8_t button7 : 1;
+		uint8_t button8 : 1;
 
-		uint8_t button9 :1;
-		uint8_t button10 :1;
-		uint8_t button11 :1;
-		uint8_t button12 :1;
-		uint8_t button13 :1;
-		uint8_t button14 :1;
-		uint8_t button15 :1;
-		uint8_t button16 :1;
+		uint8_t button9 : 1;
+		uint8_t button10 : 1;
+		uint8_t button11 : 1;
+		uint8_t button12 : 1;
+		uint8_t button13 : 1;
+		uint8_t button14 : 1;
+		uint8_t button15 : 1;
+		uint8_t button16 : 1;
 
-		uint8_t button17 :1;
-		uint8_t button18 :1;
-		uint8_t button19 :1;
-		uint8_t button20 :1;
-		uint8_t button21 :1;
-		uint8_t button22 :1;
-		uint8_t button23 :1;
-		uint8_t button24 :1;
+		uint8_t button17 : 1;
+		uint8_t button18 : 1;
+		uint8_t button19 : 1;
+		uint8_t button20 : 1;
+		uint8_t button21 : 1;
+		uint8_t button22 : 1;
+		uint8_t button23 : 1;
+		uint8_t button24 : 1;
 
-		uint8_t button25 :1;
-		uint8_t button26 :1;
-		uint8_t button27 :1;
-		uint8_t button28 :1;
-		uint8_t button29 :1;
-		uint8_t button30 :1;
-		uint8_t button31 :1;
-		uint8_t button32 :1;
+		uint8_t button25 : 1;
+		uint8_t button26 : 1;
+		uint8_t button27 : 1;
+		uint8_t button28 : 1;
+		uint8_t button29 : 1;
+		uint8_t button30 : 1;
+		uint8_t button31 : 1;
+		uint8_t button32 : 1;
 
 		uint16_t	xAxis;
 		uint16_t	yAxis;
-		uint16_t	zAxis;
+		uint8_t	zAxis;
 
 		uint16_t	rxAxis;
 		uint16_t	ryAxis;
-		uint16_t	rzAxis;		
+		uint8_t	rzAxis;
 
-		uint8_t		dPad1: 4;
-		uint8_t		dPad2: 4;
-
-		// deactivated because windows only supports 7 axis. should be enough.
-		//uint8_t		throttle;
-		//uint8_t		rudder;
-
+		uint8_t		dPad1 : 4;
+		uint8_t		dPad2 : 4;
 	};
 } HID_GamepadReport_Data_t;
 
@@ -167,15 +162,15 @@ typedef union {
 typedef union{
 	// 2 Buttons, 2 Axis
 	uint8_t whole8[3];
-	uint16_t whole16[3/2];
-	uint8_t buttons :2;
+	uint16_t whole16[3 / 2];
+	uint8_t buttons : 2;
 
 	struct{
-		uint16_t button1 :1;
-		uint16_t button2 :1;
-		uint16_t xAxis :10;
-		uint16_t yAxis :10;
-		uint16_t reserved :2;
+		uint16_t button1 : 1;
+		uint16_t button2 : 1;
+		uint16_t xAxis : 10;
+		uint16_t yAxis : 10;
+		uint16_t reserved : 2;
 	};
 } HID_JoystickReport_Data_t;
 
@@ -194,15 +189,17 @@ typedef union{
 
 /** Enum for the HID report IDs used in the device. */
 typedef enum{
-	HID_REPORTID_MouseReport		= 0x01, /**< Report ID for the Mouse report within the device. */
-	HID_REPORTID_KeyboardReport		= 0x02, /**< Report ID for the Keyboard report within the device. */
-	HID_REPORTID_RawKeyboardReport	= 0x03, /**< Report ID for the Raw Keyboard report within the device. */
-	HID_REPORTID_MediaReport		= 0x04, /**< Report ID for the Media report within the device. */
-	HID_REPORTID_SystemReport		= 0x05, /**< Report ID for the Power report within the device. */
-	HID_REPORTID_Gamepad1Report		= 0x06, /**< Report ID for the Gamepad1 report within the device. */
-	HID_REPORTID_Gamepad2Report		= 0x07, /**< Report ID for the Gamepad2 report within the device. */
-	HID_REPORTID_Joystick1Report	= 0x08, /**< Report ID for the Joystick1 report within the device. */
-	HID_REPORTID_Joystick2Report	= 0x09, /**< Report ID for the Joystick2 report within the device. */
+	HID_REPORTID_NotAReport = 0x00,  // first entry is always zero for multireports
+	HID_REPORTID_MouseReport = 0x01, /**< Report ID for the Mouse report within the device. */
+	HID_REPORTID_KeyboardReport = 0x02, /**< Report ID for the Keyboard report within the device. */
+	HID_REPORTID_RawKeyboardReport = 0x03, /**< Report ID for the Raw Keyboard report within the device. */
+	HID_REPORTID_MediaReport = 0x04, /**< Report ID for the Media report within the device. */
+	HID_REPORTID_SystemReport = 0x05, /**< Report ID for the Power report within the device. */
+	HID_REPORTID_Gamepad1Report = 0x06, /**< Report ID for the Gamepad1 report within the device. */
+	HID_REPORTID_Gamepad2Report = 0x07, /**< Report ID for the Gamepad2 report within the device. */
+	HID_REPORTID_Joystick1Report = 0x08, /**< Report ID for the Joystick1 report within the device. */
+	HID_REPORTID_Joystick2Report = 0x09, /**< Report ID for the Joystick2 report within the device. */
+	HID_REPORTID_LastNotAReport,			// determinate whats the maximum number of reports -1
 } HID_Report_IDs;
 
 #endif

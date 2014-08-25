@@ -10,14 +10,12 @@
  Definitions from HID_Reports.h:
  RAWHID_USAGE_PAGE 0xFFC0 // recommended: 0xFF00 to 0xFFFF
  RAWHID_USAGE		0x0C00 // recommended: 0x0100 to 0xFFFF
- RAWHID_TX_SIZE 63 // 1 byte for report ID
- RAWHID_RX_SIZE 63 // 1 byte for report ID
+ RAWHID_TX_SIZE 15 // 1 byte for report ID
+ RAWHID_RX_SIZE 15 // 1 byte for report ID
  */
 
-// not needed for Leonardo/Micro
+// include HID library
 #include <HID.h>
-
-// for Leonardo/Micro: make sure to activate desired USB functions in HID_Reports.h
 
 const int pinLed = 13;
 const int pinButton = 8;
@@ -26,12 +24,11 @@ void setup() {
   pinMode(pinLed, OUTPUT);
   pinMode(pinButton, INPUT_PULLUP);
 
-  // Starts Serial at baud 115200. end just ends the Serial
-  // Make sure to end your special HIDs before, this does not clear them!
-  // You need this baud for the HID library but still can use other bauds
-  // without HID functions.
-  // not needed for Leonado/Micro, Serial will not be set
-  HID.begin();
+  // Starts Serial at baud 115200 otherwise HID wont work on Uno/Mega.
+  // This is not needed for Leonado/(Pro)Micro but make sure to activate desired USB functions in HID.h
+  Serial.begin(SERIAL_HID_BAUD);
+
+  // no begin function needed for RawHID
 }
 
 void loop() {

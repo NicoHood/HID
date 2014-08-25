@@ -41,6 +41,8 @@ Media	KEYWORD3
 System	KEYWORD3
 Gamepad1	KEYWORD3
 Gamepad2	KEYWORD3
+Gamepad3	KEYWORD3
+Gamepad4	KEYWORD3
 Joystick1	KEYWORD3
 Joystick2	KEYWORD3
 
@@ -51,6 +53,9 @@ Joystick2	KEYWORD3
 #######################################
 # Constants (LITERAL1)
 #######################################
+
+#General
+SERIAL_HID_BAUD	LITERAL1
 
 #Mouse
 

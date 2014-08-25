@@ -1,32 +1,32 @@
-Arduino HID Project BETA 1.7
-============================
+Arduino HID Project
+===================
 Dont you always wanted to turn your Arduino in a Generic HID device like a Keyboard or a Gamepad?
 Disappointed that the Uno doesnt support this at all and the Micro/Leonardo only Mouse + Keyboard?
 
 Introducing the Arduino HID Project that **enables enhanced USB functionality to Arduino Uno, Mega, Leonardo, Micro.**
 No need for extra hardware. You just need one of the Arduinos and an USB cable.
 
-**Main difference is that you can upload new sketches to the Uno/Mega and dont need to reflash the firmware.**
+**Main difference is that you can upload new sketches to the Uno/Mega and dont need to reflash the firmware over and over again.**
 Before you had to upload a sketch, flash the firmware, test, flash the firmware, upload, flash again. Thats all gone!
 
-**For the Leonardo/Micro it is 'just' new device stuff, no need for a bootloader.**
+**For the Leonardo/Micro it is 'just' new HID devices, no need for a bootloader.**
 
-[Hoodloader Repository moved here.](https://github.com/NicoHood/Hoodloader)
+Note: [Hoodloader Repository moved here.](https://github.com/NicoHood/Hoodloader)
 
 Features
 ========
-Use your **Arduino Uno, Mega, Micro, Leonardo or Micro Pro** as Generic HID Device and still be able to upload sketches how you are used to do.
-This project provides a new bootloader (Hoodloader) for the 8u2/16u2 and HID libraries Arduino Uno/Mega and Micro/Leonardo.
+Use your **Arduino Uno, Mega, Micro, Leonardo or (Pro)Micro** as Generic HID Device and still be able to upload sketches how you are used to do.
+This project provides HID libraries for Arduino Uno/Mega (with a new 16u2 bootloader) and Micro/Leonardo.
 I also corrected some bugs in the original sources.
 
 **Software includes:**
 
 * Arduino HID Uno/Mega library
 * Arduino HID Micro/Leonardo library
-* Arduino HID Bootloader (Hoodloader) + driver
+* Arduino HID Bootloader (Hoodloader) + driver for Uno/Mega
 * Arduino as ISP with the 16u2 (Hoodloader only, [more information](https://github.com/NicoHood/Hoodloader))
-* Compatible with Linux/Mac/Windows XP/7/8.1*
-* Compatible with IDE 1.0.x - 1.5.7 (newer versions might need an update)
+* Compatible with Linux/Mac/Windows XP/7/8.1
+* Compatible with IDE 1.0.x - 1.5.7
 
 **The following devices are supported:**
 
@@ -41,20 +41,26 @@ I also corrected some bugs in the original sources.
 * [Gamecube to PC adapter](https://github.com/NicoHood/Nintendo)
 * [Other projects](http://nicohood.wordpress.com/)
 
+Version differences
+===================
+
+| Arduino Uno/Mega                       | Arduino Leonardo/(Pro)Micro        |
+|:---------------------------------------|:-----------------------------------|
+| HID via Hoodloader on 16u2             | Uses USB core with main MCU (32u4) |
+| Serial0 without HID fully usable       | Serial0 fully usable               |
+| Serial0 with HID at baud 115200 only   | Serial0 slow + buggy               |
+| Serial0 with HID fully usable via USB  |                                    |
+| Serial0 with HID not usable via extern |                                    |
+| Uses less flash (Serial Protocol only) | Uses more flash (full USB core)    |
+| ISP function                           | No ISP function                    |
+
+Over all the Uno/Mega solution gives you more opportunities except that the Serial0 is limited when you use HID.
+
 Installation Leonardo/Micro/Uno/Mega
 ====================================
-Download the library and install like you are used to (access the examples, keywords.txt with IDE).
-Then **move and replace** all files from "HID_Source" to the folder that matches your Arduino IDE version to one of these paths
-(depending on your version):
-```
-C:\Arduino\arduino-1.0.5\hardware\arduino\cores\arduino
-C:\Arduino\arduino-1.5.6-r2\hardware\arduino\avr\cores\arduino
-C:\Arduino\arduino-1.5.7\hardware\arduino\avr\cores\arduino
-```
-The installation path may differ to yours. Newer Versions than 1.5.7 may not work.
-Restart the IDE!
+Download the library and [install it](http://arduino.cc/en/pmwiki.php?n=Guide/Libraries) like you are used to.
 
-**I strongly recommend to install the library like this. Otherwise it wont work.**
+**For the whole Project IDE 1.5.7 or higher is recommended!**
 
 #### Leonardo/Micro only
 **Edit HID.h to de/activate usb functions.**
@@ -62,37 +68,49 @@ By default Mouse, Keyboard, Media, System, Gamepad1 is activated.
 
 Each function will take some flash,
 so if you want to save flash deactivate everything you dont need.
-By default Mouse, Keyboard, Media, System, Gamepad1 is activated.
 You cannot use more than 255 bytes HID report on the Leonardo/Micro.
 The number after each definition tells you the size of each report.
 I have no idea why you cannot use more than 255 bytes (yet), its a bug in the Arduino code.
 
 #### Uno/Mega only
-To **install the new bootloader** connect your Arduino to your PC via USB and see
+To install the new bootloader connect your Arduino to your PC via USB and see
 [Hoodloader installing instructions](https://github.com/NicoHood/Hoodloader).
+No special programmer needed, just an USB cable.
 **You can always switch back to the original firmware, nothing to break.**
-
-For Arduino Mega2560 I recommend (in general) the IDE 1.5.7 or higher. [See Issue on Github.](https://github.com/arduino/Arduino/issues/1071)
-[Or this Issue.)(http://forum.arduino.cc/index.php?topic=126160.0)
 
 Usage
 =====
 You are ready to use the libraries. **Just have a look at the examples and test it out.** They are pretty much self explaining.
 All examples use a button on pin 8 and show the basic usage of the libraries.
 The libraries will work for all Arduinos listed above but it will use 2 different HID libraries (automatically).
+For Keyboard + Mouse usage also see the [official documentation](http://arduino.cc/en/pmwiki.php?n=Reference/MouseKeyboard).
 
-The HID include and HID.begin() is not needed for **Leonardo/Micro** but I'd recommend
-to use it every time so you can port the library from one to another device.
+**#include <HID.h> is now needed for every device.**
 
-**On Arduino/Mega you can only use baud 115200 for HID** due to programming reasons. Its not bad anyway
-because its the fastest baud and you want fast HID recognition. You still can use any other baud for
-normal sketches without but HID wont work. If you try nevertheless it will output Serial crap to the Monitor.
-HID.begin() starts the Serial at baud 115200 on Arduino Uno/Mega. Do not call Serial.begin() again.
+**On Arduino/Mega you can only use baud 115200 for HID** due to speed/programming reasons.
+Use Serial.begin(SERIAL_HID_BAUD); as typedef to start Serial at baud 115200.
+Its not bad anyway because its the fastest baud and you want fast HID recognition.
+You still can **fully use any other baud** for normal sketches but HID wont work.
+If you try nevertheless it will output Serial crap to the monitor.
 
 **Always release buttons to not cause any erros.** Replug USB cable to reset the values if anything went wrong.
-See [Deactivate HID function](https://github.com/NicoHood/Hoodloader) if you need to fully disable HID again.
+On Windows every USB report will reset when you open the lock screen.
+See [deactivate HID function (Hoodloader only)](https://github.com/NicoHood/Hoodloader) how to disable HID again.
 
-For Arduino as ISP usage (optional, has nothing to do with HID function) see [Hoodloader repository](https://github.com/NicoHood/Hoodloader).
+For Arduino as ISP usage (optional, Hoodloader only, has nothing to do with HID function)
+see [Hoodloader repository](https://github.com/NicoHood/Hoodloader).
+
+Updating to a newer Version
+===========================
+HID library:
+
+To upgrade to v1.8 you need to redownload the ide files, replace the original files and install the library like you are used to.
+
+Hoodloader:
+
+Just upload the new hex file and check the HID Project if the HID library code has changed and replace the new files too.
+You normally dont need to reinstall the drivers for windows if the changelog dosnt note anything.
+Versions below 1.5 might need the new drivers.
 
 How it works
 ============
@@ -101,8 +119,12 @@ Its not that complicated, everything you need is in the main 4 .h/cpp files.
 
 For the Uno/Mega you need a special Bootloader. Why? See [Hoodloader repository](https://github.com/NicoHood/Hoodloader).
 To sum it up: Serial information is grabbed by the "man in the middle, 16u2" and you dont have to worry to get any wrong Serial stuff via USB.
+Thatswhy you need a special baud (115200) that both sides can communicate with each other.
+Every USB command is send via a special [NicoHood Protocol](https://github.com/NicoHood/NicoHoodProtocol)
+that's filtered out by the 16u2. If you use Serial0 for extern devices it cannot filter the signal of course.
+You can still use the NHP, just dont use the reserved Address 1.
 
-This library wouldnt be possible without
+This project wouldnt be possible without
 ========================================
 
 * [Lufa 140302 from Dean Camera](http://www.fourwalledcubicle.com/LUFA.php)
@@ -120,21 +142,21 @@ This library wouldnt be possible without
 Ideas for the future
 ====================
 * Add more devices (even more?)
-* Add Midi (no more free Endpoints)
-* Add Led/SPI support (discarded, not needed, too slow)
+* Add Midi (no more free Endpoints, possible on 32u4)
 * Add HID rumble support (very hard)
 * Add Xbox Support (too hard)
-* Add Report Out function (for Keyboard Leds etc, maybe the 4 pin header?)
+* Add Report Out function (for Keyboard Leds etc)
 
 Known Bugs
 ==========
+See [Hoodloader repository](https://github.com/NicoHood/Hoodloader) for Hoodloader related Bugs/Issues.
+
+Opening the examples with doubleclick doesnt work, starting from IDE does.
+
 System Wakeup is currently not working on all versions!
 System Shutdown is only working on Windows systems.
 
 RawHID only works on Uno/Mega. It still has some bugs.
-
-Programming Arduino Mega with ISP doesnt work because of fuses. Burning Bootloader error is fixed with IDE 1.5.7 or higher (avrdude bug)!
-See this for more information: http://forum.arduino.cc/index.php?topic=126160.0
 
 Feel free to open an Issue on Github if you find a bug. Or message me via my [blog](http://nicohood.wordpress.com/)!
 
@@ -143,7 +165,7 @@ Known Issues
 
 **Do not name your sketch HID.ino, this wont work!**
 
-**Do not use HID in interrupts because it uses the Serial. Your Arduino can crash!**
+**Do not use HID in interrupts because it uses Serial (Hoodloader only). Your Arduino can crash!**
 
 **If you get a checksum error after uploading please message me and send me the whole project.**
 Same if your Arduino crashes and dont want to upload sketches anymore (Replug usb fixes this).
@@ -151,27 +173,29 @@ These bugs occurred while developing the bootloader and should be fixed. Just in
 USB can behave weird, so please check your code for errors first. If you cannot find a mistake open a Github issue.
 
 **If You have weird Problems especially with controllers, let me know.**
-Sometimes the Problem is just that Windows messes up the PID so you might want to compile the hoodloader with a different PID
-
-HID only works with baud 115200 (on Uno/Mega) because there is no "programming finished" indicator.
-If you dont use HID you can still choose the baud of your choice.
+Sometimes the problem is just that Windows messes up the PID so you might want to compile the hoodloader with a different PID
+or reinstall the drivers.
 
 XBMC 13.1 (a Media Center) uses Gamepad input. Its seems to not work and may cause weird errors.
 Even with a standard Gamepad I have these errors. Just want to mention it here.
 
-Not tested on the 8u2 (should only work without DFU and v1.6 due to size. message me if it works!)
+Not tested on the 8u2, lite version should work with flashing via ISP.
 
 Not tested on the Due (message me if it works!)
 
-The USB implementation of the Leonardo/Micro is not that good it can cause errors or disconnects with massive Serial information.
+The USB implementation of the Leonardo/Micro is not that good it can cause errors or disconnects with massiv Serial input.
 This has nothing to do with this library! For example Adalight dosnt work well for me,
 so you better use an Arduino Uno with Hoodloader for Mediacenter control and Ambilight.
-
-Oh and by the way: I also removed some bugs from the official firmware.
 
 Version History
 ===============
 ```
+1.8 Beta Release (xx.08.2014)
+* Changes in the Hoodloader:
+ * **Huge improvements**, see [Hoodloader repository](https://github.com/NicoHood/Hoodloader)
+ * Reworked the whole library, easy installation now
+ * HID fixes for Media Keys/Ubuntu
+
 1.7.3 Beta Release (10.08.2014)
 * Changes in the Hoodloader:
  * Fixed HID flush bug (1.6 - 1.7.2)
