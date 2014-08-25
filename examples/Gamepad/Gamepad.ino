@@ -11,6 +11,7 @@ Press a button and demonstrate Gamepad actions
 
 // create a new Gamepad instance (1-4)
 Gamepad Gamepad1(1);
+//Gamepad Gamepad2(2);
 
 const int pinLed = 13;
 const int pinButton = 8;
@@ -47,12 +48,13 @@ void loop() {
 
     // go through all dPad positions
     // values: 0-8 (0==centred)
-    static uint8_t dpad1 = 0;
+    static uint8_t dpad1 = GAMEPAD_DPAD_CENTERED;
     Gamepad1.dPad1(dpad1++);
-    if (dpad1 == 9) dpad1 = 0;
-    static int8_t dpad2 = 0;
+    if(dpad1>GAMEPAD_DPAD_UP_LEFT) dpad1 = GAMEPAD_DPAD_CENTERED;
+    static int8_t dpad2 = GAMEPAD_DPAD_CENTERED;
     Gamepad1.dPad2(dpad2--);
-    if (dpad2 == -1) dpad2 = 8;
+    if(dpad2<GAMEPAD_DPAD_CENTERED) dpad2 = GAMEPAD_DPAD_UP_LEFT;
+
 
     // functions before only set the values
     // this writes the report to the host
@@ -74,12 +76,23 @@ void press(uint8_t b);
 void release(uint8_t b);
 void releaseAll(void);
 void buttons(uint32_t b);
-void xAxis(uint16_t a);
-void yAxis(uint16_t a);
-void zAxis(uint16_t a);
-void rxAxis(uint16_t a);
-void ryAxis(uint16_t a);
-void rzAxis(uint16_t a);
-void dPad1(uint8_t d);
-void dPad2(uint8_t d);
+void xAxis(int16_t a);
+void yAxis(int16_t a);
+void rxAxis(int16_t a);
+void ryAxis(int16_t a);
+void zAxis(int8_t a);
+void rzAxis(int8_t a);
+void dPad1(int8_t d);
+void dPad2(int8_t d);
+
+Definitions:
+GAMEPAD_DPAD_CENTERED 0
+GAMEPAD_DPAD_UP 1
+GAMEPAD_DPAD_UP_RIGHT 2
+GAMEPAD_DPAD_RIGHT 3
+GAMEPAD_DPAD_DOWN_RIGHT 4
+GAMEPAD_DPAD_DOWN 5
+GAMEPAD_DPAD_DOWN_LEFT 6
+GAMEPAD_DPAD_LEFT 7
+GAMEPAD_DPAD_UP_LEFT 8
 */

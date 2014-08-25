@@ -73,6 +73,9 @@ void HID_SendReport(uint8_t id, const void* data, int len)
 		// valid HID reports start at Address 2
 		NHPwriteChecksum(2 + i / 2, (data1 << 8) | data0);
 	}
+#ifdef HID_EXTRADELAY
+	delay(HID_EXTRADELAY);
+#endif
 }
 
 // simple copy/modification of the NicoHoodProtocol writechecksum function

@@ -37,6 +37,11 @@ void HID_SendReport(uint8_t id, const void* data, int len);
 // Keyboard
 //================================================================================
 
+//Keyboard fixed/added missing Keys
+#define KEY_PRINT			0xCE
+#define KEY_SCROLL_LOCK		0xCF
+#define KEY_PAUSE			0xD0
+
 #ifndef USBCON
 
 #define KEY_LEFT_CTRL		0x80
@@ -75,11 +80,6 @@ void HID_SendReport(uint8_t id, const void* data, int len);
 #define KEY_F10				0xCB
 #define KEY_F11				0xCC
 #define KEY_F12				0xCD
-
-//Keyboard fixed/added missing Keys
-#define KEY_PRINT			0xCE
-#define KEY_SCROLL_LOCK		0xCF
-#define KEY_PAUSE			0xD0
 
 //Raw Keyboard definitions
 #define RAW_KEYBOARD_LEFT_CTRL   B00000001

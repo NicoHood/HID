@@ -37,6 +37,16 @@ void HID_SendReport(uint8_t id, const void* data, int len);
 // Gamepad
 //================================================================================
 
+#define GAMEPAD_DPAD_CENTERED 0
+#define GAMEPAD_DPAD_UP 1
+#define GAMEPAD_DPAD_UP_RIGHT 2
+#define GAMEPAD_DPAD_RIGHT 3
+#define GAMEPAD_DPAD_DOWN_RIGHT 4
+#define GAMEPAD_DPAD_DOWN 5
+#define GAMEPAD_DPAD_DOWN_LEFT 6
+#define GAMEPAD_DPAD_LEFT 7
+#define GAMEPAD_DPAD_UP_LEFT 8
+
 class Gamepad{
 public:
 	inline Gamepad(uint8_t num){
@@ -45,14 +55,14 @@ public:
 			_reportID = HID_REPORTID_Gamepad1Report;
 			break;
 		case 2:
-			_reportID = HID_REPORTID_Gamepad1Report;
+			_reportID = HID_REPORTID_Gamepad2Report;
 			break;
-		case 3:
-			_reportID = HID_REPORTID_Gamepad1Report;
-			break;
-		case 4:
-			_reportID = HID_REPORTID_Gamepad1Report;
-			break;
+		//case 3:
+		//	_reportID = HID_REPORTID_Gamepad3Report;
+		//	break;
+		//case 4:
+		//	_reportID = HID_REPORTID_Gamepad4Report;
+		//	break;
 		default:
 			_reportID = HID_REPORTID_NotAReport;
 			break;
@@ -71,14 +81,14 @@ public:
 	inline void releaseAll(void){ _report.buttons = 0;}
 
 	inline void buttons(uint32_t b){ _report.buttons = b; }
-	inline void xAxis(uint16_t a){ _report.xAxis = a; }
-	inline void yAxis(uint16_t a){ _report.yAxis = a; }
-	inline void zAxis(uint8_t a){ _report.zAxis = a; }
-	inline void rxAxis(uint16_t a){ _report.rxAxis = a; }
-	inline void ryAxis(uint16_t a){ _report.ryAxis = a; }
-	inline void rzAxis(uint8_t a){ _report.rzAxis = a; }
-	inline void dPad1(uint8_t d){ _report.dPad1 = d; }
-	inline void dPad2(uint8_t d){ _report.dPad2 = d; }
+	inline void xAxis(int16_t a){ _report.xAxis = a; }
+	inline void yAxis(int16_t a){ _report.yAxis = a; }
+	inline void zAxis(int8_t a){ _report.zAxis = a; }
+	inline void rxAxis(int16_t a){ _report.rxAxis = a; }
+	inline void ryAxis(int16_t a){ _report.ryAxis = a; }
+	inline void rzAxis(int8_t a){ _report.rzAxis = a; }
+	inline void dPad1(int8_t d){ _report.dPad1 = d; }
+	inline void dPad2(int8_t d){ _report.dPad2 = d; }
 private:
 	HID_GamepadReport_Data_t _report;
 	uint8_t _reportID;

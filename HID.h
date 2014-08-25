@@ -51,6 +51,9 @@ THE SOFTWARE.
 //#define HID_JOYSTICK1_ENABLE 51
 //#define HID_JOYSTICK2_ENABLE 51
 
+// extra delay for raspberry. Only needed for Hoodloader and slow devices
+//#define HID_EXTRADELAY 20
+
 //================================================================================
 // NHP
 //================================================================================
