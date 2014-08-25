@@ -34,8 +34,7 @@ I also corrected some bugs in the original sources.
 * Mouse (5 buttons, move, wheel)
 * Media Keys (4 keys for music player, webbrowser and more)
 * System Key (for PC standby/shutdown)
-* 2 Gamepads (32 buttons, 6 16bit axis, 2 D-Pads)
-* 2 Joysticks (2 buttons, 2 10bit axis)
+* 4 Gamepads (32 buttons, 4 16bit axis, 2 8bit axis, 2 D-Pads)
 
 **Projects can be found here:**
 * [Gamecube to PC adapter](https://github.com/NicoHood/Nintendo)
@@ -151,8 +150,6 @@ Known Bugs
 ==========
 See [Hoodloader repository](https://github.com/NicoHood/Hoodloader) for Hoodloader related Bugs/Issues.
 
-Opening the examples with doubleclick doesnt work, starting from IDE does.
-
 System Wakeup is currently not working on all versions!
 System Shutdown is only working on Windows systems.
 
@@ -164,6 +161,8 @@ Known Issues
 ============
 
 **Do not name your sketch HID.ino, this wont work!**
+
+Opening the examples with doubleclick doesnt work, starting from IDE does.
 
 **Do not use HID in interrupts because it uses Serial (Hoodloader only). Your Arduino can crash!**
 
@@ -195,6 +194,7 @@ Version History
  * **Huge improvements**, see [Hoodloader repository](https://github.com/NicoHood/Hoodloader)
  * Reworked the whole library, easy installation now
  * HID fixes for Media Keys/Ubuntu
+ * Removed Joystick, added 4 Gamepads
 
 1.7.3 Beta Release (10.08.2014)
 * Changes in the Hoodloader:
