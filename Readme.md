@@ -114,6 +114,8 @@ To upgrade to v1.8 you need to redownload the Arduino IDE files, restore the ori
 You library is now located in sketchbook/libraries/HID/<files>
 Its now way easier to install the library, no need to replace system files. For further releases just replace all files again.
 
+**Restart the IDE**
+
 Hoodloader (Not needed for Leonardo/Micro):
 
 Just upload the new hex file and check the HID Project if the HID library code has changed and replace the new files too.
@@ -198,7 +200,7 @@ so you better use an Arduino Uno with Hoodloader for Mediacenter control and Amb
 Version History
 ===============
 ```
-1.8 Beta Release (xx.08.2014)
+1.8 Beta Release (26.08.2014)
 * Changes in the Hoodloader:
  * **Huge improvements**, see [Hoodloader repository](https://github.com/NicoHood/Hoodloader)
  * Reworked the whole library, easy installation now
