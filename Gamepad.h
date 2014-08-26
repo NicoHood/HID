@@ -57,12 +57,12 @@ public:
 		case 2:
 			_reportID = HID_REPORTID_Gamepad2Report;
 			break;
-		//case 3:
-		//	_reportID = HID_REPORTID_Gamepad3Report;
-		//	break;
-		//case 4:
-		//	_reportID = HID_REPORTID_Gamepad4Report;
-		//	break;
+		case 3:
+			_reportID = HID_REPORTID_Gamepad3Report;
+			break;
+		case 4:
+			_reportID = HID_REPORTID_Gamepad4Report;
+			break;
 		default:
 			_reportID = HID_REPORTID_NotAReport;
 			break;
@@ -75,10 +75,10 @@ public:
 	}
 
 	inline void end(void){ begin(); }
-	inline void write(void){ HID_SendReport(_reportID, &_report, sizeof(_report));}
+	inline void write(void){ HID_SendReport(_reportID, &_report, sizeof(_report)); }
 	inline void press(uint8_t b){ _report.buttons |= (uint32_t)1 << (b - 1); }
-	inline void release(uint8_t b){	_report.buttons &= ~((uint32_t)1 << (b - 1)); }
-	inline void releaseAll(void){ _report.buttons = 0;}
+	inline void release(uint8_t b){ _report.buttons &= ~((uint32_t)1 << (b - 1)); }
+	inline void releaseAll(void){ memset(&_report, 0x00, sizeof(_report)); }
 
 	inline void buttons(uint32_t b){ _report.buttons = b; }
 	inline void xAxis(int16_t a){ _report.xAxis = a; }

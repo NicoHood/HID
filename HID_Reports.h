@@ -198,8 +198,10 @@ typedef enum{
 	HID_REPORTID_SystemReport		= 0x05, /**< Report ID for the Power report within the device. */
 	HID_REPORTID_Gamepad1Report		= 0x06, /**< Report ID for the Gamepad1 report within the device. */
 	HID_REPORTID_Gamepad2Report		= 0x07, /**< Report ID for the Gamepad2 report within the device. */
-	HID_REPORTID_Joystick1Report	= 0x08, /**< Report ID for the Joystick1 report within the device. */
-	HID_REPORTID_Joystick2Report	= 0x09, /**< Report ID for the Joystick2 report within the device. */
+	HID_REPORTID_Gamepad3Report		= 0x08, /**< Report ID for the Gamepad3 report within the device. */
+	HID_REPORTID_Gamepad4Report		= 0x09, /**< Report ID for the Gamepad4 report within the device. */
+	HID_REPORTID_Joystick1Report	= 0x10, /**< Report ID for the Joystick1 report within the device. */
+	HID_REPORTID_Joystick2Report	= 0x11, /**< Report ID for the Joystick2 report within the device. */
 	HID_REPORTID_LastNotAReport,			// determinate whats the maximum number of reports -1
 } HID_Report_IDs;
 

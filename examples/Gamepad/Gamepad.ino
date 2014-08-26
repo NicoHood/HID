@@ -12,6 +12,8 @@ Press a button and demonstrate Gamepad actions
 // create a new Gamepad instance (1-4)
 Gamepad Gamepad1(1);
 //Gamepad Gamepad2(2);
+//Gamepad Gamepad3(3);
+//Gamepad Gamepad4(4);
 
 const int pinLed = 13;
 const int pinButton = 8;

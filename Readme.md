@@ -9,7 +9,7 @@ No need for extra hardware. You just need one of the Arduinos and an USB cable.
 **Main difference is that you can upload new sketches to the Uno/Mega and dont need to reflash the firmware over and over again.**
 Before you had to upload a sketch, flash the firmware, test, flash the firmware, upload, flash again. Thats all gone!
 
-**For the Leonardo/Micro it is 'just' new HID devices, no need for a bootloader.**
+**For the Leonardo/Micro it is 'just' new HID devices, no need for a bootloader (like on Uno/Mega).**
 
 Note: [Hoodloader Repository moved here.](https://github.com/NicoHood/Hoodloader)
 
@@ -57,11 +57,12 @@ Over all the Uno/Mega solution gives you more opportunities except that the Seri
 
 Installation Leonardo/Micro/Uno/Mega
 ====================================
+
+#### Leonardo/Micro only
 Download the library and [install it](http://arduino.cc/en/pmwiki.php?n=Guide/Libraries) like you are used to.
 
 **For the whole Project IDE 1.5.7 or higher is recommended!**
 
-#### Leonardo/Micro only
 **Edit HID.h to de/activate usb functions.**
 By default Mouse, Keyboard, Media, System, Gamepad1 is activated.
 
@@ -71,11 +72,17 @@ You cannot use more than 255 bytes HID report on the Leonardo/Micro.
 The number after each definition tells you the size of each report.
 I have no idea why you cannot use more than 255 bytes (yet), its a bug in the Arduino code.
 
-#### Uno/Mega only
+#### Uno/Mega onl
+Download the library and [install it](http://arduino.cc/en/pmwiki.php?n=Guide/Libraries) like you are used to.
+
+**For the whole Project IDE 1.5.7 or higher is recommended!**
+
 To install the new bootloader connect your Arduino to your PC via USB and see
 [Hoodloader installing instructions](https://github.com/NicoHood/Hoodloader).
 No special programmer needed, just an USB cable.
 **You can always switch back to the original firmware, nothing to break.**
+
+Edit HID.h to add an extra delay for raspberry pi. This is a workaround to fix this for slower PCs. There is still a problem with Raspberry.
 
 Usage
 =====
@@ -103,9 +110,11 @@ Updating to a newer Version
 ===========================
 HID library:
 
-To upgrade to v1.8 you need to redownload the ide files, replace the original files and install the library like you are used to.
+To upgrade to v1.8 you need to redownload the Arduino IDE files, restore the original files and install the library like you are used to.
+You library is now located in sketchbook/libraries/HID/<files>
+Its now way easier to install the library, no need to replace system files. For further releases just replace all files again.
 
-Hoodloader:
+Hoodloader (Not needed for Leonardo/Micro):
 
 Just upload the new hex file and check the HID Project if the HID library code has changed and replace the new files too.
 You normally dont need to reinstall the drivers for windows if the changelog dosnt note anything.
