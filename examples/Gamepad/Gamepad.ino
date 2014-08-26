@@ -6,10 +6,14 @@ Gamepad example
 Press a button and demonstrate Gamepad actions
 */
 
-// not needed for Leonardo/Micro
+// include HID library
 #include <HID.h>
 
-// for Leonardo/Micro: make sure to activate desired USB functions in HID_Reports.h
+// create a new Gamepad instance (1-4)
+Gamepad Gamepad1(1);
+//Gamepad Gamepad2(2);
+//Gamepad Gamepad3(3);
+//Gamepad Gamepad4(4);
 
 const int pinLed = 13;
 const int pinButton = 8;
@@ -18,22 +22,13 @@ void setup() {
   pinMode(pinLed, OUTPUT);
   pinMode(pinButton, INPUT_PULLUP);
 
-  // Starts Serial at baud 115200. end just ends the Serial
-  // Make sure to end your special HIDs before, this does not clear them!
-  // You need this baud for the HID library but still can use other bauds
-  // without HID functions.
-  // not needed for Leonado/Micro, Serial will not be set
-  HID.begin();
+  // Starts Serial at baud 115200 otherwise HID wont work on Uno/Mega.
+  // This is not needed for Leonado/(Pro)Micro but make sure to activate desired USB functions in HID.h
+  Serial.begin(SERIAL_HID_BAUD);
 
   // Sends a clean report to the host. This is important because
   // the 16u2 of the Uno/Mega is not turned off while programming
-  // so you want to start with a clear report to avoid strange bugs.
-  // its exactly the same like the end() function.
-  // You can also unplug the device if anything goes wrong.
-  // To prevent the 16u2 to send more reports just pull the Serial TX (pin1) low
-  // or see readme for turning off HID functions.
-  // If you did anything wrong (keyboard is doing weird stuff)
-  // just logout (no shutdown needed).
+  // so you want to start with a clean report to avoid strange bugs after reset.
   Gamepad1.begin();
 }
 
@@ -55,12 +50,13 @@ void loop() {
 
     // go through all dPad positions
     // values: 0-8 (0==centred)
-    static uint8_t dpad1 = 0;
+    static uint8_t dpad1 = GAMEPAD_DPAD_CENTERED;
     Gamepad1.dPad1(dpad1++);
-    if (dpad1 == 9) dpad1 = 0;
-    static int8_t dpad2 = 0;
+    if(dpad1>GAMEPAD_DPAD_UP_LEFT) dpad1 = GAMEPAD_DPAD_CENTERED;
+    static int8_t dpad2 = GAMEPAD_DPAD_CENTERED;
     Gamepad1.dPad2(dpad2--);
-    if (dpad2 == -1) dpad2 = 8;
+    if(dpad2<GAMEPAD_DPAD_CENTERED) dpad2 = GAMEPAD_DPAD_UP_LEFT;
+
 
     // functions before only set the values
     // this writes the report to the host
@@ -82,12 +78,23 @@ void press(uint8_t b);
 void release(uint8_t b);
 void releaseAll(void);
 void buttons(uint32_t b);
-void xAxis(uint16_t a);
-void yAxis(uint16_t a);
-void zAxis(uint16_t a);
-void rxAxis(uint16_t a);
-void ryAxis(uint16_t a);
-void rzAxis(uint16_t a);
-void dPad1(uint8_t d);
-void dPad2(uint8_t d);
+void xAxis(int16_t a);
+void yAxis(int16_t a);
+void rxAxis(int16_t a);
+void ryAxis(int16_t a);
+void zAxis(int8_t a);
+void rzAxis(int8_t a);
+void dPad1(int8_t d);
+void dPad2(int8_t d);
+
+Definitions:
+GAMEPAD_DPAD_CENTERED 0
+GAMEPAD_DPAD_UP 1
+GAMEPAD_DPAD_UP_RIGHT 2
+GAMEPAD_DPAD_RIGHT 3
+GAMEPAD_DPAD_DOWN_RIGHT 4
+GAMEPAD_DPAD_DOWN 5
+GAMEPAD_DPAD_DOWN_LEFT 6
+GAMEPAD_DPAD_LEFT 7
+GAMEPAD_DPAD_UP_LEFT 8
 */

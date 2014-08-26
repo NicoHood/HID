@@ -33,8 +33,8 @@ THE SOFTWARE.
 
 #define RAWHID_USAGE_PAGE	0xFFC0 // recommended: 0xFF00 to 0xFFFF
 #define RAWHID_USAGE		0x0C00 // recommended: 0x0100 to 0xFFFF
-#define RAWHID_TX_SIZE 63 // 1 byte for report ID
-#define RAWHID_RX_SIZE 63 // 1 byte for report ID
+#define RAWHID_TX_SIZE 15 // 1 byte for report ID
+#define RAWHID_RX_SIZE 15 // 1 byte for report ID
 
 //================================================================================
 //Report Typedefinitions
@@ -103,9 +103,9 @@ typedef union{
 
 typedef union {
 	// 32 Buttons, 6 Axis, 2 D-Pads
-	uint8_t whole8[17];
-	uint16_t whole16[17/2];
-	uint32_t whole32[17/4];
+	uint8_t whole8[15];
+	uint16_t whole16[15/2];
+	uint32_t whole32[15/4];
 	uint32_t buttons;
 
 	struct{
@@ -145,21 +145,17 @@ typedef union {
 		uint8_t button31 :1;
 		uint8_t button32 :1;
 
-		uint16_t	xAxis;
-		uint16_t	yAxis;
-		uint16_t	zAxis;
+		int16_t	xAxis;
+		int16_t	yAxis;
 
-		uint16_t	rxAxis;
-		uint16_t	ryAxis;
-		uint16_t	rzAxis;		
+		int16_t	rxAxis;
+		int16_t	ryAxis;
+
+		int8_t	zAxis;
+		int8_t	rzAxis;		
 
 		uint8_t		dPad1: 4;
 		uint8_t		dPad2: 4;
-
-		// deactivated because windows only supports 7 axis. should be enough.
-		//uint8_t		throttle;
-		//uint8_t		rudder;
-
 	};
 } HID_GamepadReport_Data_t;
 
@@ -194,6 +190,7 @@ typedef union{
 
 /** Enum for the HID report IDs used in the device. */
 typedef enum{
+	HID_REPORTID_NotAReport			= 0x00,  // first entry is always zero for multireports
 	HID_REPORTID_MouseReport		= 0x01, /**< Report ID for the Mouse report within the device. */
 	HID_REPORTID_KeyboardReport		= 0x02, /**< Report ID for the Keyboard report within the device. */
 	HID_REPORTID_RawKeyboardReport	= 0x03, /**< Report ID for the Raw Keyboard report within the device. */
@@ -201,8 +198,11 @@ typedef enum{
 	HID_REPORTID_SystemReport		= 0x05, /**< Report ID for the Power report within the device. */
 	HID_REPORTID_Gamepad1Report		= 0x06, /**< Report ID for the Gamepad1 report within the device. */
 	HID_REPORTID_Gamepad2Report		= 0x07, /**< Report ID for the Gamepad2 report within the device. */
-	HID_REPORTID_Joystick1Report	= 0x08, /**< Report ID for the Joystick1 report within the device. */
-	HID_REPORTID_Joystick2Report	= 0x09, /**< Report ID for the Joystick2 report within the device. */
+	HID_REPORTID_Gamepad3Report		= 0x08, /**< Report ID for the Gamepad3 report within the device. */
+	HID_REPORTID_Gamepad4Report		= 0x09, /**< Report ID for the Gamepad4 report within the device. */
+	HID_REPORTID_Joystick1Report	= 0x10, /**< Report ID for the Joystick1 report within the device. */
+	HID_REPORTID_Joystick2Report	= 0x11, /**< Report ID for the Joystick2 report within the device. */
+	HID_REPORTID_LastNotAReport,			// determinate whats the maximum number of reports -1
 } HID_Report_IDs;
 
 #endif
