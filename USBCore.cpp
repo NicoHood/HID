@@ -1,19 +1,42 @@
 
 
-/* Copyright (c) 2010, Peter Barrett  
-**  
-** Permission to use, copy, modify, and/or distribute this software for  
-** any purpose with or without fee is hereby granted, provided that the  
-** above copyright notice and this permission notice appear in all copies.  
-** 
-** THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL  
-** WARRANTIES WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED  
-** WARRANTIES OF MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR  
-** BE LIABLE FOR ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES  
-** OR ANY DAMAGES WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS,  
-** WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION,  
-** ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS  
-** SOFTWARE.  
+/* Copyright (c) 2010, Peter Barrett
+**
+** Permission to use, copy, modify, and/or distribute this software for
+** any purpose with or without fee is hereby granted, provided that the
+** above copyright notice and this permission notice appear in all copies.
+**
+** THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL
+** WARRANTIES WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED
+** WARRANTIES OF MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR
+** BE LIABLE FOR ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES
+** OR ANY DAMAGES WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS,
+** WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION,
+** ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS
+** SOFTWARE.
+*/
+
+/*
+Copyright (c) 2014 NicoHood
+See the readme for credit to other people.
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
 */
 
 #include "USBAPI.h"
@@ -43,7 +66,7 @@ extern const DeviceDescriptor USB_DeviceDescriptor PROGMEM;
 extern const DeviceDescriptor USB_DeviceDescriptorA PROGMEM;
 
 const u16 STRING_LANGUAGE[2] = {
-	(3<<8) | (2+2),
+	(3 << 8) | (2 + 2),
 	0x0409	// English
 };
 
@@ -78,12 +101,13 @@ const u8 STRING_MANUFACTURER[] PROGMEM = USB_MANUFACTURER;
 #define DEVICE_CLASS 0x00
 #endif
 
+//TODO warning from USBlyzer with a 16u2
 //	DEVICE DESCRIPTOR
 const DeviceDescriptor USB_DeviceDescriptor =
-	D_DEVICE(0x00,0x00,0x00,64,USB_VID,USB_PID,0x100,IMANUFACTURER,IPRODUCT,0,1);
+D_DEVICE(0x00, 0x00, 0x00, 64, USB_VID, USB_PID, 0x100, IMANUFACTURER, IPRODUCT, 0, 1);
 
 const DeviceDescriptor USB_DeviceDescriptorA =
-	D_DEVICE(DEVICE_CLASS,0x00,0x00,64,USB_VID,USB_PID,0x100,IMANUFACTURER,IPRODUCT,0,1);
+D_DEVICE(DEVICE_CLASS, 0x00, 0x00, 64, USB_VID, USB_PID, 0x100, IMANUFACTURER, IPRODUCT, 0, 1);
 
 //==================================================================
 //==================================================================
@@ -92,40 +116,40 @@ volatile u8 _usbConfiguration = 0;
 
 static inline void WaitIN(void)
 {
-	while (!(UEINTX & (1<<TXINI)))
+	while (!(UEINTX & (1 << TXINI)))
 		;
 }
 
 static inline void ClearIN(void)
 {
-	UEINTX = ~(1<<TXINI);
+	UEINTX = ~(1 << TXINI);
 }
 
 static inline void WaitOUT(void)
 {
-	while (!(UEINTX & (1<<RXOUTI)))
+	while (!(UEINTX & (1 << RXOUTI)))
 		;
 }
 
 static inline u8 WaitForINOrOUT()
 {
-	while (!(UEINTX & ((1<<TXINI)|(1<<RXOUTI))))
+	while (!(UEINTX & ((1 << TXINI) | (1 << RXOUTI))))
 		;
-	return (UEINTX & (1<<RXOUTI)) == 0;
+	return (UEINTX & (1 << RXOUTI)) == 0;
 }
 
 static inline void ClearOUT(void)
 {
-	UEINTX = ~(1<<RXOUTI);
+	UEINTX = ~(1 << RXOUTI);
 }
 
 void Recv(volatile u8* data, u8 count)
 {
 	while (count--)
 		*data++ = UEDATX;
-	
+
 	RXLED1;					// light the RX LED
-	RxLEDPulse = TX_RX_LED_PULSE_MS;	
+	RxLEDPulse = TX_RX_LED_PULSE_MS;
 }
 
 static inline u8 Recv8()
@@ -133,7 +157,7 @@ static inline u8 Recv8()
 	RXLED1;					// light the RX LED
 	RxLEDPulse = TX_RX_LED_PULSE_MS;
 
-	return UEDATX;	
+	return UEDATX;
 }
 
 static inline void Send8(u8 d)
@@ -153,32 +177,32 @@ static inline u8 FifoByteCount()
 
 static inline u8 ReceivedSetupInt()
 {
-	return UEINTX & (1<<RXSTPI);
+	return UEINTX & (1 << RXSTPI);
 }
 
 static inline void ClearSetupInt()
 {
-	UEINTX = ~((1<<RXSTPI) | (1<<RXOUTI) | (1<<TXINI));
+	UEINTX = ~((1 << RXSTPI) | (1 << RXOUTI) | (1 << TXINI));
 }
 
 static inline void Stall()
 {
-	UECONX = (1<<STALLRQ) | (1<<EPEN);
+	UECONX = (1 << STALLRQ) | (1 << EPEN);
 }
 
 static inline u8 ReadWriteAllowed()
 {
-	return UEINTX & (1<<RWAL);
+	return UEINTX & (1 << RWAL);
 }
 
 static inline u8 Stalled()
 {
-	return UEINTX & (1<<STALLEDI);
+	return UEINTX & (1 << STALLEDI);
 }
 
 static inline u8 FifoFree()
 {
-	return UEINTX & (1<<FIFOCON);
+	return UEINTX & (1 << FIFOCON);
 }
 
 static inline void ReleaseRX()
@@ -233,17 +257,17 @@ int USB_Recv(u8 ep, void* d, int len)
 {
 	if (!_usbConfiguration || len < 0)
 		return -1;
-	
+
 	LockEP lock(ep);
 	u8 n = FifoByteCount();
-	len = min(n,len);
+	len = min(n, len);
 	n = len;
 	u8* dst = (u8*)d;
 	while (n--)
 		*dst++ = Recv8();
 	if (len && !FifoByteCount())	// release empty buffer
 		ReleaseRX();
-	
+
 	return len;
 }
 
@@ -251,7 +275,7 @@ int USB_Recv(u8 ep, void* d, int len)
 int USB_Recv(u8 ep)
 {
 	u8 c;
-	if (USB_Recv(ep,&c,1) != 1)
+	if (USB_Recv(ep, &c, 1) != 1)
 		return -1;
 	return c;
 }
@@ -262,7 +286,8 @@ u8 USB_SendSpace(u8 ep)
 	LockEP lock(ep);
 	if (!ReadWriteAllowed())
 		return 0;
-	return 64 - FifoByteCount();
+	// edit by NicoHood
+	return USB_EP_SIZE - FifoByteCount();
 }
 
 //	Blocking Send of data to an endpoint
@@ -318,10 +343,10 @@ int USB_Send(u8 ep, const void* d, int len)
 }
 
 extern const u8 _initEndpoints[] PROGMEM;
-const u8 _initEndpoints[] = 
+const u8 _initEndpoints[] =
 {
 	0,
-	
+
 #ifdef CDC_ENABLED
 	EP_TYPE_INTERRUPT_IN,		// CDC_ENDPOINT_ACM
 	EP_TYPE_BULK_OUT,			// CDC_ENDPOINT_OUT
@@ -335,6 +360,8 @@ const u8 _initEndpoints[] =
 
 #define EP_SINGLE_64 0x32	// EP0
 #define EP_DOUBLE_64 0x36	// Other endpoints
+// edit by NicoHood
+#define EP_SINGLE_16 0x12
 
 static
 void InitEP(u8 index, u8 type, u8 size)
@@ -352,8 +379,15 @@ void InitEndpoints()
 	{
 		UENUM = i;
 		UECONX = 1;
-		UECFG0X = pgm_read_byte(_initEndpoints+i);
+		UECFG0X = pgm_read_byte(_initEndpoints + i);
+		// edit by NicoHood
+#if USB_EP_SIZE == 16
+		UECFG1X = EP_SINGLE_16;
+#elif USB_EP_SIZE == 64
 		UECFG1X = EP_DOUBLE_64;
+#else
+#error Unsupported value for USB_EP_SIZE
+#endif
 	}
 	UERST = 0x7E;	// And reset them
 	UERST = 0;
@@ -420,16 +454,16 @@ int USB_SendControl(u8 flags, const void* d, int len)
 // plain ASCII string but is sent out as UTF-16 with the correct 2-byte
 // prefix
 static bool USB_SendStringDescriptor(const u8*string_P, u8 string_len) {
-        SendControl(2 + string_len * 2);
-        SendControl(3);
-        for(u8 i = 0; i < string_len; i++) {
-                bool r = SendControl(pgm_read_byte(&string_P[i]));
-                r &= SendControl(0); // high byte
-                if(!r) {
-                        return false;
-                }
-        }
-        return true;
+	SendControl(2 + string_len * 2);
+	SendControl(3);
+	for (u8 i = 0; i < string_len; i++) {
+		bool r = SendControl(pgm_read_byte(&string_P[i]));
+		r &= SendControl(0); // high byte
+		if (!r) {
+			return false;
+		}
+	}
+	return true;
 }
 
 //	Does not timeout or cross fifo boundaries
@@ -438,7 +472,7 @@ static bool USB_SendStringDescriptor(const u8*string_P, u8 string_len) {
 int USB_RecvControl(void* d, int len)
 {
 	WaitOUT();
-	Recv((u8*)d,len);
+	Recv((u8*)d, len);
 	ClearOUT();
 	return len;
 }
@@ -466,13 +500,13 @@ static
 bool SendConfiguration(int maxlen)
 {
 	//	Count and measure interfaces
-	InitControl(0);	
+	InitControl(0);
 	int interfaces = SendInterfaces();
-	ConfigDescriptor config = D_CONFIG(_cmark + sizeof(ConfigDescriptor),interfaces);
+	ConfigDescriptor config = D_CONFIG(_cmark + sizeof(ConfigDescriptor), interfaces);
 
 	//	Now send them
 	InitControl(maxlen);
-	USB_SendControl(0,&config,sizeof(ConfigDescriptor));
+	USB_SendControl(0, &config, sizeof(ConfigDescriptor));
 	SendInterfaces();
 	return true;
 }
@@ -497,7 +531,7 @@ bool SendDescriptor(Setup& setup)
 	{
 		if (setup.wLength == 8)
 			_cdcComposite = 1;
-		desc_addr = _cdcComposite ?  (const u8*)&USB_DeviceDescriptorA : (const u8*)&USB_DeviceDescriptor;
+		desc_addr = _cdcComposite ? (const u8*)&USB_DeviceDescriptorA : (const u8*)&USB_DeviceDescriptor;
 	}
 	else if (USB_STRING_DESCRIPTOR_TYPE == t)
 	{
@@ -518,19 +552,19 @@ bool SendDescriptor(Setup& setup)
 		return false;
 	u8 desc_length = pgm_read_byte(desc_addr);
 
-	USB_SendControl(TRANSFER_PGM,desc_addr,desc_length);
+	USB_SendControl(TRANSFER_PGM, desc_addr, desc_length);
 	return true;
 }
 
 //	Endpoint 0 interrupt
 ISR(USB_COM_vect)
 {
-    SetEP(0);
+	SetEP(0);
 	if (!ReceivedSetupInt())
 		return;
 
 	Setup setup;
-	Recv((u8*)&setup,8);
+	Recv((u8*)&setup, 8);
 	ClearSetupInt();
 
 	u8 requestType = setup.bmRequestType;
@@ -539,7 +573,7 @@ ISR(USB_COM_vect)
 	else
 		ClearIN();
 
-    bool ok = true;
+	bool ok = true;
 	if (REQUEST_STANDARD == (requestType & REQUEST_TYPE))
 	{
 		//	Standard Requests
@@ -558,7 +592,7 @@ ISR(USB_COM_vect)
 		else if (SET_ADDRESS == r)
 		{
 			WaitIN();
-			UDADDR = setup.wValueL | (1<<ADDEN);
+			UDADDR = setup.wValueL | (1 << ADDEN);
 		}
 		else if (GET_DESCRIPTOR == r)
 		{
@@ -578,7 +612,8 @@ ISR(USB_COM_vect)
 			{
 				InitEndpoints();
 				_usbConfiguration = setup.wValueL;
-			} else
+			}
+			else
 				ok = false;
 		}
 		else if (GET_INTERFACE == r)
@@ -616,20 +651,20 @@ ISR(USB_GEN_vect)
 	UDINT = 0;
 
 	//	End of Reset
-	if (udint & (1<<EORSTI))
+	if (udint & (1 << EORSTI))
 	{
-		InitEP(0,EP_TYPE_CONTROL,EP_SINGLE_64);	// init ep0
+		InitEP(0, EP_TYPE_CONTROL, EP_SINGLE_64);	// init ep0
 		_usbConfiguration = 0;			// not configured yet
 		UEIENX = 1 << RXSTPE;			// Enable interrupts for ep0
 	}
 
 	//	Start of Frame - happens every millisecond so we use it for TX and RX LED one-shot timing, too
-	if (udint & (1<<SOFI))
+	if (udint & (1 << SOFI))
 	{
 #ifdef CDC_ENABLED
 		USB_Flush(CDC_TX);				// Send a tx frame if found
 #endif
-		
+
 		// check whether the one-shot period has elapsed.  if so, turn off the LED
 		if (TxLEDPulse && !(--TxLEDPulse))
 			TXLED0;
@@ -656,17 +691,55 @@ USBDevice_::USBDevice_()
 {
 }
 
+// edit by NicoHood
+// added from teensy definition by paul stoffregen
+#if defined(__AVR_AT90USB82__) || defined(__AVR_AT90USB162__) || defined(__AVR_ATmega32U2__) || defined(__AVR_ATmega16U2__) || defined(__AVR_ATmega8U2__)
+#define HW_CONFIG() 
+#define PLL_CONFIG() (PLLCSR = ((1<<PLLE)|(1<<PLLP0)))
+#define USB_CONFIG() (USBCON = (1<<USBE))
+#define USB_FREEZE() (USBCON = ((1<<USBE)|(1<<FRZCLK)))
+#elif defined(__AVR_ATmega32U4__)
+#define HW_CONFIG() (UHWCON = 0x01)
+#define PLL_CONFIG() (PLLCSR = 0x12)
+#define USB_CONFIG() (USBCON = ((1<<USBE)|(1<<OTGPADE)))
+#define USB_FREEZE() (USBCON = ((1<<USBE)|(1<<FRZCLK)))
+#elif defined(__AVR_AT90USB646__)
+#define HW_CONFIG() (UHWCON = 0x81)
+#define PLL_CONFIG() (PLLCSR = 0x1A)
+#define USB_CONFIG() (USBCON = ((1<<USBE)|(1<<OTGPADE)))
+#define USB_FREEZE() (USBCON = ((1<<USBE)|(1<<FRZCLK)))
+#elif defined(__AVR_AT90USB1286__)
+#define HW_CONFIG() (UHWCON = 0x81)
+#define PLL_CONFIG() (PLLCSR = 0x16)
+#define USB_CONFIG() (USBCON = ((1<<USBE)|(1<<OTGPADE)))
+#define USB_FREEZE() (USBCON = ((1<<USBE)|(1<<FRZCLK)))
+#endif
+
 void USBDevice_::attach()
 {
+	// edit by NicoHood
 	_usbConfiguration = 0;
-	UHWCON = 0x01;						// power internal reg
-	USBCON = (1<<USBE)|(1<<FRZCLK);		// clock frozen, usb enabled
+	HW_CONFIG();						// power internal reg
+
+	// from Paul, TODO needed?
+	//USBCON = 0;							// Reset controller
+	USB_FREEZE();		// clock frozen, usb enabled
+
 #if F_CPU == 16000000UL
-	PLLCSR = 0x12;						// Need 16 MHz xtal
+	// Need 16 MHz xtal
+#ifdef PINDIV
+	PLLCSR = (1 << PINDIV) | (1 << PLLE);
+#else
+	// added from paul, no idea for what board this is used for
+	PLLCSR = (1 << PLLP0) | (1 << PLLE);
+#endif	
+
 #elif F_CPU == 8000000UL
-	PLLCSR = 0x02;						// Need 8 MHz xtal
+	// Need 8 MHz xtal
+	PLLCSR = (1 << PLLE);
 #endif
-	while (!(PLLCSR & (1<<PLOCK)))		// wait for lock pll
+
+	while (!(PLLCSR & (1 << PLOCK)))		// wait for lock pll
 		;
 
 	// Some tests on specific versions of macosx (10.7.3), reported some
@@ -674,10 +747,10 @@ void USBDevice_::attach()
 	// port touch at 1200 bps. This delay fixes this behaviour.
 	delay(1);
 
-	USBCON = ((1<<USBE)|(1<<OTGPADE));	// start USB clock
-	UDIEN = (1<<EORSTE)|(1<<SOFE);		// Enable interrupts for EOR (End of Reset) and SOF (start of frame)
+	USB_CONFIG();	// start USB clock
+	UDIEN = (1 << EORSTE) | (1 << SOFE);		// Enable interrupts for EOR (End of Reset) and SOF (start of frame)
 	UDCON = 0;							// enable attach resistor
-	
+
 	TX_RX_LED_INIT;
 }
 
