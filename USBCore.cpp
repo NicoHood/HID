@@ -101,10 +101,22 @@ const u8 STRING_MANUFACTURER[] PROGMEM = USB_MANUFACTURER;
 #define DEVICE_CLASS 0x00
 #endif
 
-//TODO warning from USBlyzer with a 16u2
+// edit by NicoHood
+// warning from USBlyzer: IAD is used. Should be EFh (Miscellaneous Device Class).
+// Lufa also use these values, so i will use them at least for the u2 boards. Someone should fix this for the u4 series if needed.
+#if defined(__AVR_AT90USB82__) || defined(__AVR_AT90USB162__) || defined(__AVR_ATmega32U2__) || defined(__AVR_ATmega16U2__) || defined(__AVR_ATmega8U2__)
+
+//	DEVICE DESCRIPTOR
+const DeviceDescriptor USB_DeviceDescriptor =
+D_DEVICE(0xEF, 0x02, 0x01, 64, USB_VID, USB_PID, 0x100, IMANUFACTURER, IPRODUCT, 0, 1);
+
+#else
+
 //	DEVICE DESCRIPTOR
 const DeviceDescriptor USB_DeviceDescriptor =
 D_DEVICE(0x00, 0x00, 0x00, 64, USB_VID, USB_PID, 0x100, IMANUFACTURER, IPRODUCT, 0, 1);
+
+#endif
 
 const DeviceDescriptor USB_DeviceDescriptorA =
 D_DEVICE(DEVICE_CLASS, 0x00, 0x00, 64, USB_VID, USB_PID, 0x100, IMANUFACTURER, IPRODUCT, 0, 1);
