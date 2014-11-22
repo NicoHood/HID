@@ -4,13 +4,15 @@
 
  HoodLoader2 SerialKeyboard example
  
- This sketch should demonstate how to program a basic sketch with HoodLoader2.
+ This sketch should demonstrate how to program a basic sketch with HoodLoader2.
  It was used to demonstrate that Serial and HID is working properly.
+ The the other examples on how to use the other APIs, it works the same.
+ 
+ Use the F() macro to save strings in PROGMEM to keep ram usage low.
+ The 16u2 has very low RAM, so don't try to use that much ram.
  
  Open the Serial port, type in anything and see that Serial and Keyboard is working.
  See official documentation for more infos.
-
- Use the F() macro to save strings in PROGMEM to keep ram usage low.
  */
 
 void setup() {
