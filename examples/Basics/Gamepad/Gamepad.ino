@@ -33,7 +33,7 @@ void loop() {
 
     // move x/y Axis to a new position (16bit)
     Gamepad.xAxis(random(0xFFFF));
-    Gamepad.yAxis(analogRead(A0) << 6);
+    Gamepad.yAxis(random(0xFFFF));
 
     // go through all dPad positions
     // values: 0-8 (0==centred)
