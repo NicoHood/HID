@@ -61,6 +61,8 @@ typedef unsigned long u32;
 // by default only Mouse + Keyboard are activated
 #define HID_MOUSE_ENABLED
 #define HID_KEYBOARD_ENABLED
+//#define HID_KEYBOARD_LEDS_ENABLED
+
 //#define HID_RAWHID_ENABLED
 //#define HID_MEDIA_ENABLED
 //#define HID_SYSTEM_ENABLED
@@ -76,6 +78,15 @@ typedef unsigned long u32;
 
 #ifdef HID_KEYBOARD_ENABLED
 #define HID_KEYBOARD_SIZE (65-18) //18 for missing led out report = 47
+
+#if defined USBCON && defined(HID_KEYBOARD_ENABLED) && defined(HID_KEYBOARD_LEDS_ENABLED)
+// extern accessible led out report
+extern uint8_t hid_keyboard_leds;
+
+#define LED_NUM_LOCK			0x01
+#define LED_CAPS_LOCK			0x02
+#define LED_SCROLL_LOCK			0x04
+#endif
 #else
 #define HID_KEYBOARD_SIZE 0
 #endif
@@ -180,6 +191,9 @@ public:
 	void begin(unsigned long);
 	void begin(unsigned long, uint8_t);
 	void end(void);
+
+	// edit by NicoHood
+	uint8_t lineState(void);
 
 	virtual int available(void);
 	virtual int peek(void);
@@ -369,6 +383,7 @@ extern Mouse_ Mouse;
 
 //Keyboard fixed/added missing Keys
 #define KEY_PRINT			0xCE
+#define KEY_NUM_LOCK		0xDB
 #define KEY_SCROLL_LOCK		0xCF
 #define KEY_PAUSE			0xD0
 
@@ -618,6 +633,12 @@ public:
 		// edit by NicoHood
 		releaseAll();
 	}
+
+#if defined(HID_KEYBOARD_LEDS_ENABLED)
+	inline uint8_t getLEDs(void){
+		return hid_keyboard_leds;
+	}
+#endif
 
 	inline size_t write(uint8_t c){
 		uint8_t p = press(c);		// Keydown

@@ -104,7 +104,8 @@ const u8 STRING_MANUFACTURER[] PROGMEM = USB_MANUFACTURER;
 // edit by NicoHood
 // warning from USBlyzer: IAD is used. Should be EFh (Miscellaneous Device Class).
 // Lufa also use these values, so i will use them at least for the u2 boards. Someone should fix this for the u4 series if needed.
-#if defined(__AVR_AT90USB82__) || defined(__AVR_AT90USB162__) || defined(__AVR_ATmega32U2__) || defined(__AVR_ATmega16U2__) || defined(__AVR_ATmega8U2__)
+// You have to use this descriptor if you have CDC AND HID at the same time. Otherwise they are quite different.
+#if defined(HID_ENABLED) && (defined(__AVR_AT90USB82__) || defined(__AVR_AT90USB162__) || defined(__AVR_ATmega32U2__) || defined(__AVR_ATmega16U2__) || defined(__AVR_ATmega8U2__))
 
 //	DEVICE DESCRIPTOR
 const DeviceDescriptor USB_DeviceDescriptor =
@@ -742,7 +743,7 @@ void USBDevice_::attach()
 #ifdef PINDIV
 	PLLCSR = (1 << PINDIV) | (1 << PLLE);
 #else
-	// added from paul, no idea for what board this is used for
+	// added from paul brook, no idea for what board this is used for
 	PLLCSR = (1 << PLLP0) | (1 << PLLE);
 #endif	
 

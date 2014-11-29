@@ -48,6 +48,11 @@ THE SOFTWARE.
 //================================================================================
 //	HID report descriptor
 
+#if defined USBCON && defined(HID_KEYBOARD_ENABLED) && defined(HID_KEYBOARD_LEDS_ENABLED)
+// extern accessible led out report
+uint8_t hid_keyboard_leds = 0;
+#endif
+
 extern const u8 _hidReportDescriptor[] PROGMEM;
 const u8 _hidReportDescriptor[] = {
 #ifdef HID_MOUSE_ENABLED
@@ -114,17 +119,19 @@ const u8 _hidReportDescriptor[] = {
 	0x19, 0x00,                    //   USAGE_MINIMUM (Reserved (no event indicated))
 	0x29, 0x65,                    //   USAGE_MAXIMUM (Keyboard Application)
 	0x81, 0x00,                    //   INPUT (Data,Ary,Abs)
+#ifdef HID_KEYBOARD_LEDS_ENABLED
 	// LEDs for num lock etc
-	//0x05, 0x08,   /*   USAGE_PAGE (LEDs) */
-	//0x19, 0x01,   /*   USAGE_MINIMUM (Num Lock) */
-	//0x29, 0x05,   /*   USAGE_MAXIMUM (Kana) */
-	//0x95, 0x05,   /*   REPORT_COUNT (5) */
-	//0x75, 0x01,   /*   REPORT_SIZE (1) */
-	//0x91, 0x02,   /*   OUTPUT (Data,Var,Abs) */
+	0x05, 0x08,   /*   USAGE_PAGE (LEDs) */
+	0x19, 0x01,   /*   USAGE_MINIMUM (Num Lock) */
+	0x29, 0x05,   /*   USAGE_MAXIMUM (Kana) */
+	0x95, 0x05,   /*   REPORT_COUNT (5) */
+	0x75, 0x01,   /*   REPORT_SIZE (1) */
+	0x91, 0x02,   /*   OUTPUT (Data,Var,Abs) */
 	// Reserved 3 bits
-	//0x95, 0x01,   /*   REPORT_COUNT (1) */
-	//0x75, 0x03,   /*   REPORT_SIZE (3) */
-	//0x91, 0x03,   /*   OUTPUT (Cnst,Var,Abs) */
+	0x95, 0x01,   /*   REPORT_COUNT (1) */
+	0x75, 0x03,   /*   REPORT_SIZE (3) */
+	0x91, 0x03,   /*   OUTPUT (Cnst,Var,Abs) */
+#endif
 	// end
 	0xc0,                          // END_COLLECTION
 #endif
@@ -302,6 +309,22 @@ bool WEAK HID_Setup(Setup& setup)
 			_hid_idle = setup.wValueL;
 			return true;
 		}
+
+		// edit by NicoHood
+#if defined USBCON && defined(HID_KEYBOARD_ENABLED) && defined(HID_KEYBOARD_LEDS_ENABLED)
+		if (HID_SET_REPORT == r)
+		{
+			if (setup.wLength == 2)
+			{
+				uint8_t data[2];
+				if (2 == USB_RecvControl(data, 2))
+				{
+					// write led out report data
+					hid_keyboard_leds=data[1];
+				}
+			}
+		}
+#endif
 	}
 	return false;
 }
