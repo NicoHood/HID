@@ -4,11 +4,11 @@ This project went through a lot of phases and has now reached an HID library wit
 The idea is to enable enhanced USB functions to almost all 'standard' Arduino boards.
 This is done with slightly different methods for different boards.
 
-**Arduino IDE 1.5.8 is required for the HID Project.
+**Arduino IDE 1.5.8 is required for the HID Project.**
 
 **Supported HID devices:**
 
-* Keyboard with Leds out(modifiers + 6 keys pressed at the same time)
+* Keyboard with Leds out (modifiers + 6 keys pressed at the same time)
 * Mouse (5 buttons, move, wheel)
 * Media Keys (4 keys for music player, webbrowser and more)
 * System Key (for PC standby/shutdown)
@@ -21,46 +21,47 @@ This is done with slightly different methods for different boards.
 * (Pro)Micro
 * Any other 8u2/16u/at90usb162/32u2/32u4 compatible board
 
-| Leonardo/Micro                            | Uno/Mega HoodLoader2        | Uno/Mega HoodLoader1                  |
-|:------------------------------------------|:----------------------------|---------------------------------------|
-| Uses modified/extended Arduino USB-Core   | Same Core as Leonardo/Micro | Coded with Lufa                       |
-| More HID devices (Media, System, Gamepad) | Fully reprogrammable 16u2   | No reprogrammable 16u2                |
-| Keyboard Led Out report                   | Serial0 fully usable        | Main MCU sends HID reports on Serial0 |
-| System Wakeup fix (soon)                  |                             | Serial Protocol filters HID reports   |
-| Serial Control Line accessible            |                             | Built-in ISP function                 |
+| Leonardo/Micro             | Uno/Mega HoodLoader2        | Uno/Mega HoodLoader1                  |
+|:---------------------------|:----------------------------|---------------------------------------|
+| Extended Arduino USB-Core  | Same Core as Leonardo/Micro | Coded with Lufa                       |
+| More HID devices           | Fully reprogrammable 16u2   | No reprogrammable 16u2                |
+| Keyboard Led Out report    | Serial0 fully usable        | Main MCU sends HID reports on Serial0 |
+| System Wakeup fix (soon)   |                             | Serial Protocol filters HID reports   |
+| Serial Control Line access |                             | Built-in ISP function                 |
 
 The HID project contains HID APIs to generate HID reports and functions to send them to the USB Host.
-The API (syntax/usage) of the HID Project is always the same for each solution, you can port code from one device to another very easy.
+The API (syntax/usage) of the HID Project is always the same for each solution, **you can port code from one device to another very easy**.
 
-On a Leonardo this function is extended and improved to get more HID devices + some improvements.
-[HoodLoader2](https://github.com/NicoHood/HoodLoader2) is a BootLoader for the 16u2 that let's you use it as standalone MCU with the same USB-Core.
-[HoodLoader1](https://github.com/NicoHood/HoodLoader) is a 16u2 firmware that filters special HW Serial signals from the main MCU and sends HID signals to the USB Host.
+* On a Leonardo this function is extended and improved to get more HID devices + some improvements.
+* [HoodLoader2](https://github.com/NicoHood/HoodLoader2) is a BootLoader for the 16u2 that let's you use it as standalone MCU with the same USB-Core.
+* [HoodLoader1](https://github.com/NicoHood/HoodLoader) is a 16u2 firmware that filters special HW Serial signals from the main MCU and sends HID signals to the USB Host.
 
 
 To make things more clear the HID Software is in a separate repository than the HoodLoader (1 & 2) sources and installing instructions.
-HoodLoader 1&2 is only used for an Uno/Mega to actually enable USB functions. The 16u2 is normally used for USB-Serial programming of the main MCU but can do way more than that.
+**HoodLoader 1&2 is only used for an Uno/Mega to actually enable USB functions.** The 16u2 is normally used for USB-Serial programming of the main MCU but can do way more than that.
 To use HoodLoader1&2 you also need the HID Project. For more information and installation instructions see the specific repository.
 
 HoodLoader1 was the first solution to enable HID functions to the Uno/Mega but HoodLoader2 opens way more options because you can reprogram the whole MCU standalone.
-See the repository for more infos about this great new opportunity. HoodLoader1 API is still usable in a specific example. HoodLoader1&2 are not needed/useable with a Leonardo/Micro.
+See the repository for more infos about this great new opportunity. HoodLoader1 API is still usable in a specific example. HoodLoader1&2 are not needed/compatible with a Leonardo/Micro.
 
 Installation
 ============
 
-Please remove any older HID Project files from your sketchbook and your Arduino core to not run into any problems.
+**Please remove any older HID Project files from your sketchbook and your Arduino core to not run into any problems.**
 
 Download the library and [install it](http://arduino.cc/en/pmwiki.php?n=Guide/Libraries) like you are used to (access the examples, keywords.txt with IDE).
-Then **move and replace** all .h and .cpp files to the path below. **I strongly recommend to install the library like this. Otherwise it wont work.* 
+Then **move and replace** all .h and .cpp files to the path below. **I strongly recommend to install the library like this. Otherwise it wont work.**
 
 ```
 C:\Arduino\arduino-1.5.8\hardware\arduino\avr\cores\arduino
 ```
-The installation path may differ to yours. Please use Arduino IDE 1.5.8 and file an issue if a newer version isn't working.
+The installation path may differ to yours. **Please use Arduino IDE 1.5.8** and file an issue if a newer version isn't working.
 Restart the IDE. Ensure all drivers are installed. See [this](https://learn.sparkfun.com/tutorials/disabling-driver-signature-on-windows-8/disabling-signed-driver-enforcement-on-windows-8)
 on how to install the unsigned HoodLoader2 drivers.
 
-If you are using an Arduino Uno/Mega follow the installation instructions of the HoodLoader1 or 2 (no extra hardware needed, just a few cables).
+**If you are using an Arduino Uno/Mega follow the installation instructions of the HoodLoader1 or 2** (no extra hardware needed, just a few cables).
 You can grab the latest version + installing instructions of each HoodLoader in its own repository linked above.
+
 Of course the new version [HoodLoader2](https://github.com/NicoHood/HoodLoader2) is recommend and HoodLoader1 API is only for compatibility reasons online.
 The old, full HoodLoader1 HID (software)solution (before update 2.0) can be found here: https://github.com/NicoHood/HID/tree/3d8a9b40752a143141b8be4b8f744e203c80b000
 
@@ -74,45 +75,48 @@ How to use
 The more you activate the more flash is used. For the Uno/Mega you have a limited ram/flash size, so please try not to exceed this limit and only use the needed HID devices.
 RawHID is currently not working properly.
 
-Try the Basic examples for each HID device. They are pretty much self explaining.
+**Try the Basic examples for each HID device. They are pretty much self explaining.**
 
-The HoodLoader2 examples are to show some special cases for the 16u2. It shows how to remove the USB functions if needed,
+**The HoodLoader2 examples are to show some special cases for the 16u2.** It shows how to remove the USB functions if needed,
 how to optimally use ram since its limited and some ported sketches to reprogram the main MCU or for the missing ISP function. Please check them out.
 
 
 ### HoodLoader1
 
-Try the HoodLoader1 example. It provides the basic Serial protocol API to send HID reports. You have to copy this to every sketch again.
+**Try the HoodLoader1 example. It provides the basic Serial protocol API to send HID reports. You have to copy this to every sketch again.**
 
-With HoodLoader1 you can only use baud 115200 for HID due to speed/programming reasons.
+With HoodLoader1 you can **only use baud 115200 for HID** due to speed/programming reasons.
 Use Serial.begin(115200) in every HoodLoader1 sketch.
 Its not bad anyway because its the fastest baud and you want fast HID recognition.
 You still can **fully use any other baud** for normal sketches but HID wont work.
 If you try nevertheless it will output Serial crap to the monitor.
 
-Keep in mind that HoodLoader1 has no flush function. If the PC is reading HID too slow it can miss data, like on a Raspberry Pi.
+Keep in mind that HoodLoader1 has **no flush function**. If the PC is reading HID too slow it can miss data, like on a Raspberry Pi.
 Add a delay to the sending function or just use the newer HoodLoader2.
 
 Always release buttons to not cause any erros. Replug USB cable to reset the values if anything went wrong.
-Keep in mind that with HoodLoader1 the 16u2 is always on, so you need to reset the HID values on every startup with a begin() of each used API.
+Keep in mind that **with HoodLoader1 the 16u2 is always on**. The 16u2 and its HID reports are not reset if the main MCU is reset.
+So you need to reset the HID reports on every startup with a begin() of each used API.
 On Windows every USB report will reset when you open the lock screen.
 See [deactivate HID function (Hoodloader only)](https://github.com/NicoHood/Hoodloader) how to temporary disable HID again.
 
-For Arduino as ISP usage (optional, Hoodloader only, has nothing to do with HID function)
+For **16u2 as ISP usage** (optional, Hoodloader only, has nothing to do with HID function)
 see [Hoodloader repository](https://github.com/NicoHood/Hoodloader).
 
 The sending API is no longer integrated directly in the HID Project since it is now more an extended USB-Core and this has nothing to do with it.
 Its more a legacy version to still use HoodLoader1 or to reimplement something similar with HoodLoader2 if you still want full report access for the main MCU.
 
-The older, full integrated HID Core can be found here. Keep in mind to remove all newer stuff since it may conflict (a clean arduino core would do it).
+**The older, full integrated HID Core can be found here.** Keep in mind to remove all newer stuff since it may conflict (a clean arduino core would do it).
+It is not better than this solution, maybe easier to use since its just more integrated.
 https://github.com/NicoHood/HID/tree/3d8a9b40752a143141b8be4b8f744e203c80b000
 
 
 How it works
 ============
-For the Leonardo/Micro its just a modified version of the HID descriptor and Classes for the new devices.
-Its not that complicated, everything you need is in the main 4 .h/cpp files.
+For the Leonardo/Micro + HoodLoader2 its a modified version of the HID descriptors and USB-Core.
+This changes were made to improve the functions, add more devices and add u2 series compatibility.
 
+HoodLoader1 only:
 For the Uno/Mega you need a special Bootloader. Why? See [Hoodloader repository](https://github.com/NicoHood/Hoodloader).
 To sum it up: Serial information is grabbed by the "man in the middle, 16u2" and you dont have to worry to get any wrong Serial stuff via USB.
 Thatswhy you need a special baud (115200) that both sides can communicate with each other.
