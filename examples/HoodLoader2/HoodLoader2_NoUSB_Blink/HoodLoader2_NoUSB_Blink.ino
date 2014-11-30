@@ -13,12 +13,14 @@
  Keep in mind that the logic is inverted then! LOW=HIGH and vice versa.
  */
 
+#ifndef USBCON
 // workaround for undefined USBCON has to be placed in every sketch
 // otherwise the timings wont work correctly
 ISR(USB_GEN_vect)
 {
   UDINT = 0;
 }
+#endif
 
 void setup() {
   TX_RX_LED_INIT;
