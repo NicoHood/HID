@@ -1,5 +1,5 @@
-Arduino HID Project 2.0 (Uno/Mega/Leonardo/Micro)
-=================================================
+Arduino HID Project 2.0
+=======================
 ![Header Picture](header.jpg)
 
 This project went through a lot of phases and has now reached an HID library with 3 software solutions.
