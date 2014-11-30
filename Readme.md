@@ -1,5 +1,7 @@
-Arduino HID Project 2.0
-=======================
+Arduino HID Project 2.0 (Uno/Mega/Leonardo/Micro)
+=================================================
+![Header Picture](header.jpg)
+
 This project went through a lot of phases and has now reached an HID library with 3 software solutions.
 The idea is to enable enhanced USB functions to almost all 'standard' Arduino boards.
 This is done with slightly different methods for different boards.
