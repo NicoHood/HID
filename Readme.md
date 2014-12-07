@@ -65,7 +65,7 @@ on how to install the unsigned HoodLoader2 drivers.
 You can grab the latest version + installing instructions of each HoodLoader in its own repository linked above.
 
 Of course the new version [HoodLoader2](https://github.com/NicoHood/HoodLoader2) is recommend and HoodLoader1 API is only for compatibility reasons online.
-The old, full HoodLoader1 HID (software)solution (before update 2.0) can be found here: https://github.com/NicoHood/HID/tree/3d8a9b40752a143141b8be4b8f744e203c80b000
+The old, full HoodLoader1 HID (software)solution (before update 2.0) can be found here: [Outdated HID Project for 1.5.7](https://github.com/NicoHood/HID/tree/3d8a9b40752a143141b8be4b8f744e203c80b000)
 
 
 How to use
@@ -110,7 +110,7 @@ Its more a legacy version to still use HoodLoader1 or to reimplement something s
 
 **The older, full integrated HID Core can be found here.** Keep in mind to remove all newer stuff since it may conflict (a clean arduino core would do it).
 It is not better than this solution, maybe easier to use since its just more integrated.
-https://github.com/NicoHood/HID/tree/3d8a9b40752a143141b8be4b8f744e203c80b000
+[Outdated HID Project for 1.5.7](https://github.com/NicoHood/HID/tree/3d8a9b40752a143141b8be4b8f744e203c80b000)
 
 
 How it works
@@ -136,6 +136,10 @@ This project wouldnt be possible without
 * [Athanasios Douitsis Multimedia Keys Example](https://github.com/aduitsis/ardumultimedia)
 * [The Original Arduino Sources](https://github.com/arduino/Arduino/tree/master/hardware/arduino/firmwares/atmegaxxu2/arduino-usbserial)
 * [USBlyzer](http://www.usblyzer.com/)
+* [Mattairtechs 16u2 Lufa USB Core](https://www.mattairtech.com/index.php/development-boards/mt-db-u1.html)
+* [Paul Brook's Minimus 32u2 Arduino USB Core](https://github.com/pbrook/minimus-arduino)
+* [Paul Stoffregen's Teensy Core](https://github.com/PaulStoffregen/cores)
+* [Keyboard Led Out report by hartmut_holgraefe](http://forum.arduino.cc/index.php?topic=173583.0)
 * A lot of searching through the web
 * The awesome official Arduino IRC chat!
 * [The NicoHood Protocol ^.^](https://github.com/NicoHood/NicoHoodProtocol)
