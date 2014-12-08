@@ -128,6 +128,7 @@ HID_MEDIA_SIZE + HID_SYSTEM_SIZE + HID_GAMEPAD_SIZE + 0)
 #define USE_USB_API 
 
 // activate all API's
+// ignore this, this is not the setting for the USB core, its only used for non usb boards to use the APIs
 #define HID_MOUSE_ENABLED
 #define HID_KEYBOARD_ENABLED
 #define HID_RAWHID_ENABLED
