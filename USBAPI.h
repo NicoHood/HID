@@ -15,7 +15,7 @@
   You should have received a copy of the GNU Lesser General Public
   License along with this library; if not, write to the Free Software
   Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
-*/
+  */
 
 #ifndef __USBAPI__
 #define __USBAPI__
@@ -111,7 +111,7 @@ public:
 	void begin(void);
 	void end(void);
 	void click(uint8_t b = MOUSE_LEFT);
-	void move(signed char x, signed char y, signed char wheel = 0);	
+	void move(signed char x, signed char y, signed char wheel = 0);
 	void press(uint8_t b = MOUSE_LEFT);		// press LEFT by default
 	void release(uint8_t b = MOUSE_LEFT);	// release LEFT by default
 	bool isPressed(uint8_t b = MOUSE_LEFT);	// check LEFT by default
@@ -213,7 +213,7 @@ void	HID_SendReport(uint8_t id, const void* data, int len);
 int		MSC_GetInterface(uint8_t* interfaceNum);
 int		MSC_GetDescriptor(int i);
 bool	MSC_Setup(Setup& setup);
-bool	MSC_Data(uint8_t rx,uint8_t tx);
+bool	MSC_Data(uint8_t rx, uint8_t tx);
 
 //================================================================================
 //================================================================================

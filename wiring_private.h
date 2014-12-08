@@ -20,7 +20,7 @@
   Boston, MA  02111-1307  USA
 
   $Id: wiring.h 239 2007-01-12 17:58:39Z mellis $
-*/
+  */
 
 #ifndef WiringPrivate_h
 #define WiringPrivate_h
@@ -62,7 +62,7 @@ extern "C"{
 #define EXTERNAL_NUM_INTERRUPTS 2
 #endif
 
-typedef void (*voidFuncPtr)(void);
+	typedef void(*voidFuncPtr)(void);
 
 #ifdef __cplusplus
 } // extern "C"
