@@ -20,13 +20,13 @@
 
 #if defined(USBCON)
 
-#define EP_TYPE_CONTROL				0x00
-#define EP_TYPE_BULK_IN				0x81
-#define EP_TYPE_BULK_OUT			0x80
-#define EP_TYPE_INTERRUPT_IN		0xC1
-#define EP_TYPE_INTERRUPT_OUT		0xC0
-#define EP_TYPE_ISOCHRONOUS_IN		0x41
-#define EP_TYPE_ISOCHRONOUS_OUT		0x40
+#define EP_TYPE_CONTROL				(0x00)
+#define EP_TYPE_BULK_IN				((1<<EPTYPE1) | (1<<EPDIR))
+#define EP_TYPE_BULK_OUT			(1<<EPTYPE1)
+#define EP_TYPE_INTERRUPT_IN		((1<<EPTYPE1) | (1<<EPTYPE0) | (1<<EPDIR))
+#define EP_TYPE_INTERRUPT_OUT		((1<<EPTYPE1) | (1<<EPTYPE0))
+#define EP_TYPE_ISOCHRONOUS_IN		((1<<EPTYPE0) | (1<<EPDIR))
+#define EP_TYPE_ISOCHRONOUS_OUT		(1<<EPTYPE0)
 
 /** Pulse generation counters to keep track of the number of milliseconds remaining for each pulse type */
 #define TX_RX_LED_PULSE_MS 100
@@ -71,19 +71,28 @@ const u8 STRING_PRODUCT[] PROGMEM = USB_PRODUCT;
 
 const u8 STRING_MANUFACTURER[] PROGMEM = USB_MANUFACTURER;
 
-
-#ifdef CDC_ENABLED
-#define DEVICE_CLASS 0x02
-#else
-#define DEVICE_CLASS 0x00
-#endif
+// edit by NicoHood
+// refering to the official docs we have to use a different descriptor for CDC + HID:
+// http://www.usb.org/developers/defined_class
 
 //	DEVICE DESCRIPTOR
+#if defined(CDC_ENABLED) && defined(HID_ENABLED)
 const DeviceDescriptor USB_DeviceDescriptor =
-D_DEVICE(0x00, 0x00, 0x00, 64, USB_VID, USB_PID, 0x100, IMANUFACTURER, IPRODUCT, 0, 1);
+D_DEVICE(USB_DEVICE_CLASS_IAD, USB_DEVICE_SUB_CLASS_IAD, USB_DEVICE_PROTOCOL_IAD, 64, USB_VID, USB_PID, 0x100, IMANUFACTURER, IPRODUCT, 0, 1);
+
+#elif defined(CDC_ENABLED)
+const DeviceDescriptor USB_DeviceDescriptor =
+D_DEVICE(USB_DEVICE_CDC_CLASS, USB_DEVICE_CDC_SUB_CLASS, USB_DEVICE_CDC_PROTOCOL, 64, USB_VID, USB_PID, 0x100, IMANUFACTURER, IPRODUCT, 0, 1);
+
+//#elif defined(HID_ENABLED)
+#else
+const DeviceDescriptor USB_DeviceDescriptor =
+D_DEVICE(USB_DEVICE_NO_CLASS, USB_DEVICE_NO_SUB_CLASS, USB_DEVICE_NO_PROTOCOL, 64, USB_VID, USB_PID, 0x100, IMANUFACTURER, IPRODUCT, 0, 1);
+
+#endif
 
 const DeviceDescriptor USB_DeviceDescriptorA =
-D_DEVICE(DEVICE_CLASS, 0x00, 0x00, 64, USB_VID, USB_PID, 0x100, IMANUFACTURER, IPRODUCT, 0, 1);
+D_DEVICE(USB_DEVICE_NO_CLASS, USB_DEVICE_NO_SUB_CLASS, USB_DEVICE_NO_PROTOCOL, 64, USB_VID, USB_PID, 0x100, IMANUFACTURER, IPRODUCT, 0, 1);
 
 //==================================================================
 //==================================================================
@@ -340,7 +349,7 @@ static
 void InitEP(u8 index, u8 type, u8 size)
 {
 	UENUM = index;
-	UECONX = 1;
+	UECONX = (1 << EPEN);
 	UECFG0X = type;
 	UECFG1X = size;
 }
@@ -351,7 +360,7 @@ void InitEndpoints()
 	for (u8 i = 1; i < sizeof(_initEndpoints); i++)
 	{
 		UENUM = i;
-		UECONX = 1;
+		UECONX = (1 << EPEN);
 		UECFG0X = pgm_read_byte(_initEndpoints + i);
 		UECFG1X = EP_DOUBLE_64;
 	}

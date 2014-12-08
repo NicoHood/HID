@@ -84,6 +84,21 @@
 #define USB_DEVICE_CLASS_STORAGE               0x08
 #define USB_DEVICE_CLASS_VENDOR_SPECIFIC       0xFF
 
+// edit by NicoHood
+// added new definitions for correct USB descriptors
+// there are even more, these are the ones we need
+#define USB_DEVICE_CLASS_IAD                   0xEF
+#define USB_DEVICE_SUB_CLASS_IAD               0x02
+#define USB_DEVICE_PROTOCOL_IAD                0x01
+
+#define USB_DEVICE_CDC_CLASS                   0x02
+#define USB_DEVICE_CDC_SUB_CLASS               0x00
+#define USB_DEVICE_CDC_PROTOCOL                0x00 // NoSpecific Protocol
+
+#define USB_DEVICE_NO_CLASS                    0x00
+#define USB_DEVICE_NO_SUB_CLASS                0x00
+#define USB_DEVICE_NO_PROTOCOL                 0x00
+
 #define USB_CONFIG_POWERED_MASK                0x40
 #define USB_CONFIG_BUS_POWERED                 0x80
 #define USB_CONFIG_SELF_POWERED                0xC0
