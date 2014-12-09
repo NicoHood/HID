@@ -80,11 +80,13 @@ bool WEAK CDC_Setup(Setup& setup)
 		if (CDC_SET_LINE_CODING == r)
 		{
 			USB_RecvControl((void*)&_usbLineInfo, 7);
+			CDC_LineEncodingEvent();
 		}
 
 		if (CDC_SET_CONTROL_LINE_STATE == r)
 		{
 			_usbLineInfo.lineState = setup.wValueL;
+			CDC_LineStateEvent();
 		}
 
 		if (CDC_SET_LINE_CODING == r || CDC_SET_CONTROL_LINE_STATE == r)
@@ -146,6 +148,15 @@ bool WEAK CDC_Setup(Setup& setup)
 	return false;
 }
 
+void WEAK CDC_LineEncodingEvent(void)
+{
+	// has to be implemented by the user
+}
+
+void WEAK CDC_LineStateEvent(void)
+{
+	// has to be implemented by the user
+}
 
 void Serial_::begin(unsigned long /* baud_count */)
 {
@@ -219,6 +230,36 @@ size_t Serial_::write(const uint8_t *buffer, size_t size)
 	}
 	setWriteError();
 	return 0;
+}
+
+uint32_t Serial_::baud(void)
+{
+	return _usbLineInfo.dwDTERate;
+}
+
+uint8_t Serial_::stopbits(void)
+{
+	return _usbLineInfo.bCharFormat;
+}
+
+uint8_t Serial_::paritytype(void)
+{
+	return _usbLineInfo.bParityType;
+}
+
+uint8_t Serial_::numbits(void)
+{
+	return _usbLineInfo.bDataBits;
+}
+
+bool Serial_::dtr(void)
+{
+	return (_usbLineInfo.lineState & CDC_CONTROL_LINE_OUT_DTR) ? true : false;
+}
+
+bool Serial_::rts(void)
+{
+	return (_usbLineInfo.lineState & CDC_CONTROL_LINE_OUT_RTS) ? true : false;
 }
 
 // This operator is a convenient way for a sketch to check whether the

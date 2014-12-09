@@ -82,6 +82,12 @@ public:
 	virtual size_t write(uint8_t);
 	virtual size_t write(const uint8_t*, size_t);
 	using Print::write; // pull in write(str) and write(buf, size) from Print
+	uint32_t baud(void);
+	uint8_t stopbits(void);
+	uint8_t paritytype(void);
+	uint8_t numbits(void);
+	bool dtr(void);
+	bool rts(void);
 	operator bool();
 
 	volatile uint8_t _rx_buffer_head;
@@ -222,6 +228,8 @@ bool	MSC_Data(uint8_t rx, uint8_t tx);
 int		CDC_GetInterface(uint8_t* interfaceNum);
 int		CDC_GetDescriptor(int i);
 bool	CDC_Setup(Setup& setup);
+void CDC_LineEncodingEvent(void);
+void CDC_LineStateEvent(void);
 
 //================================================================================
 //================================================================================

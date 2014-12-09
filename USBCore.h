@@ -56,6 +56,9 @@
 #define CDC_GET_LINE_CODING			0x21
 #define CDC_SET_CONTROL_LINE_STATE	0x22
 
+#define CDC_CONTROL_LINE_OUT_DTR   (1 << 0)
+#define CDC_CONTROL_LINE_OUT_RTS   (1 << 1)
+
 #define MSC_RESET					0xFF
 #define MSC_GET_MAX_LUN				0xFE
 
