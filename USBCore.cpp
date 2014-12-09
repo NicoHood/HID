@@ -271,7 +271,8 @@ u8 USB_SendSpace(u8 ep)
 	LockEP lock(ep);
 	if (!ReadWriteAllowed())
 		return 0;
-	return 64 - FifoByteCount();
+	// edit by NicoHood
+	return USB_EP_SIZE - FifoByteCount();
 }
 
 //	Blocking Send of data to an endpoint
@@ -344,6 +345,8 @@ const u8 _initEndpoints[] =
 
 #define EP_SINGLE_64 0x32	// EP0
 #define EP_DOUBLE_64 0x36	// Other endpoints
+// edit by NicoHood
+#define EP_SINGLE_16 0x12
 
 static
 void InitEP(u8 index, u8 type, u8 size)
@@ -362,7 +365,14 @@ void InitEndpoints()
 		UENUM = i;
 		UECONX = (1 << EPEN);
 		UECFG0X = pgm_read_byte(_initEndpoints + i);
+		// edit by NicoHood
+#if USB_EP_SIZE == 16
+		UECFG1X = EP_SINGLE_16;
+#elif USB_EP_SIZE == 64
 		UECFG1X = EP_DOUBLE_64;
+#else
+#error Unsupported value for USB_EP_SIZE
+#endif
 	}
 	UERST = 0x7E;	// And reset them
 	UERST = 0;
@@ -666,16 +676,55 @@ USBDevice_::USBDevice_()
 {
 }
 
+// edit by NicoHood
+// added from teensy definition by paul stoffregen
+#if defined(__AVR_AT90USB82__) || defined(__AVR_AT90USB162__) || defined(__AVR_ATmega32U2__) || defined(__AVR_ATmega16U2__) || defined(__AVR_ATmega8U2__)
+#define HW_CONFIG() 
+#define PLL_CONFIG() (PLLCSR = ((1<<PLLE)|(1<<PLLP0)))
+#define USB_CONFIG() (USBCON = (1<<USBE))
+#define USB_FREEZE() (USBCON = ((1<<USBE)|(1<<FRZCLK)))
+#elif defined(__AVR_ATmega32U4__) || defined(__AVR_ATmega16U4__)
+#define HW_CONFIG() (UHWCON = 0x01)
+#define PLL_CONFIG() (PLLCSR = 0x12)
+#define USB_CONFIG() (USBCON = ((1<<USBE)|(1<<OTGPADE)))
+#define USB_FREEZE() (USBCON = ((1<<USBE)|(1<<FRZCLK)))
+#elif defined(__AVR_AT90USB646__)
+#define HW_CONFIG() (UHWCON = 0x81)
+#define PLL_CONFIG() (PLLCSR = 0x1A)
+#define USB_CONFIG() (USBCON = ((1<<USBE)|(1<<OTGPADE)))
+#define USB_FREEZE() (USBCON = ((1<<USBE)|(1<<FRZCLK)))
+#elif defined(__AVR_AT90USB1286__)
+#define HW_CONFIG() (UHWCON = 0x81)
+#define PLL_CONFIG() (PLLCSR = 0x16)
+#define USB_CONFIG() (USBCON = ((1<<USBE)|(1<<OTGPADE)))
+#define USB_FREEZE() (USBCON = ((1<<USBE)|(1<<FRZCLK)))
+#endif
+
 void USBDevice_::attach()
 {
+	// edit by NicoHood
+	// added support for u2 and u4 Series. Other MCUs not tested, but they could work.
 	_usbConfiguration = 0;
-	UHWCON = 0x01;						// power internal reg
-	USBCON = (1 << USBE) | (1 << FRZCLK);		// clock frozen, usb enabled
+	HW_CONFIG();						// power internal reg
+
+	// from Paul Brook source, TODO needed? (we might change this in a future commit with the USB wakeup)
+	//USBCON = 0;							// Reset controller
+	USB_FREEZE();		// clock frozen, usb enabled
+
 #if F_CPU == 16000000UL
-	PLLCSR = 0x12;						// Need 16 MHz xtal
+	// Need 16 MHz xtal
+#ifdef PINDIV
+	PLLCSR = (1 << PINDIV) | (1 << PLLE);
+#else
+	// added from Paul Brook source, no idea for what board this is used for
+	PLLCSR = (1 << PLLP0) | (1 << PLLE);
+#endif	
+
 #elif F_CPU == 8000000UL
-	PLLCSR = 0x02;						// Need 8 MHz xtal
+	// Need 8 MHz xtal
+	PLLCSR = (1 << PLLE);
 #endif
+
 	while (!(PLLCSR & (1 << PLOCK)))		// wait for lock pll
 		;
 
@@ -684,7 +733,7 @@ void USBDevice_::attach()
 	// port touch at 1200 bps. This delay fixes this behaviour.
 	delay(1);
 
-	USBCON = ((1 << USBE) | (1 << OTGPADE));	// start USB clock
+	USB_CONFIG();	// start USB clock
 	UDIEN = (1 << EORSTE) | (1 << SOFE);		// Enable interrupts for EOR (End of Reset) and SOF (start of frame)
 	UDCON = 0;							// enable attach resistor
 

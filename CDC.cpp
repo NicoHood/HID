@@ -50,8 +50,9 @@ const CDCDescriptor _cdcInterface =
 
 	//	CDC data interface
 	D_INTERFACE(CDC_DATA_INTERFACE, 2, CDC_DATA_INTERFACE_CLASS, 0, 0),
-	D_ENDPOINT(USB_ENDPOINT_OUT(CDC_ENDPOINT_OUT), USB_ENDPOINT_TYPE_BULK, 0x40, 0),
-	D_ENDPOINT(USB_ENDPOINT_IN(CDC_ENDPOINT_IN), USB_ENDPOINT_TYPE_BULK, 0x40, 0)
+	// edit by NicoHood
+	D_ENDPOINT(USB_ENDPOINT_OUT(CDC_ENDPOINT_OUT), USB_ENDPOINT_TYPE_BULK, USB_EP_SIZE, 0),
+	D_ENDPOINT(USB_ENDPOINT_IN(CDC_ENDPOINT_IN), USB_ENDPOINT_TYPE_BULK, USB_EP_SIZE, 0)
 };
 
 int WEAK CDC_GetInterface(u8* interfaceNum)
@@ -96,8 +97,28 @@ bool WEAK CDC_Setup(Setup& setup)
 			// We check DTR state to determine if host port is open (bit 0 of lineState).
 			if (1200 == _usbLineInfo.dwDTERate && (_usbLineInfo.lineState & 0x01) == 0)
 			{
+				// edit by NicoHood
+				// change ram pointer to fit the 16u2's ram size and only use an 8bit value
+#if defined(__AVR_ATmega32U4__)
 				*(uint16_t *)0x0800 = 0x7777;
 				wdt_enable(WDTO_120MS);
+#else
+				// workaround for this issue:
+				// https://github.com/arduino/Arduino/issues/2474
+				// I didn't change this for the 32u4 to simply not touch their code
+				// the correct way would be to add a compiler flag like this:
+				// -Wl,--section-start=.blkey=0x280
+				//volatile uint8_t MagicBootKey __attribute__((section(".blkey")));
+				cli();
+
+				//MagicBootKey = 0x77;
+				*(uint8_t *)0x0280 = 0x77;
+
+				wdt_enable(WDTO_120MS);
+
+				// wait for reset
+				for (;;);
+#endif
 			}
 			else
 			{
@@ -106,9 +127,18 @@ bool WEAK CDC_Setup(Setup& setup)
 				// To avoid spurious resets we set the watchdog to 250ms and eventually
 				// cancel if DTR goes back high.
 
+				// edit by NicoHood
+#if defined(__AVR_ATmega32U4__)
 				wdt_disable();
 				wdt_reset();
 				*(uint16_t *)0x0800 = 0x0;
+#else
+				// not used because of the workaround above
+				//wdt_disable();
+				//wdt_reset();
+				//MagicBootKey = 0x00;
+				//*(uint8_t *)0x0280 = 0x00;
+#endif
 			}
 		}
 		return true;
