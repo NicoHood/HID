@@ -34,6 +34,29 @@ typedef unsigned long u32;
 
 #if defined(USBCON)
 
+// include needed HID devices
+// the more you activate, the more flash it will take
+// by default only Mouse + Keyboard (without LEDs) are activated
+#define HID_MOUSE_ENABLED
+#define HID_KEYBOARD_ENABLED
+//#define HID_KEYBOARD_LEDS_ENABLED
+
+//#define HID_RAWHID_ENABLED (currently broken for USB-Core)
+//#define HID_MEDIA_ENABLED
+//#define HID_SYSTEM_ENABLED
+//#define HID_GAMEPAD_ENABLED
+
+/** Enum for the HID report IDs used in the device. */
+typedef enum{
+	HID_REPORTID_NotAReport = 0x00,			/**< first entry is always zero for multireports */
+	HID_REPORTID_MouseReport = 0x01,		/**< Report ID for the Mouse report within the device. */
+	HID_REPORTID_KeyboardReport = 0x02,		/**< Report ID for the Keyboard report within the device. */
+	HID_REPORTID_RawHidReport = 0x03,		/**< Report ID for the Raw Hid report within the device. */
+	HID_REPORTID_MediaReport = 0x04,		/**< Report ID for the Media report within the device. */
+	HID_REPORTID_SystemReport = 0x05,		/**< Report ID for the Power report within the device. */
+	HID_REPORTID_GamepadReport = 0x06,		/**< Report ID for the Gamepad report within the device. */
+} HID_Report_IDs;
+
 #include "USBDesc.h"
 #include "USBCore.h"
 
@@ -102,10 +125,14 @@ extern Serial_ Serial;
 //================================================================================
 //	Mouse
 
-#define MOUSE_LEFT 1
-#define MOUSE_RIGHT 2
-#define MOUSE_MIDDLE 4
-#define MOUSE_ALL (MOUSE_LEFT | MOUSE_RIGHT | MOUSE_MIDDLE)
+#ifdef HID_MOUSE_ENABLED
+
+#define MOUSE_LEFT		0x01
+#define MOUSE_RIGHT		0x02
+#define MOUSE_MIDDLE	0x04
+#define MOUSE_PREV		0x08
+#define MOUSE_NEXT		0x10
+#define MOUSE_ALL (MOUSE_LEFT | MOUSE_RIGHT | MOUSE_MIDDLE | MOUSE_PREV | MOUSE_NEXT)
 
 class Mouse_
 {
@@ -124,18 +151,29 @@ public:
 };
 extern Mouse_ Mouse;
 
+#endif
+
 //================================================================================
 //================================================================================
 //	Keyboard
+
+#ifdef HID_KEYBOARD_ENABLED
+
+#define KEY_PRINT			0xCE
+#define KEY_NUM_LOCK		0xDB
+#define KEY_SCROLL_LOCK		0xCF
+#define KEY_PAUSE			0xD0
 
 #define KEY_LEFT_CTRL		0x80
 #define KEY_LEFT_SHIFT		0x81
 #define KEY_LEFT_ALT		0x82
 #define KEY_LEFT_GUI		0x83
+#define KEY_LEFT_WINDOWS KEY_LEFT_GUI
 #define KEY_RIGHT_CTRL		0x84
 #define KEY_RIGHT_SHIFT		0x85
 #define KEY_RIGHT_ALT		0x86
 #define KEY_RIGHT_GUI		0x87
+#define KEY_RIGHT_WINDOWS KEY_RIGHT_GUI
 
 #define KEY_UP_ARROW		0xDA
 #define KEY_DOWN_ARROW		0xD9
@@ -165,6 +203,15 @@ extern Mouse_ Mouse;
 #define KEY_F11				0xCC
 #define KEY_F12				0xCD
 
+#define LED_NUM_LOCK			0x01
+#define LED_CAPS_LOCK			0x02
+#define LED_SCROLL_LOCK			0x04
+
+#if defined USBCON && defined(HID_KEYBOARD_ENABLED) && defined(HID_KEYBOARD_LEDS_ENABLED)
+// extern accessible led out report
+extern uint8_t hid_keyboard_leds;
+#endif
+
 //	Low level key report: up to 6 keys and shift, ctrl etc at once
 typedef struct
 {
@@ -186,8 +233,14 @@ public:
 	virtual size_t press(uint8_t k);
 	virtual size_t release(uint8_t k);
 	virtual void releaseAll(void);
+
+#if defined(HID_KEYBOARD_LEDS_ENABLED)
+	inline uint8_t getLEDs(void){ return hid_keyboard_leds; }
+#endif
 };
 extern Keyboard_ Keyboard;
+
+#endif
 
 //================================================================================
 //================================================================================

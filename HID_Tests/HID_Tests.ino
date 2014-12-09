@@ -15,6 +15,11 @@ void loop() {
   }
 
   delay(3000);
+  Keyboard.write(KEY_CAPS_LOCK);
+  Serial.println("Leds");
+  Serial.println(Keyboard.getLEDs(), BIN);
+  
+  Serial.println("Serial");
   Serial.println(Serial.dtr());
   Serial.println(Serial.rts());
   Serial.println(Serial.baud());
