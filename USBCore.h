@@ -317,5 +317,18 @@ typedef struct
 #define D_CDCCS(_subtype,_d0,_d1)	{ 5, 0x24, _subtype, _d0, _d1 }
 #define D_CDCCS4(_subtype,_d0)		{ 4, 0x24, _subtype, _d0 }
 
+//================================================================================
+//================================================================================
+//	Low level API
+
+typedef struct
+{
+	uint8_t bmRequestType;
+	uint8_t bRequest;
+	uint8_t wValueL;
+	uint8_t wValueH;
+	uint16_t wIndex;
+	uint16_t wLength;
+} Setup;
 
 #endif

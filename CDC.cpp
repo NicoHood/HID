@@ -16,7 +16,7 @@
 ** SOFTWARE.
 */
 
-#include "USBAPI.h"
+#include "CDC.h"
 #include <avr/wdt.h>
 
 #if defined(USBCON)
