@@ -7,7 +7,6 @@ Under Construction. This is a todo list for myself and a feature list so far.
 Keyboard Layout english only?
 more usb definitions instead of fixed values, noone understands
 someone has to add the keywords.txt definitions as well
-keyboard music vol (change descriptor)
 keyboard led move to usb function not to keyboard and from keyboard call this function?
 weak hidsendreport implement somewhere the prototype?
 move HID-Core to a seperate folder?
@@ -16,6 +15,8 @@ keycode/raw for keyboard
 magic key fix?
 add examples
 void Recv(volatile u8* data, u8 count) static inline??
+improve workaround for consumer + system weak hid send function prototype
+add gamepad
 
 Bugs
 Mouse Abs only works with system report under special circumstances.

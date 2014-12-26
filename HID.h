@@ -262,6 +262,8 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 #include "USBDesc.h"
 #include "USBCore.h"
+// only include HIDAPI if we have an USB AVR MCU.
+// The use can overwrite HID_SendReport() and manually include the APIs.
 #include "HIDAPI.h"
 
 //================================================================================

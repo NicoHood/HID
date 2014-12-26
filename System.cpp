@@ -1,5 +1,5 @@
 /*
-HIDAPI.h
+System.cpp
 Copyright (c) 2005-2014 Arduino.  All right reserved.
 
 This library is free software; you can redistribute it and/or
@@ -17,13 +17,10 @@ License along with this library; if not, write to the Free Software
 Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-#ifndef __HIDAPI__
-#define __HIDAPI__
-
-// include all HID APIs
-#include "Keyboard.h"
-#include "Mouse.h"
-#include "Consumer.h"
 #include "System.h"
 
-#endif
+//================================================================================
+// System
+//================================================================================
+
+System_ System;
