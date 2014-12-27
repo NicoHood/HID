@@ -46,6 +46,7 @@ Gamepad + Mouse Abs doesnt work
 * Added Keycode functions in Keyboard API
 * Inlined a lot of the HID API functions to save flash
 * Added Gamepad
+* Added USB Wakeup support
 ```
 
 ```
