@@ -9,19 +9,18 @@ more usb definitions instead of fixed values, noone understands
 someone has to add the keywords.txt definitions as well
 keyboard led move to usb function not to keyboard and from keyboard call this function?
 weak hidsendreport implement somewhere the prototype?
-move HID-Core to a seperate folder?
 usb wakeup
 keycode/raw for keyboard
 magic key fix?
 add examples
-void Recv(volatile u8* data, u8 count) static inline??
 improve workaround for consumer + system weak hid send function prototype
-add gamepad
 check keycode function again?
 generalize HID key definitions
+separate folder for the usb core?
 
 Bugs
 Mouse Abs only works with system report under special circumstances.
+Gamepad + Mouse Abs doesnt work
 ```
 
 
@@ -46,6 +45,7 @@ Mouse Abs only works with system report under special circumstances.
 * Removed virtual functions in Keyboard API
 * Added Keycode functions in Keyboard API
 * Inlined a lot of the HID API functions to save flash
+* Added Gamepad
 ```
 
 ```
