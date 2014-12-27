@@ -23,6 +23,9 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 // to access the HID_SendReport via USBAPI.h, report number and the Print class
 #include "Arduino.h"
 
+//TODO workaround to access the weak sending function
+void HID_SendReport(uint8_t id, const void* data, int len);
+
 //================================================================================
 //================================================================================
 //	Keyboard
@@ -84,7 +87,9 @@ typedef struct
 } KeyReport;
 
 // extern accessible led out report
+#if defined(HID_KEYBOARD_LEDS_ENABLED)
 extern uint8_t hid_keyboard_leds;
+#endif
 
 class Keyboard_ : public Print
 {
@@ -92,15 +97,31 @@ protected:
 	KeyReport _keyReport;
 	void sendReport(KeyReport* keys);
 public:
-	Keyboard_(void);
-	void begin(void);
-	void end(void);
+	inline Keyboard_(void){
+		// empty
+	}
+
+	inline void begin(void){
+		// edit by NicoHood
+		end();
+	}
+
+	inline void end(void){
+		// edit by NicoHood
+		releaseAll();
+	}
+
 	size_t write(uint8_t k);
 	size_t press(uint8_t k);
-	size_t release(uint8_t k);
+	inline size_t release(uint8_t k);
 	void releaseAll(void);
 
- //TODO
+	size_t writeKeycode(uint8_t k);
+	size_t pressKeycode(uint8_t k);
+	size_t releaseKeycode(uint8_t k);
+	size_t addKeycodeToReport(uint8_t k);
+	size_t removeKeycodeFromReport(uint8_t k);
+
 #if defined(HID_KEYBOARD_LEDS_ENABLED)
 	inline uint8_t getLEDs(void){ return hid_keyboard_leds; }
 #endif

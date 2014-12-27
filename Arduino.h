@@ -224,6 +224,7 @@ extern const uint8_t PROGMEM digital_pin_to_timer_PGM[];
 #include "USBAPI.h"
 #include "CDC.h"
 #include "HID.h"
+#include "HIDTables.h"
 
 #if defined(HAVE_HWSERIAL0) && defined(HAVE_CDCSERIAL)
 #error "Targets with both UART0 and CDC serial not supported"

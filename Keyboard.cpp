@@ -26,23 +26,12 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #if defined(HID_KEYBOARD_LEDS_ENABLED)
 uint8_t hid_keyboard_leds = 0;
 void HID_SetKeyboardLedReport(uint8_t leds){
+	// implementation of the weak function in HID.cpp
 	hid_keyboard_leds = leds;
 }
 #endif
 
 Keyboard_ Keyboard;
-
-Keyboard_::Keyboard_(void)
-{
-}
-
-void Keyboard_::begin(void)
-{
-}
-
-void Keyboard_::end(void)
-{
-}
 
 void Keyboard_::sendReport(KeyReport* keys)
 {
@@ -206,9 +195,9 @@ size_t Keyboard_::press(uint8_t k)
 			setWriteError();
 			return 0;
 		}
-		if (k & 0x80) {						// it's a capital letter or other character reached with shift
+		if (k & SHIFT) {						// it's a capital letter or other character reached with shift
 			_keyReport.modifiers |= 0x02;	// the left shift modifier
-			k &= 0x7F;
+			k = k ^ SHIFT;
 		}
 	}
 
@@ -251,9 +240,9 @@ size_t Keyboard_::release(uint8_t k)
 		if (!k) {
 			return 0;
 		}
-		if (k & 0x80) {							// it's a capital letter or other character reached with shift
+		if (k & SHIFT) {							// it's a capital letter or other character reached with shift
 			_keyReport.modifiers &= ~(0x02);	// the left shift modifier
-			k &= 0x7F;
+			k = k ^ SHIFT;
 		}
 	}
 
@@ -281,4 +270,123 @@ size_t Keyboard_::write(uint8_t c)
 	uint8_t p = press(c);  // Keydown
 	release(c);            // Keyup
 	return p;              // just return the result of press() since release() almost always returns 1
+}
+
+
+// pressKeycode() adds the specified key (printing, non-printing, or modifier)
+// to the persistent key report and sends the report.  Because of the way 
+// USB HID works, the host acts like the key remains pressed until we 
+// call releaseKeycode(), releaseAll(), or otherwise clear the report and resend.
+size_t Keyboard_::pressKeycode(uint8_t k)
+{
+	if (!addKeycodeToReport(k)) {
+		return 0;
+	}
+	sendReport(&_keyReport);
+}
+
+size_t Keyboard_::addKeycodeToReport(uint8_t k)
+{
+	uint8_t index = 0;
+	uint8_t done = 0;
+
+	if ((k >= HID_KEYBOARD_LEFT_CONTROL) && (k <= HID_KEYBOARD_RIGHT_GUI)) {
+		// it's a modifier key
+		_keyReport.modifiers |= (0x01 << (k - HID_KEYBOARD_LEFT_CONTROL));
+	}
+	else {
+		// it's some other key:
+		// Add k to the key report only if it's not already present
+		// and if there is an empty slot.
+		for (index = 0; index < sizeof(_keyReport.keys); index++) {
+			if (_keyReport.keys[index] != k) { // is k already in list?
+				if (0 == _keyReport.keys[index]) { // have we found an empty slot?
+					_keyReport.keys[index] = k;
+					done = 1;
+					break;
+				}
+			}
+			else {
+				done = 1;
+				break;
+			}
+
+		}
+
+		// use separate variable to check if slot was found
+		// for style reasons - we do not know how the compiler
+		// handles the for() index when it leaves the loop
+		if (0 == done) {
+			setWriteError();
+			return 0;
+		}
+	}
+
+	return 1;
+}
+
+
+// releaseKeycode() takes the specified key out of the persistent key report and
+// sends the report.  This tells the OS the key is no longer pressed and that
+// it shouldn't be repeated any more.
+// When send is set to FALSE (= 0) no sendReport() is executed. This comes in
+// handy when combining key releases (e.g. SHIFT+A).
+size_t Keyboard_::releaseKeycode(uint8_t k)
+{
+	if (!removeKeycodeFromReport(k)) {
+		return 0;
+	}
+	sendReport(&_keyReport);
+}
+
+size_t Keyboard_::removeKeycodeFromReport(uint8_t k)
+{
+	uint8_t indexA;
+	uint8_t indexB;
+	uint8_t count;
+
+	if ((k >= HID_KEYBOARD_LEFT_CONTROL) && (k <= HID_KEYBOARD_RIGHT_GUI)) {
+		// it's a modifier key
+		_keyReport.modifiers = _keyReport.modifiers & (~(0x01 << (k - HID_KEYBOARD_LEFT_CONTROL)));
+	}
+	else {
+		// it's some other key:
+		// Test the key report to see if k is present.  Clear it if it exists.
+		// Check all positions in case the key is present more than once (which it shouldn't be)
+		for (indexA = 0; indexA < sizeof(_keyReport.keys); indexA++) {
+			if (_keyReport.keys[indexA] == k) {
+				_keyReport.keys[indexA] = 0;
+			}
+		}
+
+		// finally rearrange the keys list so that the free (= 0x00) are at the
+		// end of the keys list - some implementations stop for keys at the
+		// first occurence of an 0x00 in the keys list
+		// so (0x00)(0x01)(0x00)(0x03)(0x02)(0x00) becomes 
+		//    (0x01)(0x03)(0x02)(0x00)(0x00)(0x00)
+		count = 0; // holds the number of zeros we've found
+		indexA = 0;
+		while ((indexA + count) < sizeof(_keyReport.keys)) {
+			if (0 == _keyReport.keys[indexA]) {
+				count++; // one more zero
+				for (indexB = indexA; indexB < sizeof(_keyReport.keys) - count; indexB++) {
+					_keyReport.keys[indexB] = _keyReport.keys[indexB + 1];
+				}
+				_keyReport.keys[sizeof(_keyReport.keys) - count] = 0;
+			}
+			else {
+				indexA++; // one more non-zero
+			}
+		}
+	}
+
+	return 1;
+}
+
+
+size_t Keyboard_::writeKeycode(uint8_t c)
+{
+	uint8_t p = pressKeycode(c);	// Keydown
+	releaseKeycode(c);				// Keyup
+	return (p);						// just return the result of pressKeycode() since release() almost always returns 1
 }

@@ -17,6 +17,8 @@ add examples
 void Recv(volatile u8* data, u8 count) static inline??
 improve workaround for consumer + system weak hid send function prototype
 add gamepad
+check keycode function again?
+generalize HID key definitions
 
 Bugs
 Mouse Abs only works with system report under special circumstances.
@@ -38,6 +40,12 @@ Mouse Abs only works with system report under special circumstances.
 * Removed not needed virtual functions in Keyboard
 * Made HID Reports and its IDs replaceable via pins_Arduino.h
 * Added Absolute Mouse
+* Removed uint8_t USBPutChar(uint8_t c); in HID.cpp
+* Made void Recv(volatile u8* data, u8 count) in USBCore.cpp static inline
+* HID-APIs sends a clean report on begin() and end() now.
+* Removed virtual functions in Keyboard API
+* Added Keycode functions in Keyboard API
+* Inlined a lot of the HID API functions to save flash
 ```
 
 ```
