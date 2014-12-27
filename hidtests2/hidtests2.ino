@@ -4,6 +4,8 @@ void setup() {
   pinMode(8, INPUT_PULLUP);
   pinMode(9, INPUT_PULLUP);
   pinMode(10, INPUT_PULLUP);
+  pinMode(11, INPUT_PULLUP);
+  pinMode(12, INPUT_PULLUP);
 
   // 6374 292
   Keyboard.begin();
@@ -45,6 +47,18 @@ void loop() {
     Keyboard.releaseAll();
     delay(300);
   }
+  if (!digitalRead(11)) {
+    digitalWrite(13, 1);
+    System.write(SYSTEM_SLEEP);
+    delay(300);
+    digitalWrite(13, 0);
+  }
+  if (!digitalRead(12)) {
+    digitalWrite(13, 1);
+    USBDevice.wakeupHost();
+    delay(300);
+    digitalWrite(13, 0);
+  }
 
   if (Serial.available()) {
     // let the Serial receive all bytes and discard the first bytes
@@ -70,7 +84,7 @@ void loop() {
           Consumer.write(MEDIA_PLAY_PAUSE);
           break;
 
-        case 's':
+        case 'o':
           {
             //            uint8_t k[8] = {0};
             //            k[1] = 1 << 4;
@@ -79,6 +93,10 @@ void loop() {
             //            Keyboard.releaseAll();
             break;
           }
+
+        case 's':
+          System.write(SYSTEM_SLEEP);
+          break;
 
         case 'r':
           Mouse.move(100, 0);
@@ -107,24 +125,24 @@ void loop() {
         case '\n':
           Serial.println("Please only input a single character!");
           break;
-          
-          case 'd':
-            Serial.println("Serial");
-  Serial.println(Serial.dtr());
-  Serial.println(Serial.rts());
-  Serial.println(Serial.baud());
-  Serial.println(Serial.stopbits());
-  Serial.println(Serial.paritytype());
-  Serial.println(Serial.numbits());
-  break;
+
+        case 'd':
+          Serial.println("Serial");
+          Serial.println(Serial.dtr());
+          Serial.println(Serial.rts());
+          Serial.println(Serial.baud());
+          Serial.println(Serial.stopbits());
+          Serial.println(Serial.paritytype());
+          Serial.println(Serial.numbits());
+          break;
 
         default:
           Serial.println("unknown");
       }
     }
   }
-  
-  
+
+
   if (eventBaud) {
     Serial.println("Event");
     Serial.println(eventBaud);
