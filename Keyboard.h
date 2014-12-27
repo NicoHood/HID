@@ -78,6 +78,51 @@ void HID_SendReport(uint8_t id, const void* data, int len);
 #define LED_CAPS_LOCK			0x02
 #define LED_SCROLL_LOCK			0x04
 
+//Raw Keyboard definitions
+#define RAW_KEYBOARD_LEFT_CTRL   (1 << 0)
+#define RAW_KEYBOARD_LEFT_SHIFT  (1 << 1)
+#define RAW_KEYBOARD_LEFT_ALT    (1 << 2)
+#define RAW_KEYBOARD_LEFT_GUI  	 (1 << 3)
+#define RAW_KEYBOARD_RIGHT_CTRL  (1 << 4)
+#define RAW_KEYBOARD_RIGHT_SHIFT (1 << 5)
+#define RAW_KEYBOARD_RIGHT_ALT   (1 << 6)
+#define RAW_KEYBOARD_RIGHT_GUI 	 (1 << 7)
+
+#define RAW_KEYBOARD_KEY(key) ((key>='a' && key<='z') ? (0x04 + key-'a') :\
+(key>='A' && key<='Z') ? (0x04 + key-'A') : (key>='1' && key<='9') ? (0x1E + key-'1') : 0x27)
+
+#define RAW_KEYBOARD_UP_ARROW		0x52
+#define RAW_KEYBOARD_DOWN_ARROW		0x51
+#define RAW_KEYBOARD_LEFT_ARROW		0x50
+#define RAW_KEYBOARD_RIGHT_ARROW	0x4F
+#define RAW_KEYBOARD_SPACEBAR		0x2C
+#define RAW_KEYBOARD_BACKSPACE		0x2A
+#define RAW_KEYBOARD_TAB			0x2B
+#define RAW_KEYBOARD_RETURN			0x28
+#define RAW_KEYBOARD_ESC			0x29
+#define RAW_KEYBOARD_INSERT			0x49
+#define RAW_KEYBOARD_DELETE			0x4C
+#define RAW_KEYBOARD_PAGE_UP		0x4B
+#define RAW_KEYBOARD_PAGE_DOWN		0x4E
+#define RAW_KEYBOARD_HOME			0x4A
+#define RAW_KEYBOARD_END			0x4D
+#define RAW_KEYBOARD_CAPS_LOCK		0x39
+#define RAW_KEYBOARD_F1				0x3A
+#define RAW_KEYBOARD_F2				0x3B
+#define RAW_KEYBOARD_F3				0x3C
+#define RAW_KEYBOARD_F4				0x3D
+#define RAW_KEYBOARD_F5				0x3E
+#define RAW_KEYBOARD_F6				0x3F
+#define RAW_KEYBOARD_F7				0x40
+#define RAW_KEYBOARD_F8				0x41
+#define RAW_KEYBOARD_F9				0x42
+#define RAW_KEYBOARD_F10			0x43
+#define RAW_KEYBOARD_F11			0x44
+#define RAW_KEYBOARD_F12			0x45
+#define RAW_KEYBOARD_PRINT			0x46
+#define RAW_KEYBOARD_SCROLL_LOCK	0x47
+#define RAW_KEYBOARD_PAUSE			0x48
+
 //	Low level key report: up to 6 keys and shift, ctrl etc at once
 typedef struct
 {
