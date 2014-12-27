@@ -4,8 +4,8 @@ void setup() {
   pinMode(8, INPUT_PULLUP);
   pinMode(9, INPUT_PULLUP);
   pinMode(10, INPUT_PULLUP);
-  pinMode(11, INPUT_PULLUP);
-  pinMode(12, INPUT_PULLUP);
+  pinMode(2, INPUT_PULLUP);
+  pinMode(3, INPUT_PULLUP);
 
   // 6374 292
   Keyboard.begin();
@@ -47,13 +47,13 @@ void loop() {
     Keyboard.releaseAll();
     delay(300);
   }
-  if (!digitalRead(11)) {
+  if (!digitalRead(2)) {
     digitalWrite(13, 1);
     System.write(SYSTEM_SLEEP);
     delay(300);
     digitalWrite(13, 0);
   }
-  if (!digitalRead(12)) {
+  if (!digitalRead(3)) {
     digitalWrite(13, 1);
     USBDevice.wakeupHost();
     delay(300);
