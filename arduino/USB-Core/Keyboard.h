@@ -131,11 +131,6 @@ typedef struct
 	uint8_t keys[6];
 } KeyReport;
 
-// extern accessible led out report
-#if defined(HID_KEYBOARD_LEDS_ENABLED)
-extern uint8_t hid_keyboard_leds;
-#endif
-
 class Keyboard_ : public Print
 {
 protected:

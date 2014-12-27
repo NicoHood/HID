@@ -23,14 +23,6 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 //================================================================================
 //	Keyboard
 
-#if defined(HID_KEYBOARD_LEDS_ENABLED)
-uint8_t hid_keyboard_leds = 0;
-void HID_SetKeyboardLedReport(uint8_t leds){
-	// implementation of the weak function in HID.cpp
-	hid_keyboard_leds = leds;
-}
-#endif
-
 Keyboard_ Keyboard;
 
 void Keyboard_::sendReport(KeyReport* keys)

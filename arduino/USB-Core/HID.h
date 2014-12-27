@@ -27,6 +27,11 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define HID_KEYBOARD_LEDS_ENABLED
 #endif
 
+// extern accessible led out report
+#if defined(HID_KEYBOARD_LEDS_ENABLED)
+extern uint8_t hid_keyboard_leds;
+#endif
+
 // HID report IDs
 // note by NicoHood: I would not change the current IDs, since it can confuse the OS
 // I had several problems if i change the report id and its use.
@@ -322,9 +327,6 @@ int		HID_GetInterface(uint8_t* interfaceNum);
 int		HID_GetDescriptor(int i);
 bool	HID_Setup(Setup& setup);
 void	HID_SendReport(uint8_t id, const void* data, int len);
-#if defined(HID_KEYBOARD_LEDS_ENABLED)
-void	HID_SetKeyboardLedReport(uint8_t leds);
-#endif
 
 #else /* if defined(USBCON) */
 

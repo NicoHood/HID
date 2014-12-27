@@ -57,6 +57,10 @@ const HIDDescriptor _hidInterface =
 	D_ENDPOINT(USB_ENDPOINT_IN(HID_ENDPOINT_INT), USB_ENDPOINT_TYPE_INTERRUPT, USB_EP_SIZE, 0x01)
 };
 
+#if defined(HID_KEYBOARD_LEDS_ENABLED)
+uint8_t hid_keyboard_leds = 0;
+#endif
+
 //================================================================================
 //================================================================================
 //	Driver
@@ -122,7 +126,7 @@ bool WEAK HID_Setup(Setup& setup)
 				// write led out report data
 				uint8_t data[2];
 				if (2 == USB_RecvControl(data, 2))
-					HID_SetKeyboardLedReport(data[1]);
+					hid_keyboard_leds = data[1];
 			}
 			// else TODO check for other devices like RAW HID, not needed for now
 		}
@@ -130,13 +134,6 @@ bool WEAK HID_Setup(Setup& setup)
 	}
 	return false;
 }
-
-#if defined(HID_KEYBOARD_LEDS_ENABLED)
-void WEAK HID_SetKeyboardLedReport(uint8_t leds){
-	// weak function implemented by the Keyboard API
-	// to not always create the Keyboard object, if it isn't used
-}
-#endif
 
 #endif
 
