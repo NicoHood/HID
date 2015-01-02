@@ -18,9 +18,8 @@ void setup() {
   pinMode(resetPin, OUTPUT);
   digitalWrite(resetPin, HIGH);
 
-  // Start USB and HW Serial
+  // Start USB Serial
   Serial.begin(115200);
-  Serial1.begin(115200);
 }
 
 void loop() {
