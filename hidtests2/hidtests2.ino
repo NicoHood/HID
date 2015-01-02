@@ -7,9 +7,10 @@ void setup() {
   pinMode(2, INPUT_PULLUP);
   pinMode(3, INPUT_PULLUP);
 
-  // 6374 292
+  // 7052 279
   Keyboard.begin();
   Gamepad.begin();
+  hid_keyboard_leds = 0; //test to access it from here
 }
 
 uint32_t eventBaud = 0;
@@ -124,6 +125,18 @@ void loop() {
         case '\r':
         case '\n':
           Serial.println("Please only input a single character!");
+          break;
+
+        case 'g': {
+            // press button 1-32 and reset (34 becaue its written later)
+            static uint8_t count = 1;
+            Gamepad.press(count++);
+            if (count == 34) {
+              Gamepad.releaseAll();
+              count = 1;
+            }
+            Gamepad.write();
+          }
           break;
 
         case 'd':

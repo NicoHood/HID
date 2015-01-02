@@ -1,0 +1,36 @@
+// add your custom HID Report Descriptor here.
+// you can use the pre defined reports as well
+#define EXTERN_HID_REPORT DEFAULT_HID_REPORT
+
+#define GAMEPAD_HID_REPORT \
+HID_REPORT_KEYBOARD_LEDS(HID_REPORTID_KEYBOARD), \
+HID_REPORT_MOUSE(HID_REPORTID_MOUSE), \
+HID_REPORT_GAMEPAD(HID_REPORTID_GAMEPAD)
+
+#define EXTENDED_HID_REPORT \
+HID_REPORT_KEYBOARD_LEDS(HID_REPORTID_KEYBOARD), \
+HID_REPORT_MOUSE(HID_REPORTID_MOUSE), \
+HID_REPORT_MOUSE_ABSOLUTE(HID_REPORTID_MOUSE_ABSOLUTE), \
+HID_REPORT_CONSUMERCONTROL(HID_REPORTID_CONSUMERCONTROL), \
+HID_REPORT_SYSTEMCONTROL(HID_REPORTID_SYSTEMCONTROL)
+
+
+// use this to enable the Keyboard Led functions
+#define HID_KEYBOARD_LEDS_ENABLED
+
+
+// Keep in mind that changing the ids or reports might confuse your OS
+// Then you might need to reinstall all drivers or change the USB PID
+// Mouse Abs only works with a System report and without Gamepad
+// Gamepads can causes some recognition Problems with some OS
+// RAW HID seems to not works properly in a multireport
+// Currently available pre defined reports:
+
+//HID_REPORT_KEYBOARD_LEDS(HID_REPORTID_KEYBOARD),
+//HID_REPORT_KEYBOARD_KEYS(HID_REPORTID_KEYBOARD),
+//HID_REPORT_MOUSE(HID_REPORTID_MOUSE),
+//HID_REPORT_MOUSE_ABSOLUTE(HID_REPORTID_MOUSE_ABSOLUTE),
+////HID_REPORT_RAWHID(HID_REPORTID_RAWHID), // not working at the moment
+//HID_REPORT_CONSUMERCONTROL(HID_REPORTID_CONSUMERCONTROL),
+//HID_REPORT_SYSTEMCONTROL(HID_REPORTID_SYSTEMCONTROL),
+//HID_REPORT_GAMEPAD(HID_REPORTID_GAMEPAD),

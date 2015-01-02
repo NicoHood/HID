@@ -28,23 +28,12 @@
 
 extern const u8 _hidReportDescriptor[] PROGMEM;
 const u8 _hidReportDescriptor[] = {
-	// by default use the standard HID APIs
-#ifndef EXTERN_HID_REPORT
-#ifdef HID_KEYBOARD_LEDS_ENABLED
-	HID_REPORT_KEYBOARD_LEDS(HID_REPORTID_KEYBOARD),
-#else
-	HID_REPORT_KEYBOARD_KEYS(HID_REPORTID_KEYBOARD),
-#endif
-	HID_REPORT_MOUSE(HID_REPORTID_MOUSE),
-	HID_REPORT_MOUSE_ABSOLUTE(HID_REPORTID_MOUSE_ABSOLUTE),
-	//HID_REPORT_RAWHID(HID_REPORTID_RAWHID),
-	HID_REPORT_CONSUMERCONTROL(HID_REPORTID_CONSUMERCONTROL),
-	HID_REPORT_SYSTEMCONTROL(HID_REPORTID_SYSTEMCONTROL),
-	//TODO get Gamepad working with the other devices
-	//HID_REPORT_GAMEPAD(HID_REPORTID_GAMEPAD),
-	
-#else
+	// by default use the standard HID descriptors
+	// extern descriptors can be passed via pins_Arduino.h
+#ifdef EXTERN_HID_REPORT
 	EXTERN_HID_REPORT
+#else
+	DEFAULT_HID_REPORT
 #endif
 };
 

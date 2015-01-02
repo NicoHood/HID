@@ -22,9 +22,19 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 #include "Arduino.h"
 
-// enable Led out report by default
-#ifndef EXTERN_HID_REPORT
-#define HID_KEYBOARD_LEDS_ENABLED
+// for the extern HID descriptors
+#include "pins_Arduino.h"
+
+// default HID report descriptor
+#ifdef HID_KEYBOARD_LEDS_ENABLED
+#define DEFAULT_HID_REPORT \
+HID_REPORT_KEYBOARD_LEDS(HID_REPORTID_KEYBOARD), \
+HID_REPORT_MOUSE(HID_REPORTID_MOUSE)
+
+#else
+#define DEFAULT_HID_REPORT \
+HID_REPORT_KEYBOARD_KEYS(HID_REPORTID_KEYBOARD), \
+HID_REPORT_MOUSE(HID_REPORTID_MOUSE)
 #endif
 
 // extern accessible led out report

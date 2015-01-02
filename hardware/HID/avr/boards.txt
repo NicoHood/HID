@@ -1,0 +1,33 @@
+##############################################################
+
+leonardo_extended.name=Arduino Leonardo Extended HID-Core
+leonardo_extended.vid.0=0x2341
+leonardo_extended.pid.0=0x0036
+leonardo_extended.vid.1=0x2341
+leonardo_extended.pid.1=0x8036
+leonardo_extended.upload.tool=arduino:avrdude
+leonardo_extended.upload.protocol=avr109
+leonardo_extended.upload.maximum_size=28672
+leonardo_extended.upload.maximum_data_size=2560
+leonardo_extended.upload.speed=57600
+leonardo_extended.upload.disable_flushing=true
+leonardo_extended.upload.use_1200bps_touch=true
+leonardo_extended.upload.wait_for_upload_port=true
+
+leonardo_extended.bootloader.tool=arduino:avrdude
+leonardo_extended.bootloader.low_fuses=0xff
+leonardo_extended.bootloader.high_fuses=0xd8
+leonardo_extended.bootloader.extended_fuses=0xcb
+leonardo_extended.bootloader.file=arduino:caterina/Caterina-leonardo_extended.hex
+leonardo_extended.bootloader.unlock_bits=0x3F
+leonardo_extended.bootloader.lock_bits=0x2F
+
+leonardo_extended.build.mcu=atmega32u4
+leonardo_extended.build.f_cpu=16000000L
+leonardo_extended.build.vid=0x2341
+leonardo_extended.build.pid=0x8036
+leonardo_extended.build.usb_product="Arduino Leonardo"
+leonardo_extended.build.board=AVR_LEONARDO
+leonardo_extended.build.core=arduino:hid
+leonardo_extended.build.variant=leonardo_hid
+leonardo_extended.build.extra_flags={build.usb_flags}
