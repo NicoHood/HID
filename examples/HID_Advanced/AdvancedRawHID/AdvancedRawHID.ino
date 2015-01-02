@@ -2,7 +2,7 @@
  Copyright (c) 2014 NicoHood
  See the readme for credit to other people.
 
- Advanced RawHID example
+ Advanced RawHID example (currently not available)
  
  Shows how to send bytes via raw HID
  Press a button to send some example values.
@@ -23,7 +23,6 @@ void setup() {
   pinMode(pinButton, INPUT_PULLUP);
 
   // no begin function needed for RawHID
-  // Make sure all desired USB functions are activated in USBAPI.h!
 }
 
 void loop() {
@@ -32,7 +31,7 @@ void loop() {
 
     // direct without library. Always send RAWHID_RX_SIZE bytes!
     uint8_t buff[RAWHID_RX_SIZE]; // unitialized, has random values
-    HID_SendReport(HID_REPORTID_RawKeyboardReport, buff, sizeof(buff));
+    HID_SendReport(HID_REPORTID_RAWHID, buff, sizeof(buff));
 
     // with library
     memset(&buff, 42, sizeof(buff));

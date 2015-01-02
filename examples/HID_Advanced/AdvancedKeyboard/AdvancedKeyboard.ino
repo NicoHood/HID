@@ -17,7 +17,6 @@ void setup() {
   pinMode(pinButton, INPUT_PULLUP);
 
   // Sends a clean report to the host. This is important on any Arduino type.
-  // Make sure all desired USB functions are activated in USBAPI.h!
   pressRawKeyboard(0, 0);
 }
 
@@ -45,7 +44,7 @@ void pressRawKeyboard(uint8_t modifiers, uint8_t key) {
   uint8_t keys[8] = {
     modifiers, 0, key, 0, 0, 0, 0, 0
   }; //modifiers, reserved, key[0]
-  HID_SendReport(HID_REPORTID_KeyboardReport, keys, sizeof(keys));
+  HID_SendReport(HID_REPORTID_KEYBOARD, keys, sizeof(keys));
 }
 
 /*

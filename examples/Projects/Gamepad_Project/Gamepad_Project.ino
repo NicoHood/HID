@@ -41,7 +41,6 @@ void setup() {
   pinMode(pinButton12, INPUT_PULLUP);
 
   // Sends a clean report to the host. This is important on any Arduino type.
-  // Make sure all desired USB functions are activated in USBAPI.h!
   Gamepad.begin();
 }
 

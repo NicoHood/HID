@@ -3,10 +3,10 @@
  See the readme for credit to other people.
  
  Advanced Gamepad example
+ 
+ Make sure the Gamepad report is set in:
+ sketchbook/hardware/HID/avr/variants/hid_descriptors/hid_descriptors.h
  */
-
-// include HID library
-#include <HID.h>
 
 // see HID_Reports.h for all data structures
 HID_GamepadReport_Data_t Gamepadreport;
@@ -22,9 +22,8 @@ void setup() {
   pinMode(pinButton, INPUT_PULLUP);
 
   // Sends a clean report to the host. This is important on any Arduino type.
-  // Make sure all desired USB functions are activated in USBAPI.h!
   memset(&Gamepadreport, 0, sizeof(Gamepadreport));
-  HID_SendReport(HID_REPORTID_Gamepad1Report, &Gamepadreport, sizeof(Gamepadreport));
+  HID_SendReport(HID_REPORTID_GAMEPAD, &Gamepadreport, sizeof(Gamepadreport));
 }
 
 void loop() {
@@ -43,7 +42,7 @@ void loop() {
 
     // functions before only set the values
     // this writes the report to the host
-    HID_SendReport(HID_REPORTID_Gamepad1Report, &Gamepadreport, sizeof(Gamepadreport));
+    HID_SendReport(HID_REPORTID_GAMEPAD, &Gamepadreport, sizeof(Gamepadreport));
 
     // simple debounce
     delay(300);
