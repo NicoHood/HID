@@ -69,6 +69,7 @@ Your Arduino IDE will output errors then if you double click the file and try to
 * Added USB Wakeup support
 * Separated USB-Core in its own folder
 * Added HID Tables
+* USB-Serial now fully reprogrammable
 ```
 
 ```
