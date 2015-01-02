@@ -38,9 +38,10 @@ Installation
 
 For Arduino Uno/Mega first install [HoodLoader2](https://github.com/NicoHood/HoodLoader2) on your 16u2 + the needed software files.
 [HoodLoader1](https://github.com/NicoHood/HoodLoader) is only supported for legacy but will get a new use soon!
+For Arduino Micro/Leonardo ignore this step.
 
 Installation has changed over the time. Put all files from *avr/* into *sketchbook/hardware/HID/avr*.
-Make sure you use Arduino IDE 1.5.8 or newer. You don't have to modify the original Arduino-Core any more.
+Make sure you use Arduino IDE 1.5.8 or newer. You don't have to modify the original core any more.
 
 At the moment you have to move the cores/hid folder into your Arduino installation
 *arduino-1.6.0/hardware/arduino/avr/cores/hid* because of a bug in the IDE.
@@ -73,14 +74,17 @@ Have a closer look at these lines:
 You can also add your own descriptor with your own APIs.
 Use the void HID_SendReport(uint8_t id, const void* data, int len); function to send hid reports.
 
-See *Project/USB-Serial* for a fully usable USB-Serial bridge and how to use the new Serial functions.
-In the CDC.h you can also see the new Control Line functions for advanced users.
-Keep in mind that the USB_ENDPOINTs for the u2 Series are set to 16 bytes, so the Serial buffer is also smaller (normally 64b).
+**Select your Arduino board under *Tools->Board->Arduino Leonardo/Micro Custom HID* to use the new HID-Core.
+If you select the normal Leonardo/Micro entry you will automatically use the standard Arduino Core.**
 
 **Try the Basic HID examples for each HID device. They are pretty much self explaining.
 You can also see the *Projects/HID_Test* for an all in one example.**
 
-### HoodLoader1
+See *Project/USB-Serial* for a fully usable USB-Serial bridge and how to use the new Serial functions.
+In the CDC.h you can also see the new Control Line functions for advanced users.
+Keep in mind that the USB_ENDPOINTs for the u2 Series are set to 16 bytes, so the Serial buffer is also smaller (normally 64b).
+
+### HoodLoader1 (legacy, new stuff coming soon)
 
 **Try the HoodLoader1 example. It provides the basic Serial protocol API to send HID reports. You have to copy this to every sketch again.**
 
@@ -157,6 +161,7 @@ Generalize HID key definitions via HIDTables for example?
 
 update Burning via ISP (advanced)
 Test with Android phone (HL1)
+"Emulate" HL1 protocol
 ```
 
 
