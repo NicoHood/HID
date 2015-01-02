@@ -6,6 +6,9 @@ This project went through a lot of phases and has now reached an HID library wit
 The idea is to enable enhanced USB functions to almost all 'standard' Arduino boards.
 This is done with slightly different methods for different boards.
 
+###The new 2.1 is ready to test here, need feedback:
+https://github.com/NicoHood/HID/tree/Official-Integration
+
 **Arduino IDE 1.5.8 is required for the HID Project.**
 
 **Supported HID devices:**
