@@ -4,23 +4,27 @@ TODO
 Under Construction. This is a todo list for myself and a feature list so far.
 
 ```
-Keyboard Layout english only?
-more usb definitions instead of fixed values, noone understands
-someone has to add the keywords.txt definitions as well
-keyboard led move to usb function not to keyboard and from keyboard call this function?
-weak hidsendreport implement somewhere the prototype?
-usb wakeup
-keycode/raw for keyboard
-magic key fix?
+Keyboard Layout for different Languages
+Clean up USB Core code from fixed values. Use better understandable definitions
+Magic key fix for 32u4?
+
+Add Keywords.txt definitions
 add examples
-improve workaround for consumer + system weak hid send function prototype
-check keycode function again?
-generalize HID key definitions
-separate folder for the usb core?
+keycode/raw for keyboard
+Check Keyboard keycode function again?
+Generalize HID key definitions via HIDTables for example?
+Add custom HID reports example
+add copyright
+
+update Burning via ISP (advanced)
+Test with Android phone
+update no usb workaround notice (no longer needed for hoodloader2, but for leonardo)
+
 
 Bugs
 Mouse Abs only works with system report under special circumstances.
-Gamepad + Mouse Abs doesnt work
+Gamepad + Mouse Abs doesnt work (fix Gamepad)
+Fix HID_SendReport() prototype workaround in HID-APIs
 ```
 
 
@@ -47,6 +51,8 @@ Gamepad + Mouse Abs doesnt work
 * Inlined a lot of the HID API functions to save flash
 * Added Gamepad
 * Added USB Wakeup support
+* Separated USB-Core in its own folder
+* Added HID Tables
 ```
 
 ```
@@ -56,9 +62,12 @@ Include schematic
  - CDC.h -> Arduino.h, USBDESC.h, USBCore.h
  - HID.h -> Arduino.h, USBDESC.h, USBCore.h, HID-API
   - HID-API -> Keyboard.h, Mouse.h
-   - Keyboard.h ->  Arduino.h
-   - Mouse.h ->  Arduino.h
+   - Keyboard.h -> Arduino.h
+   - Mouse.h -> Arduino.h
+   - [Other APIs].h -> Arduino.h
+ - HIDTables.h
 
 HID.h contains all HID configuration.
 Each HID-API (like Mouse) includes Arduino.h and gets these settings as well.
+The pins_Arduino.h can overwrite each HID descriptor or define complete new one.
 ```
