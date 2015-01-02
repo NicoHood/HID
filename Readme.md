@@ -38,6 +38,9 @@ Mouse Abs only works with system report under special circumstances.
 Gamepad + Mouse Abs doesnt work (fix Gamepad)
 Fix HID_SendReport() prototype workaround in HID-APIs
 Core selection in boards.txt is not working
+
+Do not name the Arduino Sketch 'Mouse.ino' or 'Keyboard.ino' etc.
+Your Arduino IDE will output errors then if you double click the file and try to compile.
 ```
 
 
