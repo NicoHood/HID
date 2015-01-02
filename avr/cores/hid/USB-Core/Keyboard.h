@@ -186,7 +186,7 @@ public:
 	size_t removeKeycodeFromReport(uint8_t k);
 
 #if defined(HID_KEYBOARD_LEDS_ENABLED)
-	inline uint8_t getLEDs(void){ return hid_keyboard_leds; }
+	inline uint8_t getLeds(void){ return hid_keyboard_leds; }
 #endif
 };
 extern Keyboard_ Keyboard;
