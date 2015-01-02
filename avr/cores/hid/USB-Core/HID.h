@@ -25,18 +25,6 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 // for the extern HID descriptors
 #include "pins_Arduino.h"
 
-// default HID report descriptor
-#ifdef HID_KEYBOARD_LEDS_ENABLED
-#define DEFAULT_HID_REPORT \
-HID_REPORT_KEYBOARD_LEDS(HID_REPORTID_KEYBOARD), \
-HID_REPORT_MOUSE(HID_REPORTID_MOUSE)
-
-#else
-#define DEFAULT_HID_REPORT \
-HID_REPORT_KEYBOARD_KEYS(HID_REPORTID_KEYBOARD), \
-HID_REPORT_MOUSE(HID_REPORTID_MOUSE)
-#endif
-
 // extern accessible led out report
 #if defined(HID_KEYBOARD_LEDS_ENABLED)
 extern uint8_t hid_keyboard_leds;
@@ -192,7 +180,6 @@ extern uint8_t hid_keyboard_leds;
     0x75, 0x08,                      /*   REPORT_SIZE (8) */ \
     0x81, 0x03,                      /*   INPUT (Cnst,Var,Abs) */ \
 \
-	HID_REPORT_KEYBOARD_LEDS \
       /* 6 Keyboard keys */ \
     0x95, 0x06,                      /*   REPORT_COUNT (6) */ \
     0x75, 0x08,                      /*   REPORT_SIZE (8) */ \
@@ -319,6 +306,18 @@ extern uint8_t hid_keyboard_leds;
     0x09, 0x02,                  /* usage */ \
     0x91, 0x02,                  /* Output (array) */ \
     0xC0                         /* end collection */ 
+#endif
+
+// default HID report descriptor
+#ifdef HID_KEYBOARD_LEDS_ENABLED
+#define DEFAULT_HID_REPORT \
+HID_REPORT_KEYBOARD_LEDS(HID_REPORTID_KEYBOARD), \
+HID_REPORT_MOUSE(HID_REPORTID_MOUSE)
+
+#else
+#define DEFAULT_HID_REPORT \
+HID_REPORT_KEYBOARD_KEYS(HID_REPORTID_KEYBOARD), \
+HID_REPORT_MOUSE(HID_REPORTID_MOUSE)
 #endif
 
 #if defined(USBCON)
