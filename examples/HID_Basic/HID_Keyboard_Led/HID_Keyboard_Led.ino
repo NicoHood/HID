@@ -2,12 +2,13 @@
  Copyright (c) 2014 NicoHood
  See the readme for credit to other people.
 
- Keyboard example
+ Keyboard Led example
 
- Press a button to write some text to your pc.
+ Press a button to toogle caps lock.
+ Caps lock state is represented by the onboard led.
  See official and HID Project documentation for more infos
 
- Make sure the Keyboard report is set in (by default it is):
+ Make sure the Keyboard report + LEDs! is set in:
  sketchbook/hardware/HID/avr/variants/hid_descriptors/hid_descriptors.h
 */
 
@@ -18,31 +19,31 @@ void setup() {
   pinMode(pinLed, OUTPUT);
   pinMode(pinButton, INPUT_PULLUP);
 
-  // Starts Serial debug output
-  Serial.begin(115200);
-
   // Sends a clean report to the host. This is important on any Arduino type.
   Keyboard.begin();
 }
 
 
 void loop() {
-  if (!digitalRead(pinButton)) {
+  // update Led equal to the caps lock state
+  // keep in mind on HoodLoader2 high&low are inverted (like this)
+  if (Keyboard.getLeds()&LED_CAPS_LOCK)
+    digitalWrite(pinLed, LOW);
+  else
     digitalWrite(pinLed, HIGH);
 
-    // Same use as the official library, pretty much self explaining
-    Keyboard.println("This message was sent with my Arduino.");
-    Serial.println("Serial port is still working and not glitching out");
+  if (!digitalRead(pinButton)) {
+    // trigger caps lock
+    Keyboard.write(KEY_CAPS_LOCK);
 
     // simple debounce
-    delay(300);
-    digitalWrite(pinLed, LOW);
+    delay(500);
   }
 }
 
 /*
 Definitions:
- 
+
 #define KEY_PRINT		0xCE
 #define KEY_NUM_LOCK		0xDB
 #define KEY_SCROLL_LOCK		0xCF

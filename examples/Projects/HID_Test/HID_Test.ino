@@ -115,7 +115,7 @@ void loop() {
         case 'C':
           Keyboard.write(KEY_CAPS_LOCK);
           Serial.println("Leds");
-          Serial.println(Keyboard.getLEDs(), BIN);
+          Serial.println(Keyboard.getLeds(), BIN);
           break;
 
         case 'k':
