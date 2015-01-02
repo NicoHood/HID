@@ -1,3 +1,15 @@
+Installation
+============
+
+put these files into *sketchbook/hardware/HID/*
+
+at the moment you have to move
+the cores/hid folder into your Arduino installation because of a bug in the ide.
+This Core is ment to use with 1.5.8 or newer Arduino IDE
+
+You can compile all HID APIs
+but this doesnt mean that you can use them if no hid descriptor is set correctly.
+
 TODO
 ====
 
@@ -25,6 +37,7 @@ Bugs
 Mouse Abs only works with system report under special circumstances.
 Gamepad + Mouse Abs doesnt work (fix Gamepad)
 Fix HID_SendReport() prototype workaround in HID-APIs
+Core selection in boards.txt is not working
 ```
 
 

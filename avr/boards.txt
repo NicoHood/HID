@@ -1,6 +1,6 @@
 ##############################################################
 
-leonardo_extended.name=Arduino Leonardo Extended HID-Core
+leonardo_extended.name=Arduino Leonardo Custom HID
 leonardo_extended.vid.0=0x2341
 leonardo_extended.pid.0=0x0036
 leonardo_extended.vid.1=0x2341
@@ -31,3 +31,35 @@ leonardo_extended.build.board=AVR_LEONARDO
 leonardo_extended.build.core=arduino:hid
 leonardo_extended.build.variant=leonardo_hid
 leonardo_extended.build.extra_flags={build.usb_flags}
+
+##############################################################
+
+micro.name=Arduino Micro Custom HID
+micro.upload.tool=arduino:avrdude
+micro.upload.protocol=avr109
+micro.upload.maximum_size=28672
+micro.upload.maximum_data_size=2560
+micro.upload.speed=57600
+micro.upload.disable_flushing=true
+micro.upload.use_1200bps_touch=true
+micro.upload.wait_for_upload_port=true
+
+micro.bootloader.tool=arduino:avrdude
+micro.bootloader.low_fuses=0xff
+micro.bootloader.high_fuses=0xd8
+micro.bootloader.extended_fuses=0xcb
+micro.bootloader.file=arduino:caterina/Caterina-Micro.hex
+micro.bootloader.unlock_bits=0x3F
+micro.bootloader.lock_bits=0x2F
+
+micro.build.mcu=atmega32u4
+micro.build.f_cpu=16000000L
+micro.build.vid=0x2341
+micro.build.pid=0x8037
+micro.build.usb_product="Arduino Micro"
+micro.build.board=AVR_MICRO
+micro.build.core=arduino:hid
+micro.build.variant=micro_hid
+micro.build.extra_flags={build.usb_flags}
+
+##############################################################
