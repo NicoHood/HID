@@ -155,7 +155,7 @@ Clean up USB Core code from fixed values. Use better understandable definitions
 Magic key fix for 32u4?
 
 keycode/raw for keyboard
-Check Keyboard keycode function again?
+Check Keyboard keycode function again? + add example
 Generalize HID key definitions via HIDTables for example?
 
 update Burning via ISP (advanced)

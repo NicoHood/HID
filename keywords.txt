@@ -226,6 +226,11 @@ move	KEYWORD2
 moveTo	KEYWORD2
 isPressed	KEYWORD2
 getLeds	KEYWORD2
+pressKeycode	KEYWORD2
+releaseKeycode	KEYWORD2
+writeKeycode	KEYWORD2
+addKeycodeToReport	KEYWORD2
+removeKeycodeFromReport	KEYWORD2
 buttons	KEYWORD2
 xAxis	KEYWORD2
 yAxis	KEYWORD2
