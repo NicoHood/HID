@@ -21,12 +21,6 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
 
-// add your custom HID Report Descriptor here.
-// you can use the pre defined reports as well
-//#define EXTERN_HID_REPORT DEFAULT_HID_REPORT
-#define EXTERN_HID_REPORT EXTENDED_HID_REPORT
-//#define EXTERN_HID_REPORT GAMEPAD_HID_REPORT
-
 #define EXTENDED_HID_REPORT \
 HID_REPORT_KEYBOARD_LEDS(HID_REPORTID_KEYBOARD), \
 HID_REPORT_MOUSE(HID_REPORTID_MOUSE), \
@@ -39,8 +33,18 @@ HID_REPORT_KEYBOARD_LEDS(HID_REPORTID_KEYBOARD), \
 HID_REPORT_MOUSE(HID_REPORTID_MOUSE), \
 HID_REPORT_GAMEPAD(HID_REPORTID_GAMEPAD)
 
+//================================================================================
+// Settings
+//================================================================================
+
 // use this to enable the Keyboard Led functions
 #define HID_KEYBOARD_LEDS_ENABLED
+
+// add your custom HID Report Descriptor here.
+// you can use the pre defined reports as well
+//#define EXTERN_HID_REPORT DEFAULT_HID_REPORT
+#define EXTERN_HID_REPORT EXTENDED_HID_REPORT
+//#define EXTERN_HID_REPORT GAMEPAD_HID_REPORT
 
 
 // Keep in mind that changing the ids or reports might confuse your OS
