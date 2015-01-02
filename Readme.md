@@ -46,8 +46,8 @@ Make sure you use Arduino IDE 1.5.8 or newer. You don't have to modify the origi
 At the moment you have to move the cores/hid folder into your Arduino installation
 *arduino-1.6.0/hardware/arduino/avr/cores/hid* because of a bug in the IDE.
 
-If you like to, you can add the keywords to your Arduino IDE so that words like 'Gamepad' are highlighted.
-(TODO)
+If you like to, you can add the keywords.txt to your Arduino IDE so that words like 'Gamepad' are highlighted.
+Replace the file in *arduino-1.6.0/lib/keywords.txt* with the *keywords.txt* provided in this project.
 
 How to use
 ==========
@@ -154,7 +154,6 @@ Keyboard Layout for different Languages
 Clean up USB Core code from fixed values. Use better understandable definitions
 Magic key fix for 32u4?
 
-Add/update Keywords.txt definitions
 keycode/raw for keyboard
 Check Keyboard keycode function again?
 Generalize HID key definitions via HIDTables for example?
