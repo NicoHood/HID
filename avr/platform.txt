@@ -7,5 +7,6 @@
 # https://github.com/arduino/Arduino/wiki/Arduino-Hardware-Cores-migration-guide-from-1.0-to-1.6
 
 # https://github.com/NicoHood
-name=Arduino Custom HID-Core
+
+name=HID Project USB-Core
 version=2.1

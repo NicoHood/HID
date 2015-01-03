@@ -21,38 +21,38 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
 
-#define EXTENDED_HID_REPORT \
-HID_REPORT_KEYBOARD_LEDS(HID_REPORTID_KEYBOARD), \
-HID_REPORT_MOUSE(HID_REPORTID_MOUSE), \
-HID_REPORT_MOUSE_ABSOLUTE(HID_REPORTID_MOUSE_ABSOLUTE), \
-HID_REPORT_CONSUMERCONTROL(HID_REPORTID_CONSUMERCONTROL), \
-HID_REPORT_SYSTEMCONTROL(HID_REPORTID_SYSTEMCONTROL)
-
-#define GAMEPAD_HID_REPORT \
-HID_REPORT_KEYBOARD_LEDS(HID_REPORTID_KEYBOARD), \
-HID_REPORT_MOUSE(HID_REPORTID_MOUSE), \
-HID_REPORT_GAMEPAD(HID_REPORTID_GAMEPAD)
+// include the standard micro board definition file
+#include <../../variants/micro/pins_arduino.h>
 
 //================================================================================
-// Settings
+// HID Settings
 //================================================================================
 
 // use this to enable the Keyboard Led functions
 #define HID_KEYBOARD_LEDS_ENABLED
 
-// add your custom HID Report Descriptor here.
-// you can use the pre defined reports as well
-//#define EXTERN_HID_REPORT DEFAULT_HID_REPORT
-#define EXTERN_HID_REPORT EXTENDED_HID_REPORT
-//#define EXTERN_HID_REPORT GAMEPAD_HID_REPORT
+// add your custom report here:
+#define EXTERN_HID_REPORT \
+HID_REPORT_KEYBOARD_LEDS(HID_REPORTID_KEYBOARD), \
+HID_REPORT_MOUSE(HID_REPORTID_MOUSE)
 
+// activate your custom HID-APIs here:
+#define HID_MOUSE_API_ENABLE
+#define HID_KEYBOARD_API_ENABLE
+//#define HID_CONSUMER_API_ENABLE
+//#define HID_SYSTEM_API_ENABLE
+//#define HID_GAMEPAD_API_ENABLE
 
-// Keep in mind that changing the ids or reports might confuse your OS
-// Then you might need to reinstall all drivers or change the USB PID
-// Mouse Abs only works with a System report and without Gamepad
-// Gamepads can causes some recognition Problems with some OS
-// RAW HID seems to not works properly in a multireport
-// Currently available pre defined reports:
+/*
+You can use the pre defined reports as well.
+Keep in mind that changing the ids or reports might confuse your OS.
+Then you might need to reinstall all drivers or change the USB PID.
+Mouse Abs only works with a System report together.
+Gamepad and Mouse Abs dont work together.
+Gamepads can causes some recognition problems with some OS.
+RAW HID seems to not works properly in a multireport.
+Currently available pre defined reports :
+*/
 
 //HID_REPORT_KEYBOARD_LEDS(HID_REPORTID_KEYBOARD),
 //HID_REPORT_KEYBOARD_KEYS(HID_REPORTID_KEYBOARD),

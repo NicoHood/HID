@@ -37,6 +37,7 @@ Installation
 ============
 
 For Arduino Uno/Mega first install [HoodLoader2](https://github.com/NicoHood/HoodLoader2) on your 16u2 + the needed software files.
+Make sure your HoodLoader2 software is up to date when you also update the HID-Project files.
 [HoodLoader1](https://github.com/NicoHood/HoodLoader) is only supported for legacy but will get a new use soon!
 For Arduino Micro/Leonardo ignore this step.
 
@@ -57,30 +58,33 @@ How to use
 
 ### Micro/Leonardo + HoodLoader2
 
+**1. Select the new board via *Tools->Board->Arduino Leonardo HID-Project* for example.**
+For HoodLoader2 select the HoodLoader 16u2 MCU. Ensure HoodLoader2 Software is up to date.
+
+![Board Selection Picture](board.png)
+
+**2. Select the USB-Core you want to use. You have 5 options here:**
+
+* Extended (Keyboard+Leds, Mouse+Absolute, Consumer, System)
+* Gamepad (Keyboard+Leds, Mouse, Gamepad)
+* Custom (Your custom configuration, see below)
+* Default Core (Standard Arduino Core)
+* No USB Core (No USB functions available, saves ram + flash)
+
+![USB-Core Selection Picture](usb-core.png)
+
+To create a custom HID report descriptor you can edit the file in *avr/variants/leonardo_custom/pins_arduino.h*.
+Same for Micro and HoodLoader2. Not all HID reports are playing well together on all OS so I made these pre selections.
+With the custom report you can try it out yourself. Everything you need should be in the pins_arduino.h file.
+
 **You can compile all HID APIs but this doesn't mean that you can use them if no hid descriptor is set correctly.**
 Edit the *sketchbook/hardware/HID/avr/variants/hid_descriptors/hid_descriptors.h* to use the extended HID core.
 At the moment you have 3 options: Default, Gamepad or Extended. Extended should work for anything expect Gamepads.
 See the bug section below to find out more about working hid reports. Not all of them are playing well together.
+Use the void HID_SendReport(uint8_t id, const void* data, int len); function to send hid reports with your custom HID-APIs.
 
-Have a closer look at these lines:
-``` cpp
-// use this to enable the Keyboard Led functions
-#define HID_KEYBOARD_LEDS_ENABLED
 
-// add your custom HID Report Descriptor here.
-// you can use the pre defined reports as well
-//#define EXTERN_HID_REPORT DEFAULT_HID_REPORT
-#define EXTERN_HID_REPORT EXTENDED_HID_REPORT
-//#define EXTERN_HID_REPORT GAMEPAD_HID_REPORT
-```
-
-You can also add your own descriptor with your own APIs.
-Use the void HID_SendReport(uint8_t id, const void* data, int len); function to send hid reports.
-
-**Select your Arduino board under *Tools->Board->Arduino Leonardo/Micro Custom HID* to use the new HID-Core.
-If you select the normal Leonardo/Micro entry you will automatically use the standard Arduino Core.**
-
-**Try the Basic HID examples for each HID device. They are pretty much self explaining.
+**3. Try the Basic HID examples for each HID device. They are pretty much self explaining.
 You can also see the *Projects/HID_Test* for an all in one example.**
 
 See *Project/USB-Serial* for a fully usable USB-Serial bridge and how to use the new Serial functions.
@@ -215,6 +219,7 @@ Version History
 * Separated USB-Core in its own folder
 * Added HID Tables
 * USB-Serial now fully reprogrammable
+* Easy USB-Core selection via Tools->USB-Core
 
 2.0 Release (29.11.2014)
 * Added HoodLoader2
@@ -345,11 +350,10 @@ Include schematic
 - Arduino.h
  - USBAPI.h -> Arduino.h, USBDESC.h, USBCore.h
  - CDC.h -> Arduino.h, USBDESC.h, USBCore.h
- - HID.h -> Arduino.h, USBDESC.h, USBCore.h, HID-API
-  - HID-API -> Keyboard.h, Mouse.h
-   - Keyboard.h -> Arduino.h
-   - Mouse.h -> Arduino.h
-   - [Other APIs].h -> Arduino.h
+ - HID.h -> Arduino.h, USBDESC.h, USBCore.h, HID-APIs(Keyboard.h, Mouse.h, etc)
+  - Keyboard.h -> Arduino.h
+  - Mouse.h -> Arduino.h
+  - [Other APIs].h -> Arduino.h
  - HIDTables.h
 
 HID.h contains all HID configuration.

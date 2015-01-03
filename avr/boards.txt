@@ -1,65 +1,103 @@
-##############################################################
+#HID Project board definition file
 
-leonardo_extended.name=Arduino Leonardo Custom HID
-leonardo_extended.vid.0=0x2341
-leonardo_extended.pid.0=0x0036
-leonardo_extended.vid.1=0x2341
-leonardo_extended.pid.1=0x8036
-leonardo_extended.upload.tool=arduino:avrdude
-leonardo_extended.upload.protocol=avr109
-leonardo_extended.upload.maximum_size=28672
-leonardo_extended.upload.maximum_data_size=2560
-leonardo_extended.upload.speed=57600
-leonardo_extended.upload.disable_flushing=true
-leonardo_extended.upload.use_1200bps_touch=true
-leonardo_extended.upload.wait_for_upload_port=true
-
-leonardo_extended.bootloader.tool=arduino:avrdude
-leonardo_extended.bootloader.low_fuses=0xff
-leonardo_extended.bootloader.high_fuses=0xd8
-leonardo_extended.bootloader.extended_fuses=0xcb
-leonardo_extended.bootloader.file=arduino:caterina/Caterina-leonardo_extended.hex
-leonardo_extended.bootloader.unlock_bits=0x3F
-leonardo_extended.bootloader.lock_bits=0x2F
-
-leonardo_extended.build.mcu=atmega32u4
-leonardo_extended.build.f_cpu=16000000L
-leonardo_extended.build.vid=0x2341
-leonardo_extended.build.pid=0x8036
-leonardo_extended.build.usb_product="Arduino Leonardo"
-leonardo_extended.build.board=AVR_LEONARDO
-leonardo_extended.build.core=arduino:hid
-leonardo_extended.build.variant=leonardo_hid
-leonardo_extended.build.extra_flags={build.usb_flags}
+menu.usbcore=USB Core
 
 ##############################################################
 
-micro.name=Arduino Micro Custom HID
-micro.upload.tool=arduino:avrdude
-micro.upload.protocol=avr109
-micro.upload.maximum_size=28672
-micro.upload.maximum_data_size=2560
-micro.upload.speed=57600
-micro.upload.disable_flushing=true
-micro.upload.use_1200bps_touch=true
-micro.upload.wait_for_upload_port=true
+leonardoExtended.name=Arduino Leonardo HID-Project
+leonardoExtended.vid.0=0x2341
+leonardoExtended.pid.0=0x0036
+leonardoExtended.vid.1=0x2341
+leonardoExtended.pid.1=0x8036
+leonardoExtended.upload.tool=arduino:avrdude
+leonardoExtended.upload.protocol=avr109
+leonardoExtended.upload.maximum_size=28672
+leonardoExtended.upload.maximum_data_size=2560
+leonardoExtended.upload.speed=57600
+leonardoExtended.upload.disable_flushing=true
+leonardoExtended.upload.use_1200bps_touch=true
+leonardoExtended.upload.wait_for_upload_port=true
 
-micro.bootloader.tool=arduino:avrdude
-micro.bootloader.low_fuses=0xff
-micro.bootloader.high_fuses=0xd8
-micro.bootloader.extended_fuses=0xcb
-micro.bootloader.file=arduino:caterina/Caterina-Micro.hex
-micro.bootloader.unlock_bits=0x3F
-micro.bootloader.lock_bits=0x2F
+leonardoExtended.bootloader.tool=arduino:avrdude
+leonardoExtended.bootloader.low_fuses=0xff
+leonardoExtended.bootloader.high_fuses=0xd8
+leonardoExtended.bootloader.extended_fuses=0xcb
+leonardoExtended.bootloader.file=arduino:caterina/Caterina-leonardo.hex
+leonardoExtended.bootloader.unlock_bits=0x3F
+leonardoExtended.bootloader.lock_bits=0x2F
 
-micro.build.mcu=atmega32u4
-micro.build.f_cpu=16000000L
-micro.build.vid=0x2341
-micro.build.pid=0x8037
-micro.build.usb_product="Arduino Micro"
-micro.build.board=AVR_MICRO
-micro.build.core=arduino:hid
-micro.build.variant=micro_hid
-micro.build.extra_flags={build.usb_flags}
+leonardoExtended.build.mcu=atmega32u4
+leonardoExtended.build.f_cpu=16000000L
+leonardoExtended.build.vid=0x2341
+leonardoExtended.build.pid=0x8036
+leonardoExtended.build.usb_product="Arduino Leonardo"
+leonardoExtended.build.board=AVR_LEONARDO
+leonardoExtended.build.extra_flags={build.usb_flags}
+
+#USB core selection
+#HID Project needs to be installed https://github.com/NicoHood/HID
+#TODO change to HID:hid
+leonardoExtended.menu.usbcore.hid=Serial + Extended HID
+leonardoExtended.menu.usbcore.hid.build.variant=leonardo_hid
+leonardoExtended.menu.usbcore.hid.build.core=arduino:hid
+leonardoExtended.menu.usbcore.gamepad=Serial + Gamepad HID
+leonardoExtended.menu.usbcore.gamepad.build.variant=leonardo_gamepad
+leonardoExtended.menu.usbcore.gamepad.build.core=arduino:hid
+leonardoExtended.menu.usbcore.custom=Serial + Custom HID
+leonardoExtended.menu.usbcore.custom.build.variant=leonardo_custom
+leonardoExtended.menu.usbcore.custom.build.core=arduino:hid
+leonardoExtended.menu.usbcore.USB_CORE=Default Core
+leonardoExtended.menu.usbcore.USB_CORE.build.variant=arduino:leonardo
+leonardoExtended.menu.usbcore.USB_CORE.build.core=arduino:arduino
+leonardoExtended.menu.usbcore.NO_USB=No USB functions
+leonardoExtended.menu.usbcore.NO_USB.build.variant=leonardo_no_usb
+leonardoExtended.menu.usbcore.NO_USB.build.core=arduino:hid
+
+##############################################################
+
+microExtended.name=Arduino Micro HID-Project
+microExtended.upload.tool=arduino:avrdude
+microExtended.upload.protocol=avr109
+microExtended.upload.maximum_size=28672
+microExtended.upload.maximum_data_size=2560
+microExtended.upload.speed=57600
+microExtended.upload.disable_flushing=true
+microExtended.upload.use_1200bps_touch=true
+microExtended.upload.wait_for_upload_port=true
+
+microExtended.bootloader.tool=arduino:avrdude
+microExtended.bootloader.low_fuses=0xff
+microExtended.bootloader.high_fuses=0xd8
+microExtended.bootloader.extended_fuses=0xcb
+microExtended.bootloader.file=arduino:caterina/Caterina-Micro.hex
+microExtended.bootloader.unlock_bits=0x3F
+microExtended.bootloader.lock_bits=0x2F
+
+microExtended.build.mcu=atmega32u4
+microExtended.build.f_cpu=16000000L
+microExtended.build.vid=0x2341
+microExtended.build.pid=0x8037
+microExtended.build.usb_product="Arduino Micro"
+microExtended.build.board=AVR_MICRO
+microExtended.build.extra_flags={build.usb_flags}
+
+#USB core selection
+#HID Project needs to be installed https://github.com/NicoHood/HID
+#TODO change to HID:hid
+microExtended.menu.usbcore.hid=Serial + Extended HID
+microExtended.menu.usbcore.hid.build.variant=micro_hid
+microExtended.menu.usbcore.hid.build.core=arduino:hid
+microExtended.menu.usbcore.gamepad=Serial + Gamepad HID
+microExtended.menu.usbcore.gamepad.build.variant=micro_gamepad
+microExtended.menu.usbcore.gamepad.build.core=arduino:hid
+microExtended.menu.usbcore.custom=Serial + Custom HID
+microExtended.menu.usbcore.custom.build.variant=micro_custom
+microExtended.menu.usbcore.custom.build.core=arduino:hid
+microExtended.menu.usbcore.USB_CORE=Default Core
+microExtended.menu.usbcore.USB_CORE.build.variant=arduino:micro
+microExtended.menu.usbcore.USB_CORE.build.core=arduino:arduino
+microExtended.menu.usbcore.NO_USB=No USB functions
+microExtended.menu.usbcore.NO_USB.build.variant=micro_no_usb
+microExtended.menu.usbcore.NO_USB.build.core=arduino:hid
 
 ##############################################################

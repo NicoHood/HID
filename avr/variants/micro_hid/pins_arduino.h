@@ -21,5 +21,28 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
 
+// include the standard micro board definition file
 #include <../../variants/micro/pins_arduino.h>
-#include "../hid_descriptors/hid_descriptors.h"
+
+//================================================================================
+// HID Settings
+//================================================================================
+
+// use this to enable the Keyboard Led functions
+#define HID_KEYBOARD_LEDS_ENABLED
+
+#define EXTENDED_HID_REPORT \
+HID_REPORT_KEYBOARD_LEDS(HID_REPORTID_KEYBOARD), \
+HID_REPORT_MOUSE(HID_REPORTID_MOUSE), \
+HID_REPORT_MOUSE_ABSOLUTE(HID_REPORTID_MOUSE_ABSOLUTE), \
+HID_REPORT_CONSUMERCONTROL(HID_REPORTID_CONSUMERCONTROL), \
+HID_REPORT_SYSTEMCONTROL(HID_REPORTID_SYSTEMCONTROL)
+
+// add your custom report here:
+#define EXTERN_HID_REPORT EXTENDED_HID_REPORT
+
+// activate your custom HID-APIs here:
+#define HID_MOUSE_API_ENABLE
+#define HID_KEYBOARD_API_ENABLE
+#define HID_CONSUMER_API_ENABLE
+#define HID_SYSTEM_API_ENABLE

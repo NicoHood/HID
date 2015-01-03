@@ -45,8 +45,8 @@ THE SOFTWARE.
 
 #include "Arduino.h"
 
-// for the extern HID descriptors
-#include "pins_Arduino.h"
+// for the extern HID descriptors + settings
+#include "pins_arduino.h"
 
 // extern accessible led out report
 #if defined(HID_KEYBOARD_LEDS_ENABLED)
@@ -78,6 +78,49 @@ extern uint8_t hid_keyboard_leds;
 #endif
 #ifndef HID_REPORTID_MOUSE_ABSOLUTE
 #define HID_REPORTID_MOUSE_ABSOLUTE 7
+#endif
+
+// only include HIDAPIs if we have an USB AVR MCU.
+// only enable specific APIs to throw an error if the hid report wasn't set
+// The user can overwrite HID_SendReport() and manually include the APIs for a non USB AVR
+// the include has to be done after the report IDs!
+
+#ifdef HID_ENABLE_ALL_APIS
+// include all HID APIs
+#define HID_MOUSE_API_ENABLE
+#define HID_KEYBOARD_API_ENABLE
+#define HID_CONSUMER_API_ENABLE
+#define HID_SYSTEM_API_ENABLE
+#define HID_GAMEPAD_API_ENABLE
+
+#elif !defined(EXTERN_HID_REPORT)
+// by default enable mouse + keyboard api
+#define HID_MOUSE_API_ENABLE
+#define HID_KEYBOARD_API_ENABLE
+#endif
+
+#ifdef USBCON
+
+#ifdef HID_MOUSE_API_ENABLE
+#include "Mouse.h"
+#endif
+
+#ifdef HID_KEYBOARD_API_ENABLE
+#include "Keyboard.h"
+#endif
+
+#ifdef HID_CONSUMER_API_ENABLE
+#include "Consumer.h"
+#endif
+
+#ifdef HID_SYSTEM_API_ENABLE
+#include "System.h"
+#endif
+
+#ifdef HID_GAMEPAD_API_ENABLE
+#include "Gamepad.h"
+#endif
+
 #endif
 
 // HID reports
@@ -347,9 +390,6 @@ HID_REPORT_MOUSE(HID_REPORTID_MOUSE)
 
 #include "USBDesc.h"
 #include "USBCore.h"
-// only include HIDAPI if we have an USB AVR MCU.
-// The use can overwrite HID_SendReport() and manually include the APIs.
-#include "HIDAPI.h"
 
 //================================================================================
 //================================================================================
