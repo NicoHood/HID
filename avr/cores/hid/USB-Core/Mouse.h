@@ -46,9 +46,6 @@ THE SOFTWARE.
 // to access the HID_SendReport via USBAPI.h and report number
 #include "Arduino.h"
 
-//TODO workaround to access the weak sending function
-void HID_SendReport(uint8_t id, const void* data, int len);
-
 //================================================================================
 //================================================================================
 //	Mouse

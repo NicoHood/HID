@@ -59,7 +59,7 @@ How to use
 ### Micro/Leonardo + HoodLoader2
 
 **1. Select the new board via *Tools->Board->Arduino Leonardo HID-Project* for example.**
-For HoodLoader2 select the HoodLoader 16u2 MCU. Ensure HoodLoader2 Software is up to date.
+For HoodLoader2 select the 16u2 MCU. Ensure HoodLoader2 board definition files are up to date.
 
 ![Board Selection Picture](board.png)
 
@@ -73,16 +73,9 @@ For HoodLoader2 select the HoodLoader 16u2 MCU. Ensure HoodLoader2 Software is u
 
 ![USB-Core Selection Picture](usb-core.png)
 
-To create a custom HID report descriptor you can edit the file in *avr/variants/leonardo_custom/pins_arduino.h*.
+To create a **custom HID report descriptor** you can edit the file in *avr/variants/leonardo_custom/pins_arduino.h*.
 Same for Micro and HoodLoader2. Not all HID reports are playing well together on all OS so I made these pre selections.
 With the custom report you can try it out yourself. Everything you need should be in the pins_arduino.h file.
-
-**You can compile all HID APIs but this doesn't mean that you can use them if no hid descriptor is set correctly.**
-Edit the *sketchbook/hardware/HID/avr/variants/hid_descriptors/hid_descriptors.h* to use the extended HID core.
-At the moment you have 3 options: Default, Gamepad or Extended. Extended should work for anything expect Gamepads.
-See the bug section below to find out more about working hid reports. Not all of them are playing well together.
-Use the void HID_SendReport(uint8_t id, const void* data, int len); function to send hid reports with your custom HID-APIs.
-
 
 **3. Try the Basic HID examples for each HID device. They are pretty much self explaining.
 You can also see the *Projects/HID_Test* for an all in one example.**
@@ -168,6 +161,7 @@ Generalize HID key definitions via HIDTables for example?
 update Burning via ISP (advanced)
 Test with Android phone (HL1)
 "Emulate" HL1 protocol
+test no usb function with leonardo (usb workaround?)
 ```
 
 
@@ -176,7 +170,6 @@ Known Bugs
 * See Hoodloader1+2 repositories for HoodLoader1+2 related Bugs/Issues.
 * Mouse Abs only works with system report under special circumstances.
 * Gamepad + Mouse Abs doesnt work together
-* Fix HID_SendReport() prototype workaround in HID-APIs
 * Core selection in boards.txt is not working
 * Do not name the Arduino Sketch 'Mouse.ino' or 'Keyboard.ino' etc.
 Your Arduino IDE will output errors then if you double click the file and try to compile.

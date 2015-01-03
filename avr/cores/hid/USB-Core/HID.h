@@ -80,49 +80,6 @@ extern uint8_t hid_keyboard_leds;
 #define HID_REPORTID_MOUSE_ABSOLUTE 7
 #endif
 
-// only include HIDAPIs if we have an USB AVR MCU.
-// only enable specific APIs to throw an error if the hid report wasn't set
-// The user can overwrite HID_SendReport() and manually include the APIs for a non USB AVR
-// the include has to be done after the report IDs!
-
-#ifdef HID_ENABLE_ALL_APIS
-// include all HID APIs
-#define HID_MOUSE_API_ENABLE
-#define HID_KEYBOARD_API_ENABLE
-#define HID_CONSUMER_API_ENABLE
-#define HID_SYSTEM_API_ENABLE
-#define HID_GAMEPAD_API_ENABLE
-
-#elif !defined(EXTERN_HID_REPORT)
-// by default enable mouse + keyboard api
-#define HID_MOUSE_API_ENABLE
-#define HID_KEYBOARD_API_ENABLE
-#endif
-
-#ifdef USBCON
-
-#ifdef HID_MOUSE_API_ENABLE
-#include "Mouse.h"
-#endif
-
-#ifdef HID_KEYBOARD_API_ENABLE
-#include "Keyboard.h"
-#endif
-
-#ifdef HID_CONSUMER_API_ENABLE
-#include "Consumer.h"
-#endif
-
-#ifdef HID_SYSTEM_API_ENABLE
-#include "System.h"
-#endif
-
-#ifdef HID_GAMEPAD_API_ENABLE
-#include "Gamepad.h"
-#endif
-
-#endif
-
 // HID reports
 // Report IDs and the report itself can be overwritten by the pins_arduino.h
 
@@ -407,5 +364,49 @@ void	HID_SendReport(uint8_t id, const void* data, int len);
 void	HID_SendReport(uint8_t id, const void* data, int len);
 
 #endif /* if defined(USBCON) */
+
+
+// only include HIDAPIs if we have an USB AVR MCU.
+// only enable specific APIs to throw an error if the hid report wasn't set
+// The user can overwrite HID_SendReport() and manually include the APIs for a non USB AVR
+// the include has to be done at the end so that the HID-APIs see the report ids and the send prototype.
+
+#ifdef HID_ENABLE_ALL_APIS
+// include all HID APIs
+#define HID_MOUSE_API_ENABLE
+#define HID_KEYBOARD_API_ENABLE
+#define HID_CONSUMER_API_ENABLE
+#define HID_SYSTEM_API_ENABLE
+#define HID_GAMEPAD_API_ENABLE
+
+#elif !defined(EXTERN_HID_REPORT)
+// by default enable mouse + keyboard api
+#define HID_MOUSE_API_ENABLE
+#define HID_KEYBOARD_API_ENABLE
+#endif
+
+#ifdef USBCON
+
+#ifdef HID_MOUSE_API_ENABLE
+#include "Mouse.h"
+#endif
+
+#ifdef HID_KEYBOARD_API_ENABLE
+#include "Keyboard.h"
+#endif
+
+#ifdef HID_CONSUMER_API_ENABLE
+#include "Consumer.h"
+#endif
+
+#ifdef HID_SYSTEM_API_ENABLE
+#include "System.h"
+#endif
+
+#ifdef HID_GAMEPAD_API_ENABLE
+#include "Gamepad.h"
+#endif
+
+#endif
 
 #endif
