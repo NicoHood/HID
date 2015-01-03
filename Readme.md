@@ -46,6 +46,9 @@ Make sure you use Arduino IDE 1.5.8 or newer. You don't have to modify the origi
 At the moment you have to move the cores/hid folder into your Arduino installation
 *arduino-1.6.0/hardware/arduino/avr/cores/hid* because of a bug in the IDE.
 
+**Your sketchbook folder should look like this:**
+![Installation Picture](installation.png)
+
 If you like to, you can add the keywords.txt to your Arduino IDE so that words like 'Gamepad' are highlighted.
 Replace the file in *arduino-1.6.0/lib/keywords.txt* with the *keywords.txt* provided in this project.
 
@@ -147,7 +150,7 @@ You can still use the NHP, just don't use the reserved Address 1.
 TODO
 ====
 
-Under Construction. This is a todo list for myself and a feature list so far.
+Under Construction. This is a todo list for myself.
 
 ```
 Keyboard Layout for different Languages
