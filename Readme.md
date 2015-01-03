@@ -77,8 +77,8 @@ To create a **custom HID report descriptor** you can edit the file in *avr/varia
 Same for Micro and HoodLoader2. Not all HID reports are playing well together on all OS so I made these pre selections.
 With the custom report you can try it out yourself. Everything you need should be in the pins_arduino.h file.
 
-**3. Try the Basic HID examples for each HID device. They are pretty much self explaining.
-You can also see the *Projects/HID_Test* for an all in one example.**
+**3. Try the Basic HID examples for each HID device. They are pretty much self explaining.**
+You can also see the *Projects/HID_Test* for an all in one example.
 
 See *Project/USB-Serial* for a fully usable USB-Serial bridge and how to use the new Serial functions.
 In the CDC.h you can also see the new Control Line functions for advanced users.
@@ -224,40 +224,40 @@ Version History
 * Reworked the whole library structure again
 
 1.8 Beta Release (26.08.2014)
-* Changes in the Hoodloader:
- * **Huge improvements**, see [Hoodloader repository](https://github.com/NicoHood/Hoodloader)
+* Changes in the Hoodloader1:
+ * **Huge improvements**, see Hoodloader1 repository
  * Reworked the whole library, easy installation now
  * HID fixes for Media Keys/Ubuntu
  * Removed Joystick, added 4 Gamepads
 
 1.7.3 Beta Release (10.08.2014)
-* Changes in the Hoodloader:
+* Changes in the Hoodloader1:
  * Fixed HID flush bug (1.6 - 1.7.2)
 
 1.7.2 Beta Release (10.08.2014)
-* Changes in the Hoodloader:
+* Changes in the Hoodloader1:
  * Added Lite version for 8u2
  * Added Versions that show up as Uno/Mega (not recommended)
  * Makefile and structure changes
 
 1.7.1 Beta Release (10.08.2014)
-* Changes in the Hoodloader:
+* Changes in the Hoodloader1:
  * Fixed HID deactivation bug
 
 1.7 Beta Release (10.08.2014)
-* Changes in the Hoodloader:
- * Works as ISP now. See the [Hoodloader Repository](https://github.com/NicoHood/Hoodloader) for more information.
+* Changes in the Hoodloader1:
+ * Works as ISP now. See Hoodloader1 Repository for more information.
  * Exceeded 8kb limit. For flashing a 8u2 use v1.6 please!
 * Changed Readme text
 
 1.6 Beta Release (09.08.2014)
-* Bugfixes in the Hoodloader:
+* Bugfixes in the Hoodloader1:
  * Changed HID management (not blocking that much, faster)
  * added RawHID in/out (HID to Serial)
 * Added RawHID Class and example
 
 1.5 Beta Release (21.07.2014)
-* Moved Hoodloader source to a [separate Github page](https://github.com/NicoHood/Hoodloader)
+* Moved Hoodloader1 source to a separate Github page
 * Bugfixes in the Hoodloader:
  * Firmware is still available here
  * Overall a lot of ram improvements, now with a big global union of ram
@@ -277,7 +277,7 @@ Version History
 * #define Bugfix in USBAPI.h
 
 1.4 Beta Release (10.07.2014)
-* Bugfixes in the Hoodloader:
+* Bugfixes in the Hoodloader1:
  * Added Lite Version with less ram usage
  * Changed PIDs, edited driver file
 * merged v1.0.x and v1.5.x together (both are compatible!)
@@ -285,15 +285,17 @@ Version History
 * added Tutorials
 
 1.3 Beta Release (01.07.2014)
-* Bugfixes in the Hoodloader:
- * Improved ram usage (you can get even better but that messes up code and increases flash)
+* Bugfixes in the Hoodloader1:
+ * Improved ram usage
 * **Important NHP fix inside the HID Class for Uno/Mega**
 
 1.2 Beta Release (22.06.2014)
 * Added 1.0.x/1.5.x support
-* Bugfixes in the Hoodloader:
- * Sometimes HID Devices weren't updating when using more than 1 Device (set forcewrite to true)
- * Fast updates crashed the bootloader (too much ram usage, set CDC buffer from 128b to 100b each)
+* Bugfixes in the Hoodloader1:
+ * Sometimes HID Devices weren't updating
+   when using more than 1 Device (set forcewrite to true)
+ * Fast updates crashed the bootloader
+  (too much ram usage, set CDC buffer from 128b to 100b each)
 * Minor file structure changes
 
 1.1 Beta Release (05.06.2014)
