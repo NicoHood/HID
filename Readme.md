@@ -37,6 +37,7 @@ Installation
 ============
 
 For Arduino Uno/Mega first install [HoodLoader2](https://github.com/NicoHood/HoodLoader2) on your 16u2 + the needed software files.
+Temporary use this dev version of the HoodLoader2: https://github.com/NicoHood/HoodLoader2/tree/dev
 Make sure your HoodLoader2 software is up to date when you also update the HID-Project files.
 [HoodLoader1](https://github.com/NicoHood/HoodLoader) is only supported for legacy but will get a new use soon!
 For Arduino Micro/Leonardo ignore this step.
