@@ -28,18 +28,12 @@ THE SOFTWARE.
 // HID Settings
 //================================================================================
 
-// use this to enable the Keyboard Led functions
-#define HID_KEYBOARD_LEDS_ENABLED
-
-#define GAMEPAD_HID_REPORT \
-HID_REPORT_KEYBOARD_LEDS(HID_REPORTID_KEYBOARD), \
-HID_REPORT_MOUSE(HID_REPORTID_MOUSE), \
-HID_REPORT_GAMEPAD(HID_REPORTID_GAMEPAD)
-
-// add your custom report here:
-#define EXTERN_HID_REPORT GAMEPAD_HID_REPORT
-
-// activate your custom HID-APIs here:
-#define HID_MOUSE_API_ENABLE
-#define HID_KEYBOARD_API_ENABLE
-#define HID_GAMEPAD_API_ENABLE
+// pre selected hid reports with autoinclude of the api
+#define HID_MOUSE_ENABLE // normal mouse with buttons + wheel
+//#define HID_MOUSE_ABSOLUTE_ENABLE // only works with system and without gamepad
+#define HID_KEYBOARD_LEDS_ENABLE // leds OR keys
+//#define HID_KEYBOARD_KEYS_ENABLE
+//#define HID_RAWHID_ENABLE // currently not working
+//#define HID_CONSUMER_ENABLE
+//#define HID_SYSTEM_ENABLE
+#define HID_GAMEPAD_ENABLE // only works without mouse absolute

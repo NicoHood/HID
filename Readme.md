@@ -46,6 +46,7 @@ Make sure you use Arduino IDE 1.5.8 or newer. You don't have to modify the origi
 
 At the moment you have to move the cores/hid folder into your Arduino installation
 *arduino-1.6.0/hardware/arduino/avr/cores/hid* because of a bug in the IDE.
+![HID Folder Picture](hid-core.png)
 
 **Your sketchbook folder should look like this:**
 ![Installation Picture](installation.png)
@@ -208,6 +209,7 @@ Version History
 * Added Keycode functions in Keyboard API
 * Inlined a lot of the HID API functions to save flash
 * Added Gamepad
+* Added RawHID API (but RawHID itself isnt working still)
 * Added USB Wakeup support
 * Separated USB-Core in its own folder
 * Added HID Tables

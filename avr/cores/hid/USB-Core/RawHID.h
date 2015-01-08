@@ -21,19 +21,59 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
 
-// include the standard micro board definition file
-#include <../../variants/micro/pins_arduino.h>
+#ifndef __RAWHIDAPI__
+#define __RAWHIDAPI__
+
+// to access the HID_SendReport via USBAPI.h and report number
+#include "Arduino.h"
 
 //================================================================================
-// HID Settings
+// RawHID
 //================================================================================
 
-// pre selected hid reports with autoinclude of the api
-#define HID_MOUSE_ENABLE // normal mouse with buttons + wheel
-//#define HID_MOUSE_ABSOLUTE_ENABLE // only works with system and without gamepad
-#define HID_KEYBOARD_LEDS_ENABLE // leds OR keys
-//#define HID_KEYBOARD_KEYS_ENABLE
-//#define HID_RAWHID_ENABLE // currently not working
-//#define HID_CONSUMER_ENABLE
-//#define HID_SYSTEM_ENABLE
-#define HID_GAMEPAD_ENABLE // only works without mouse absolute
+typedef union{
+// a RAWHID_TX_SIZE byte buffer for rx or tx
+uint8_t whole8[RAWHID_TX_SIZE];
+uint16_t whole16[RAWHID_TX_SIZE / 2];
+uint32_t whole32[RAWHID_TX_SIZE / 4];
+uint8_t buff[RAWHID_TX_SIZE];
+} HID_RawKeyboardReport_Data_t;
+
+class RawHID_ : public Print{
+public:
+	inline RawHID_(void){
+		// empty
+	}
+
+	inline void begin(void){
+		// empty
+	}
+
+	inline void end(void){
+		// empty
+	}
+
+	using Print::write; // to get the String version of write
+	inline size_t write(uint8_t b){
+		write(&b, 1);
+	}
+
+	inline size_t write(const uint8_t *buffer, size_t size){
+		size_t bytesleft = size;
+		// first work through the buffer thats already there
+		while (bytesleft >= RAWHID_RX_SIZE){
+			HID_SendReport(HID_REPORTID_RAWHID, &buffer[size - bytesleft], RAWHID_RX_SIZE);
+			bytesleft -= RAWHID_RX_SIZE;
+		}
+		// write down the other bytes and fill with zeros
+		if (bytesleft){
+			uint8_t rest[RAWHID_RX_SIZE];
+			memcpy(rest, &buffer[size - bytesleft], bytesleft);
+			memset(&rest[bytesleft], 0, RAWHID_RX_SIZE - bytesleft);
+			HID_SendReport(HID_REPORTID_RAWHID, &rest, RAWHID_RX_SIZE);
+		}
+	}
+};
+extern RawHID_ RawHID;
+
+#endif

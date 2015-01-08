@@ -48,6 +48,36 @@ THE SOFTWARE.
 // for the extern HID descriptors + settings
 #include "pins_arduino.h"
 
+#ifndef EXTERN_HID_REPORT
+// by default enable mouse + keyboard api
+#define HID_MOUSE_ENABLE
+#define HID_KEYBOARD_KEYS_ENABLE
+#endif
+
+#ifdef HID_KEYBOARD_LEDS_ENABLE
+// enable the Keyboard Led functions if the led report is selected
+#define HID_KEYBOARD_LEDS_ENABLED
+#endif
+
+#if defined(HID_MOUSE_ENABLE) || defined(HID_MOUSE_ABSOLUTE_ENABLE)
+#define HID_MOUSE_API_ENABLE
+#endif
+#if defined(HID_KEYBOARD_LEDS_ENABLE) || defined(HID_KEYBOARD_KEYS_ENABLE)
+#define HID_KEYBOARD_API_ENABLE
+#endif
+#ifdef HID_RAWHID_ENABLE
+#define HID_RAWHID_API_ENABLE
+#endif
+#ifdef HID_CONSUMER_ENABLE
+#define HID_CONSUMER_API_ENABLE
+#endif
+#ifdef HID_SYSTEM_ENABLE
+#define HID_SYSTEM_API_ENABLE
+#endif
+#ifdef HID_GAMEPAD_ENABLE
+#define HID_GAMEPAD_API_ENABLE
+#endif
+
 // extern accessible led out report
 #if defined(HID_KEYBOARD_LEDS_ENABLED)
 extern uint8_t hid_keyboard_leds;
@@ -302,10 +332,18 @@ extern uint8_t hid_keyboard_leds;
 
 // note by NicoHood: RawHID might never work with multireports, because of OS problems
 // therefore we have to make it a single report with no idea. No other HID device will be supported then.
+#ifndef RAWHID_USAGE_PAGE
 #define RAWHID_USAGE_PAGE	0xFFC0 // recommended: 0xFF00 to 0xFFFF
+#endif
+#ifndef RAWHID_USAGE
 #define RAWHID_USAGE		0x0C00 // recommended: 0x0100 to 0xFFFF
+#endif
+#ifndef RAWHID_TX_SIZE
 #define RAWHID_TX_SIZE (USB_EP_SIZE-1)
+#endif
+#ifndef RAWHID_RX_SIZE
 #define RAWHID_RX_SIZE (USB_EP_SIZE-1)
+#endif
 
 #define LSB(_x) ((_x) & 0xFF)
 #define MSB(_x) ((_x) >> 8)
@@ -329,18 +367,6 @@ extern uint8_t hid_keyboard_leds;
     0x09, 0x02,                  /* usage */ \
     0x91, 0x02,                  /* Output (array) */ \
     0xC0                         /* end collection */ 
-#endif
-
-// default HID report descriptor
-#ifdef HID_KEYBOARD_LEDS_ENABLED
-#define DEFAULT_HID_REPORT \
-HID_REPORT_KEYBOARD_LEDS(HID_REPORTID_KEYBOARD), \
-HID_REPORT_MOUSE(HID_REPORTID_MOUSE)
-
-#else
-#define DEFAULT_HID_REPORT \
-HID_REPORT_KEYBOARD_KEYS(HID_REPORTID_KEYBOARD), \
-HID_REPORT_MOUSE(HID_REPORTID_MOUSE)
 #endif
 
 #if defined(USBCON)
@@ -375,14 +401,10 @@ void	HID_SendReport(uint8_t id, const void* data, int len);
 // include all HID APIs
 #define HID_MOUSE_API_ENABLE
 #define HID_KEYBOARD_API_ENABLE
+#define HID_RAWHID_API_ENABLE
 #define HID_CONSUMER_API_ENABLE
 #define HID_SYSTEM_API_ENABLE
 #define HID_GAMEPAD_API_ENABLE
-
-#elif !defined(EXTERN_HID_REPORT)
-// by default enable mouse + keyboard api
-#define HID_MOUSE_API_ENABLE
-#define HID_KEYBOARD_API_ENABLE
 #endif
 
 #ifdef USBCON
@@ -393,6 +415,10 @@ void	HID_SendReport(uint8_t id, const void* data, int len);
 
 #ifdef HID_KEYBOARD_API_ENABLE
 #include "Keyboard.h"
+#endif
+
+#ifdef HID_RAWHID_API_ENABLE
+#include "RawHID.h"
 #endif
 
 #ifdef HID_CONSUMER_API_ENABLE

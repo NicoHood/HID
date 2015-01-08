@@ -143,13 +143,25 @@ THE SOFTWARE.
 #define RAW_KEYBOARD_SCROLL_LOCK	0x47
 #define RAW_KEYBOARD_PAUSE			0x48
 
+typedef union{
+	// Low level key report: up to 6 keys and shift, ctrl etc at once
+	uint8_t whole8[8];
+	uint16_t whole16[8 / 2];
+	uint32_t whole32[8 / 4];
+	struct{
+		uint8_t modifiers;
+		uint8_t reserved;
+		uint8_t keys[6];
+	};
+} HID_KeyboardReport_Data_t;
+
 //	Low level key report: up to 6 keys and shift, ctrl etc at once
 typedef struct
 {
 	uint8_t modifiers;
 	uint8_t reserved;
 	uint8_t keys[6];
-} KeyReport;
+} KeyReport; //TODO typedef union above
 
 class Keyboard_ : public Print
 {

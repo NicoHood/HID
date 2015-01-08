@@ -21,19 +21,10 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
 
-// include the standard micro board definition file
-#include <../../variants/micro/pins_arduino.h>
+#include "RawHID.h"
 
 //================================================================================
-// HID Settings
+// RawHID
 //================================================================================
 
-// pre selected hid reports with autoinclude of the api
-#define HID_MOUSE_ENABLE // normal mouse with buttons + wheel
-//#define HID_MOUSE_ABSOLUTE_ENABLE // only works with system and without gamepad
-#define HID_KEYBOARD_LEDS_ENABLE // leds OR keys
-//#define HID_KEYBOARD_KEYS_ENABLE
-//#define HID_RAWHID_ENABLE // currently not working
-//#define HID_CONSUMER_ENABLE
-//#define HID_SYSTEM_ENABLE
-#define HID_GAMEPAD_ENABLE // only works without mouse absolute
+RawHID_ RawHID;

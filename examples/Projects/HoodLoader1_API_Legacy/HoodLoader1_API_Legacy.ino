@@ -27,6 +27,8 @@
  See official documentation for more infos
  */
 
+#include "USB-Core/Keyboard.h"
+
 // Serial to write Protocol data to. Default: Serial
 #define HID_SERIAL Serial
 #define SERIAL_HID_BAUD 115200

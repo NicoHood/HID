@@ -59,6 +59,19 @@ THE SOFTWARE.
 // but the last 3 wont do anything from what I tested
 #define MOUSE_ALL (MOUSE_LEFT | MOUSE_RIGHT | MOUSE_MIDDLE | MOUSE_PREV | MOUSE_NEXT)
 
+typedef union{
+	// mouse report: 8 buttons, position, wheel
+	uint8_t whole8[4];
+	uint16_t whole16[4 / 2];
+	uint32_t whole32[4 / 4];
+	struct{
+		uint8_t buttons;
+		int8_t xAxis;
+		int8_t yAxis;
+		int8_t wheel;
+	};
+} HID_MouseReport_Data_t;
+
 class Mouse_
 {
 private:
