@@ -8,9 +8,6 @@
  sketchbook/hardware/HID/avr/variants/hid_descriptors/hid_descriptors.h
  */
 
-// see HID_Reports.h for all data structures
-HID_GamepadReport_Data_t Gamepadreport;
-
 const int pinLed = LED_BUILTIN;
 const int pinButton = 2;
 

@@ -161,6 +161,7 @@ update Burning via ISP (advanced)
 Test with Android phone (HL1)
 "Emulate" HL1 protocol
 test no usb function with leonardo (usb workaround?)
+test gamepad under linux, maybe remove keyboard?
 ```
 
 
