@@ -42,12 +42,9 @@ Make sure your HoodLoader2 software is up to date when you also update the HID-P
 [HoodLoader1](https://github.com/NicoHood/HoodLoader) is only supported for legacy but will get a new use soon!
 For Arduino Micro/Leonardo ignore this step.
 
-Installation has changed over the time. Put all files from *avr/* into *sketchbook/hardware/HID/avr*.
+Installation has changed over the time.
 Make sure you use Arduino IDE 1.5.8 or newer. You don't have to modify the original core any more.
-
-At the moment you have to move the cores/hid folder into your Arduino installation
-*arduino-1.6.0/hardware/arduino/avr/cores/hid* because of a bug in the IDE.
-![HID Folder Picture](hid-core.png)
+Put all files into *sketchbook/hardware/HID/*. **You have to rename the folder HID-master to HID.**
 
 **Your sketchbook folder should look like this:**
 ![Installation Picture](installation.png)

@@ -22,7 +22,7 @@ THE SOFTWARE.
 */
 
 // include the standard micro board definition file
-#include <../../variants/micro/pins_arduino.h>
+#include "../micro/pins_arduino.h"
 
 //================================================================================
 // HID Settings

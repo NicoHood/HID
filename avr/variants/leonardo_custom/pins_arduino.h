@@ -22,7 +22,7 @@ THE SOFTWARE.
 */
 
 // include the standard leonardo board definition file
-#include <../../variants/leonardo/pins_arduino.h>
+#include "../leonardo/pins_arduino.h"
 
 //================================================================================
 // HID Settings

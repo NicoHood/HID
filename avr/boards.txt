@@ -36,22 +36,21 @@ leonardoExtended.build.extra_flags={build.usb_flags}
 
 #USB core selection
 #HID Project needs to be installed https://github.com/NicoHood/HID
-#TODO change to HID:hid
 leonardoExtended.menu.usbcore.hid=Serial + Extended HID
 leonardoExtended.menu.usbcore.hid.build.variant=leonardo_hid
-leonardoExtended.menu.usbcore.hid.build.core=arduino:hid
+leonardoExtended.menu.usbcore.hid.build.core=HID:hid
 leonardoExtended.menu.usbcore.gamepad=Serial + Gamepad HID
 leonardoExtended.menu.usbcore.gamepad.build.variant=leonardo_gamepad
-leonardoExtended.menu.usbcore.gamepad.build.core=arduino:hid
+leonardoExtended.menu.usbcore.gamepad.build.core=HID:hid
 leonardoExtended.menu.usbcore.custom=Serial + Custom HID
 leonardoExtended.menu.usbcore.custom.build.variant=leonardo_custom
-leonardoExtended.menu.usbcore.custom.build.core=arduino:hid
+leonardoExtended.menu.usbcore.custom.build.core=HID:hid
 leonardoExtended.menu.usbcore.USB_CORE=Default Core
 leonardoExtended.menu.usbcore.USB_CORE.build.variant=arduino:leonardo
 leonardoExtended.menu.usbcore.USB_CORE.build.core=arduino:arduino
 leonardoExtended.menu.usbcore.NO_USB=No USB functions
 leonardoExtended.menu.usbcore.NO_USB.build.variant=leonardo_no_usb
-leonardoExtended.menu.usbcore.NO_USB.build.core=arduino:hid
+leonardoExtended.menu.usbcore.NO_USB.build.core=HID:hid
 
 ##############################################################
 
@@ -83,22 +82,21 @@ microExtended.build.extra_flags={build.usb_flags}
 
 #USB core selection
 #HID Project needs to be installed https://github.com/NicoHood/HID
-#TODO change to HID:hid
 microExtended.menu.usbcore.hid=Serial + Extended HID
 microExtended.menu.usbcore.hid.build.variant=micro_hid
-microExtended.menu.usbcore.hid.build.core=arduino:hid
+microExtended.menu.usbcore.hid.build.core=HID:hid
 microExtended.menu.usbcore.gamepad=Serial + Gamepad HID
 microExtended.menu.usbcore.gamepad.build.variant=micro_gamepad
-microExtended.menu.usbcore.gamepad.build.core=arduino:hid
+microExtended.menu.usbcore.gamepad.build.core=HID:hid
 microExtended.menu.usbcore.custom=Serial + Custom HID
 microExtended.menu.usbcore.custom.build.variant=micro_custom
-microExtended.menu.usbcore.custom.build.core=arduino:hid
+microExtended.menu.usbcore.custom.build.core=HID:hid
 microExtended.menu.usbcore.USB_CORE=Default Core
 microExtended.menu.usbcore.USB_CORE.build.variant=arduino:micro
 microExtended.menu.usbcore.USB_CORE.build.core=arduino:arduino
 microExtended.menu.usbcore.NO_USB=No USB functions
 microExtended.menu.usbcore.NO_USB.build.variant=micro_no_usb
-microExtended.menu.usbcore.NO_USB.build.core=arduino:hid
+microExtended.menu.usbcore.NO_USB.build.core=HID:hid
 
 ##############################################################
 
@@ -126,7 +124,7 @@ uno.bootloader.file=arduino:optiboot/optiboot_atmega328.hex
 uno.build.mcu=atmega328p
 uno.build.f_cpu=16000000L
 uno.build.board=AVR_UNO
-uno.build.core=arduino:hid
+uno.build.core=HID:hid
 uno.build.variant=arduino:standard
 
 ##############################################################
@@ -148,7 +146,7 @@ mega.bootloader.unlock_bits=0x3F
 mega.bootloader.lock_bits=0x0F
 
 mega.build.f_cpu=16000000L
-mega.build.core=arduino:hid
+mega.build.core=HID:hid
 mega.build.variant=arduino:mega
 # default board  may be overridden by the cpu menu
 mega.build.board=AVR_MEGA2560
