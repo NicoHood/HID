@@ -1,14 +1,14 @@
 /*
  Copyright (c) 2014 NicoHood
  See the readme for credit to other people.
- 
+
  Gamepad example
- 
+
  Press a button and demonstrate Gamepad actions
- 
+
  Make sure the Gamepad report is set in:
  sketchbook/hardware/HID/avr/variants/hid_descriptors/hid_descriptors.h
- 
+
  Function prototypes:
  void begin(void);
  void end(void);
@@ -69,10 +69,10 @@ void loop() {
     // values: 0-8 (0==centred)
     static uint8_t dpad1 = GAMEPAD_DPAD_CENTERED;
     Gamepad.dPad1(dpad1++);
-    if(dpad1>GAMEPAD_DPAD_UP_LEFT) dpad1 = GAMEPAD_DPAD_CENTERED;
+    if (dpad1 > GAMEPAD_DPAD_UP_LEFT) dpad1 = GAMEPAD_DPAD_CENTERED;
     static int8_t dpad2 = GAMEPAD_DPAD_CENTERED;
     Gamepad.dPad2(dpad2--);
-    if(dpad2<GAMEPAD_DPAD_CENTERED) dpad2 = GAMEPAD_DPAD_UP_LEFT;
+    if (dpad2 < GAMEPAD_DPAD_CENTERED) dpad2 = GAMEPAD_DPAD_UP_LEFT;
 
 
     // functions above only set the values

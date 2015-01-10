@@ -36,14 +36,15 @@ The idea is to enable enhanced USB functions to almost all 'standard' Arduino bo
 Installation
 ============
 
-For Arduino Uno/Mega first install [HoodLoader2](https://github.com/NicoHood/HoodLoader2) on your 16u2 + the needed software files.
-Temporary use this dev version of the HoodLoader2: https://github.com/NicoHood/HoodLoader2/tree/dev
+HID-Project only works with the new Arduino IDE 1.5.8 or newer.
+I recommend you to use the new [IDE 1.6 rc1](https://groups.google.com/a/arduino.cc/d/msg/developers/2_GD40Sl6FA/OLWZMwaLJ3IJ).
+
+For Arduino Uno/Mega first install [HoodLoader2 dev](https://github.com/NicoHood/HoodLoader2/tree/dev) on your 16u2 + the needed software files.
 Make sure your HoodLoader2 software is up to date when you also update the HID-Project files.
 [HoodLoader1](https://github.com/NicoHood/HoodLoader) is only supported for legacy but will get a new use soon!
 For Arduino Micro/Leonardo ignore this step.
 
-Installation has changed over the time.
-Make sure you use Arduino IDE 1.5.8 or newer. You don't have to modify the original core any more.
+Installation has changed over the time. You don't have to modify the original core any more.
 Put all files into *sketchbook/hardware/HID/*. **You have to rename the folder HID-master to HID.**
 
 **Your sketchbook folder should look like this:**
@@ -59,6 +60,8 @@ How to use
 
 **1. Select the new board via *Tools->Board->Arduino Leonardo HID-Project* for example.**
 For HoodLoader2 select the 16u2 MCU. Ensure HoodLoader2 board definition files are up to date.
+The Uno and Mega entry is just for advanced users who want to use the HID-APIs but normally you'd
+need the new HoodLoader2 (16u2) board definition files.
 
 ![Board Selection Picture](board.png)
 
@@ -114,6 +117,34 @@ It is not better than this solution, maybe easier to use since its just more int
 [Outdated HID Project for 1.5.7](https://github.com/NicoHood/HID/tree/3d8a9b40752a143141b8be4b8f744e203c80b000)
 
 
+### Midi support?
+Some people have asked me about Midi support. It is not planned to integrate Midi into the HID-Project USB-Core since it is very complicated to do so.
+But I will work on a new Midi firmware for the 16u2 that supports of course Midi (HoodLoader2 only). A firmware is something like a pre-compiled sketch. With the difference
+that I wont use the Arduino IDE to create this firmware. I will use Lufa and a makefile to compile this firmware. This is more efficient.
+
+When the firmware is done you may upload it via avr-dude as described on the HoodLoader2 github page. Then you are able to start the midi with a simple reset
+or start the bootloader (HoodLoader2) again with a double reset like you are used to. Then you can reprogram your 328 again.
+
+So be patient, I have a lot of new stuff planned and Midi will come. But you are able to flash other firmwares like HIDuino. Maybe thats all you need.
+Install HoodLoader2 and flash the hex file. If it works please leave me some info.
+
+Troubleshoot
+============
+
+Switching the HID-Core might confuse the OS since the USB device changes completely from one second to the other.
+Therefore go to Printers and Devices on Windows and select remove. Reconnect your Arduino and maybe remove it again if its not working properly.
+Alternatively you can also restart your PC or use another USB PID (in the boards.txt) to see if its a Windows problem or not.
+If you change the USB PID the CDC Driver wont be loaded but you can always reupload a sketch in bootloader mode.
+
+![remove usb device](remove-device.png)
+
+Gamepads had several problems over the time. The first thing I'd like to mention is that the calibration windows only updates if you focus it.
+Windows only supports gamepads with up to 7 axis and 32 buttons and has problems with more than one Gamepad in a multireport.
+Linux has problems when gamepads are in multi reports with a system device for example. It may occur that it display immense axis/buttons or none at all.
+![gamepad](gamepad.png)
+
+If you have any other problem, open an issue on github or contact me on my blog.
+
 How it works
 ============
 For the Leonardo/Micro + HoodLoader2 its a modified version of the HID descriptors and USB-Core.
@@ -162,6 +193,7 @@ Test with Android phone (HL1)
 "Emulate" HL1 protocol
 test no usb function with leonardo (usb workaround?)
 test gamepad under linux, maybe remove keyboard?
+remove dev HL2 link
 ```
 
 
