@@ -1,6 +1,6 @@
 Arduino HID Project 2.1
 =======================
-![Header Picture](header.jpg)
+![Header Picture](pictures/header.jpg)
 
 This project went through a lot of phases and has now reached a new Arduino USB-Core
 with a lot of new functions like extended HID. It also supports HoodLoader1+2.
@@ -48,7 +48,7 @@ Installation has changed over the time. You don't have to modify the original co
 Put all files into *sketchbook/hardware/HID/*. **You have to rename the folder HID-master to HID.**
 
 **Your sketchbook folder should look like this:**
-![Installation Picture](installation.png)
+![Installation Picture](pictures/installation.png)
 
 If you like to, you can add the keywords.txt to your Arduino IDE so that words like 'Gamepad' are highlighted.
 Replace the file in *arduino-1.6.0/lib/keywords.txt* with the *keywords.txt* provided in this project.
@@ -63,7 +63,7 @@ For HoodLoader2 select the 16u2 MCU. Ensure HoodLoader2 board definition files a
 The Uno and Mega entry is just for advanced users who want to use the HID-APIs but normally you'd
 need the new HoodLoader2 (16u2) board definition files.
 
-![Board Selection Picture](board.png)
+![Board Selection Picture](pictures/board.png)
 
 **2. Select the USB-Core you want to use. You have 5 options here:**
 
@@ -73,7 +73,7 @@ need the new HoodLoader2 (16u2) board definition files.
 * Default Core (Standard Arduino Core)
 * No USB Core (No USB functions available, saves ram + flash)
 
-![USB-Core Selection Picture](usb-core.png)
+![USB-Core Selection Picture](pictures/usb-core.png)
 
 To create a **custom HID report descriptor** you can edit the file in *avr/variants/leonardo_custom/pins_arduino.h*.
 Same for Micro and HoodLoader2. Not all HID reports are playing well together on all OS so I made these pre selections.
@@ -136,14 +136,15 @@ Therefore go to Printers and Devices on Windows and select remove. Reconnect you
 Alternatively you can also restart your PC or use another USB PID (in the boards.txt) to see if its a Windows problem or not.
 If you change the USB PID the CDC Driver wont be loaded but you can always reupload a sketch in bootloader mode.
 
-![remove usb device](remove-device.png)
+![remove usb device](pictures/remove-device.png)
 
 Gamepads had several problems over the time. The first thing I'd like to mention is that the calibration windows only updates if you focus it.
 Windows only supports gamepads with up to 7 axis and 32 buttons and has problems with more than one Gamepad in a multireport.
 Linux has problems when gamepads are in multi reports with a system device for example. It may occur that it display immense axis/buttons or none at all.
-![gamepad](gamepad.png)
 
-If you have any other problem, open an issue on github or contact me on my blog.
+![gamepad](pictures/gamepad.png)
+
+**If you have any other problem, open an issue on github or contact me on my blog.**
 
 How it works
 ============
