@@ -388,6 +388,7 @@ Useful Links/Credits
 * [Paul Stoffregen's Teensy Core](https://github.com/PaulStoffregen/cores)
 * [Keyboard Led Out report by hartmut_holgraefe](http://forum.arduino.cc/index.php?topic=173583.0)
 * [Github Pull Request with a lot of new functions](https://github.com/arduino/Arduino/pull/1803)
+* [Arduino ISP fix](https://petervanhoyweghen.wordpress.com/2012/09/16/arduinoisp-on-the-leonardo/)
 * A lot of searching through the web
 * The awesome official Arduino IRC chat!
 * [The NicoHood Protocol ^.^](https://github.com/NicoHood/NicoHoodProtocol)
