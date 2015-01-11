@@ -3,10 +3,7 @@
  See the readme for credit to other people.
  
  Advanced Gamepad example
- 
- Make sure the Gamepad report is set in:
- sketchbook/hardware/HID/avr/variants/hid_descriptors/hid_descriptors.h
- */
+*/
 
 const int pinLed = LED_BUILTIN;
 const int pinButton = 2;

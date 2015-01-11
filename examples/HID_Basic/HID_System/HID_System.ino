@@ -5,9 +5,6 @@
  System example
 
  Press a button to put pc into sleep/shut it down or wake it up again.
-
- Make sure the System report is set in:
- sketchbook/hardware/HID/avr/variants/hid_descriptors/hid_descriptors.h
 */
 
 const int pinLed = LED_BUILTIN;

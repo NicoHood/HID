@@ -7,9 +7,6 @@
  Press a button to click, move, moveTo the mouse.
  See official documentation for more infos
  
- Make sure the Absolute Mouse report is set in:
- sketchbook/hardware/HID/avr/variants/hid_descriptors/hid_descriptors.h
- 
  Mouse Key definitions:
  MOUSE_LEFT
  MOUSE_RIGHT

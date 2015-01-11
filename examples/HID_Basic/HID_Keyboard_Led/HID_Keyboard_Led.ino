@@ -7,9 +7,6 @@
  Press a button to toogle caps lock.
  Caps lock state is represented by the onboard led.
  See official and HID Project documentation for more infos
-
- Make sure the Keyboard report + LEDs! is set in:
- sketchbook/hardware/HID/avr/variants/hid_descriptors/hid_descriptors.h
 */
 
 const int pinLed = LED_BUILTIN;

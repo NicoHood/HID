@@ -7,9 +7,6 @@
  Press a button to play/pause music player
  See HID Project documentation for more Consumer keys.
 
- Make sure the Consumer report is set in:
- sketchbook/hardware/HID/avr/variants/hid_descriptors/hid_descriptors.h
-
 // basic Media key definitions, see HID Project and official USB docs for more
 #define MEDIA_FAST_FORWARD	0xB3
 #define MEDIA_REWIND	0xB4

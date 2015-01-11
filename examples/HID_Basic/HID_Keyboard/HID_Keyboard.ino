@@ -6,9 +6,6 @@
 
  Press a button to write some text to your pc.
  See official and HID Project documentation for more infos
-
- Make sure the Keyboard report is set in (by default it is):
- sketchbook/hardware/HID/avr/variants/hid_descriptors/hid_descriptors.h
 */
 
 const int pinLed = LED_BUILTIN;

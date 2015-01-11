@@ -6,9 +6,6 @@
 
  Press a button and demonstrate Gamepad actions
 
- Make sure the Gamepad report is set in:
- sketchbook/hardware/HID/avr/variants/hid_descriptors/hid_descriptors.h
-
  Function prototypes:
  void begin(void);
  void end(void);
