@@ -87,15 +87,19 @@ Same for Micro and HoodLoader2. Not all HID reports are playing well together on
 With the custom report you can try it out yourself. Everything you need should be in the pins_arduino.h file.
 
 ##### 3. Try the Basic HID examples for each HID device.
-They are pretty much self explaining.
-You can also see the *Projects/HID_Test* for an all in one example.
+
+![example Picture](pictures/example.png)
+
+You may want to start with the HelloWorld and HID_Basic examples. They are pretty much self explaining.
+Ensure that always the correct HID-Core is selected.
 
 See *Project/USB-Serial* for a fully usable USB-Serial bridge and how to use the new Serial functions.
 In the CDC.h you can also see the new Control Line functions for advanced users.
 Keep in mind that the USB_ENDPOINTs for the u2 Series are set to 16 bytes, so the Serial buffer is also smaller (normally 64b).
 
 ##### 4. Deactivate USB-Core to save flash and ram (optional)
-If you don't want to use the USB-Core you can also choose under *Tools/USB Core* "No USB functions" to get rid of the USB stuff and save the ram for other stuff if you don't need it. You also don't need the HID Project essentially if you don't want to use the USB functions.
+If you don't want to use the USB-Core you can also choose under *Tools/USB Core* "No USB functions" to get rid of the USB stuff
+and save the ram for other stuff if you don't need it. You also don't need the HID Project essentially if you don't want to use the USB functions.
 
 Due to a bad Leonardo/Micro bootloader you need to add an add an ISR into every sketch as workaround.
 **This is not needed for HoodLoader2 devices**, since the bootloader does a true watchdog reset on reprogramming and not a simple application jump
