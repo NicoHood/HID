@@ -289,7 +289,7 @@ extern uint8_t hid_keyboard_leds;
 	0x05, 0x01,							/* USAGE_PAGE (Generic Desktop) */ \
 	0x09, 0x04,							/* USAGE (Joystick) */ \
 	0xa1, 0x01,							/* COLLECTION (Application) */ \
-	0x85, HID_REPORTID_GAMEPAD,	/*   REPORT_ID */ \
+	0x85, report_id,					/*   REPORT_ID */ \
 	/* 32 Buttons */ \
 	0x05, 0x09,							/*   USAGE_PAGE (Button) */ \
 	0x19, 0x01,							/*   USAGE_MINIMUM (Button 1) */ \
