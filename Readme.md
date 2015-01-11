@@ -86,6 +86,22 @@ See *Project/USB-Serial* for a fully usable USB-Serial bridge and how to use the
 In the CDC.h you can also see the new Control Line functions for advanced users.
 Keep in mind that the USB_ENDPOINTs for the u2 Series are set to 16 bytes, so the Serial buffer is also smaller (normally 64b).
 
+**If you don't want to use the USB-Core** you can also choose under *Tools/USB Core* "No USB functions" to get rid of the USB stuff
+and save the ram for other stuff if you don't need it. You also don't need the HID Project essentially if you don't want to use the USB functions.
+Due to a bad Leonardo/Micro bootloader you need to add an add an ISR into every sketch as workaround.
+**This is not needed for HoodLoader2 devices**, since the bootloader does a true watchdog reset on reprogramming and not a simple application jump
+(the usb clock is then still on and breaks any delay functions).
+Checkout the 'Leonardo_Micro_NoUSB_Blink' example.
+
+```cpp
+// workaround for undefined USBCON has to be placed in every sketch
+// otherwise the timings wont work correctly
+ISR(USB_GEN_vect)
+{
+  UDINT = 0;
+}
+```
+
 ### HoodLoader1 (legacy, new stuff coming soon)
 
 **Try the HoodLoader1 example. It provides the basic Serial protocol API to send HID reports. You have to copy this to every sketch again.**
@@ -130,6 +146,10 @@ Install HoodLoader2 and flash the hex file. If it works please leave me some inf
 
 Troubleshoot
 ============
+
+**Any random weird problem** is mostly solved by a pc reboot or a port switching. Try another (USB2.0) port if you have any problems with your device.
+You might also try it on another pc to see if your OS mixes up drivers. Once I had a problem with my USB-Hub, so ensure to connect it directly.
+You could also try a different/shorter USB cable.
 
 **Switching the HID-Core** might confuse the OS since the USB device changes completely from one second to the other.
 Therefore go to Printers and Devices on Windows and select remove. Reconnect your Arduino and maybe remove it again if its not working properly.
@@ -193,7 +213,6 @@ Generalize HID key definitions via HIDTables for example?
 update Burning via ISP (advanced)
 Test with Android phone (HL1)
 "Emulate" HL1 protocol
-test no usb function with leonardo (usb workaround?)
 remove dev HL2 link
 ```
 
