@@ -144,6 +144,19 @@ or start the bootloader (HoodLoader2) again with a double reset like you are use
 So be patient, I have a lot of new stuff planned and Midi will come. But you are able to flash other firmwares like HIDuino. Maybe thats all you need.
 Install HoodLoader2 and flash the hex file. If it works please leave me some info.
 
+* https://github.com/ddiakopoulos/hiduino
+* http://hunt.net.nz/users/darran/weblog/5b7f8/Arduino_UNO_USB_MIDI_firmware.html
+
+### Arduino as ISP
+You want to use your Leonardo/Micro as ISP as well? Here is a simple fix (not working with HoodLoader2 currently):
+Select the Leonardo board and upload the Arduino as ISP sketch from this project to your Leonardo.
+Select the board you want to flash and under *Tools->Programmer->Arduino as ISP (Leonardo)*.
+Ensure the correct Serial port is selected, wires are also correct and hit burn bootloader.
+
+A fix for the u2 Series is in work. Optional you could use HoodLoader1 firmware as ISP.
+The only thing I changed was the reset pin to pin 10 instead of SS
+and the upload protocol from stk500v1 to arduino to avoid any CDC Serial dtr state problems.
+
 Troubleshoot
 ============
 
@@ -266,6 +279,7 @@ Version History
 * Added HID Tables
 * USB-Serial now fully reprogrammable
 * Easy USB-Core selection via Tools->USB-Core
+* Added Arduino as ISP fix for 32u4 (u2 Series doesn't work at the moment)
 
 2.0 Release (29.11.2014)
 * Added HoodLoader2
