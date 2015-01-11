@@ -48,7 +48,11 @@ Installation has changed over the time. You don't have to modify the original co
 Put all files into *sketchbook/hardware/HID/*. **You have to rename the folder HID-master to HID.**
 
 **Your sketchbook folder should look like this:**
+
 ![Installation Picture](pictures/installation.png)
+
+Ensure that under File->Preferences the correct sketchbook folder is selected. **Restart the IDE.**
+
 
 If you like to, you can add the keywords.txt to your Arduino IDE so that words like 'Gamepad' are highlighted.
 Replace the file in *arduino-1.6.0/lib/keywords.txt* with the *keywords.txt* provided in this project.
@@ -56,7 +60,7 @@ Replace the file in *arduino-1.6.0/lib/keywords.txt* with the *keywords.txt* pro
 How to use
 ==========
 
-### Micro/Leonardo + HoodLoader2
+### Micro/Leonardo & HoodLoader2
 
 **1. Select the new board via *Tools->Board->Arduino Leonardo HID-Project* for example.**
 For HoodLoader2 select the 16u2 MCU. Ensure HoodLoader2 board definition files are up to date.
