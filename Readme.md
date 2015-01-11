@@ -131,16 +131,17 @@ Install HoodLoader2 and flash the hex file. If it works please leave me some inf
 Troubleshoot
 ============
 
-Switching the HID-Core might confuse the OS since the USB device changes completely from one second to the other.
+**Switching the HID-Core** might confuse the OS since the USB device changes completely from one second to the other.
 Therefore go to Printers and Devices on Windows and select remove. Reconnect your Arduino and maybe remove it again if its not working properly.
 Alternatively you can also restart your PC or use another USB PID (in the boards.txt) to see if its a Windows problem or not.
 If you change the USB PID the CDC Driver wont be loaded but you can always reupload a sketch in bootloader mode.
 
 ![remove usb device](pictures/remove-device.png)
 
-Gamepads had several problems over the time. The first thing I'd like to mention is that the calibration windows only updates if you focus it.
+**Gamepads** had several problems over the time. The first thing I'd like to mention is that the calibration windows only updates if you focus it.
 Windows only supports gamepads with up to 7 axis and 32 buttons and has problems with more than one Gamepad in a multireport.
 Linux has problems when gamepads are in multi reports with a system device for example. It may occur that it display immense axis/buttons or none at all.
+The current gamepad setting was tested under windows and ubuntu and seems to work. Feel free to extend the gamepad report at your own risk.
 
 ![gamepad](pictures/gamepad.png)
 
@@ -193,7 +194,6 @@ update Burning via ISP (advanced)
 Test with Android phone (HL1)
 "Emulate" HL1 protocol
 test no usb function with leonardo (usb workaround?)
-test gamepad under linux, maybe remove keyboard?
 remove dev HL2 link
 ```
 

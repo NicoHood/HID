@@ -28,6 +28,7 @@ leonardoExtended.bootloader.lock_bits=0x2F
 
 leonardoExtended.build.mcu=atmega32u4
 leonardoExtended.build.f_cpu=16000000L
+leonardoExtended.build.core=HID:hid
 leonardoExtended.build.vid=0x2341
 leonardoExtended.build.pid=0x8036
 leonardoExtended.build.usb_product="Arduino Leonardo"
@@ -38,19 +39,14 @@ leonardoExtended.build.extra_flags={build.usb_flags}
 #HID Project needs to be installed https://github.com/NicoHood/HID
 leonardoExtended.menu.usbcore.hid=Serial + Extended HID
 leonardoExtended.menu.usbcore.hid.build.variant=leonardo_hid
-leonardoExtended.menu.usbcore.hid.build.core=HID:hid
 leonardoExtended.menu.usbcore.gamepad=Serial + Gamepad HID
 leonardoExtended.menu.usbcore.gamepad.build.variant=leonardo_gamepad
-leonardoExtended.menu.usbcore.gamepad.build.core=HID:hid
 leonardoExtended.menu.usbcore.custom=Serial + Custom HID
 leonardoExtended.menu.usbcore.custom.build.variant=leonardo_custom
-leonardoExtended.menu.usbcore.custom.build.core=HID:hid
 leonardoExtended.menu.usbcore.USB_CORE=Default Core
-leonardoExtended.menu.usbcore.USB_CORE.build.variant=arduino:leonardo
-leonardoExtended.menu.usbcore.USB_CORE.build.core=arduino:arduino
+leonardoExtended.menu.usbcore.USB_CORE.build.variant=leonardo
 leonardoExtended.menu.usbcore.NO_USB=No USB functions
 leonardoExtended.menu.usbcore.NO_USB.build.variant=leonardo_no_usb
-leonardoExtended.menu.usbcore.NO_USB.build.core=HID:hid
 
 ##############################################################
 
@@ -74,6 +70,7 @@ microExtended.bootloader.lock_bits=0x2F
 
 microExtended.build.mcu=atmega32u4
 microExtended.build.f_cpu=16000000L
+microExtended.build.core=HID:hid
 microExtended.build.vid=0x2341
 microExtended.build.pid=0x8037
 microExtended.build.usb_product="Arduino Micro"
@@ -84,19 +81,14 @@ microExtended.build.extra_flags={build.usb_flags}
 #HID Project needs to be installed https://github.com/NicoHood/HID
 microExtended.menu.usbcore.hid=Serial + Extended HID
 microExtended.menu.usbcore.hid.build.variant=micro_hid
-microExtended.menu.usbcore.hid.build.core=HID:hid
 microExtended.menu.usbcore.gamepad=Serial + Gamepad HID
 microExtended.menu.usbcore.gamepad.build.variant=micro_gamepad
-microExtended.menu.usbcore.gamepad.build.core=HID:hid
 microExtended.menu.usbcore.custom=Serial + Custom HID
 microExtended.menu.usbcore.custom.build.variant=micro_custom
-microExtended.menu.usbcore.custom.build.core=HID:hid
 microExtended.menu.usbcore.USB_CORE=Default Core
-microExtended.menu.usbcore.USB_CORE.build.variant=arduino:micro
-microExtended.menu.usbcore.USB_CORE.build.core=arduino:arduino
+microExtended.menu.usbcore.USB_CORE.build.variant=micro
 microExtended.menu.usbcore.NO_USB=No USB functions
 microExtended.menu.usbcore.NO_USB.build.variant=micro_no_usb
-microExtended.menu.usbcore.NO_USB.build.core=HID:hid
 
 ##############################################################
 
