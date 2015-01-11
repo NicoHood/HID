@@ -223,7 +223,7 @@ keycode/raw for keyboard
 Check Keyboard keycode function again? + add example
 Generalize HID key definitions via HIDTables for example?
 
-update Burning via ISP (advanced)
+update Burning via ISP for HL2
 Test with Android phone (HL1)
 "Emulate" HL1 protocol
 remove dev HL2 link
