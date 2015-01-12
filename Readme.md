@@ -6,6 +6,21 @@ This project went through a lot of phases and has now reached a new Arduino USB-
 with a lot of new functions like extended HID. It also supports HoodLoader1+2.
 The idea is to enable enhanced USB functions to almost all 'standard' Arduino boards.
 
+##### Content
+* [Features](https://github.com/NicoHood/HID/tree/Official-Integration#features)
+* [Installation](https://github.com/NicoHood/HID/tree/Official-Integration#installation)
+* [How to use](https://github.com/NicoHood/HID/tree/Official-Integration#how-to-use)
+* [Troubleshoot](https://github.com/NicoHood/HID/tree/Official-Integration#troubleshoot)
+* [How it works](https://github.com/NicoHood/HID/tree/Official-Integration#how-it-works)
+* [Known bugs](https://github.com/NicoHood/HID/tree/Official-Integration#known-bugs)
+* [Version history](https://github.com/NicoHood/HID/tree/Official-Integration#version-history)
+* [Useful links and credits](https://github.com/NicoHood/HID/tree/Official-Integration#useful-linkscredits)
+* [Developer information](https://github.com/NicoHood/HID/tree/Official-Integration#for-developers)
+* [License and copyright](https://github.com/NicoHood/HID/tree/Official-Integration#licence-and-copyright)
+
+Features
+========
+
 **Supported Arduinos (IDE 1.5.8 or higher!):**
 * Uno (with HoodLoader1 or 2)
 * Mega (with HoodLoader1 or 2)
