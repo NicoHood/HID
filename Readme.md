@@ -267,13 +267,13 @@ Known Bugs
 * Do not name the Arduino Sketch 'Mouse.ino' or 'Keyboard.ino' etc.
 Your Arduino IDE will output errors then if you double click the file and try to compile.
 * RawHID is not working properly, test it at your own risk.
-* Feel free to open an Issue on Github if you find a bug. Or message me via my [blog](http://nicohood.wordpress.com/)!
 * All OS have some problems with Gamepads. Dont use more than one device for Linux and be careful when you change the descriptor.
 * XBMC 13.1 (a Media Center) uses Gamepad input. Its seems to not work and may cause weird errors.
 Even with a standard Gamepad I have these errors. Just want to mention it here.
 * The Serial may disconnect if you have too much throughput. This is a general bug of the Arduino Core,
 which might be fixed. For example Adalight dosnt work well for me,
 so you better use an Arduino Uno with Hoodloader1 (yes the older one!) for Mediacenter control and Ambilight.
+* Feel free to open an Issue on Github if you find a bug. Or message me via my [blog](http://nicohood.wordpress.com/)!
 
 
 Version History
