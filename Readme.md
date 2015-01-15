@@ -160,8 +160,23 @@ Its more a legacy version to still use HoodLoader1 or to reimplement something s
 It is not better than this solution, maybe easier to use since its just more integrated.
 [Outdated HID Project for 1.5.7](https://github.com/NicoHood/HID/tree/3d8a9b40752a143141b8be4b8f744e203c80b000)
 
+### Arduino as ISP
+You want to use your Leonardo/Micro as ISP as well? Here is a simple fix (not working with HoodLoader2 currently):
+Select the Leonardo board and upload the Arduino as ISP sketch from this project to your Leonardo.
+Select the board you want to flash and under *Tools->Programmer->Arduino as ISP (Leonardo)*.
+Ensure the correct Serial port is selected, wires are also correct and hit burn bootloader.
 
-### Midi support?
+A fix for the u2 Series is in work. Optional you could use HoodLoader1 firmware as ISP.
+The only thing I changed was the reset pin to pin 10 instead of SS
+and the upload protocol from stk500v1 to arduino to avoid any CDC Serial dtr state problems.
+
+Troubleshoot/FAQ
+================
+
+##### Error: Selected board depends on 'HID' core (not installed)
+See [issue #9](https://github.com/NicoHood/HID/issues/9).
+
+##### Midi support?
 Some people have asked me about Midi support. It is not planned to integrate Midi into the HID-Project USB-Core since it is very complicated to do so.
 But I will work on a new Midi firmware for the 16u2 that supports of course Midi (HoodLoader2 only). A firmware is something like a pre-compiled sketch. With the difference
 that I wont use the Arduino IDE to create this firmware. I will use Lufa and a makefile to compile this firmware. This is more efficient.
@@ -174,32 +189,23 @@ Install HoodLoader2 and flash the hex file. If it works please leave me some inf
 
 * https://github.com/ddiakopoulos/hiduino
 * http://hunt.net.nz/users/darran/weblog/5b7f8/Arduino_UNO_USB_MIDI_firmware.html
+* Also see [issue #2](https://github.com/NicoHood/HID/issues/2)
 
-### Arduino as ISP
-You want to use your Leonardo/Micro as ISP as well? Here is a simple fix (not working with HoodLoader2 currently):
-Select the Leonardo board and upload the Arduino as ISP sketch from this project to your Leonardo.
-Select the board you want to flash and under *Tools->Programmer->Arduino as ISP (Leonardo)*.
-Ensure the correct Serial port is selected, wires are also correct and hit burn bootloader.
-
-A fix for the u2 Series is in work. Optional you could use HoodLoader1 firmware as ISP.
-The only thing I changed was the reset pin to pin 10 instead of SS
-and the upload protocol from stk500v1 to arduino to avoid any CDC Serial dtr state problems.
-
-Troubleshoot
-============
-
-**Any random weird problem** is mostly solved by a pc reboot or a port switching. Try another (USB2.0) port if you have any problems with your device.
+##### Any random weird problem
+is mostly solved by a pc reboot or a port switching. Try another (USB2.0) port if you have any problems with your device.
 You might also try it on another pc to see if your OS mixes up drivers. Once I had a problem with my USB-Hub, so ensure to connect it directly.
 You could also try a different/shorter USB cable.
 
-**Switching the HID-Core** might confuse the OS since the USB device changes completely from one second to the other.
+##### Switching the HID-Core
+might confuse the OS since the USB device changes completely from one second to the other.
 Therefore go to Printers and Devices on Windows and select remove. Reconnect your Arduino and maybe remove it again if its not working properly.
 Alternatively you can also restart your PC or use another USB PID (in the boards.txt) to see if its a Windows problem or not.
 If you change the USB PID the CDC Driver wont be loaded but you can always reupload a sketch in bootloader mode.
 
 ![remove usb device](pictures/remove-device.png)
 
-**Gamepads** had several problems over the time. The first thing I'd like to mention is that the calibration windows only updates if you focus it.
+##### Gamepads
+had several problems over the time. The first thing I'd like to mention is that the calibration windows only updates if you focus it.
 Windows only supports gamepads with up to 7 axis and 32 buttons and has problems with more than one Gamepad in a multireport.
 Linux has problems when gamepads are in multi reports with a system device for example. It may occur that it display immense axis/buttons or none at all.
 The current gamepad setting was tested under windows and ubuntu and seems to work. Feel free to extend the gamepad report at your own risk.
