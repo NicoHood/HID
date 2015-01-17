@@ -39,7 +39,7 @@ typedef union{
 	// every usable system control key possible
 	uint8_t whole8[1];
 	uint8_t key;
-} HID_SystemReport_Data_t;
+} HID_SystemControlReport_Data_t;
 
 class System_{
 public:

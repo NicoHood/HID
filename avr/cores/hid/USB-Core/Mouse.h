@@ -72,6 +72,17 @@ typedef union{
 	};
 } HID_MouseReport_Data_t;
 
+typedef union{
+	// mouse absolute report: 2 absolute axis
+	uint8_t whole8[4];
+	uint16_t whole16[4 / 2];
+	uint32_t whole32[4 / 4];
+	struct{
+		int16_t xAxis;
+		int16_t yAxis;
+	};
+} HID_MouseAbsoluteReport_Data_t;
+
 class Mouse_
 {
 private:
@@ -128,7 +139,7 @@ public:
 		return false;
 	}
 
-	inline void moveTo(uint16_t x, uint16_t y){
+	inline void moveTo(int16_t x, int16_t y){
 		// uses different report ID and different HID mouse device!
 		uint32_t pos = ((uint32_t)y << 16) | x;
 		HID_SendReport(HID_REPORTID_MOUSE_ABSOLUTE, &pos, sizeof(pos));

@@ -70,11 +70,11 @@ THE SOFTWARE.
 #ifdef HID_RAWHID_ENABLE
 #define HID_RAWHID_API_ENABLE
 #endif
-#ifdef HID_CONSUMER_ENABLE
-#define HID_CONSUMER_API_ENABLE
+#ifdef HID_CONSUMERCONTROL_ENABLE
+#define HID_CONSUMERCONTROL_API_ENABLE
 #endif
-#ifdef HID_SYSTEM_ENABLE
-#define HID_SYSTEM_API_ENABLE
+#ifdef HID_SYSTEMCONTROL_ENABLE
+#define HID_SYSTEMCONTROL_API_ENABLE
 #endif
 #ifdef HID_GAMEPAD_ENABLE
 #define HID_GAMEPAD_API_ENABLE
@@ -404,8 +404,8 @@ void	HID_SendReport(uint8_t id, const void* data, int len);
 #define HID_MOUSE_API_ENABLE
 #define HID_KEYBOARD_API_ENABLE
 #define HID_RAWHID_API_ENABLE
-#define HID_CONSUMER_API_ENABLE
-#define HID_SYSTEM_API_ENABLE
+#define HID_CONSUMERCONTROL_API_ENABLE
+#define HID_SYSTEMCONTROL_API_ENABLE
 #define HID_GAMEPAD_API_ENABLE
 #endif
 
@@ -423,11 +423,11 @@ void	HID_SendReport(uint8_t id, const void* data, int len);
 #include "RawHID.h"
 #endif
 
-#ifdef HID_CONSUMER_API_ENABLE
+#ifdef HID_CONSUMERCONTROL_API_ENABLE
 #include "Consumer.h"
 #endif
 
-#ifdef HID_SYSTEM_API_ENABLE
+#ifdef HID_SYSTEMCONTROL_API_ENABLE
 #include "System.h"
 #endif
 
