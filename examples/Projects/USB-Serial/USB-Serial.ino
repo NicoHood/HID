@@ -33,11 +33,10 @@ void loop() {
 
   // Serial -> USB
   if (Serial1.available()) {
-    Serial.flush();
     // send maximum one EP_SIZE to give the usb some time to flush the buffer
     uint8_t buff[USB_EP_SIZE - 1];
     int i = 0;
-    for (i = 0; i < USB_EP_SIZE - 1; i++) {
+    for (i = 0; i < sizeof(buff); i++) {
       if (Serial1.available())
         buff[i] = Serial1.read();
       else break;

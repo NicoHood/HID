@@ -314,6 +314,7 @@ Version History
 * USB-Serial now fully reprogrammable
 * Easy USB-Core selection via Tools->USB-Core
 * Added Arduino as ISP fix for 32u4 (u2 Series doesn't work at the moment)
+* Updated USB-Serial
 
 2.0 Release (29.11.2014)
 * Added HoodLoader2
