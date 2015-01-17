@@ -52,6 +52,13 @@ typedef unsigned long u32;
 
 #include "Arduino.h"
 
+// edit by NicoHood
+// this definitions is usefull if you want to reduce the EP_SIZE to 16
+// at the moment only 64 and 16 as EP_SIZE for all EPs are supported except the control endpoint
+#ifndef USB_EP_SIZE
+#define USB_EP_SIZE 64
+#endif
+
 #if defined(USBCON)
 
 #include "USBDesc.h"
