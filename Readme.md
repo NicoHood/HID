@@ -33,49 +33,6 @@ Test with Android phone (HL1)
 remove dev HL2 link
 ```
 
-
-Known Bugs
-==========
-* See Hoodloader1+2 repositories for HoodLoader1+2 related Bugs/Issues.
-* Mouse Abs only works with system report under special circumstances.
-* Gamepad + Mouse Abs doesnt work together
-* Core selection in boards.txt is not working
-* Do not name the Arduino Sketch 'Mouse.ino' or 'Keyboard.ino' etc.
-Your Arduino IDE will output errors then if you double click the file and try to compile.
-* RawHID is not working properly, test it at your own risk.
-* All OS have some problems with Gamepads. Dont use more than one device for Linux and be careful when you change the descriptor.
-* XBMC 13.1 (a Media Center) uses Gamepad input. Its seems to not work and may cause weird errors.
-Even with a standard Gamepad I have these errors. Just want to mention it here.
-* The Serial may disconnect if you have too much throughput. This is a general bug of the Arduino Core,
-which might be fixed. For example Adalight dosnt work well for me,
-so you better use an Arduino Uno with Hoodloader1 (yes the older one!) for Mediacenter control and Ambilight.
-* Feel free to open an Issue on Github if you find a bug. Or message me via my [blog](http://nicohood.wordpress.com/)!
-
-Useful Links/Credits
-====================
-
-* [LUFA from Dean Camera](http://www.fourwalledcubicle.com/LUFA.php)
-* [Darran's HID Projects] (https://github.com/harlequin-tech/arduino-usb)
-* [Connor's Joystick for the Leonardo](http://www.imaginaryindustries.com/blog/?p=80)
-* [Stefan Jones Multimedia Keys Example](http://stefanjones.ca/blog/arduino-leonardo-remote-multimedia-keys/)
-* [Athanasios Douitsis Multimedia Keys Example](https://github.com/aduitsis/ardumultimedia)
-* [The Original Arduino Sources](https://github.com/arduino/Arduino/tree/master/hardware/arduino/firmwares/atmegaxxu2/arduino-usbserial)
-* [USBlyzer](http://www.usblyzer.com/)
-* [Mattairtechs 16u2 Lufa USB Core](https://www.mattairtech.com/index.php/development-boards/mt-db-u1.html)
-* [Paul Brook's Minimus 32u2 Arduino USB Core](https://github.com/pbrook/minimus-arduino)
-* [Paul Stoffregen's Teensy Core](https://github.com/PaulStoffregen/cores)
-* [Keyboard Led Out report by hartmut_holgraefe](http://forum.arduino.cc/index.php?topic=173583.0)
-* [Github Pull Request with a lot of new functions](https://github.com/arduino/Arduino/pull/1803)
-* [Arduino ISP fix](https://petervanhoyweghen.wordpress.com/2012/09/16/arduinoisp-on-the-leonardo/)
-* A lot of searching through the web
-* The awesome official Arduino IRC chat!
-* [The NicoHood Protocol ^.^](https://github.com/NicoHood/NicoHoodProtocol)
-* See HoodLoader1&2 repository for more credits/links
-* [Hackaday post about HoodLoader2](hackaday.com/2014/11/30/using-the-second-microcontroller-on-an-arduino)
-* [Gamecube to PC adapter](https://github.com/NicoHood/Nintendo)
-* See http://nicohood.wordpress.com/ for more tutorials, projects and contact.
-* For donations please contact me on my blog :)
-
 Version History
 ===============
 ```
