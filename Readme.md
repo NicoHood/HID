@@ -13,6 +13,13 @@ All documentation moved to the [wiki page](https://github.com/NicoHood/HID/wiki)
 
 An offline version will be available soon.
 
+Contact
+=======
+
+You can contact me on my wordpress blog in the contact section.
+
+www.nicohood.de
+
 TODO
 ====
 
@@ -31,12 +38,14 @@ update Burning via ISP for HL2
 Test with Android phone (HL1)
 "Emulate" HL1 protocol
 remove dev HL2 link
+
+HL2 usb hub fix (try with a bare cdc bootloader?)
 ```
 
 Version History
 ===============
 ```
-2.1 Release (xx.01.2015)
+2.1 Release (28.01.2015)
 * Reworked the whole USB-Core from scratch
 * Uses less flash if HID or Serial is not used
 * Extended and compacter(flash) HID Report Descriptors
@@ -64,8 +73,8 @@ Version History
 * Added HID Tables
 * USB-Serial now fully reprogrammable
 * Easy USB-Core selection via Tools->USB-Core
-* Added Arduino as ISP fix for 32u4 (u2 Series doesn't work at the moment)
-* Updated USB-Serial
+* Added Arduino as ISP fix for 32u4 and 16u2
+* Moved documentation to the wiki
 
 2.0 Release (29.11.2014)
 * Added HoodLoader2
