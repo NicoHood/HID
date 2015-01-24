@@ -34,10 +34,8 @@ keycode/raw for keyboard
 Check Keyboard keycode function again? + add example
 Generalize HID key definitions via HIDTables for example?
 
-update Burning via ISP for HL2
 Test with Android phone (HL1)
-"Emulate" HL1 protocol
-remove dev HL2 link
+HID-Bridge + Firmwares (planned for 2.2)
 
 HL2 usb hub fix (try with a bare cdc bootloader?)
 ```
