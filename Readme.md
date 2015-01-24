@@ -75,6 +75,7 @@ Version History
 * Easy USB-Core selection via Tools->USB-Core
 * Added Arduino as ISP fix for 32u4 and 16u2
 * Moved documentation to the wiki
+* Added AVR libraries to the core with the better SoftSerial
 
 2.0 Release (29.11.2014)
 * Added HoodLoader2
