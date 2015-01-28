@@ -6,6 +6,13 @@ This project went through a lot of phases and has now reached a new Arduino USB-
 with a lot of new functions like extended HID. It also supports HoodLoader1+2.
 The idea is to enable enhanced USB functions to almost all 'standard' Arduino boards.
 
+<<<<<<< HEAD
+=======
+###The new 2.1 is ready to test here, need feedback:
+https://github.com/NicoHood/HID/tree/Official-Integration
+
+**Arduino IDE 1.5.8 is required for the HID Project.**
+>>>>>>> origin/master
 
 Download
 ========
