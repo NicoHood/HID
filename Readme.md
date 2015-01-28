@@ -6,12 +6,28 @@ This project went through a lot of phases and has now reached a new Arduino USB-
 with a lot of new functions like extended HID. It also supports HoodLoader1+2.
 The idea is to enable enhanced USB functions to almost all 'standard' Arduino boards.
 
+
+Download
+========
+
+You have 3 versions you can download:
+* The master includes all fixes to the current stable release. Download it by clicking download at the right.
+Use the [online Wiki](https://github.com/NicoHood/HID/wiki) to get the newest documentation.
+* Download an offline version in [releases](https://github.com/NicoHood/HID/releases).
+It's a snapshot of the current stable release but might have missed some updates that the current master branch has included.
+This also includes an offline version of the wiki. Offline versions will be available after some time when the official release is out.
+* Select [branch 'dev'](https://github.com/NicoHood/HID/tree/dev) to test the bleeding edge of this software. It might now work at all or has a lot of debugging stuff in it.
+If the dev version gets near to a new release a note will be placed here, that you can test the new dev beta.
+Currently there is no beta available.
+
+
 Wiki
 ====
 
 All documentation moved to the [wiki page](https://github.com/NicoHood/HID/wiki).
 
-An offline version will be available soon.
+An offline snapshot is available in [releases](https://github.com/NicoHood/HID/releases).
+
 
 Contact
 =======
@@ -19,6 +35,7 @@ Contact
 You can contact me on my wordpress blog in the contact section.
 
 www.nicohood.de
+
 
 TODO
 ====
@@ -39,6 +56,7 @@ HID-Bridge + Firmwares (planned for 2.2)
 
 HL2 usb hub fix (try with a bare cdc bootloader?)
 ```
+
 
 Version History
 ===============
@@ -166,6 +184,7 @@ Version History
 
 1.0 Beta Release (03.06.2014)
 ```
+
 
 Licence and Copyright
 =====================
