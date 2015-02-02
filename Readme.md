@@ -1,5 +1,7 @@
 Arduino HID Project 2.1
 =======================
+
+[![Join the chat at https://gitter.im/NicoHood/HID](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/NicoHood/HID?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 ![Header Picture](header.jpg)
 
 This project went through a lot of phases and has now reached a new Arduino USB-Core
