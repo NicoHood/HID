@@ -437,5 +437,5 @@ void	HID_SendReport(uint8_t id, const void* data, int len);
 #ifdef HID_GAMEPAD_API_ENABLE
 #include "Gamepad.h"
 #endif
-#define kkk
+
 #endif
