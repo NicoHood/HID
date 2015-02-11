@@ -138,12 +138,13 @@ public:
 			return true;
 		return false;
 	}
-
+#ifdef HID_MOUSE_ABSOLUTE_API_ENABLE
 	inline void moveTo(int16_t x, int16_t y){
 		// uses different report ID and different HID mouse device!
 		uint32_t pos = ((uint32_t)y << 16) | x;
 		HID_SendReport(HID_REPORTID_MOUSE_ABSOLUTE, &pos, sizeof(pos));
 	}
+#endif
 };
 extern Mouse_ Mouse;
 

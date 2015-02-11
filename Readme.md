@@ -1,4 +1,4 @@
-Arduino HID Project 2.1
+Arduino HID Project 2.2
 =======================
 
 [![Join the chat at https://gitter.im/NicoHood/HID](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/NicoHood/HID?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
@@ -63,6 +63,10 @@ HL2 usb hub fix (try with a bare cdc bootloader?)
 Version History
 ===============
 ```
+2.2 Release (xx.xx.2015)
+* added HID-Bridge
+* added colour highlighting (through HID-Bridge library)
+
 2.1 Release (28.01.2015)
 * Reworked the whole USB-Core from scratch
 * Uses less flash if HID or Serial is not used

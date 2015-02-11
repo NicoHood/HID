@@ -61,10 +61,14 @@ THE SOFTWARE.
 #define HID_KEYBOARD_LEDS_ENABLED
 #endif
 
-#if defined(HID_MOUSE_ENABLE) || defined(HID_MOUSE_ABSOLUTE_ENABLE)
+#if defined(HID_MOUSE_ENABLE) || defined(HID_MOUSE_ABSOLUTE_API_ENABLE)
 #define HID_MOUSE_API_ENABLE
 #endif
+#if defined(HID_MOUSE_ABSOLUTE_ENABLE)
+#define HID_MOUSE_ABSOLUTE_API_ENABLE
+#endif
 #if defined(HID_KEYBOARD_LEDS_ENABLE) || defined(HID_KEYBOARD_KEYS_ENABLE)
+#define HID_KEYBOARD_ENABLE
 #define HID_KEYBOARD_API_ENABLE
 #endif
 #ifdef HID_RAWHID_ENABLE
@@ -82,7 +86,7 @@ THE SOFTWARE.
 
 // extern accessible led out report
 #if defined(HID_KEYBOARD_LEDS_ENABLED)
-extern uint8_t hid_keyboard_leds;
+extern volatile uint8_t hid_keyboard_leds;
 #endif
 
 // HID report IDs
@@ -402,14 +406,13 @@ void	HID_SendReport(uint8_t id, const void* data, int len);
 #ifdef HID_ENABLE_ALL_APIS
 // include all HID APIs
 #define HID_MOUSE_API_ENABLE
+#define HID_MOUSE_ABSOLUTE_API_ENABLE
 #define HID_KEYBOARD_API_ENABLE
 #define HID_RAWHID_API_ENABLE
 #define HID_CONSUMERCONTROL_API_ENABLE
 #define HID_SYSTEMCONTROL_API_ENABLE
 #define HID_GAMEPAD_API_ENABLE
 #endif
-
-#ifdef USBCON
 
 #ifdef HID_MOUSE_API_ENABLE
 #include "Mouse.h"
@@ -434,7 +437,5 @@ void	HID_SendReport(uint8_t id, const void* data, int len);
 #ifdef HID_GAMEPAD_API_ENABLE
 #include "Gamepad.h"
 #endif
-
-#endif
-
+#define kkk
 #endif

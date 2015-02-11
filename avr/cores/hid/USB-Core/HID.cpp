@@ -91,7 +91,7 @@ const HIDDescriptor _hidInterface =
 };
 
 #if defined(HID_KEYBOARD_LEDS_ENABLED)
-uint8_t hid_keyboard_leds = 0;
+volatile uint8_t hid_keyboard_leds = 0;
 #endif
 
 //================================================================================
