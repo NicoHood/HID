@@ -112,7 +112,7 @@ int WEAK HID_GetDescriptor(int /* i */)
 	return USB_SendControl(TRANSFER_PGM, _hidReportDescriptor, sizeof(_hidReportDescriptor));
 }
 
-void WEAK HID_SendReport(u8 id, const void* data, int len)
+void WEAK HID_SendReport(uint8_t id, const void* data, int len)
 {
 	USB_Send(HID_TX, &id, 1);
 	USB_Send(HID_TX | TRANSFER_RELEASE, data, len);
