@@ -28,8 +28,8 @@ void loop() {
     digitalWrite(pinLed, HIGH);
 
     // Same use as the official library, pretty much self explaining
-    Keyboard.println("This message was sent with my Arduino.");
-    Serial.println("Serial port is still working and not glitching out");
+    Keyboard.println(F("This message was sent with my Arduino."));
+    Serial.println(F("Serial port is still working and not glitching out"));
 
     // simple debounce
     delay(300);
