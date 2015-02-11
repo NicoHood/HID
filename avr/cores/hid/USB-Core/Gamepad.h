@@ -131,6 +131,7 @@ public:
 	inline void dPad1(int8_t d){ _report.dPad1 = d; }
 	inline void dPad2(int8_t d){ _report.dPad2 = d; }
 
+private:
 	HID_GamepadReport_Data_t _report;
 };
 extern Gamepad_ Gamepad;
