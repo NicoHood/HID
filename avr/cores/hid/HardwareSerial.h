@@ -43,7 +43,7 @@
 #endif
 #if !defined(SERIAL_RX_BUFFER_SIZE)
 #if (RAMEND < 1000)
-#define SERIAL_RX_BUFFER_SIZE 16
+#define SERIAL_RX_BUFFER_SIZE 32
 #else
 #define SERIAL_RX_BUFFER_SIZE 64
 #endif

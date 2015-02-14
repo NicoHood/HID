@@ -48,9 +48,9 @@ THE SOFTWARE.
 
 Keyboard_ Keyboard;
 
-void Keyboard_::sendReport(KeyReport* keys)
+void Keyboard_::sendReport(HID_KeyboardReport_Data_t* keys)
 {
-	HID_SendReport(HID_REPORTID_KEYBOARD, keys, sizeof(KeyReport));
+	HID_SendReport(HID_REPORTID_KEYBOARD, keys, sizeof(HID_KeyboardReport_Data_t));
 }
 
 extern

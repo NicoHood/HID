@@ -65,7 +65,10 @@ Version History
 ```
 2.2 Release (xx.xx.2015)
 * added HID-Bridge
+* increased HW Serial1 RX buffer size from 16 to 32 (TX still 16)
 * added colour highlighting (through HID-Bridge library)
+* removed fixed size in report buffers
+* used HID_KeyboardReport_Data_t now in Keyboard API
 
 2.1 Release (28.01.2015)
 * Reworked the whole USB-Core from scratch

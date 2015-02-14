@@ -145,9 +145,9 @@ THE SOFTWARE.
 
 typedef union{
 	// Low level key report: up to 6 keys and shift, ctrl etc at once
-	uint8_t whole8[8];
-	uint16_t whole16[8 / 2];
-	uint32_t whole32[8 / 4];
+	uint8_t whole8[];
+	uint16_t whole16[];
+	uint32_t whole32[];
 	struct{
 		uint8_t modifiers;
 		uint8_t reserved;
@@ -155,19 +155,11 @@ typedef union{
 	};
 } HID_KeyboardReport_Data_t;
 
-//	Low level key report: up to 6 keys and shift, ctrl etc at once
-typedef struct
-{
-	uint8_t modifiers;
-	uint8_t reserved;
-	uint8_t keys[6];
-} KeyReport; //TODO typedef union above
-
 class Keyboard_ : public Print
 {
 protected:
-	KeyReport _keyReport;
-	void sendReport(KeyReport* keys);
+	HID_KeyboardReport_Data_t _keyReport;
+	void sendReport(HID_KeyboardReport_Data_t* keys);
 public:
 	inline Keyboard_(void){
 		// empty

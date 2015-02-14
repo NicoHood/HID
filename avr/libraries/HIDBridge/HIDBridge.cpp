@@ -43,64 +43,107 @@ void HIDBridge_::err(uint8_t error)
 
 }
 
-void HIDBridge_::task(void)
+void HIDBridge_::readSerial(void)
 {
 	static NHP_Read_Data_t n = { 0 };
 	uint8_t error = 0x00;
 
+	// read as long as the Serial is available
+	// but do not block forever
+	rx_buffer_index_t i = 0; //TODO availabel -> read -1
 	while (Serial.available()) {
-		if (NHPread(Serial.read(), &n)) {
+		// read in new Serial byte and process with NHP protocol
+		uint8_t b = Serial.read();
+		bool newInput = NHPread(b, &n);
+
+		// proceed new valid NHP input
+		if (newInput) {
 			if (n.mode == NHP_ADDRESS) {
 				switch (n.address) {
-				case 0:
 					// received a control address command
-					if (n.data == 0) {
+				case HIDBRIDGE_ADDRESS_CONTROL:
+					// acknowledge/request
+					if (n.data == HIDBRIDGE_CONTROL_ISREADY)
 						isReady = true;
-						return;
-					}
-					else
-						error = 3;
-					break;
-				default:
-					error = 1;
-					break;
 
+					// pause
+					else if (n.data == HIDBRIDGE_CONTROL_NOTREADY)
+						isReady = false;
+
+					// not
+					else
+						err(HID_BRIDGE_ERR_CONTROL);
+
+					break;
+					// received HID out report TODO
+				default:
+					err(HID_BRIDGE_ERR_ADDRESS);
+					break;
 				}
 			}
-			else  if (n.mode == NHP_COMMAND) {
-
+			// received HID out report TODO
+			else if (n.mode == NHP_COMMAND) {
+				error = 4;
 			}
-			else {
-				error = 2;
-			}
-
 		}
+
+		// NHP reading error
+		else if (n.errorLevel) {
+			error = 2;
+		}
+
+		// do not block forever
+		if (++i >= SERIAL_RX_BUFFER_SIZE)
+			break;
 	}
 
-	if (error)
+	if (error){
 		err(error);
+		isReady = false; // revert
+	}
 }
 
-bool HIDBridge_::ready(void)
+
+bool HIDBridge_::waitForReady(void)
 {
-	//if (!hidReady) {
+
+	uint32_t currentMillis = millis();
+	do{
+		// check for new state information
+		// maybe the host sended a pause signal
+		readSerial();
+
+		// check for timeout //TODO move 1 up?
+		if ((millis() - currentMillis) > HIDBRIDGE_TX_TIMEOUT) {
+			err(1);
+			return false;
+		}
+	}
+	// try to wait for a new request/acknowledge
+	while (!isReady)
+
+	return isReady;
+
+	//if (!isReady) { //TODO remove?
 	//	// try to wait for a new request/acknowledge
 	//	uint32_t currentMillis = millis();
-	//	while (!hidReady) {
-	//		readHIDReady();
-	//		if ((millis() - currentMillis) > 1000) {
-	//			errorHID(0);
-	//			return;
+	//	while (!isReady) {
+	//		readSerial();
+	//		// check for timeout //TODO move 1 up?
+	//		if ((millis() - currentMillis) > HIDBRIDGE_TX_TIMEOUT) {
+	//			err(1);
+	//			return false;
 	//		}
 	//	}
 	//}
+	//return true;
 }
 
 // overwrites the HID_SendReport function which is empty/not used on a 328/2560
 void HID_SendReport(uint8_t reportID, const void* data, int len)
 {
-	// check if we got a request/acknowledge
-	if (!HIDBridge.ready()){
+	// check the latest request/acknowledge, pause, error
+	if (!HIDBridge.waitForReady()){
 		HIDBridge.err(0);
 		return;
 	}
@@ -118,4 +161,7 @@ void HID_SendReport(uint8_t reportID, const void* data, int len)
 
 	// end transfer with zero command
 	Serial.write(NHPwriteCommand(0));
+
+	// need a request/acknowledge next time again
+	HIDBridge.isReady = false;
 }

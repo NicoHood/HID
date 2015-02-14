@@ -44,9 +44,9 @@ THE SOFTWARE.
 
 typedef union {
 	// 32 Buttons, 6 Axis, 2 D-Pads
-	uint8_t whole8[15];
-	uint16_t whole16[15 / 2];
-	uint32_t whole32[15 / 4];
+	uint8_t whole8[];
+	uint16_t whole16[];
+	uint32_t whole32[];
 	uint32_t buttons;
 
 	struct{

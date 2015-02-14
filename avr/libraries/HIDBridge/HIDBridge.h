@@ -36,6 +36,20 @@ THE SOFTWARE.
 // Definitions
 //================================================================================
 
+#define HIDBRIDGE_TX_TIMEOUT 1000
+
+#define HIDBRIDGE_ADDRESS_CONTROL 0
+
+#define HIDBRIDGE_CONTROL_ISREADY 0
+#define HIDBRIDGE_CONTROL_NOTREADY 1
+
+#define HID_BRIDGE_ERR_TIMEOUT 0
+#define HID_BRIDGE_ERR_NHP_ERR 1
+#define HID_BRIDGE_ERR_COMMAND 2
+#define HID_BRIDGE_ERR_ADDRESS 3
+#define HID_BRIDGE_ERR_CONTROL 4
+
+
 //================================================================================
 // HIDBridge
 //================================================================================
@@ -46,8 +60,8 @@ public:
 	HIDBridge_(void);
 
 	bool begin(void);
-
-	bool ready(void);
+	void readSerial(void);
+	bool waitForReady(void);
 	bool isReady;
 	void task(void);
 	void err(uint8_t error);

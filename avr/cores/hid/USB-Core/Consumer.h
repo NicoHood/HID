@@ -55,9 +55,9 @@ THE SOFTWARE.
 
 typedef union{
 	// every usable Consumer key possible, up to 4 keys presses possible
-	uint8_t whole8[8];
-	uint16_t whole16[8 / 2];
-	uint32_t whole32[8 / 4];
+	uint8_t whole8[];
+	uint16_t whole16[];
+	uint32_t whole32[];
 	struct{
 		uint16_t key1;
 		uint16_t key2;
@@ -104,7 +104,7 @@ public:
 		HID_SendReport(HID_REPORTID_CONSUMERCONTROL, &_report, sizeof(_report));
 	}
 	inline void releaseAll(void){
-		begin();
+		end();
 	}
 private:
 	HID_ConsumerControlReport_Data_t _report;

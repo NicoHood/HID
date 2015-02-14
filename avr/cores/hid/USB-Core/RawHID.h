@@ -33,9 +33,9 @@ THE SOFTWARE.
 
 typedef union{
 // a RAWHID_TX_SIZE byte buffer for rx or tx
-uint8_t whole8[RAWHID_TX_SIZE];
-uint16_t whole16[RAWHID_TX_SIZE / 2];
-uint32_t whole32[RAWHID_TX_SIZE / 4];
+uint8_t whole8[];
+uint16_t whole16[];
+uint32_t whole32[];
 uint8_t buff[RAWHID_TX_SIZE];
 } HID_RawKeyboardReport_Data_t;
 
