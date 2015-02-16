@@ -5,10 +5,6 @@ menu.usbcore=USB Core
 ##############################################################
 
 leonardoExtended.name=Arduino Leonardo HID-Project
-leonardoExtended.vid.0=0x2341
-leonardoExtended.pid.0=0x0036
-leonardoExtended.vid.1=0x2341
-leonardoExtended.pid.1=0x8036
 leonardoExtended.upload.tool=arduino:avrdude
 leonardoExtended.upload.protocol=avr109
 leonardoExtended.upload.maximum_size=28672

@@ -25,6 +25,7 @@ THE SOFTWARE.
 #define HIDBRIDGE_H
 
 #include <Arduino.h>
+#include <SoftwareSerial.h>
 #include "NHP.h"
 
 //================================================================================
@@ -38,16 +39,20 @@ THE SOFTWARE.
 
 #define HIDBRIDGE_TX_TIMEOUT 1000
 
+#define HIDBRIDGE_BAUD 2000000
+
 #define HIDBRIDGE_ADDRESS_CONTROL 0
 
 #define HIDBRIDGE_CONTROL_ISREADY 0
 #define HIDBRIDGE_CONTROL_NOTREADY 1
 
-#define HID_BRIDGE_ERR_TIMEOUT 0
-#define HID_BRIDGE_ERR_NHP_ERR 1
-#define HID_BRIDGE_ERR_COMMAND 2
-#define HID_BRIDGE_ERR_ADDRESS 3
-#define HID_BRIDGE_ERR_CONTROL 4
+#define HIDBRIDGE_ERR_TIMEOUT 0
+#define HIDBRIDGE_ERR_NHP_ERR 1
+#define HIDBRIDGE_ERR_COMMAND 2
+#define HIDBRIDGE_ERR_ADDRESS 3
+#define HIDBRIDGE_ERR_CONTROL 4
+#define HIDBRIDGE_ERR_NOT_RDY 5
+#define HIDBRIDGE_ERR_NO_SPTR 6
 
 
 //================================================================================
@@ -58,15 +63,27 @@ THE SOFTWARE.
 class HIDBridge_{
 public:
 	HIDBridge_(void);
-
-	bool begin(void);
+	inline void debugStream(Stream* s){
+		debug = s;
+	}
+	bool begin(Stream &s);
+	bool begin(Stream* s);
 	void readSerial(void);
 	bool waitForReady(void);
 	bool isReady;
 	void task(void);
 	void err(uint8_t error);
 
-	inline void write(void){} // TODO
+	// public to access via HID_SendReport
+	void SendReport(uint8_t reportID, const void* data, int len);
+
+private:
+	Stream* debug;
+	Stream* HIDStream; //TODO template?
+
+	NHP_Read_Data_t nhp_read;
+
+
 };
 
 extern HIDBridge_ HIDBridge;
