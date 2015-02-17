@@ -24,9 +24,13 @@ THE SOFTWARE.
 #ifndef NHP_H
 #define NHP_H
 
+
+#ifdef __cplusplus
+extern "C"{
+#endif
+
 #include <stdint.h> //uint_t definitions
 #include <stdbool.h> //bool type
-
 
 //================================================================================
 //Settings
@@ -48,9 +52,13 @@ THE SOFTWARE.
 // Lead
 #define NHP_LENGTH_MASK		0x38 // B00|111|000
 #define NHP_LENGTH_OFFSET      3
+#define NHP_LENGTH_COMMAND_0   0 // length 0 indicates a command
+#define NHP_LENGTH_COMMAND_1   1 // length 1 indicates a command
+#define NHP_LENGTH_HIGH_MSB31  7 // length 7 indicates MSB 31 is high (1)
 #define NHP_COMMAND_MASK	0x0F // B0000|1111 // 4bit command(0-15) in lead block
 
 // Data
+#define NHP_DATA_7BIT		   7 // data blocks contain 7 bit of information
 #define NHP_DATA_7BIT_MASK	0x7F // B0|1111111 // data in data block
 #define NHP_DATA_4BIT_MASK	0x0F // B0000|1111 // data in lead (32 bit special MSB case)
 #define NHP_DATA_3BIT_MASK	0x07 // B00000|111 // data in lead
@@ -79,9 +87,13 @@ THE SOFTWARE.
 #define UINT16_AT_OFFSET(p_to_8, offset)    ((uint16_t)*((const uint16_t *)((p_to_8)+(offset))))
 #define UINT32_AT_OFFSET(p_to_8, offset)    ((uint32_t)*((const uint32_t *)((p_to_8)+(offset))))
 
-// protocol data for temporary variables
+//================================================================================
+// Typedefs
+//================================================================================
+	
+// protocol read data for temporary variables
 typedef union {
-	struct { //TODO change order to save flash?
+	struct {
 		// buffer for read operations
 		uint8_t readBuffer[NHP_READ_BUFFER_SIZE];
 
@@ -96,15 +108,15 @@ typedef union {
 			// temporary + final data
 			uint32_t data;
 			uint32_t data32;
-			uint16_t data16[sizeof(data) / sizeof(uint16_t)];
-			uint8_t  data8[sizeof(data)];
+			uint16_t data16[sizeof(uint32_t) / sizeof(uint16_t)];
+			uint8_t  data8[sizeof(uint32_t) / sizeof(uint8_t)];
 			uint8_t command : 4;
 		};
 	};
-	uint8_t raw[sizeof(uint8_t) + sizeof(uint8_t) + sizeof(uint32_t) + sizeof(readBuffer)];
+	uint8_t raw[NHP_READ_BUFFER_SIZE + sizeof(uint8_t) + sizeof(uint8_t) + sizeof(uint32_t)];
 } NHP_Read_Data_t;
 
-// protocol data for temporary variables
+// protocol write data for temporary variables
 typedef union {
 	struct{
 		// buffer for write operations
@@ -112,177 +124,19 @@ typedef union {
 		uint8_t writeLength;
 	};
 
-	uint8_t raw[sizeof(writeBuffer) + sizeof(uint8_t)];
+	uint8_t raw[NHP_WRITE_BUFFER_SIZE + sizeof(uint8_t)];
 } NHP_Write_Data_t;
 
 //================================================================================
-// Protocol Function Prototypes
+// Function Prototypes
 //================================================================================
 
-static bool NHPread(uint8_t input, NHP_Read_Data_t* protocol) {
-	// get old protocol states and save into temporary variables (better compiler optimization)
-	uint8_t readLength = protocol->readLength;
-	uint8_t mode;
-	uint8_t blocks = protocol->blocks;
-	uint8_t errorLevel = protocol->errorLevel;
-	uint32_t data = protocol->data;
-	uint8_t address;
-	bool newInput = false;
+bool readNHP(uint8_t input, NHP_Read_Data_t* protocol);
+uint8_t writeNHPCommand(uint8_t command);
+void writeNHPAddress(uint8_t address, uint32_t data, NHP_Write_Data_t* protocol);
 
-	// completely reset the protocol after sucessfull reading/error last time
-	if (protocol->mode) {
-		blocks = 0;
-		readLength = 0;
-	}
-	// check if previous reading had a lead error, copy that lead byte to the beginning
-	else if (errorLevel == NHP_ERR_LEAD) {
-		protocol->readBuffer[0] = protocol->readBuffer[readLength];
-		readLength = 1;
-	}
-
-	// write new byte input to the buffer
-	protocol->readBuffer[readLength++] = input;
-
-	// reset mode and errorLevel to the default (no error, no input)
-	errorLevel = NHP_ERR_NONE;
-	mode = NHP_IN_PROGRESS;
-
-	// check the header(lead/data/end) indicator
-	uint8_t header = input & NHP_HEADER_MASK;
-
-	if (header == NHP_HEADER_LEAD)
-	{
-		if (blocks) {
-			// we were still reading! Log an error but continue reading with this new lead
-			// set indicator to move this lead byte to the beginning next reading
-			errorLevel = NHP_ERR_LEAD;
-			// write the buffer without the new lead, move it next reading
-			readLength--;
-		}
-
-		// read command indicator or block length
-		blocks = (input >> NHP_LENGTH_OFFSET) & (NHP_LENGTH_MASK >> NHP_LENGTH_OFFSET);
-
-		if (blocks == 0 || blocks == 1) {
-			// save command in data variable
-			data = input & NHP_COMMAND_MASK;
-			// return command indicator, reset next reading
-			mode = NHP_COMMAND;
-			newInput = true;
-		}
-		// address data
-		else if (blocks == 7) {
-			// save block length + first 4 data bits (special 32 bit case)
-			data = input & NHP_DATA_4BIT_MASK;
-			blocks -= 2;
-		}
-		else {
-			// save block length + first 3 data bits
-			data = input & NHP_DATA_3BIT_MASK;
-			blocks--;
-		}
-	}
-
-	else if (header == NHP_HEADER_END)
-	{
-		// reset next reading on both: valid input or error
-		if (blocks == 1){
-			// valid input, save the address
-			address = input & NHP_ADDRESS_MASK;
-			mode = NHP_ADDRESS;
-			newInput = true;
-		}
-		else{
-			// too early for an end, reset next time
-			errorLevel = NHP_ERR_END;
-			mode = NHP_RESET;
-		}
-	}
-
-	else if (header == NHP_HEADER_DATA_A || header == NHP_HEADER_DATA_B)
-	{
-		if (blocks >= 2) {
-			// get next 7 bits of data
-			blocks--;
-			data <<= 7;
-			// normally dont need & NHP_DATA_7BIT_MASK because the MSB bit is zero
-			data |= (input & NHP_DATA_7BIT_MASK);
-		}
-		else {
-			// log an error, expecting a lead or end byte
-			errorLevel = NHP_ERR_DATA;
-			mode = NHP_RESET;
-		}
-	}
-
-	// save temporary values to the data struct
-	protocol->blocks = blocks;
-	protocol->mode = mode;
-	protocol->readLength = readLength;
-	protocol->address = address;
-	protocol->errorLevel = errorLevel;
-	protocol->data = data;
-
-	// return if we have a new address or command
-	return newInput;
-}
-
-//================================================================================
-// Write NHP
-//================================================================================
-
-static uint8_t NHPwriteCommand(uint8_t command) {
-	// write lead mask 11 + length 00|0 or 00|1 including the last bit for the 4 bit command
-	// return the command with protocol around
-	return NHP_HEADER_LEAD | (command & NHP_COMMAND_MASK);
-}
-
-static void NHPwriteAddress(uint8_t address, uint32_t data, NHP_Write_Data_t* protocol) {
-	// start with the maximum size of blocks (6+1 for special MSB case)
-	uint8_t blocks = 7;
-
-	// check for the first 7 bit block that doesnt fit into the first 3 bits
-	while (blocks > 2) {
-		uint8_t nextvalue = (data >> (7 * (blocks - 3)));
-		if (nextvalue > NHP_DATA_3BIT_MASK) {
-			// data won't fit into the first 3 bits, wee need an extra block for them
-			// don't write them to the lead block, keep the data for the data blocks
-			if (blocks == 7) {
-				// special case for the MSB where we still want to write
-				// the 'too big' value into the lead block
-				protocol->writeBuffer[0] = nextvalue;
-				blocks = 6;
-			}
-			break;
-		}
-		else {
-			// write the possible first 3 bits and check again if the value is zero
-			// this also ensures that the first byte is always initialized
-			protocol->writeBuffer[0] = nextvalue;
-			blocks--;
-
-			// we have our first bits, stop
-			if (nextvalue)
-				break;
-		}
-	}
-
-	// write the rest of the data blocks
-	uint8_t datablocks = blocks - 2;
-	while (datablocks > 0) {
-		protocol->writeBuffer[datablocks] = data & NHP_DATA_7BIT_MASK;
-		data >>= 7;
-		datablocks--;
-	}
-
-	// add lead 11 + length to the first 3 (or 4 for special MSB case) data bits
-	protocol->writeBuffer[0] |= NHP_HEADER_LEAD | (blocks << NHP_LENGTH_OFFSET);
-
-	// write end 10 + address
-	protocol->writeBuffer[blocks - 1] = NHP_HEADER_END | (address & NHP_ADDRESS_MASK);
-
-	// save the number of blocks
-	protocol->writeLength = blocks;
-}
-
+#ifdef __cplusplus
+} // extern "C"
 #endif
+
+#endif // include guard

@@ -25,17 +25,30 @@ THE SOFTWARE.
 #define HIDBRIDGE_H
 
 #include <Arduino.h>
-#include <SoftwareSerial.h>
 #include "NHP.h"
 
 //================================================================================
 // Settings
 //================================================================================
 
+#define HIDBRIDGE_TX_SERIAL Serial
+
+#ifdef HOODLOADER2
+#define HIDBRIDGE_RX
+#else
+#define HIDBRIDGE_TX
+#endif
 
 //================================================================================
 // Definitions
 //================================================================================
+
+#if defined(HIDBRIDGE_RX) && defined(HIDBRIDGE_TX)
+#error Cannot send and receive at the same time
+// also because it will create the instance of the class
+// even if its not used, so we dont separate the TX and RX class names
+// function names are kept similar
+#endif
 
 #define HIDBRIDGE_TX_TIMEOUT 1000
 
@@ -45,6 +58,7 @@ THE SOFTWARE.
 
 #define HIDBRIDGE_CONTROL_ISREADY 0
 #define HIDBRIDGE_CONTROL_NOTREADY 1
+#define HIDBRIDGE_CONTROL_NOTCONNECTED 1
 
 #define HIDBRIDGE_ERR_TIMEOUT 0
 #define HIDBRIDGE_ERR_NHP_ERR 1
@@ -52,41 +66,82 @@ THE SOFTWARE.
 #define HIDBRIDGE_ERR_ADDRESS 3
 #define HIDBRIDGE_ERR_CONTROL 4
 #define HIDBRIDGE_ERR_NOT_RDY 5
-#define HIDBRIDGE_ERR_NO_SPTR 6
 
 
 //================================================================================
-// HIDBridge
+// HIDBridge TX
 //================================================================================
 
-
+#ifdef HIDBRIDGE_TX
 class HIDBridge_{
 public:
 	HIDBridge_(void);
-	inline void debugStream(Stream* s){
-		debug = s;
-	}
-	bool begin(Stream &s);
-	bool begin(Stream* s);
-	void readSerial(void);
-	bool waitForReady(void);
-	bool isReady;
-	void task(void);
-	void err(uint8_t error);
+
+	// user functions
+	void begin(void);
+	void end(void);
+
+	// advanced user functions
+	void read(void);
+	bool available(void);
 
 	// public to access via HID_SendReport
 	void SendReport(uint8_t reportID, const void* data, int len);
 
-private:
+	// debug
+	void err(uint8_t error);
+	inline void debugStream(Stream* s){
+		debug = s;
+	}
 	Stream* debug;
-	Stream* HIDStream; //TODO template?
 
+private:
+	bool isReady;
+	bool isConnected;
+
+	// temporary NHP protocol read data
 	NHP_Read_Data_t nhp_read;
-
-
 };
 
 extern HIDBridge_ HIDBridge;
+#endif
+
+//================================================================================
+// HIDBridge RX
+//================================================================================
+
+#ifdef HIDBRIDGE_RX
+class HIDBridge_{
+public:
+	HIDBridge_(void);
+
+	// user functions
+	void begin(void);
+	void end(void);
+
+	// advanced user functions
+	void read(void);
+	bool available(void);
+
+	// public to access via HID_SendReport
+	void SendReport(uint8_t reportID, const void* data, int len);
+
+	// debug
+	void err(uint8_t error);
+	inline void debugStream(Stream* s){
+		debug = s;
+	}
+	Stream* debug;
+
+private:
+	bool isReady;
+
+	// temporary NHP protocol read data
+	NHP_Read_Data_t nhp_read;
+};
+
+extern HIDBridge_ HIDBridge;
+#endif
 
 //================================================================================
 // Function prototypes

@@ -24,8 +24,10 @@ THE SOFTWARE.
 #include "HIDBridge.h"
 
 //================================================================================
-// HIDBridge
+// HIDBridge TX
 //================================================================================
+
+#ifdef HIDBRIDGE_TX
 
 HIDBridge_ HIDBridge;
 
@@ -33,14 +35,22 @@ HIDBridge_::HIDBridge_(void){
 	// empty
 }
 
-bool HIDBridge_::begin(Stream &s)
+void HIDBridge_::begin(void)
 {
-	begin((Stream*)&s);
+	// start the serial at our own baud rate
+	HIDBRIDGE_TX_SERIAL.begin(HIDBRIDGE_BAUD);
+
+	// wait for the first request to see if usb device is connected
+	available();
 }
 
-bool HIDBridge_::begin(Stream* s)
+void HIDBridge_::end(void)
 {
-	HIDStream = s;
+	// end the serial transmission and reset our helper values
+	HIDBRIDGE_TX_SERIAL.end();
+	nhp_read.mode = NHP_RESET;
+	isReady = false;
+	isConnected = false;
 }
 
 
@@ -48,48 +58,60 @@ void HIDBridge_::err(uint8_t error)
 {
 	if (!debug)
 		return;
-	debug->println("Softserial");
+	debug->print("Bridge Err TX: ");
 	debug->println(error);
 }
 
-void HIDBridge_::readSerial(void)
+void HIDBridge_::read(void)
 {
 	// read as long as the Serial is available
 	// but do not block forever
 	for (rx_buffer_index_t i = 0; i < SERIAL_RX_BUFFER_SIZE; i++){
+
 		// read in new Serial byte
-		int b = Serial.read();
+		int b = HIDBRIDGE_TX_SERIAL.read();
 		if (b < 0)
 			break;
 
 		// process with NHP protocol
-		bool newInput = NHPread(b, &nhp_read);
+		bool newInput = readNHP(b, &nhp_read);
 
 		// proceed new valid NHP input
 		if (newInput) {
+
+			// NHP address contains control data or out report data
 			if (nhp_read.mode == NHP_ADDRESS) {
-				switch (nhp_read.address) {
-					// received a control address command
-				case HIDBRIDGE_ADDRESS_CONTROL:
+
+				// received a control address command
+				if (nhp_read.address == HIDBRIDGE_ADDRESS_CONTROL) {
 					// acknowledge/request
-					if (nhp_read.data == HIDBRIDGE_CONTROL_ISREADY)
+					if (nhp_read.data == HIDBRIDGE_CONTROL_ISREADY){
 						isReady = true;
+						isConnected = true;
+					}
 
 					// pause
-					else if (nhp_read.data == HIDBRIDGE_CONTROL_NOTREADY)
+					else if (nhp_read.data == HIDBRIDGE_CONTROL_NOTREADY){
 						isReady = false;
+						isConnected = true;
+					}
 
-					// not
+					// usb device detached
+					else if (nhp_read.data == HIDBRIDGE_CONTROL_NOTCONNECTED){
+						isReady = false;
+						isConnected = false;
+					}
+					
+					// not defined control command
 					else
 						err(HIDBRIDGE_ERR_CONTROL);
-
-					break;
-					// received HID out report TODO
-				default:
-					err(HIDBRIDGE_ERR_ADDRESS);
-					break;
 				}
+
+				// received HID out report TODO
+				else
+					err(HIDBRIDGE_ERR_ADDRESS);
 			}
+
 			// received HID out report TODO
 			else if (nhp_read.mode == NHP_COMMAND) {
 				err(HIDBRIDGE_ERR_COMMAND);
@@ -106,52 +128,46 @@ void HIDBridge_::readSerial(void)
 }
 
 
-bool HIDBridge_::waitForReady(void)
+bool HIDBridge_::available(void)
 {
 	// try to wait for a new request/acknowledge
 	uint32_t currentMillis = millis();
 	do{
 		// check for new state information
 		// maybe the host sended a pause signal
-		readSerial();
+		read();
 
-		// check for timeout
-		if ((millis() - currentMillis) > HIDBRIDGE_TX_TIMEOUT) {
+		// check for timeout, do not wait longer if usb device is not connected
+		if (!isConnected || (millis() - currentMillis) > HIDBRIDGE_TX_TIMEOUT) {
 			err(HIDBRIDGE_ERR_TIMEOUT);
 			break;
 		}
-	} while (!isReady); //TODO andn no error in readSerial?
+	} while (!isReady);
 
 	return isReady;
 }
 
 void HIDBridge_::SendReport(uint8_t reportID, const void* data, int len)
 {
-	// check if stream pointer is set
-	if (!HIDStream){
-		err(HIDBRIDGE_ERR_NO_SPTR);
-		return;
-	}
-
-	// check the latest request/acknowledge,a pause, error
-	if (!waitForReady()){
+	// check the latest request/acknowledge, pause or error
+	if (!available()){
 		err(HIDBRIDGE_ERR_NOT_RDY);
 		return;
 	}
 
 	// begin transfer with reportID as command
-	HIDStream->write(NHPwriteCommand(reportID));
+	HIDBRIDGE_TX_SERIAL.write(writeNHPCommand(reportID));
 
 	// send data in 4 byte packets with the address of the reportID
 	// the rest (if any, e.g. with 2 byte) is filled with random bytes
 	NHP_Write_Data_t n;
 	for (int i = 0; i < len; i += 4) {
-		NHPwriteAddress(reportID, UINT32_AT_OFFSET(data, i), &n);
-		HIDStream->write(n.writeBuffer, n.writeLength);
+		writeNHPAddress(reportID, UINT32_AT_OFFSET(data, i), &n);
+		HIDBRIDGE_TX_SERIAL.write(n.writeBuffer, n.writeLength);
 	}
 
 	// end transfer with zero command
-	HIDStream->write(NHPwriteCommand(0));
+	HIDBRIDGE_TX_SERIAL.write(writeNHPCommand(0));
 
 	// need a request/acknowledge next time again
 	isReady = false;
@@ -164,3 +180,13 @@ void HID_SendReport(uint8_t reportID, const void* data, int len)
 {
 	HIDBridge.SendReport(reportID, data, len);
 }
+
+#endif // #ifdef HIDBRIDGE_TX
+
+//================================================================================
+// HIDBridge RX
+//================================================================================
+
+#ifdef HIDBRIDGE_RX
+
+#endif // #ifdef HIDBRIDGE_RX
