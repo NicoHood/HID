@@ -69,6 +69,7 @@ Version History
 * added colour highlighting (through HID-Bridge library)
 * removed fixed size in report buffers
 * used HID_KeyboardReport_Data_t now in Keyboard API
+* Arduino as ISP fix for 328
 
 2.1 Release (28.01.2015)
 * Reworked the whole USB-Core from scratch
