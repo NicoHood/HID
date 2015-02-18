@@ -54,9 +54,7 @@ Check Keyboard keycode function again? + add example
 Generalize HID key definitions via HIDTables for example?
 
 Test with Android phone (HL1)
-HID-Bridge + Firmwares (planned for 2.2)
-
-HL2 usb hub fix (try with a bare cdc bootloader?)
+improve keywords.txt
 ```
 
 
@@ -64,12 +62,13 @@ Version History
 ===============
 ```
 2.2 Release (xx.xx.2015)
-* added HID-Bridge
+* added HID-Bridge between 16u2 and 328/2560
 * increased HW Serial1 RX buffer size from 16 to 32 (TX still 16)
 * added colour highlighting (through HID-Bridge library)
 * removed fixed size in report buffers
 * used HID_KeyboardReport_Data_t now in Keyboard API
 * Arduino as ISP fix for 328
+* Upload verification on USB hubs fix for HL2.0.4
 
 2.1 Release (28.01.2015)
 * Reworked the whole USB-Core from scratch
