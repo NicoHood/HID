@@ -8,6 +8,8 @@ This project went through a lot of phases and has now reached a new Arduino USB-
 with a lot of new functions like extended HID. It also supports HoodLoader1+2.
 The idea is to enable enhanced USB functions to almost all 'standard' Arduino boards.
 
+See the [wiki](https://github.com/NicoHood/HID/wiki/Features) for more information about features etc.
+
 
 Download
 ========
@@ -69,6 +71,7 @@ Version History
 * used HID_KeyboardReport_Data_t now in Keyboard API
 * Arduino as ISP fix for 328
 * Upload verification on USB hubs fix for HL2.0.4
+* No USB workaround for Leonardo integrated into variants
 
 2.1 Release (28.01.2015)
 * Reworked the whole USB-Core from scratch
