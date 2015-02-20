@@ -24,29 +24,29 @@ void setup() {
 
 void loop() {
   // USB -> Serial
-  for (int i = 0; i < USB_EP_SIZE; i++) {
+  uint8_t i;
+  for (i = 0; i < USB_EP_SIZE; i++) {
     // read maximum one EP_SIZE to not block
-    if (Serial.available())
-      Serial1.write(Serial.read());
-    else break;
+    int b = Serial.read();
+    if (b < 0)
+      break;
+    Serial1.write(b);
   }
 
   // Serial -> USB
-  if (Serial1.available()) {
-    // send maximum one EP_SIZE to give the usb some time to flush the buffer
-    uint8_t buff[USB_EP_SIZE - 1];
-    int i = 0;
-    for (i = 0; i < sizeof(buff); i++) {
-      if (Serial1.available())
-        buff[i] = Serial1.read();
-      else break;
-    }
-    Serial.write(buff, i);
+  uint8_t buff[USB_EP_SIZE];
+  for (i = 0; i < sizeof(buff); i++) {
+    // read maximum one EP_SIZE to not block
+    int b = Serial1.read();
+    if (b < 0)
+      break;
+    buff[i] = b;
   }
+  // send maximum one EP_SIZE to give the usb some time to flush the buffer
+  Serial.write(buff, i);
 }
 
-void CDC_LineEncodingEvent(void)
-{
+void CDC_LineEncodingEvent(void) {
   // start HW Serial with new baud rate
   Serial1.end();
   Serial1.begin(Serial.baud());
