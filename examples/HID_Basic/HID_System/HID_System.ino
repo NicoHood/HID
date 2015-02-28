@@ -39,7 +39,7 @@ void loop() {
 
     // tries to wake up the PC
     // this might fail on some PCs where USB wakeup isnt supported
-    USBDevice.wakeupHost();
+    System.write(SYSTEM_WAKE_UP);
 
     // simple debounce
     delay(300);

@@ -59,7 +59,12 @@ public:
 		release();
 	}
 	inline void press(uint8_t s){
-		HID_SendReport(HID_REPORTID_SYSTEMCONTROL, &s, sizeof(s));
+#ifdef USBCON
+		if (s == SYSTEM_WAKE_UP)
+			USBDevice.wakeupHost();
+		else
+#endif
+			HID_SendReport(HID_REPORTID_SYSTEMCONTROL, &s, sizeof(s));
 	}
 	inline void release(void){
 		begin();

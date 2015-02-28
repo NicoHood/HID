@@ -72,6 +72,7 @@ Version History
 * Arduino as ISP fix for 328
 * Upload verification on USB hubs fix for HL2.0.4
 * No USB workaround for Leonardo integrated into variants
+* Changed USB Wakeup in System API
 
 2.1 Release (28.01.2015)
 * Reworked the whole USB-Core from scratch
