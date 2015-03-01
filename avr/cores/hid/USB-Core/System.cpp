@@ -28,3 +28,12 @@ THE SOFTWARE.
 //================================================================================
 
 System_ System;
+
+void System_::press(uint8_t s){
+#ifdef USBCON
+	if (s == SYSTEM_WAKE_UP)
+		USBDevice.wakeupHost();
+	else
+#endif
+		HID_SendReport(HID_REPORTID_SYSTEMCONTROL, &s, sizeof(s));
+}
