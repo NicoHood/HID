@@ -29,9 +29,9 @@ THE SOFTWARE.
 //================================================================================
 
 // pre selected hid reports with autoinclude of the api
-#define HID_MOUSE_ENABLE // normal mouse with buttons + wheel
+//#define HID_MOUSE_ENABLE // normal mouse with buttons + wheel
 //#define HID_MOUSE_ABSOLUTE_ENABLE // only works with system and without gamepad
-#define HID_KEYBOARD_LEDS_ENABLE // leds OR keys
+//#define HID_KEYBOARD_LEDS_ENABLE // leds OR keys
 //#define HID_KEYBOARD_KEYS_ENABLE
 //#define HID_RAWHID_ENABLE // currently not working
 //#define HID_CONSUMERCONTROL_ENABLE
