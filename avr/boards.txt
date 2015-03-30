@@ -82,17 +82,17 @@ microExtended.build.extra_flags={build.usb_flags}
 #HID Project needs to be installed https://github.com/NicoHood/HID
 microExtended.menu.usbcore.hid=Serial + Extended HID
 microExtended.menu.usbcore.hid.build.variant=micro_hid
-microExtended.menu.usbcore.hid.pid=0x8037
+microExtended.menu.usbcore.hid.build.pid=0x8037
 microExtended.menu.usbcore.gamepad=Serial + Gamepad HID
 microExtended.menu.usbcore.gamepad.build.variant=micro_gamepad
-microExtended.menu.usbcore.gamepad.pid=0x8037
+microExtended.menu.usbcore.gamepad.build.pid=0x8037
 microExtended.menu.usbcore.custom=Serial + Custom HID
 microExtended.menu.usbcore.custom.build.variant=micro_custom
-microExtended.menu.usbcore.custom.pid=0x8037
+microExtended.menu.usbcore.custom.build.pid=0x8037
 microExtended.menu.usbcore.USB_CORE=Default Core
 microExtended.menu.usbcore.USB_CORE.build.variant=micro
-microExtended.menu.usbcore.USB_CORE.pid=0x8037
+microExtended.menu.usbcore.USB_CORE.build.pid=0x8037
 microExtended.menu.usbcore.NO_USB=No USB functions
 microExtended.menu.usbcore.NO_USB.build.variant=micro_no_usb
-microExtended.menu.usbcore.NO_USB.pid=0x8037
+microExtended.menu.usbcore.NO_USB.build.pid=0x8037
 
