@@ -54,6 +54,7 @@ THE SOFTWARE.
 #define KEY_NUM_LOCK		0xDB
 #define KEY_SCROLL_LOCK		0xCF
 #define KEY_PAUSE			0xD0
+#define KEY_MENU			0xED // 0x65 in the official docs
 
 #define KEY_LEFT_CTRL		0x80
 #define KEY_LEFT_SHIFT		0x81
