@@ -12,6 +12,8 @@ The idea is to enable enhanced USB functions to almost all 'standard' Arduino bo
 Download
 ========
 
+###Download the current dev version for 1.6.2 compatibility. The master currently only works with 1.6.1 and the dev only with 1.6.2 due to internal IDE changes.
+
 You have 3 versions you can download:
 * The master includes all fixes to the current stable release. Download it by clicking download at the right.
 Use the [online Wiki](https://github.com/NicoHood/HID/wiki) to get the newest documentation.
