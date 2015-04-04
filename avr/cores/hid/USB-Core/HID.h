@@ -50,7 +50,7 @@ THE SOFTWARE.
 
 #if !defined(EXTERN_HID_REPORT) && !defined(HID_MOUSE_ENABLE) && !defined(HID_KEYBOARD_KEYS_ENABLE) \
 && !defined(HID_KEYBOARD_LEDS_ENABLE) && !defined(HID_MOUSE_ABSOLUTE_ENABLE) && !defined(HID_RAWHID_ENABLE) \
-&& !defined(HID_CONSUMER_ENABLE) && !defined(HID_SYSTEM_ENABLE) && !defined(HID_GAMEPAD_ENABLE) 
+&& !defined(HID_CONSUMERCONTROL_ENABLE) && !defined(HID_SYSTEM_ENABLE) && !defined(HID_GAMEPAD_ENABLE) 
 // by default enable mouse + keyboard api
 #define HID_MOUSE_ENABLE
 #define HID_KEYBOARD_KEYS_ENABLE
