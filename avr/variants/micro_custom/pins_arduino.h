@@ -40,7 +40,7 @@ You have to enable the specific hid apis on your own then, also the keyboard led
 */
 
 #define HID_AUTOMATIC
-#define HID_CUSTOM_SETTINGS
+//#define HID_CUSTOM_SETTINGS
 
 //================================================================================
 // Automatic
