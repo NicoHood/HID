@@ -48,12 +48,13 @@ You have to enable the specific hid apis on your own then, also the keyboard led
 
 #ifdef HID_AUTOMATIC
 // pre selected hid reports with autoinclude of the api
-#define HID_MOUSE_ENABLE // normal mouse with buttons + wheel
+//#define HID_MOUSE_ENABLE // normal mouse with buttons + wheel
 //#define HID_MOUSE_ABSOLUTE_ENABLE // only works with system and without gamepad
-#define HID_KEYBOARD_LEDS_ENABLE // leds OR keys
+//#define HID_KEYBOARD_LEDS_ENABLE // leds OR keys
 //#define HID_KEYBOARD_KEYS_ENABLE
 //#define HID_RAWHID_ENABLE // currently not working
-//#define HID_CONSUMERCONTROL_ENABLE
+#define HID_CONSUMERCONTROL_ENABLE
+#define HID_REPORTID_CONSUMERCONTROL 1
 //#define HID_SYSTEMCONTROL_ENABLE
 //#define HID_GAMEPAD_ENABLE // only works without mouse absolute
 
