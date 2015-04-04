@@ -6,6 +6,7 @@
 
  Press a button to play/pause music player
  See HID Project documentation for more Consumer keys.
+ https://github.com/NicoHood/HID/wiki/Consumer-API#key-definitions
 
 // basic Media key definitions, see HID Project and official USB docs for more
 #define MEDIA_FAST_FORWARD	0xB3
