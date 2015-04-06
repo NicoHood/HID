@@ -73,6 +73,8 @@ Version History
 * Upload verification on USB hubs fix for HL2.0.4
 * No USB workaround for Leonardo integrated into variants
 * Changed USB Wakeup in System API
+* Consumer Key fix (issue #3)
+* Gamepad fix (issue #14)
 
 2.1 Release (28.01.2015)
 * Reworked the whole USB-Core from scratch
