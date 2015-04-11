@@ -6,19 +6,7 @@
 
  Press a button to play/pause music player
  See HID Project documentation for more Consumer keys.
- https://github.com/NicoHood/HID/wiki/Consumer-API#key-definitions
-
-// basic Media key definitions, see HID Project and official USB docs for more
-#define MEDIA_FAST_FORWARD	0xB3
-#define MEDIA_REWIND	0xB4
-#define MEDIA_NEXT	0xB5
-#define MEDIA_PREVIOUS	0xB6
-#define MEDIA_STOP	0xB7
-#define MEDIA_PLAY_PAUSE	0xCD
-
-#define MEDIA_VOLUME_MUTE	0xE2
-#define MEDIA_VOLUME_UP	0xE9
-#define MEDIA_VOLUME_DOWN	0xEA
+ https://github.com/NicoHood/HID/wiki/Consumer-API
 */
 
 const int pinLed = LED_BUILTIN;

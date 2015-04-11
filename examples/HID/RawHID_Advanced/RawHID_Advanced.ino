@@ -2,7 +2,7 @@
  Copyright (c) 2014 NicoHood
  See the readme for credit to other people.
 
- Advanced RawHID example (currently not available)
+ Advanced RawHID example (currently not available/broken)
  
  Shows how to send bytes via raw HID
  Press a button to send some example values.

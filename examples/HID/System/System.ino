@@ -5,6 +5,8 @@
  System example
 
  Press a button to put pc into sleep/shut it down or wake it up again.
+ See HID Project documentation for more infos
+ https://github.com/NicoHood/HID/wiki/System-API
 */
 
 const int pinLed = LED_BUILTIN;
