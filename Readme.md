@@ -51,8 +51,7 @@ Keyboard Layout for different Languages
 Clean up USB Core code from fixed values. Use better understandable definitions
 Magic key fix for 32u4?
 
-keycode/raw for keyboard
-Check Keyboard keycode function again? + add example
+Check Keyboard keycode function again
 Generalize HID key definitions via HIDTables for example?
 
 Test with Android phone (HL1)
@@ -63,8 +62,8 @@ improve keywords.txt
 Version History
 ===============
 ```
-2.2 Release (xx.xx.2015)
-* added HID-Bridge between 16u2 and 328/2560
+2.2 Release (12.04.2015)
+* added experimental, not finished nor documented HID-Bridge between 16u2 and 328/2560
 * increased HW Serial1 RX buffer size from 16 to 32 (TX still 16)
 * added colour highlighting (through HID-Bridge library)
 * removed fixed size in report buffers
@@ -75,6 +74,7 @@ Version History
 * Changed USB Wakeup in System API
 * Consumer Key fix (issue #3)
 * Gamepad fix (issue #14)
+* Added Keycode example
 
 2.1 Release (28.01.2015)
 * Reworked the whole USB-Core from scratch
