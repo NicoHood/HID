@@ -1,4 +1,4 @@
-Arduino HID Project 2.2
+Arduino HID Project 2.3
 =======================
 
 [![Join the chat at https://gitter.im/NicoHood/HID](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/NicoHood/HID?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
@@ -62,6 +62,8 @@ improve keywords.txt
 Version History
 ===============
 ```
+2.3 Release (xx.xx.2015)
+
 2.2 Release (12.04.2015)
 * added experimental, not finished nor documented HID-Bridge between 16u2 and 328/2560
 * increased HW Serial1 RX buffer size from 16 to 32 (TX still 16)
