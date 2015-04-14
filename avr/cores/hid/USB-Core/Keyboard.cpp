@@ -50,7 +50,7 @@ Keyboard_ Keyboard;
 
 void Keyboard_::sendReport(HID_KeyboardReport_Data_t* keys)
 {
-	HID_SendReport(HID_REPORTID_KEYBOARD, keys, sizeof(HID_KeyboardReport_Data_t));
+	HID_SendReport(HID_REPORTID_KEYBOARD, keys, sizeof(keys));
 }
 
 extern
