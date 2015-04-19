@@ -75,6 +75,7 @@ Version History
 * Consumer Key fix (issue #3)
 * Gamepad fix (issue #14)
 * Added Keycode example
+* Mouse press + release fix
 
 2.1 Release (28.01.2015)
 * Reworked the whole USB-Core from scratch
