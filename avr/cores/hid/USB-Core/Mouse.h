@@ -87,7 +87,12 @@ class Mouse_
 {
 private:
 	uint8_t _buttons;
-	void buttons(uint8_t b);
+	inline void buttons(uint8_t b){
+		if (b != _buttons){
+			_buttons = b;
+			move(0, 0, 0);
+		}
+	}
 public:
 	inline Mouse_(void) {
 		// removed this to avoid creating an instance of Mouse if not needed
