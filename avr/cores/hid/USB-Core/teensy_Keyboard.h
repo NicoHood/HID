@@ -23,8 +23,12 @@ class usb_keyboard_class : public Print
 	teensy_HID_KeyboardReport_Data_t _keyReport;
 	void sendReport(teensy_HID_KeyboardReport_Data_t* keys);
 	public:
-	void begin(void) { }
-	void end(void) { }
+	void begin(void) {
+                end();
+        }
+	void end(void) {
+            releaseAll();
+        }
 #if ARDUINO >= 100
 	virtual size_t write(uint8_t);
 #else
