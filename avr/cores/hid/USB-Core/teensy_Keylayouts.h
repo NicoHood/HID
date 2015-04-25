@@ -44,7 +44,7 @@ extern "C"{
 //#define LAYOUT_DANISH
 //#define LAYOUT_FINNISH
 //#define LAYOUT_FRENCH
-#define LAYOUT_FRENCH_BELGIAN
+//#define LAYOUT_FRENCH_BELGIAN
 //#define LAYOUT_FRENCH_SWISS
 //#define LAYOUT_GERMAN
 //#define LAYOUT_GERMAN_MAC
