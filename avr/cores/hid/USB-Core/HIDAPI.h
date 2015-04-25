@@ -28,7 +28,8 @@ THE SOFTWARE.
 // Edited by Ringo
 //#include "Keyboard.h"
 #include "teensy_Keyboard.h"
-// End edit#include "Mouse.h"
+// End edit
+#include "Mouse.h"
 #include "Consumer.h"
 #include "System.h"
 #include "Gamepad.h"
