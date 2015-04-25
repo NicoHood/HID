@@ -28,6 +28,10 @@
  * SOFTWARE.
  */
 
+/*
+ * Edited by Ringo Martens on 04/25/2015 to port keyboard class to arduino
+ */
+
 #ifndef teensy_KEYLAYOUTS_H__
 #define teensy_KEYLAYOUTS_H__
 

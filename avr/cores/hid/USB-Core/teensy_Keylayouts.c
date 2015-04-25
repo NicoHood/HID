@@ -1,3 +1,7 @@
+/*
+ * Edited by Ringo Martens on 04/25/2015 to port keyboard class to arduino
+ */
+
 #include <avr/pgmspace.h>
 #include <stdint.h>
 
