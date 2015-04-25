@@ -30,7 +30,22 @@ void loop() {
 
     // Same use as the official library, pretty much self explaining
     teensy_Keyboard.println(F("This message was sent with my Arduino."));
-    Serial.println(F("Serial port is still working and not glitching out"));
+    teensy_Keyboard.println(F("Lowercase:  abcdefghijklmnopqrstuvwxyz"));
+    teensy_Keyboard.println(F("Uppercase:  ABCDEFGHIJKLMNOPQRSTUVWXYZ"));
+
+/*
+    // Single keypress
+    teensy_Keyboard.press(MODIFIERKEY_SHIFT);
+    teensy_Keyboard.press('a');
+    teensy_Keyboard.releaseAll();
+    
+    teensy_Keyboard.println();
+    
+    // Write a single keystroke
+    teensy_Keyboard.write('a');
+    
+    teensy_Keyboard.println();    
+*/
 
     // simple debounce
     delay(300);
