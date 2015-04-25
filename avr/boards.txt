@@ -1,6 +1,8 @@
 #HID Project board definition file
 
 menu.usbcore=USB Core
+menu.keys=Keyboard Layout
+
 
 ##############################################################
 
@@ -48,6 +50,59 @@ leonardoExtended.menu.usbcore.USB_CORE.build.pid=0x8036
 leonardoExtended.menu.usbcore.NO_USB=No USB functions
 leonardoExtended.menu.usbcore.NO_USB.build.variant=leonardo_no_usb
 leonardoExtended.menu.usbcore.NO_USB.build.pid=0x8036
+
+#Layout selection
+#Copied from Teensyduino
+leonardoExtended.menu.keys.en-us=US English
+leonardoExtended.menu.keys.en-us.build.keylayout=US_ENGLISH
+leonardoExtended.menu.keys.fr-ca=Canadian French
+leonardoExtended.menu.keys.fr-ca.build.keylayout=CANADIAN_FRENCH
+leonardoExtended.menu.keys.xx-ca=Canadian Multilingual
+leonardoExtended.menu.keys.xx-ca.build.keylayout=CANADIAN_MULTILINGUAL
+leonardoExtended.menu.keys.cz-cz=Czech
+leonardoExtended.menu.keys.cz-cz.build.keylayout=CZECH
+leonardoExtended.menu.keys.da-da=Danish
+leonardoExtended.menu.keys.da-da.build.keylayout=DANISH
+leonardoExtended.menu.keys.fi-fi=Finnish
+leonardoExtended.menu.keys.fi-fi.build.keylayout=FINNISH
+leonardoExtended.menu.keys.fr-fr=French
+leonardoExtended.menu.keys.fr-fr.build.keylayout=FRENCH
+leonardoExtended.menu.keys.fr-be=French Belgian
+leonardoExtended.menu.keys.fr-be.build.keylayout=FRENCH_BELGIAN
+leonardoExtended.menu.keys.fr-ch=French Swiss
+leonardoExtended.menu.keys.fr-ch.build.keylayout=FRENCH_SWISS
+leonardoExtended.menu.keys.de-de=German
+leonardoExtended.menu.keys.de-de.build.keylayout=GERMAN
+leonardoExtended.menu.keys.de-dm=German (Mac)
+leonardoExtended.menu.keys.de-dm.build.keylayout=GERMAN_MAC
+leonardoExtended.menu.keys.de-ch=German Swiss
+leonardoExtended.menu.keys.de-ch.build.keylayout=GERMAN_SWISS
+leonardoExtended.menu.keys.is-is=Icelandic
+leonardoExtended.menu.keys.is-is.build.keylayout=ICELANDIC
+leonardoExtended.menu.keys.en-ie=Irish
+leonardoExtended.menu.keys.en-ie.build.keylayout=IRISH
+leonardoExtended.menu.keys.it-it=Italian
+leonardoExtended.menu.keys.it-it.build.keylayout=ITALIAN
+leonardoExtended.menu.keys.no-no=Norwegian
+leonardoExtended.menu.keys.no-no.build.keylayout=NORWEGIAN
+leonardoExtended.menu.keys.pt-pt=Portuguese
+leonardoExtended.menu.keys.pt-pt.build.keylayout=PORTUGUESE
+leonardoExtended.menu.keys.pt-br=Portuguese Brazilian
+leonardoExtended.menu.keys.pt-br.build.keylayout=PORTUGUESE_BRAZILIAN
+leonardoExtended.menu.keys.rs-rs=Serbian (Latin Only)
+leonardoExtended.menu.keys.rs-rs.build.keylayout=SERBIAN_LATIN_ONLY
+leonardoExtended.menu.keys.es-es=Spanish
+leonardoExtended.menu.keys.es-es.build.keylayout=SPANISH
+leonardoExtended.menu.keys.es-mx=Spanish Latin America
+leonardoExtended.menu.keys.es-mx.build.keylayout=SPANISH_LATIN_AMERICA
+leonardoExtended.menu.keys.sv-se=Swedish
+leonardoExtended.menu.keys.sv-se.build.keylayout=SWEDISH
+leonardoExtended.menu.keys.tr-tr=Turkish (partial)
+leonardoExtended.menu.keys.tr-tr.build.keylayout=TURKISH
+leonardoExtended.menu.keys.en-gb=United Kingdom
+leonardoExtended.menu.keys.en-gb.build.keylayout=UNITED_KINGDOM
+leonardoExtended.menu.keys.usint=US International
+leonardoExtended.menu.keys.usint.build.keylayout=US_INTERNATIONAL
 
 ##############################################################
 
