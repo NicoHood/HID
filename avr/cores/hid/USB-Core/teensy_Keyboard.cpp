@@ -358,3 +358,8 @@ void usb_keyboard_class::releaseAll(void)
 	_keyReport.modifiers = 0;
 	sendReport(&_keyReport);
 }
+
+void usb_keyboard_class::send_now(void)
+{
+	sendReport(&_keyReport);
+}

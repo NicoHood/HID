@@ -42,6 +42,7 @@ class usb_keyboard_class : public Print
 	void press(uint16_t n);
 	void release(uint16_t n);
 	void releaseAll(void);
+	void send_now(void);
 	private:
 	KEYCODE_TYPE unicode_to_keycode(uint16_t unicode);
 	KEYCODE_TYPE deadkey_to_keycode(KEYCODE_TYPE keycode);
