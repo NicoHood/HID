@@ -1,5 +1,5 @@
 /*
- Copyright (c) 2014 NicoHood
+ Copyright (c) 2014-2015 NicoHood
  See the readme for credit to other people.
 
  Keyboard Led example
@@ -25,7 +25,7 @@ void setup() {
 void loop() {
   // update Led equal to the caps lock state
   // keep in mind on HoodLoader2 high&low are inverted (like this)
-  if (Keyboard.getLeds()&LED_CAPS_LOCK)
+  if (Keyboard.getLeds() & LED_CAPS_LOCK)
     digitalWrite(pinLed, LOW);
   else
     digitalWrite(pinLed, HIGH);
@@ -37,4 +37,4 @@ void loop() {
     // simple debounce
     delay(500);
   }
-}
+
