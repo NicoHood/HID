@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010 by Cristian Maglie <c.maglie@bug.st>
+ * Copyright (c) 2010 by Cristian Maglie <c.maglie@arduino.cc>
  * Copyright (c) 2014 by Paul Stoffregen <paul@pjrc.com> (Transaction API)
  * Copyright (c) 2014 by Matthijs Kooijman <matthijs@stdin.nl> (SPISettings AVR)
  * Copyright (c) 2014 by Andrew J. Kroll <xxxajk@gmail.com> (atomicity fixes)
@@ -29,7 +29,15 @@ void SPIClass::begin()
   noInterrupts(); // Protect from a scheduler and prevent transactionBegin
   if (!initialized) {
     // Set SS to high so a connected chip will be "deselected" by default
-    digitalWrite(SS, HIGH);
+    uint8_t port = digitalPinToPort(SS);
+    uint8_t bit = digitalPinToBitMask(SS);
+    volatile uint8_t *reg = portModeRegister(port);
+
+    // if the SS pin is not already configured as an output
+    // then set it high (to enable the internal pull-up resistor)
+    if(!(*reg & bit)){
+      digitalWrite(SS, HIGH);
+    }
 
     // When the SS pin is set as OUTPUT, it can be used as
     // a general purpose output port (it doesn't influence
