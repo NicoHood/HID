@@ -63,6 +63,11 @@ Version History
 ===============
 ```
 2.3 Release (xx.xx.2015)
+* Updated Libraries
+* Updated Arduino Core
+* Added Minor Consumer definitions
+* Fixed platforms.txt
+* SERIAL_RX_BUFFER_SIZE reverted to 16 (TODO add -D to build option)
 
 2.2 Release (12.04.2015)
 * added experimental, not finished nor documented HID-Bridge between 16u2 and 328/2560
