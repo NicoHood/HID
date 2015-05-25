@@ -1,5 +1,5 @@
 /*
- Copyright (c) 2014 NicoHood
+ Copyright (c) 2014-2015 NicoHood
  See the readme for credit to other people.
 
  Keyboard example

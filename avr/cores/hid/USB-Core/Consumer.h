@@ -36,12 +36,18 @@ THE SOFTWARE.
 #define MEDIA_REWIND	0xB4
 #define MEDIA_NEXT	0xB5
 #define MEDIA_PREVIOUS	0xB6
+#define MEDIA_PREV	MEDIA_PREVIOUS
 #define MEDIA_STOP	0xB7
 #define MEDIA_PLAY_PAUSE	0xCD
 
 #define MEDIA_VOLUME_MUTE	0xE2
 #define MEDIA_VOLUME_UP	0xE9
 #define MEDIA_VOLUME_DOWN	0xEA
+#define MEDIA_VOL_MUTE MEDIA_VOLUME_MUTE
+#define MEDIA_VOL_UP MEDIA_VOLUME_UP
+#define MEDIA_VOL_DOWN MEDIA_VOLUME_DOWN
+
+#define CONSUMER_SCREENSAVER 0x19e
 
 #define CONSUMER_EMAIL_READER	0x18A
 #define CONSUMER_CALCULATOR	0x192
@@ -53,12 +59,12 @@ THE SOFTWARE.
 #define CONSUMER_BROWSER_REFRESH	0x227
 #define CONSUMER_BROWSER_BOOKMARKS	0x22A
 
-typedef union{
+typedef union {
 	// every usable Consumer key possible, up to 4 keys presses possible
 	uint8_t whole8[];
 	uint16_t whole16[];
 	uint32_t whole32[];
-	struct{
+	struct {
 		uint16_t key1;
 		uint16_t key2;
 		uint16_t key3;
@@ -66,24 +72,24 @@ typedef union{
 	};
 } HID_ConsumerControlReport_Data_t;
 
-class Consumer_{
+class Consumer_ {
 public:
-	inline Consumer_(void){
+	inline Consumer_(void) {
 		// empty
 	}
-	inline void begin(void){
+	inline void begin(void) {
 		// release all buttons
 		end();
 	}
-	inline void end(void){
+	inline void end(void) {
 		memset(&_report, 0, sizeof(_report));
 		HID_SendReport(HID_REPORTID_CONSUMERCONTROL, &_report, sizeof(_report));
 	}
-	inline void write(uint16_t m){
+	inline void write(uint16_t m) {
 		press(m);
 		release(m);
 	}
-	inline void press(uint16_t m){
+	inline void press(uint16_t m) {
 		// search for a free spot
 		for (int i = 0; i < sizeof(HID_ConsumerControlReport_Data_t) / 2; i++) {
 			if (_report.whole16[i] == 0x00) {
@@ -93,7 +99,7 @@ public:
 		}
 		HID_SendReport(HID_REPORTID_CONSUMERCONTROL, &_report, sizeof(_report));
 	}
-	inline void release(uint16_t m){
+	inline void release(uint16_t m) {
 		// search and release the keypress
 		for (int i = 0; i < sizeof(HID_ConsumerControlReport_Data_t) / 2; i++) {
 			if (_report.whole16[i] == m) {
@@ -103,7 +109,7 @@ public:
 		}
 		HID_SendReport(HID_REPORTID_CONSUMERCONTROL, &_report, sizeof(_report));
 	}
-	inline void releaseAll(void){
+	inline void releaseAll(void) {
 		end();
 	}
 private:
