@@ -1,0 +1,59 @@
+#######################################
+# Syntax Coloring Map For HID-Project
+#######################################
+
+#######################################
+# Datatypes (KEYWORD1)
+#######################################
+
+#######################################
+# Methods and Functions (KEYWORD2)
+#######################################
+
+USBDevice	KEYWORD3
+Keyboard	KEYWORD3
+Mouse	KEYWORD3
+RawHID	KEYWORD3
+System	KEYWORD3
+Consumer	KEYWORD3
+Gamepad	KEYWORD3
+press	KEYWORD2
+release	KEYWORD2
+releaseAll	KEYWORD2
+accept	KEYWORD2
+click	KEYWORD2
+move	KEYWORD2
+moveTo	KEYWORD2
+isPressed	KEYWORD2
+getLeds	KEYWORD2
+pressKeycode	KEYWORD2
+releaseKeycode	KEYWORD2
+writeKeycode	KEYWORD2
+addKeycodeToReport	KEYWORD2
+removeKeycodeFromReport	KEYWORD2
+buttons	KEYWORD2
+xAxis	KEYWORD2
+yAxis	KEYWORD2
+zAxis	KEYWORD2
+rxAxis	KEYWORD2
+ryAxis	KEYWORD2
+rzAxis	KEYWORD2
+dPad1	KEYWORD2
+dPad2	KEYWORD2
+HID_SendReport	KEYWORD2
+wakeupHost	KEYWORD2
+baud	KEYWORD2
+stopbits	KEYWORD2
+paritytype	KEYWORD2
+numbits	KEYWORD2
+dtr	KEYWORD2
+rts	KEYWORD2
+
+#######################################
+# Instances (KEYWORD2)
+#######################################
+
+#######################################
+# Constants (LITERAL1)
+#######################################
+

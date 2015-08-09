@@ -1,8 +1,0 @@
-arduinoispleo.name=Arduino as ISP (Leonardo)
-arduinoispleo.communication=serial
-arduinoispleo.protocol=arduino
-arduinoispleo.speed=19200
-arduinoispleo.program.protocol=arduino
-arduinoispleo.program.speed=19200
-arduinoispleo.program.tool=avrdude
-arduinoispleo.program.extra_params=-P{serial.port} -b{program.speed}
