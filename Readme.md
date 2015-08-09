@@ -1,8 +1,11 @@
 Arduino HID Project 2.2
 =======================
 
-[![Join the chat at https://gitter.im/NicoHood/HID](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/NicoHood/HID?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 ![Header Picture](header.jpg)
+
+##IDE 1.6.6 compatible library is [now available here.](https://github.com/NicoHood/HID/tree/dev_2_4)
+Install it as library, not as hardware file. IDE 1.6.6 introduced pluggable HID where you
+dont need to patch the whole Arduino-Core anymore.
 
 This project went through a lot of phases and has now reached a new Arduino USB-Core
 with a lot of new functions like extended HID. It also supports HoodLoader1+2.
