@@ -27,7 +27,7 @@ THE SOFTWARE.
 
 #if !defined(_USING_HID)
 
-#warning "Using legacy HID core (non pluggable)"
+#error "This is not an USB AVR or you use an old version of the IDE."
 
 #else
 
@@ -48,7 +48,7 @@ THE SOFTWARE.
 // but the last 3 wont do anything from what I tested
 #define MOUSE_ALL (MOUSE_LEFT | MOUSE_RIGHT | MOUSE_MIDDLE | MOUSE_PREV | MOUSE_NEXT)
 
-static const u8 _hidReportDescriptor[] PROGMEM = {
+static const uint8_t _absmouseReportDescriptor[] PROGMEM = {
 	/*  Mouse absolute */
     0x05, 0x01,                      /* USAGE_PAGE (Generic Desktop)	  54 */
     0x09, 0x02,                      /* USAGE (Mouse) */
@@ -137,8 +137,8 @@ private:
 public:
 	inline AbsMouse_(void) {
 		static HID_Descriptor cb = {
-			.length = sizeof(_hidReportDescriptor),
-			.descriptor = _hidReportDescriptor,
+			.length = sizeof(_absmouseReportDescriptor),
+			.descriptor = _absmouseReportDescriptor,
 		};
 		static HIDDescriptorListNode node(&cb);
 		HID.AppendDescriptor(&node);

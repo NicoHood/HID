@@ -27,7 +27,7 @@ THE SOFTWARE.
 
 #if !defined(_USING_HID)
 
-#warning "Using legacy HID core (non pluggable)"
+#error "This is not an USB AVR or you use an old version of the IDE."
 
 #else
 
@@ -50,7 +50,7 @@ THE SOFTWARE.
 #define GAMEPAD_DPAD_LEFT 7
 #define GAMEPAD_DPAD_UP_LEFT 8
 
-static const u8 _hidReportDescriptor[] PROGMEM = {
+static const uint8_t _gamepadReportDescriptor[] PROGMEM = {
 	/* Gamepad with 32 buttons and 6 axis*/
 	0x05, 0x01,							/* USAGE_PAGE (Generic Desktop) */
 	0x09, 0x04,							/* USAGE (Joystick) */
@@ -162,8 +162,8 @@ class Gamepad_{
 public:
 	inline Gamepad_(void){
 		static HID_Descriptor cb = {
-			.length = sizeof(_hidReportDescriptor),
-			.descriptor = _hidReportDescriptor,
+			.length = sizeof(_gamepadReportDescriptor),
+			.descriptor = _gamepadReportDescriptor,
 		};
 		static HIDDescriptorListNode node(&cb);
 		HID.AppendDescriptor(&node);

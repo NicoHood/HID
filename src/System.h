@@ -27,7 +27,7 @@ THE SOFTWARE.
 
 #if !defined(_USING_HID)
 
-#warning "Using legacy HID core (non pluggable)"
+#error "This is not an USB AVR or you use an old version of the IDE."
 
 #else
 
@@ -43,7 +43,7 @@ THE SOFTWARE.
 #define SYSTEM_SLEEP	0x82
 #define SYSTEM_WAKE_UP	0x83
 
-static const u8 _hidReportDescriptor[] PROGMEM = {
+static const uint8_t _systemReportDescriptor[] PROGMEM = {
 	//TODO limit to system keys only?
 	/*  System Control (Power Down, Sleep, Wakeup, ...) */
 	0x05, 0x01,								/* USAGE_PAGE (Generic Desktop) */
@@ -73,8 +73,8 @@ class System_{
 public:
 	inline System_(void){
 		static HID_Descriptor cb = {
-			.length = sizeof(_hidReportDescriptor),
-			.descriptor = _hidReportDescriptor,
+			.length = sizeof(_systemReportDescriptor),
+			.descriptor = _systemReportDescriptor,
 		};
 		static HIDDescriptorListNode node(&cb);
 		HID.AppendDescriptor(&node);

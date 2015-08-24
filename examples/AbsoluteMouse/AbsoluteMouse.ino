@@ -11,7 +11,7 @@
 */
 
 #include "HID.h"
-#include "AbsoluteMouse.h"
+#include "HID-Project.h"
 
 const int pinLed = LED_BUILTIN;
 const int pinButtonClick = 2;

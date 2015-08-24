@@ -10,7 +10,7 @@
 */
 
 #include "HID.h"
-#include "System.h"
+#include "HID-Project.h"
 
 const int pinLed = LED_BUILTIN;
 const int pinButtonS = 2;

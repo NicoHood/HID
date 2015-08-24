@@ -27,7 +27,7 @@ THE SOFTWARE.
 
 #if !defined(_USING_HID)
 
-#warning "Using legacy HID core (non pluggable)"
+#error "This is not an USB AVR or you use an old version of the IDE."
 
 #else
 
@@ -67,7 +67,7 @@ THE SOFTWARE.
 #define CONSUMER_BROWSER_REFRESH	0x227
 #define CONSUMER_BROWSER_BOOKMARKS	0x22A
 
-static const u8 _hidReportDescriptor[] PROGMEM = {
+static const uint8_t _consumerReportDescriptor[] PROGMEM = {
 	/* Consumer Control (Sound/Media keys) */
 	0x05, 0x0C,									/* usage page (consumer device) */
 	0x09, 0x01, 								/* usage -- consumer control */
@@ -103,8 +103,8 @@ class Consumer_ {
 public:
 	inline Consumer_(void) {
 		static HID_Descriptor cb = {
-			.length = sizeof(_hidReportDescriptor),
-			.descriptor = _hidReportDescriptor,
+			.length = sizeof(_consumerReportDescriptor),
+			.descriptor = _consumerReportDescriptor,
 		};
 		static HIDDescriptorListNode node(&cb);
 		HID.AppendDescriptor(&node);
