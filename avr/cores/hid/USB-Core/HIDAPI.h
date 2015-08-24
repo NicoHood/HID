@@ -25,7 +25,10 @@ THE SOFTWARE.
 #define __HIDAPI__
 
 // include all HID APIs
-#include "Keyboard.h"
+// Edited by Ringo
+//#include "Keyboard.h"
+#include "teensy_Keyboard.h"
+// End edit
 #include "Mouse.h"
 #include "Consumer.h"
 #include "System.h"

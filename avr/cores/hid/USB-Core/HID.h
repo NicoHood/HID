@@ -419,7 +419,10 @@ void	HID_SendReport(uint8_t id, const void* data, int len);
 #endif
 
 #ifdef HID_KEYBOARD_API_ENABLE
-#include "Keyboard.h"
+// Edited by Ringo
+//#include "Keyboard.h"
+#include "teensy_Keyboard.h"
+// End edit
 #endif
 
 #ifdef HID_RAWHID_API_ENABLE
