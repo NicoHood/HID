@@ -29,7 +29,12 @@ THE SOFTWARE.
 
 #include <Arduino.h>
 
+#if !defined(USBCON)
+#error "This is not an USB AVR or you use an old version of the IDE."
+#endif
+
 // Include all HID libraries (.a linkage required to work) properly
+#include "ImprovedKeyboard.h"
 #include "AbsoluteMouse.h"
 #include "Consumer.h"
 #include "Gamepad.h"
