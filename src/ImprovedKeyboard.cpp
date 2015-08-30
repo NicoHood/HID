@@ -1,22 +1,24 @@
 /*
-  Keyboard.cpp
+Copyright (c) 2014-2015 NicoHood
+See the readme for credit to other people.
 
-  Copyright (c) 2015, Arduino LLC
-  Original code (pre-library): Copyright (c) 2011, Peter Barrett
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
 
-  This library is free software; you can redistribute it and/or
-  modify it under the terms of the GNU Lesser General Public
-  License as published by the Free Software Foundation; either
-  version 2.1 of the License, or (at your option) any later version.
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
 
-  This library is distributed in the hope that it will be useful,
-  but WITHOUT ANY WARRANTY; without even the implied warranty of
-  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-  Lesser General Public License for more details.
-
-  You should have received a copy of the GNU Lesser General Public
-  License along with this library; if not, write to the Free Software
-  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
 */
 
 #include "ImprovedKeyboard.h"
@@ -83,11 +85,8 @@ void Keyboard_::sendReport(KeyReport* keys)
 	HID.SendReport(2,keys,sizeof(KeyReport));
 }
 
-extern
-const uint8_t _asciimap[128] PROGMEM;
-
 #define SHIFT 0x80
-const uint8_t _asciimap[128] =
+static const uint8_t _asciimap[128] PROGMEM =
 {
 	0x00,             // NUL
 	0x00,             // SOH
@@ -220,8 +219,10 @@ const uint8_t _asciimap[128] =
 	0				// DEL
 };
 
+uint8_t Keyboard_::getKeycode(uint8_t k){
+	return pgm_read_byte(_asciimap + k);
+}
 
-uint8_t USBPutChar(uint8_t c);
 
 // press() adds the specified key (printing, non-printing, or modifier)
 // to the persistent key report and sends the report.  Because of the way 
@@ -236,7 +237,7 @@ size_t Keyboard_::press(uint8_t k)
 		_keyReport.modifiers |= (1<<(k-128));
 		k = 0;
 	} else {				// it's a printing key
-		k = pgm_read_byte(_asciimap + k);
+		k = getKeycode(k);
 		if (!k) {
 			setWriteError();
 			return 0;
@@ -280,7 +281,7 @@ size_t Keyboard_::release(uint8_t k)
 		_keyReport.modifiers &= ~(1<<(k-128));
 		k = 0;
 	} else {				// it's a printing key
-		k = pgm_read_byte(_asciimap + k);
+		k = getKeycode(k);
 		if (!k) {
 			return 0;
 		}

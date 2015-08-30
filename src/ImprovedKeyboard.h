@@ -56,6 +56,7 @@
 #define KEY_LEFT_ARROW		0xD8
 #define KEY_RIGHT_ARROW		0xD7
 #define KEY_BACKSPACE		0xB2
+#define KEY_SPACE           ' '
 #define KEY_TAB				0xB3
 #define KEY_RETURN			0xB0
 #define KEY_ESC				0xB1
@@ -96,6 +97,7 @@ class Keyboard_ : public Print
 private:
   KeyReport _keyReport;
   void sendReport(KeyReport* keys);
+  uint8_t getKeycode(uint8_t k) __attribute__((weak));
 public:
   Keyboard_(void);
   void begin(void);
@@ -104,6 +106,10 @@ public:
   size_t press(uint8_t k);
   size_t release(uint8_t k);
   void releaseAll(void);
+  
+  // Select a different layout optional:
+  void useLayoutGerman(void);
+  void useLayoutUS(void);
 };
 extern Keyboard_ Keyboard;
 extern HID_ HID;
