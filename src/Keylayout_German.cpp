@@ -156,7 +156,7 @@ static const uint8_t _asciimap[128] PROGMEM =
 	0x35|SHIFT,    // ~
 	0				// DEL
 };
-
+Keyboard_ Keyboard;
 uint8_t Keyboard_::getKeycode(uint8_t k){
 	return pgm_read_byte(_asciimap + k);
 }
