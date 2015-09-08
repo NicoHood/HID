@@ -95,8 +95,6 @@ typedef union {
 	};
 } HID_ConsumerControlReport_Data_t;
 
-extern HID_ HID;
-
 class Consumer_ {
 public:
 	inline Consumer_(void) {

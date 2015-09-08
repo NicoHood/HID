@@ -63,19 +63,6 @@ extern "C"{
 //#define LAYOUT_UNITED_KINGDOM
 //#define LAYOUT_US_INTERNATIONAL
 
-// Default US keyboard layout
-#if !defined(LAYOUT_CANADIAN_FRENCH) && !defined(LAYOUT_CANADIAN_MULTILINGUAL) \
-&& !defined(LAYOUT_DANISH) && !defined(LAYOUT_FINNISH) && !defined(LAYOUT_FRENCH) \
-&& !defined(LAYOUT_FRENCH_BELGIAN) && !defined(LAYOUT_FRENCH_SWISS) && !defined(LAYOUT_GERMAN) \
-&& !defined(LAYOUT_GERMAN_MAC) && !defined(LAYOUT_GERMAN_SWISS) && !defined(LAYOUT_ICELANDIC) \
-&& !defined(LAYOUT_IRISH) && !defined(LAYOUT_ITALIAN) && !defined(LAYOUT_NORWEGIAN) \
-&& !defined(LAYOUT_PORTUGUESE) && !defined(LAYOUT_PORTUGUESE_BRAZILIAN) \
-&& !defined(LAYOUT_SPANISH) && !defined(LAYOUT_SPANISH_LATIN_AMERICA) \
-&& !defined(LAYOUT_SWEDISH) && !defined(LAYOUT_TURKISH) && !defined(LAYOUT_UNITED_KINGDOM) \
-&& !defined(LAYOUT_US_INTERNATIONAL) && !defined(LAYOUT_US_ENGLISH)
-#define LAYOUT_US_ENGLISH
-#endif
-
 // http://en.wikipedia.org/wiki/Keyboard_layout
 
 

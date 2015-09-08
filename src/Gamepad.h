@@ -154,8 +154,6 @@ typedef union {
 	};
 } HID_GamepadReport_Data_t;
 
-extern HID_ HID;
-
 class Gamepad_{
 public:
 	inline Gamepad_(void){

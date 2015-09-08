@@ -118,6 +118,5 @@ class usb_keyboard_class : public Print
 };
 
 extern usb_keyboard_class TeensyKeyboard;
-extern HID_ HID;
 
 #endif

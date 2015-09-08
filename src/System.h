@@ -65,8 +65,6 @@ typedef union{
 	uint8_t key;
 } HID_SystemControlReport_Data_t;
 
-extern HID_ HID;
-
 class System_{
 public:
 	inline System_(void){
