@@ -35,9 +35,7 @@ THE SOFTWARE.
 // Consumer
 //================================================================================
 
-#ifndef HID_REPORTID_CONSUMERCONTROL
-#define HID_REPORTID_CONSUMERCONTROL 4
-#endif
+#include "HID-Project.h"
 
 // Media key definitions, see official USB docs for more
 #define MEDIA_FAST_FORWARD	0xB3

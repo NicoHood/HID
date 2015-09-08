@@ -31,18 +31,15 @@
 
 #else
 
+#include "HID-Project.h"
 #include "TeensyKeylayouts.h"
-
-#ifndef HID_REPORTID_KEYBOARD
-#define HID_REPORTID_KEYBOARD 2
-#endif
 
 // Keyboard Protocol 1, HID 1.11 spec, Appendix B, page 59-60
 static const uint8_t PROGMEM keyboard_hid_report_desc[] = {
         0x05, 0x01,             //  Usage Page (Generic Desktop),
         0x09, 0x06,             //  Usage (Keyboard),
         0xA1, 0x01,             //  Collection (Application),
-        0x85, HID_REPORTID_KEYBOARD,   //   REPORT_ID (2)
+        0x85, HID_REPORTID_TEENSY_KEYBOARD,   //   REPORT_ID
         0x75, 0x01,             //  Report Size (1),
         0x95, 0x08,             //  Report Count (8),
         0x05, 0x07,             //  Usage Page (Key Codes),

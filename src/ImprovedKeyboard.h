@@ -36,9 +36,7 @@ THE SOFTWARE.
 //================================================================================
 //  Keyboard
 
-#ifndef HID_REPORTID_KEYBOARD
-#define HID_REPORTID_KEYBOARD 2
-#endif
+#include "HID-Project.h"
 
 #define KEY_PRINT			0xCE
 #define KEY_NUM_LOCK		0xDB

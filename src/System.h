@@ -35,9 +35,7 @@ THE SOFTWARE.
 // System
 //================================================================================
 
-#ifndef HID_REPORTID_SYSTEMCONTROL
-#define HID_REPORTID_SYSTEMCONTROL 5
-#endif
+#include "HID-Project.h"
 
 #define SYSTEM_POWER_DOWN	0x81
 #define SYSTEM_SLEEP	0x82

@@ -35,9 +35,7 @@ THE SOFTWARE.
 // Gamepad
 //================================================================================
 
-#ifndef HID_REPORTID_GAMEPAD
-#define HID_REPORTID_GAMEPAD 6
-#endif
+#include "HID-Project.h"
 
 // Dpad directions
 #define GAMEPAD_DPAD_CENTERED 0
