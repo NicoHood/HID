@@ -104,6 +104,8 @@ THE SOFTWARE.
 
 extern HID_ HID;
 
+#include "HID-Tables.h"
+
 // Include all HID libraries (.a linkage required to work) properly
 #include "ImprovedKeylayouts.h"
 #include "ImprovedKeyboard.h"

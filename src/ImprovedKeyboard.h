@@ -39,18 +39,23 @@ THE SOFTWARE.
 #include "ImprovedKeylayouts.h"
 
 //  Low level key report: up to 6 keys and shift, ctrl etc at once
-typedef struct
-{
-  uint8_t modifiers;
-  uint8_t reserved;
-  uint8_t keys[6];
-} KeyReport;
+typedef union{
+	// Low level key report: up to 6 keys and shift, ctrl etc at once
+	uint8_t whole8[];
+	uint16_t whole16[];
+	uint32_t whole32[];
+	struct{
+		uint8_t modifiers;
+		uint8_t reserved;
+		uint8_t keys[6];
+	};
+} HID_KeyboardReport_Data_t;
 
 class Keyboard_ : public Print
 {
 private:
-  KeyReport _keyReport;
-  void sendReport(KeyReport* keys);
+  HID_KeyboardReport_Data_t _keyReport;
+  void sendReport(HID_KeyboardReport_Data_t* keys);
 public:
   Keyboard_(void);
   void begin(void);
@@ -60,9 +65,11 @@ public:
   size_t release(uint8_t k);
   void releaseAll(void);
   
-  // Select a different layout optional:
-  void useLayoutGerman(void);
-  void useLayoutUS(void);
+  size_t writeKeycode(uint8_t k);
+  size_t pressKeycode(uint8_t k);
+  size_t releaseKeycode(uint8_t k);
+  size_t addKeycodeToReport(uint8_t k);
+  size_t removeKeycodeFromReport(uint8_t k);
 };
 extern Keyboard_ Keyboard;
 
