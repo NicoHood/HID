@@ -51,7 +51,6 @@ class Keyboard_ : public Print
 private:
   KeyReport _keyReport;
   void sendReport(KeyReport* keys);
-  uint8_t getKeycode(uint8_t k) __attribute__((weak));
 public:
   Keyboard_(void);
   void begin(void);
