@@ -42,3 +42,4 @@ THE SOFTWARE.
 
 // Include Teensy HID afterwards to overwrite key definitions if used
 #include "TeensyKeyboard.h"
+#include "NKROKeyboard.h"
