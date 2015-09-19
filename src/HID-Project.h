@@ -138,4 +138,5 @@ THE SOFTWARE.
 #else
 #include "ImprovedKeylayouts.h"
 #include "ImprovedKeyboard.h"
+#include "NKROKeyboard.h"
 #endif
