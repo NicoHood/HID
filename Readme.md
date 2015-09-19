@@ -7,6 +7,21 @@ This project went through a lot of phases and has now reached a new Arduino ~~US
 with a lot of new functions like extended HID. It also supports HoodLoader1+2.
 The idea is to enable enhanced USB functions to almost all 'standard' Arduino boards.
 
+**Supported Arduinos (IDE 1.6.6 or higher!):**
+* Uno (with HoodLoader2)
+* Mega (with HoodLoader2)
+* Leonardo
+* (Pro)Micro
+* Any other 8u2/16u/at90usb162/32u2/32u4 compatible board
+
+**Supported HID devices:**
+* Keyboard ~~with Leds out (modifiers + 6 keys pressed at the same time)~~
+* Mouse (5 buttons, move, wheel)
+* Absolute Mouse
+* Consumer/Media Keys (4 keys for music player, web browser and more)
+* System Key (for PC standby/shutdown)
+* Gamepad (32 buttons, 4 16bit axis, 2 8bit axis, 2 D-Pads)
+
 See the [wiki](https://github.com/NicoHood/HID/wiki/Features) for more information about features etc.
 
 
@@ -66,7 +81,7 @@ Version History
 * Changed USB-Core into a simple library, only possible with Pluggable HID
 * Removed HID presets (like mouse + keyboard + consumer + system)
 
-2.3 Release (xx.xx.2015) (never released)
+2.3 Release (never released)
 * Updated Libraries
 * Updated Arduino Core
 * Added Minor Consumer definitions

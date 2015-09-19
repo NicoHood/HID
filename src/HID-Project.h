@@ -41,7 +41,7 @@ THE SOFTWARE.
 //#define LAYOUT_FRENCH
 //#define LAYOUT_FRENCH_BELGIAN
 //#define LAYOUT_FRENCH_SWISS
-//#define LAYOUT_GERMAN
+#define LAYOUT_GERMAN
 //#define LAYOUT_GERMAN_MAC
 //#define LAYOUT_GERMAN_SWISS
 //#define LAYOUT_ICELANDIC
@@ -102,13 +102,13 @@ THE SOFTWARE.
 #define HID_REPORTID_TEENSY_KEYBOARD 9
 #endif
 
+#include "HID.h"
+
 extern HID_ HID;
 
 #include "HID-Tables.h"
 
 // Include all HID libraries (.a linkage required to work) properly
-#include "ImprovedKeylayouts.h"
-#include "ImprovedKeyboard.h"
 #include "AbsoluteMouse.h"
 #include "Consumer.h"
 #include "Gamepad.h"
@@ -117,4 +117,7 @@ extern HID_ HID;
 // Include Teensy HID afterwards to overwrite key definitions if used
 #ifdef USE_TEENSY_KEYBOARD
 #include "TeensyKeyboard.h"
+#else
+#include "ImprovedKeylayouts.h"
+#include "ImprovedKeyboard.h"
 #endif

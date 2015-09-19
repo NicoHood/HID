@@ -21,6 +21,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
 
+// Include guard
 #pragma once
 
 //================================================================================
@@ -86,8 +87,6 @@ THE SOFTWARE.
 //================================================================================
 // LAYOUT_US_ENGLISH
 //================================================================================
-
-#ifdef LAYOUT_US_ENGLISH
 
 #define RAW_KEYBOARD_LEFT_CTRL   (1 << 0)
 #define RAW_KEYBOARD_LEFT_SHIFT  (1 << 1)
@@ -323,9 +322,3 @@ static const uint8_t _asciimap[128] PROGMEM =
 	0x35|SHIFT,    // ~
 	0				// DEL
 };
-
-#else
-
-//TODO other layouts
-
-#endif
