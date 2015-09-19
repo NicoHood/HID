@@ -2,10 +2,7 @@
 #include "PluggableUSB.h"
 #include "HIDDevice.h"
 #include "HID.h"
-
-#ifdef kkk
-#error
-#endif
+#include "HID-Project.h"
 
 #if defined(USBCON)
 
@@ -17,6 +14,10 @@ descriptorData(data), descriptorLength(length), reportID(ID)
 
 void HIDDevice::SendReport(const void* data, int len){
     HID.SendReport(reportID, data, len);
+}
+
+void HIDDevice::SendRawReport(const void* data, int len){
+    HID.SendReport(HID_REPORTID_NONE, data, len);
 }
 
 void HIDDevice::setReportData(const void* data, int len){
