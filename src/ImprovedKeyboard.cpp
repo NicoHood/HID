@@ -91,10 +91,12 @@ HIDDevice((uint8_t*)_hidReportDescriptor, sizeof(_hidReportDescriptor), HID_REPO
 
 void Keyboard_::begin(void)
 {
+	releaseAll();
 }
 
 void Keyboard_::end(void)
 {
+	releaseAll();
 }
 
 void Keyboard_::sendReport(HID_KeyboardReport_Data_t* keys)
