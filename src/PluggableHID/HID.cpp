@@ -102,8 +102,19 @@ void HID_::SendReport(u8 id, const void* data, int len)
 {
 	// Only send report ID if it exists
 	if(id){
+#if defined(USE_BOOT_KEYBOARD_PROTOCOL)
+		// Do not send a normal report while in Bootloader mode.
+		if(_hid_protocol != 1){
+			return;
+		}
+#endif
 		USB_Send(HID_TX, &id, 1);
 	}
+	// Non reportID reports (rawHID) will still try to send data.
+	// If this happens at PC boot this can cause wrong keypresses.
+	// Normally any data > 8 byte should be ignored due to the USB specs.
+	// To avoid this, use the getProtocol() function of the HIDDevice
+	// inside the rawHID etc or disable the boot protocol.
 	USB_Send(HID_TX | TRANSFER_RELEASE,data,len);
 }
 
