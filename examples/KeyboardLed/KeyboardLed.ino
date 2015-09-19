@@ -28,7 +28,7 @@ void setup() {
 void loop() {
   // Update Led equal to the caps lock state.
   // Keep in mind that on a 16u2 and Arduino Micro HIGH and LOW for TX/RX Leds are inverted.
-  if (Keyboard.getLeds()&LED_CAPS_LOCK)
+  if (Keyboard.getLeds() & LED_CAPS_LOCK)
     digitalWrite(pinLed, HIGH);
   else
     digitalWrite(pinLed, LOW);
