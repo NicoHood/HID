@@ -19,6 +19,7 @@
 #include "PluggableUSB.h"
 #include "HID.h"
 #include "HIDDevice.h"
+#include "HID-Project.h" // Only used for the BootKeyboard setting
 
 #if defined(USBCON)
 
@@ -58,7 +59,11 @@ int HID_GetInterface(u8* interfaceNum)
 	interfaceNum[0] += 1;	// uses 1
 	_hidInterface =
 	{
+#if defined(USE_BOOT_KEYBOARD_PROTOCOL)
+		D_INTERFACE(HID_INTERFACE,1,3,1,1),
+#else
 		D_INTERFACE(HID_INTERFACE,1,3,0,0),
+#endif
 		D_HIDREPORT(sizeof_hidReportDescriptor),
 		D_ENDPOINT(USB_ENDPOINT_IN (HID_ENDPOINT_INT),USB_ENDPOINT_TYPE_INTERRUPT,USB_EP_SIZE,0x01)
 	};
@@ -97,7 +102,10 @@ void HID_::AppendDescriptor(HIDDevice *device)
 
 void HID_::SendReport(u8 id, const void* data, int len)
 {
-	USB_Send(HID_TX, &id, 1);
+	// Only send report ID if it exists
+	if(id){
+		USB_Send(HID_TX, &id, 1);
+	}
 	USB_Send(HID_TX | TRANSFER_RELEASE,data,len);
 }
 
@@ -143,8 +151,7 @@ bool HID_::HID_Setup(USBSetup& setup, u8 i)
 				HIDDevice *current = rootDevice;
 				while(current != NULL) 
 				{
-					// TODO implementation for non reportID HID devices
-					// This would could make rawHID work. reportID 0 could be used as indicator
+					// Search HIDDevice for report ID
 					if(current->reportID == ID)
 					{
 						// Get the data length information and the corresponding bytes
@@ -152,8 +159,14 @@ bool HID_::HID_Setup(USBSetup& setup, u8 i)
 						uint8_t data[length];
 						USB_RecvControl(data, length);
 							
-						// Skip report ID data
-						current->setReportData(data+1, length-1);
+						// Skip report ID data, if any
+						if(ID){
+							current->setReportData(data+1, length-1);
+						}
+						// TODO test this case
+						else{
+							current->setReportData(data, length);
+						}
 						
 						// Dont search any further
 						break;

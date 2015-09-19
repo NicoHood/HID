@@ -253,7 +253,11 @@ void usb_keyboard_class::set_media(uint8_t c)
 
 void usb_keyboard_class::send_now(void)
 {
+#if defined(USE_BOOT_KEYBOARD_PROTOCOL)
+	HID.SendReport(HID_REPORTID_NONE, keyboard_report_data,sizeof(keyboard_report_data));
+#else
 	SendReport(keyboard_report_data,sizeof(keyboard_report_data));
+#endif
 }
 
 

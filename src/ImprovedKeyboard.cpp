@@ -101,7 +101,11 @@ void Keyboard_::sendReport(HID_KeyboardReport_Data_t* keys)
 {
 	// Call the inherited function.
 	// This wrapper still saves us some bytes
+#if defined(USE_BOOT_KEYBOARD_PROTOCOL)
+	HID.SendReport(HID_REPORTID_NONE, keys,sizeof(HID_KeyboardReport_Data_t));
+#else
 	SendReport(keys,sizeof(HID_KeyboardReport_Data_t));
+#endif
 }
 
 #if defined(HID_KEYBOARD_LEDS_ENABLED)
