@@ -65,32 +65,35 @@ typedef union{
 	uint8_t key;
 } HID_SystemControlReport_Data_t;
 
-class System_{
+class System_ : private HIDDevice{
 public:
-	inline System_(void){
-		static HID_Descriptor cb = {
-			.length = sizeof(_systemReportDescriptor),
-			.descriptor = _systemReportDescriptor,
-		};
-		static HIDDescriptorListNode node(&cb);
-		HID.AppendDescriptor(&node);
+	inline System_(void) :
+	HIDDevice((uint8_t*)_systemReportDescriptor, sizeof(_systemReportDescriptor), HID_REPORTID_SYSTEMCONTROL)
+	{
+		// HID Descriptor is appended via the inherited HIDDevice class
 	}
+	
 	inline void begin(void){
 		// release all buttons
 		end();
 	}
+	
 	inline void end(void){
 		uint8_t _report = 0;
-		HID.SendReport(HID_REPORTID_SYSTEMCONTROL, &_report, sizeof(_report));
+		SendReport(&_report, sizeof(_report));
 	}
+	
 	inline void write(uint8_t s){
 		press(s);
 		release();
 	}
+	
 	void press(uint8_t s);
+	
 	inline void release(void){
 		begin();
 	}
+	
 	inline void releaseAll(void){
 		begin();
 	}

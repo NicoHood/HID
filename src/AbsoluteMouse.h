@@ -98,7 +98,7 @@ typedef union{
 	};
 } HID_MouseAbsoluteReport_Data_t;
 
-class AbsMouse_
+class AbsMouse_ : private HIDDevice
 {
 private:
 	int16_t xAxis = 0;
@@ -131,13 +131,10 @@ private:
 	}
 
 public:
-	inline AbsMouse_(void) {
-		static HID_Descriptor cb = {
-			.length = sizeof(_absmouseReportDescriptor),
-			.descriptor = _absmouseReportDescriptor,
-		};
-		static HIDDescriptorListNode node(&cb);
-		HID.AppendDescriptor(&node);
+	inline AbsMouse_(void): 
+	HIDDevice((uint8_t*)_absmouseReportDescriptor, sizeof(_absmouseReportDescriptor), HID_REPORTID_MOUSE_ABSOLUTE)
+	{
+		// HID Descriptor is appended via the inherited HIDDevice class
 	}
 
 	inline void begin(void){
@@ -165,7 +162,7 @@ public:
 		report.xAxis = x;
 		report.yAxis = y;
 		report.wheel = wheel;
-		HID.SendReport(HID_REPORTID_MOUSE_ABSOLUTE, &report, sizeof(report));
+		SendReport(&report, sizeof(report));
 	}
 
 	inline void move(int x, int y, signed char wheel = 0){

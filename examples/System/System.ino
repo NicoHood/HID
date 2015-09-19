@@ -9,7 +9,6 @@
  https://github.com/NicoHood/HID/wiki/System-API
 */
 
-#include "HID.h"
 #include "HID-Project.h"
 
 const int pinLed = LED_BUILTIN;
@@ -30,7 +29,7 @@ void loop() {
   if (!digitalRead(pinButtonS)) {
     digitalWrite(pinLed, HIGH);
 
-    // Puts pc into sleep mode/shuts it down
+    // Puts PC into sleep mode/shuts it down
     System.write(SYSTEM_SLEEP);
     //System.write(SYSTEM_POWER_DOWN);
 
@@ -42,7 +41,7 @@ void loop() {
   if (!digitalRead(pinButtonW)) {
     digitalWrite(pinLed, HIGH);
 
-    // Tries to wake up the PC
+    // Try to wake up the PC
     // This might fail on some PCs/Laptops where USB wakeup is not supported
     System.write(SYSTEM_WAKE_UP);
 

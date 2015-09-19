@@ -9,7 +9,6 @@
   https://github.com/NicoHood/HID/wiki/Gamepad-API
 */
 
-#include "HID.h"
 #include "HID-Project.h"
 
 const int pinLed = LED_BUILTIN;

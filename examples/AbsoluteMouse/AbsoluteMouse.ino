@@ -10,7 +10,6 @@
   https://github.com/NicoHood/HID/wiki/AbsoluteMouse-API
 */
 
-#include "HID.h"
 #include "HID-Project.h"
 
 const int pinLed = LED_BUILTIN;

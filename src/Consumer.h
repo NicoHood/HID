@@ -97,15 +97,12 @@ typedef union {
 	};
 } HID_ConsumerControlReport_Data_t;
 
-class Consumer_ {
+class Consumer_ : private HIDDevice {
 public:
-	inline Consumer_(void) {
-		static HID_Descriptor cb = {
-			.length = sizeof(_consumerReportDescriptor),
-			.descriptor = _consumerReportDescriptor,
-		};
-		static HIDDescriptorListNode node(&cb);
-		HID.AppendDescriptor(&node);
+	inline Consumer_(void) :
+	HIDDevice((uint8_t*)_consumerReportDescriptor, sizeof(_consumerReportDescriptor), HID_REPORTID_CONSUMERCONTROL)
+	{
+		// HID Descriptor is appended via the inherited HIDDevice class
 	}
 
 	inline void begin(void) {
@@ -115,7 +112,7 @@ public:
 
 	inline void end(void) {
 		memset(&_report, 0, sizeof(_report));
-		HID.SendReport(HID_REPORTID_CONSUMERCONTROL, &_report, sizeof(_report));
+		SendReport(&_report, sizeof(_report));
 	}
 
 	inline void write(uint16_t m) {
@@ -131,7 +128,7 @@ public:
 				break;
 			}
 		}
-		HID.SendReport(HID_REPORTID_CONSUMERCONTROL, &_report, sizeof(_report));
+		SendReport(&_report, sizeof(_report));
 	}
 
 	inline void release(uint16_t m) {
@@ -142,7 +139,7 @@ public:
 				// no break to delete multiple keys
 			}
 		}
-		HID.SendReport(HID_REPORTID_CONSUMERCONTROL, &_report, sizeof(_report));
+		SendReport(&_report, sizeof(_report));
 	}
 
 	inline void releaseAll(void) {

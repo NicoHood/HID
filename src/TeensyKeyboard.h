@@ -35,7 +35,7 @@
 #include "TeensyKeylayouts.h"
 
 // Keyboard Protocol 1, HID 1.11 spec, Appendix B, page 59-60
-static const uint8_t PROGMEM keyboard_hid_report_desc[] = {
+static const uint8_t PROGMEM teensykeyboard_hid_report_desc[] = {
         0x05, 0x01,             //  Usage Page (Generic Desktop),
         0x09, 0x06,             //  Usage (Keyboard),
         0xA1, 0x01,             //  Collection (Application),
@@ -82,7 +82,7 @@ static const uint8_t PROGMEM keyboard_hid_report_desc[] = {
         0xc0			// End Collection
 };
 
-class usb_keyboard_class : public Print
+class usb_keyboard_class : public Print, private HIDDevice
 {
 	public:
 	usb_keyboard_class(void);

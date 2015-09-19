@@ -1,15 +1,14 @@
 /*
- Copyright (c) 2014-2015 NicoHood
- See the readme for credit to other people.
+  Copyright (c) 2014-2015 NicoHood
+  See the readme for credit to other people.
 
- Consumer example
- Press a button to play/pause music player
- 
- See HID Project documentation for more Consumer keys.
- https://github.com/NicoHood/HID/wiki/Consumer-API
+  Consumer example
+  Press a button to play/pause music player
+
+  See HID Project documentation for more Consumer keys.
+  https://github.com/NicoHood/HID/wiki/Consumer-API
 */
 
-#include "HID.h"
 #include "HID-Project.h"
 
 const int pinLed = LED_BUILTIN;

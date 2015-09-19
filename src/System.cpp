@@ -37,7 +37,7 @@ void System_::press(uint8_t s){
 		USBDevice.wakeupHost();
 	else
 #endif
-		HID.SendReport(HID_REPORTID_SYSTEMCONTROL, &s, sizeof(s));
+		SendReport(&s, sizeof(s));
 }
 
 #endif

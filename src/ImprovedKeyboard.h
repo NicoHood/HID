@@ -36,7 +36,6 @@ THE SOFTWARE.
 //  Keyboard
 
 #include "HID-Project.h"
-#include "PluggableHID/HIDDevice.h"
 #include "ImprovedKeylayouts.h"
 
 //  Low level key report: up to 6 keys and shift, ctrl etc at once
@@ -52,7 +51,7 @@ typedef union{
 	};
 } HID_KeyboardReport_Data_t;
 
-class Keyboard_ : public Print, public HIDDevice
+class Keyboard_ : public Print, private HIDDevice
 {
 private:
   HID_KeyboardReport_Data_t _keyReport;

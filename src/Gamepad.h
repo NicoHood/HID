@@ -154,15 +154,12 @@ typedef union {
 	};
 } HID_GamepadReport_Data_t;
 
-class Gamepad_{
+class Gamepad_ : private HIDDevice{
 public:
-	inline Gamepad_(void){
-		static HID_Descriptor cb = {
-			.length = sizeof(_gamepadReportDescriptor),
-			.descriptor = _gamepadReportDescriptor,
-		};
-		static HIDDescriptorListNode node(&cb);
-		HID.AppendDescriptor(&node);
+	inline Gamepad_(void) :
+	HIDDevice((uint8_t*)_gamepadReportDescriptor, sizeof(_gamepadReportDescriptor), HID_REPORTID_GAMEPAD)
+	{
+		// HID Descriptor is appended via the inherited HIDDevice class
 	}
 
 	inline void begin(void){
@@ -172,10 +169,10 @@ public:
 
 	inline void end(void){
 		memset(&_report, 0, sizeof(_report));
-		HID.SendReport(HID_REPORTID_GAMEPAD, &_report, sizeof(_report));
+		SendReport(&_report, sizeof(_report));
 	}
 
-	inline void write(void){ HID.SendReport(HID_REPORTID_GAMEPAD, &_report, sizeof(_report)); }
+	inline void write(void){ SendReport(&_report, sizeof(_report)); }
 	inline void press(uint8_t b){ _report.buttons |= (uint32_t)1 << (b - 1); }
 	inline void release(uint8_t b){ _report.buttons &= ~((uint32_t)1 << (b - 1)); }
 	inline void releaseAll(void){ memset(&_report, 0x00, sizeof(_report)); }

@@ -40,6 +40,7 @@ public:
   HIDDevice(uint8_t* data, uint16_t length, uint8_t ID);
   
   // Needs to be public for static HID_ function access
+  // Inherit this device private and everything should be fine
 //private:
   HIDDevice* next = NULL;
 
@@ -50,8 +51,9 @@ public:
   
   virtual void setReportData(const void* data, int len);
 
-  // Public for custom, professional usage, like raw Keyboard  
-//protected:
+protected:
+  // Could be used and inherited public for custom, professional usage, like raw Keyboard
+  // As an alternative you may still call the HID singleton.
   void SendReport(const void* data, int len);
 };
 

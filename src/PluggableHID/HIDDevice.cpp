@@ -12,9 +12,6 @@
 HIDDevice::HIDDevice(uint8_t* data, uint16_t length, uint8_t ID) :
 descriptorData(data), descriptorLength(length), reportID(ID)
 {
-    // TODO call Append
-    // TODO init const data
-    // TODO template?
     HID.AppendDescriptor(this);
 }
 

@@ -23,13 +23,10 @@
 
 #include "TeensyKeyboard.h"
 
-usb_keyboard_class::usb_keyboard_class(void){
-	static HID_Descriptor cb = {
-		.length = sizeof(keyboard_hid_report_desc),
-		.descriptor = keyboard_hid_report_desc,
-	};
-	static HIDDescriptorListNode node(&cb);
-	HID.AppendDescriptor(&node);
+usb_keyboard_class::usb_keyboard_class(void) :
+HIDDevice((uint8_t*)teensykeyboard_hid_report_desc, sizeof(teensykeyboard_hid_report_desc), HID_REPORTID_TEENSY_KEYBOARD)
+{
+	// HID Descriptor is appended via the inherited HIDDevice class
 }
 
 // Step #1, decode UTF8 to Unicode code points
@@ -256,7 +253,7 @@ void usb_keyboard_class::set_media(uint8_t c)
 
 void usb_keyboard_class::send_now(void)
 {
-	HID.SendReport(HID_REPORTID_TEENSY_KEYBOARD,keyboard_report_data,sizeof(keyboard_report_data));
+	SendReport(keyboard_report_data,sizeof(keyboard_report_data));
 }
 
 
