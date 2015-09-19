@@ -19,7 +19,8 @@
   Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-#ifndef HID_h
+#pragma once
+
 #define HID_h
 
 #include <stdint.h>
@@ -44,17 +45,7 @@
 #define HID_REPORT_DESCRIPTOR_TYPE      0x22
 #define HID_PHYSICAL_DESCRIPTOR_TYPE    0x23
 
-typedef struct __attribute__((packed)) {
-  uint16_t length;
-  const void* descriptor;
-} HID_Descriptor;
-
-class HIDDescriptorListNode {
-public:
-  HIDDescriptorListNode *next = NULL;
-  const HID_Descriptor * cb;
-  HIDDescriptorListNode(const HID_Descriptor *ncb) {cb = ncb;}
-};
+class HIDDevice;
 
 class HID_
 {
@@ -62,7 +53,9 @@ public:
   HID_(void);
   int begin(void);
   void SendReport(uint8_t id, const void* data, int len);
-  void AppendDescriptor(HIDDescriptorListNode* node);
+  void AppendDescriptor(HIDDevice* device);
+private:
+  static bool HID_Setup(USBSetup& setup, u8 i);
 };
 
 typedef struct
@@ -93,6 +86,3 @@ typedef struct
 #define WEAK __attribute__ ((weak))
 
 #endif
-
-#endif
-

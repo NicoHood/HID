@@ -18,6 +18,7 @@
 
 #include "PluggableUSB.h"
 #include "HID.h"
+#include "HIDDevice.h"
 
 #if defined(USBCON)
 
@@ -42,7 +43,7 @@ static u8 HID_INTERFACE;
 
 HIDDescriptor _hidInterface;
 
-static HIDDescriptorListNode* rootNode = NULL;
+static HIDDevice* rootDevice = NULL;
 static uint16_t sizeof_hidReportDescriptor = 0;
 static uint8_t modules_count = 0;
 //================================================================================
@@ -67,10 +68,10 @@ int HID_GetInterface(u8* interfaceNum)
 int HID_GetDescriptor(int8_t t)
 {
 	if (HID_REPORT_DESCRIPTOR_TYPE == t) {
-		HIDDescriptorListNode* current = rootNode;
+		HIDDevice* current = rootDevice;
 		int total = 0;
 		while(current != NULL) {
-			total += USB_SendControl(TRANSFER_PGM,current->cb->descriptor,current->cb->length);
+			total += USB_SendControl(TRANSFER_PGM,current->descriptorData,current->descriptorLength);
 			current = current->next;
 		}
 		return total;
@@ -79,19 +80,19 @@ int HID_GetDescriptor(int8_t t)
 	}
 }
 
-void HID_::AppendDescriptor(HIDDescriptorListNode *node)
+void HID_::AppendDescriptor(HIDDevice *device)
 {
 	if (modules_count == 0) {
-		rootNode = node;
+		rootDevice = device;
 	} else {
-		HIDDescriptorListNode *current = rootNode;
+		HIDDevice *current = rootDevice;
 		while(current->next != NULL) {
 			current = current->next;
 		}
-		current->next = node;
+		current->next = device;
 	}
 	modules_count++;
-	sizeof_hidReportDescriptor += (uint16_t)node->cb->length;
+	sizeof_hidReportDescriptor += (uint16_t)device->descriptorLength;
 }
 
 void HID_::SendReport(u8 id, const void* data, int len)
@@ -100,7 +101,7 @@ void HID_::SendReport(u8 id, const void* data, int len)
 	USB_Send(HID_TX | TRANSFER_RELEASE,data,len);
 }
 
-bool HID_Setup(USBSetup& setup, u8 i)
+bool HID_::HID_Setup(USBSetup& setup, u8 i)
 {
 	if (HID_INTERFACE != i) {
 		return false;
@@ -134,6 +135,35 @@ bool HID_Setup(USBSetup& setup, u8 i)
 				_hid_idle = setup.wValueL;
 				return true;
 			}
+			
+			if (HID_SET_REPORT == r)
+			{
+				// Get reportID and search for the suited HIDDevice
+				uint8_t ID = setup.wIndex;
+				HIDDevice *current = rootDevice;
+				while(current != NULL) 
+				{
+					// TODO implementation for non reportID HID devices
+					// This would could make rawHID work. reportID 0 could be used as indicator
+					if(current->reportID == ID)
+					{
+						// Get the data length information and the corresponding bytes
+						uint8_t length = setup.wLength;
+						uint8_t data[length];
+						USB_RecvControl(data, length);
+							
+						// Skip report ID data
+						current->setReportData(data+1, length-1);
+						
+						// Dont search any further
+						break;
+					}
+					current = current->next;
+				}
+				//TODO return true??
+				// https://github.com/arduino/Arduino/blob/master/hardware/arduino/avr/cores/arduino/USBCore.cpp#L613-L618
+				return true;
+			}
 		}
 		return false;
 	}
@@ -146,7 +176,7 @@ HID_::HID_(void)
 	endpointType[0] = EP_TYPE_INTERRUPT_IN;
 
 	static PUSBCallbacks cb = {
-		.setup = &HID_Setup,
+		.setup = HID_Setup,
 		.getInterface = &HID_GetInterface,
 		.getDescriptor = &HID_GetDescriptor,
 		.numEndpoints = 1,

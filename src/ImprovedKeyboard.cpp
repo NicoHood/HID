@@ -30,46 +30,58 @@ THE SOFTWARE.
 //	Keyboard
 
 static const u8 _hidReportDescriptor[] PROGMEM = {
+    //  Keyboard
+    0x05, 0x01,                      /* USAGE_PAGE (Generic Desktop)	  47 */
+    0x09, 0x06,                      /* USAGE (Keyboard) */
+    0xa1, 0x01,                      /* COLLECTION (Application) */
+    0x85, HID_REPORTID_KEYBOARD,	 /*   REPORT_ID */
+    0x05, 0x07,                      /*   USAGE_PAGE (Keyboard) */
 
-  //  Keyboard
-    0x05, 0x01,                    // USAGE_PAGE (Generic Desktop)  // 47
-    0x09, 0x06,                    // USAGE (Keyboard)
-    0xa1, 0x01,                    // COLLECTION (Application)
-    0x85, HID_REPORTID_KEYBOARD,   //   REPORT_ID
-    0x05, 0x07,                    //   USAGE_PAGE (Keyboard)
-   
-  0x19, 0xe0,                    //   USAGE_MINIMUM (Keyboard LeftControl)
-    0x29, 0xe7,                    //   USAGE_MAXIMUM (Keyboard Right GUI)
-    0x15, 0x00,                    //   LOGICAL_MINIMUM (0)
-    0x25, 0x01,                    //   LOGICAL_MAXIMUM (1)
-    0x75, 0x01,                    //   REPORT_SIZE (1)
-    
-  0x95, 0x08,                    //   REPORT_COUNT (8)
-    0x81, 0x02,                    //   INPUT (Data,Var,Abs)
-    0x95, 0x01,                    //   REPORT_COUNT (1)
-    0x75, 0x08,                    //   REPORT_SIZE (8)
-    0x81, 0x03,                    //   INPUT (Cnst,Var,Abs)
-    
-  0x95, 0x06,                    //   REPORT_COUNT (6)
-    0x75, 0x08,                    //   REPORT_SIZE (8)
-    0x15, 0x00,                    //   LOGICAL_MINIMUM (0)
-    0x25, 0x65,                    //   LOGICAL_MAXIMUM (101)
-    0x05, 0x07,                    //   USAGE_PAGE (Keyboard)
-    
-  0x19, 0x00,                    //   USAGE_MINIMUM (Reserved (no event indicated))
-    0x29, 0x65,                    //   USAGE_MAXIMUM (Keyboard Application)
-    0x81, 0x00,                    //   INPUT (Data,Ary,Abs)
-    0xc0,                          // END_COLLECTION
+    /* Keyboard Modifiers (shift, alt, ...) */
+    0x19, 0xe0,                      /*   USAGE_MINIMUM (Keyboard LeftControl) */
+    0x29, 0xe7,                      /*   USAGE_MAXIMUM (Keyboard Right GUI) */
+    0x15, 0x00,                      /*   LOGICAL_MINIMUM (0) */
+    0x25, 0x01,                      /*   LOGICAL_MAXIMUM (1) */
+    0x75, 0x01,                      /*   REPORT_SIZE (1) */
+	0x95, 0x08,                      /*   REPORT_COUNT (8) */
+    0x81, 0x02,                      /*   INPUT (Data,Var,Abs) */
+
+    /* Reserved byte */
+    0x95, 0x01,                      /*   REPORT_COUNT (1) */
+    0x75, 0x08,                      /*   REPORT_SIZE (8) */
+    0x81, 0x03,                      /*   INPUT (Cnst,Var,Abs) */
+
+	/* 5 LEDs for num lock etc */
+	0x05, 0x08,						 /*   USAGE_PAGE (LEDs) */
+	0x19, 0x01,						 /*   USAGE_MINIMUM (Num Lock) */
+	0x29, 0x05,						 /*   USAGE_MAXIMUM (Kana) */
+	0x95, 0x05,						 /*   REPORT_COUNT (5) */
+	0x75, 0x01,						 /*   REPORT_SIZE (1) */
+	0x91, 0x02,						 /*   OUTPUT (Data,Var,Abs) */
+	/*  Reserved 3 bits */
+	0x95, 0x01,						 /*   REPORT_COUNT (1) */
+	0x75, 0x03,						 /*   REPORT_SIZE (3) */
+	0x91, 0x03,						 /*   OUTPUT (Cnst,Var,Abs) */
+
+    /* 6 Keyboard keys */
+    0x95, 0x06,                      /*   REPORT_COUNT (6) */
+    0x75, 0x08,                      /*   REPORT_SIZE (8) */
+    0x15, 0x00,                      /*   LOGICAL_MINIMUM (0) */
+    0x26, 0xE7, 0x00,                /*   LOGICAL_MAXIMUM (231) */
+    0x05, 0x07,                      /*   USAGE_PAGE (Keyboard) */
+    0x19, 0x00,                      /*   USAGE_MINIMUM (Reserved (no event indicated)) */
+    0x29, 0xE7,                      /*   USAGE_MAXIMUM (Keyboard Right GUI) */
+    0x81, 0x00,                      /*   INPUT (Data,Ary,Abs) */
+
+    /* End */
+    0xc0                            /* END_COLLECTION */
 };
 
-Keyboard_::Keyboard_(void) 
+Keyboard_::Keyboard_(void) : 
+HIDDevice((uint8_t*)_hidReportDescriptor, sizeof(_hidReportDescriptor), HID_REPORTID_KEYBOARD),
+leds(0)
 {
-	static HID_Descriptor cb = {
-		.length = sizeof(_hidReportDescriptor),
-		.descriptor = _hidReportDescriptor,
-	};
-	static HIDDescriptorListNode node(&cb);
-	HID.AppendDescriptor(&node);
+	// HID Descriptor is appended via the inherited HIDDevice class
 }
 
 void Keyboard_::begin(void)
@@ -82,8 +94,21 @@ void Keyboard_::end(void)
 
 void Keyboard_::sendReport(HID_KeyboardReport_Data_t* keys)
 {
-	HID.SendReport(HID_REPORTID_KEYBOARD,keys,sizeof(HID_KeyboardReport_Data_t));
+	// Call the inherited function.
+	// This wrapper still saves us some bytes
+	SendReport(keys,sizeof(HID_KeyboardReport_Data_t));
 }
+
+void Keyboard_::setReportData(const void* data, int len){
+    // Save led state
+    if(len == 1)
+    	leds = *(uint8_t*)data;
+}
+
+uint8_t Keyboard_::getLeds(void){
+    return leds;
+}
+
 
 // press() adds the specified key (printing, non-printing, or modifier)
 // to the persistent key report and sends the report.  Because of the way 

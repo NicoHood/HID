@@ -109,10 +109,10 @@ extern HID_ HID;
 #include "HID-Tables.h"
 
 // Include all HID libraries (.a linkage required to work) properly
-#include "AbsoluteMouse.h"
-#include "Consumer.h"
-#include "Gamepad.h"
-#include "System.h"
+//#include "AbsoluteMouse.h"
+//#include "Consumer.h"
+//#include "Gamepad.h"
+//#include "System.h"
 
 // Include Teensy HID afterwards to overwrite key definitions if used
 #ifdef USE_TEENSY_KEYBOARD

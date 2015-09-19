@@ -79,7 +79,7 @@ THE SOFTWARE.
 #define KEY_RIGHT_WINDOWS	KEY_RIGHT_GUI
 #define KEY_PRINTSCREEN		KEY_PRINT
 
-// TODO implement Leds
+// Keyboard Leds
 #define LED_NUM_LOCK			0x01
 #define LED_CAPS_LOCK			0x02
 #define LED_SCROLL_LOCK			0x04
