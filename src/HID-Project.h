@@ -33,8 +33,13 @@ THE SOFTWARE.
 #error "This is not an USB AVR or you use an old version of the IDE."
 #endif
 
+//================================================================================
+// Settings
+//================================================================================
+
 #define HID_KEYBOARD_LEDS_ENABLED
 #define USE_BOOT_KEYBOARD_PROTOCOL
+//#define USE_BOOT_MOUSE_PROTOCOL
 
 //#define LAYOUT_US_ENGLISH
 //#define LAYOUT_CANADIAN_FRENCH
@@ -59,6 +64,10 @@ THE SOFTWARE.
 //#define LAYOUT_TURKISH
 //#define LAYOUT_UNITED_KINGDOM
 //#define LAYOUT_US_INTERNATIONAL
+
+//================================================================================
+// Definitions and Helpers
+//================================================================================
 
 // Default US keyboard layout
 #if !defined(LAYOUT_CANADIAN_FRENCH) && !defined(LAYOUT_CANADIAN_MULTILINGUAL) \
@@ -105,6 +114,11 @@ THE SOFTWARE.
 
 #ifndef HID_REPORTID_TEENSY_KEYBOARD
 #define HID_REPORTID_TEENSY_KEYBOARD 9
+#endif
+
+#if defined(USE_BOOT_KEYBOARD_PROTOCOL) && defined(USE_BOOT_MOUSE_PROTOCOL)
+// Technically it is possible but not within this (simpler) API.
+#error "You cannot use a boot compatible keyboard and mouse at the same time."
 #endif
 
 #include "HID.h"

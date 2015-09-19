@@ -59,6 +59,8 @@ int HID_::HID_GetInterface(u8* interfaceNum)
 	{
 #if defined(USE_BOOT_KEYBOARD_PROTOCOL)
 		D_INTERFACE(HID_INTERFACE,1,3,1,1),
+#elif defined(USE_BOOT_MOUSE_PROTOCOL)
+		D_INTERFACE(HID_INTERFACE,1,3,1,2),
 #else
 		D_INTERFACE(HID_INTERFACE,1,3,0,0),
 #endif
@@ -102,7 +104,7 @@ void HID_::SendReport(u8 id, const void* data, int len)
 {
 	// Only send report ID if it exists
 	if(id){
-#if defined(USE_BOOT_KEYBOARD_PROTOCOL)
+#if defined(USE_BOOT_KEYBOARD_PROTOCOL) || defined(USE_BOOT_MOUSE_PROTOCOL)
 		// Do not send a normal report while in Bootloader mode.
 		if(_hid_protocol != 1){
 			return;

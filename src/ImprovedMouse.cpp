@@ -91,6 +91,15 @@ void Mouse_::move(signed char x, signed char y, signed char wheel)
 	report.xAxis = x;
 	report.yAxis = y;
 	report.wheel = wheel;
+#if defined(USE_BOOT_MOUSE_PROTOCOL)
+	if(getProtocol() != 1){
+	    // Do not send the wheel information.
+	    // It should be discarded by the host,
+	    // but to be sure we better leave it out.
+		SendRawReport(&report, sizeof(report)-1);
+	}
+	else
+#endif
 	SendReport(&report, sizeof(report));
 }
 
