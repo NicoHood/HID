@@ -173,9 +173,6 @@ bool HID_::HID_Setup(USBSetup& setup, u8 i)
 					}
 					current = current->next;
 				}
-				//TODO return true??
-				// https://github.com/arduino/Arduino/blob/master/hardware/arduino/avr/cores/arduino/USBCore.cpp#L613-L618
-				return true;
 			}
 		}
 		return false;
