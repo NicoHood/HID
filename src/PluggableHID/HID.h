@@ -46,17 +46,6 @@
 
 class HIDDevice;
 
-class HID_
-{
-public:
-  HID_(void);
-  int begin(void);
-  void SendReport(uint8_t id, const void* data, int len);
-  void AppendDescriptor(HIDDevice* device);
-private:
-  static bool HID_Setup(USBSetup& setup, u8 i);
-};
-
 typedef struct
 {
   u8 len;     // 9
@@ -76,6 +65,34 @@ typedef struct
   HIDDescDescriptor     desc;
   EndpointDescriptor      in;
 } HIDDescriptor;
+
+class HID_
+{
+public:
+  HID_(void);
+  
+  // Only access this class via the HIDDevice
+private:
+  friend HIDDevice;
+  int begin(void);
+  void SendReport(uint8_t id, const void* data, int len);
+  void AppendDescriptor(HIDDevice* device);
+  
+  // Static functions
+  static int HID_GetInterface(u8* interfaceNum);
+  static int HID_GetDescriptor(int8_t t);
+  static bool HID_Setup(USBSetup& setup, u8 i);
+  
+  // Static variables
+  static uint8_t HID_ENDPOINT_INT;
+  static uint8_t HID_INTERFACE;
+  static HIDDescriptor _hidInterface;
+  static HIDDevice* rootDevice;
+  static uint16_t sizeof_hidReportDescriptor;
+  static uint8_t modules_count;
+  static uint8_t _hid_protocol;
+  static uint8_t _hid_idle;
+};
 
 #define HID_TX HID_ENDPOINT_INT
 

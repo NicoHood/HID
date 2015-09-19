@@ -55,6 +55,7 @@ protected:
   // Could be used and inherited public for custom, professional usage, like raw Keyboard
   // As an alternative you may still call the HID singleton.
   void SendReport(const void* data, int len);
+  uint8_t getProtocol(void);
 };
 
 

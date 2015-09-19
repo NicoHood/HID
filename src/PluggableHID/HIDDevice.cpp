@@ -22,5 +22,9 @@ void HIDDevice::SendReport(const void* data, int len){
 void HIDDevice::setReportData(const void* data, int len){
     // Discard this information if its not implemented by the HIDDevice
 }
+
+uint8_t HIDDevice::getProtocol(void){
+    return HID._hid_protocol;
+}
   
 #endif

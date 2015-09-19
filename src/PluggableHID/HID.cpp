@@ -25,8 +25,6 @@
 
 HID_ HID;
 
-static u8 HID_ENDPOINT_INT;
-
 //================================================================================
 //================================================================================
 
@@ -40,21 +38,21 @@ static u8 HID_ENDPOINT_INT;
 #define RAWHID_TX_SIZE 64
 #define RAWHID_RX_SIZE 64
 
-static u8 HID_INTERFACE;
+// Static variables
+uint8_t HID_::HID_ENDPOINT_INT;
+uint8_t HID_::HID_INTERFACE;
+HIDDescriptor HID_::_hidInterface;
+HIDDevice* HID_::rootDevice = NULL;
+uint16_t HID_::sizeof_hidReportDescriptor = 0;
+uint8_t HID_::modules_count = 0;
+uint8_t HID_::_hid_protocol = 1;
+uint8_t HID_::_hid_idle = 1;
 
-HIDDescriptor _hidInterface;
-
-static HIDDevice* rootDevice = NULL;
-static uint16_t sizeof_hidReportDescriptor = 0;
-static uint8_t modules_count = 0;
 //================================================================================
 //================================================================================
 //	Driver
 
-u8 _hid_protocol = 1;
-u8 _hid_idle = 1;
-
-int HID_GetInterface(u8* interfaceNum)
+int HID_::HID_GetInterface(u8* interfaceNum)
 {
 	interfaceNum[0] += 1;	// uses 1
 	_hidInterface =
@@ -70,7 +68,7 @@ int HID_GetInterface(u8* interfaceNum)
 	return USB_SendControl(0,&_hidInterface,sizeof(_hidInterface));
 }
 
-int HID_GetDescriptor(int8_t t)
+int HID_::HID_GetDescriptor(int8_t t)
 {
 	if (HID_REPORT_DESCRIPTOR_TYPE == t) {
 		HIDDevice* current = rootDevice;
