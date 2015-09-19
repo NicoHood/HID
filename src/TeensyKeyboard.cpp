@@ -29,6 +29,18 @@ HIDDevice((uint8_t*)teensykeyboard_hid_report_desc, sizeof(teensykeyboard_hid_re
 	// HID Descriptor is appended via the inherited HIDDevice class
 }
 
+#if defined(HID_KEYBOARD_LEDS_ENABLED)
+void usb_keyboard_class::setReportData(const void* data, int len){
+    // Save led state
+    if(len == 1)
+    	leds = *(uint8_t*)data;
+}
+
+uint8_t usb_keyboard_class::getLeds(void){
+    return leds;
+}
+#endif
+
 // Step #1, decode UTF8 to Unicode code points
 //
 size_t usb_keyboard_class::write(uint8_t c)

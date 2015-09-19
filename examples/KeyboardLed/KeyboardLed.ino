@@ -11,6 +11,14 @@
   https://github.com/NicoHood/HID/wiki/Keyboard-API
 */
 
+// Choose your favourite keyboard
+#define USBKEYBOARD Keyboard
+
+//#define USBKEYBOARD NKROKeyboard
+
+//#define USBKEYBOARD TeensyKeyboard
+//#define USE_TEENSY_KEYBOARD
+
 #include "HID-Project.h"
 
 const int pinLed = LED_BUILTIN;
@@ -21,21 +29,21 @@ void setup() {
   pinMode(pinButton, INPUT_PULLUP);
 
   // Sends a clean report to the host. This is important on any Arduino type.
-  Keyboard.begin();
+  USBKEYBOARD.begin();
 }
 
 
 void loop() {
   // Update Led equal to the caps lock state.
   // Keep in mind that on a 16u2 and Arduino Micro HIGH and LOW for TX/RX Leds are inverted.
-  if (Keyboard.getLeds() & LED_CAPS_LOCK)
+  if (USBKEYBOARD.getLeds() & LED_CAPS_LOCK)
     digitalWrite(pinLed, HIGH);
   else
     digitalWrite(pinLed, LOW);
 
   // Trigger caps lock manually via button
   if (!digitalRead(pinButton)) {
-    Keyboard.write(KEY_CAPS_LOCK);
+    USBKEYBOARD.write(KEY_CAPS_LOCK);
 
     // Simple debounce
     delay(300);

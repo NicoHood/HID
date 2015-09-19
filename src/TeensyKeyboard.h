@@ -61,6 +61,7 @@ static const uint8_t PROGMEM teensykeyboard_hid_report_desc[] = {
 	0x09, 0xB6,		//  Usage (Scan Previous Track),
 	0x09, 0xB7,		//  Usage (Stop),
 	0x09, 0xB8,		//  Usage (Eject),
+// Note: Teensy ledreport was not modified to 8 bit, nor left out when leds are deactivated
         0x81, 0x02,             //  Input (Data, Variable, Absolute), ;Media keys
         0x95, 0x05,             //  Report Count (5),
         0x75, 0x01,             //  Report Size (1),
@@ -82,10 +83,20 @@ static const uint8_t PROGMEM teensykeyboard_hid_report_desc[] = {
         0xc0			// End Collection
 };
 
+// Keyboard Leds
+#define LED_NUM_LOCK			0x01
+#define LED_CAPS_LOCK			0x02
+#define LED_SCROLL_LOCK			0x04
+
 class usb_keyboard_class : public Print, private HIDDevice
 {
 	public:
 	usb_keyboard_class(void);
+	
+#if defined(HID_KEYBOARD_LEDS_ENABLED)
+  uint8_t getLeds(void);
+#endif
+
 	void begin(void) { }
 	void end(void) { }
 	virtual size_t write(uint8_t);
@@ -115,6 +126,11 @@ class usb_keyboard_class : public Print, private HIDDevice
 	uint8_t utf8_state;
 	uint16_t unicode_wchar;
 	uint8_t keyboard_report_data[8];
+	
+#if defined(HID_KEYBOARD_LEDS_ENABLED)
+  virtual void setReportData(const void* data, int len);
+  uint8_t leds;
+#endif
 };
 
 extern usb_keyboard_class TeensyKeyboard;

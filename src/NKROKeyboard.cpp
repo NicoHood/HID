@@ -47,18 +47,17 @@ static const u8 _hidReportDescriptor[] PROGMEM = {
     0x81, 0x02,                      /*   INPUT (Data,Var,Abs) */
 
 #if defined(HID_KEYBOARD_LEDS_ENABLED)
-//TODO remove reserved bytes to add 3 more custom data bits for advanced users?
-	/* 5 LEDs for num lock etc */
+	/* 5 LEDs for num lock etc, 3 left for advanced, custom usage */
 	0x05, 0x08,						 /*   USAGE_PAGE (LEDs) */
 	0x19, 0x01,						 /*   USAGE_MINIMUM (Num Lock) */
 	0x29, 0x05,						 /*   USAGE_MAXIMUM (Kana) */
-	0x95, 0x05,						 /*   REPORT_COUNT (5) */
+	0x95, 0x08,						 /*   REPORT_COUNT (8) */
 	0x75, 0x01,						 /*   REPORT_SIZE (1) */
 	0x91, 0x02,						 /*   OUTPUT (Data,Var,Abs) */
 	/*  Reserved 3 bits */
-	0x95, 0x01,						 /*   REPORT_COUNT (1) */
-	0x75, 0x03,						 /*   REPORT_SIZE (3) */
-	0x91, 0x03,						 /*   OUTPUT (Cnst,Var,Abs) */
+	//0x95, 0x01,						 /*   REPORT_COUNT (1) */
+	//0x75, 0x03,						 /*   REPORT_SIZE (3) */
+	//0x91, 0x03,						 /*   OUTPUT (Cnst,Var,Abs) */
 #endif
 
 	/* 104 Keys as bitmap */
@@ -124,7 +123,7 @@ void NKROKeyboard_::setReportData(const void* data, int len){
     	leds = *(uint8_t*)data;
 }
 
-uint8_t Keyboard_::getLeds(void){
+uint8_t NKROKeyboard_::getLeds(void){
     return leds;
 }
 #endif
