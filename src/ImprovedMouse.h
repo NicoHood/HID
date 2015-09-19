@@ -1,26 +1,27 @@
 /*
-  Mouse.h
+Copyright (c) 2014-2015 NicoHood
+See the readme for credit to other people.
 
-  Copyright (c) 2015, Arduino LLC
-  Original code (pre-library): Copyright (c) 2011, Peter Barrett
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
 
-  This library is free software; you can redistribute it and/or
-  modify it under the terms of the GNU Lesser General Public
-  License as published by the Free Software Foundation; either
-  version 2.1 of the License, or (at your option) any later version.
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
 
-  This library is distributed in the hope that it will be useful,
-  but WITHOUT ANY WARRANTY; without even the implied warranty of
-  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-  Lesser General Public License for more details.
-
-  You should have received a copy of the GNU Lesser General Public
-  License along with this library; if not, write to the Free Software
-  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
 */
 
-#ifndef MOUSE_h
-#define MOUSE_h
+#pragma once
 
 #include "HID.h"
 
@@ -34,12 +35,31 @@
 //================================================================================
 //  Mouse
 
-#define MOUSE_LEFT 1
-#define MOUSE_RIGHT 2
-#define MOUSE_MIDDLE 4
-#define MOUSE_ALL (MOUSE_LEFT | MOUSE_RIGHT | MOUSE_MIDDLE)
+#include "HID-Project.h"
 
-class Mouse_
+#define MOUSE_LEFT		(1 << 0)
+#define MOUSE_RIGHT		(1 << 1)
+#define MOUSE_MIDDLE	(1 << 2)
+#define MOUSE_PREV		(1 << 3)
+#define MOUSE_NEXT		(1 << 4)
+// actually this mouse report has 8 buttons (for smaller descriptor)
+// but the last 3 wont do anything from what I tested
+#define MOUSE_ALL (MOUSE_LEFT | MOUSE_RIGHT | MOUSE_MIDDLE | MOUSE_PREV | MOUSE_NEXT)
+
+typedef union{
+	// mouse report: 8 buttons, position, wheel
+	uint8_t whole8[];
+	uint16_t whole16[];
+	uint32_t whole32[];
+	struct{
+		uint8_t buttons;
+		int8_t xAxis;
+		int8_t yAxis;
+		int8_t wheel;
+	};
+} HID_MouseReport_Data_t;
+
+class Mouse_ : private HIDDevice
 {
 private:
   uint8_t _buttons;
@@ -55,7 +75,5 @@ public:
   bool isPressed(uint8_t b = MOUSE_LEFT); // check LEFT by default
 };
 extern Mouse_ Mouse;
-extern HID_ HID;
 
-#endif
 #endif
