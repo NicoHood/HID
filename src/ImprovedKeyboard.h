@@ -57,8 +57,10 @@ class Keyboard_ : public Print, public HIDDevice
 private:
   HID_KeyboardReport_Data_t _keyReport;
   void sendReport(HID_KeyboardReport_Data_t* keys);
+#if defined(HID_KEYBOARD_LEDS_ENABLED)
   virtual void setReportData(const void* data, int len);
   uint8_t leds;
+#endif
 public:
   Keyboard_(void);
   void begin(void);
@@ -73,8 +75,10 @@ public:
   size_t releaseKeycode(uint8_t k);
   size_t addKeycodeToReport(uint8_t k);
   size_t removeKeycodeFromReport(uint8_t k);
-  
+
+#if defined(HID_KEYBOARD_LEDS_ENABLED)
   uint8_t getLeds(void);
+#endif
 };
 extern Keyboard_ Keyboard;
 

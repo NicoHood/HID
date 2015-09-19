@@ -15,7 +15,8 @@ The idea is to enable enhanced USB functions to almost all 'standard' Arduino bo
 * Any other 8u2/16u/at90usb162/32u2/32u4 compatible board
 
 **Supported HID devices:**
-* Keyboard ~~with Leds out (modifiers + 6 keys pressed at the same time)~~
+* Keyboard with Leds out (modifiers + 6 keys pressed at the same time)
+* NKRO Keyboard with Leds out (press up to 113 keys at the same time)
 * Mouse (5 buttons, move, wheel)
 * Absolute Mouse
 * Consumer/Media Keys (4 keys for music player, web browser and more)
@@ -78,8 +79,15 @@ Version History
 ```
 2.4 Release (xx.xx.2015)
 * Added Arduino IDE 1.6.6 compatibility with Pluggable HID
+* Improved Pluggable HID (have its own modifed copy now)
 * Changed USB-Core into a simple library, only possible with Pluggable HID
-* Removed HID presets (like mouse + keyboard + consumer + system)
+* Removed HID presets in boards menu (like mouse + keyboard + consumer + system)
+* Added Teensy Keyboard
+* Added NKRO Keyboard
+* Added Led report for Keyboard
+* Added HID out report in general (RAW HID preparation)
+* Added a few key definitions
+* Uses .alinkage custom IDE option
 
 2.3 Release (never released)
 * Updated Libraries

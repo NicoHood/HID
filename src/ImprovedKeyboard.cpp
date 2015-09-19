@@ -50,7 +50,9 @@ static const u8 _hidReportDescriptor[] PROGMEM = {
     0x95, 0x01,                      /*   REPORT_COUNT (1) */
     0x75, 0x08,                      /*   REPORT_SIZE (8) */
     0x81, 0x03,                      /*   INPUT (Cnst,Var,Abs) */
-
+    
+#if defined(HID_KEYBOARD_LEDS_ENABLED)
+//TODO remove reserved bytes to add 3 more custom data bits for advanced users?
 	/* 5 LEDs for num lock etc */
 	0x05, 0x08,						 /*   USAGE_PAGE (LEDs) */
 	0x19, 0x01,						 /*   USAGE_MINIMUM (Num Lock) */
@@ -62,6 +64,7 @@ static const u8 _hidReportDescriptor[] PROGMEM = {
 	0x95, 0x01,						 /*   REPORT_COUNT (1) */
 	0x75, 0x03,						 /*   REPORT_SIZE (3) */
 	0x91, 0x03,						 /*   OUTPUT (Cnst,Var,Abs) */
+#endif
 
     /* 6 Keyboard keys */
     0x95, 0x06,                      /*   REPORT_COUNT (6) */
@@ -78,8 +81,10 @@ static const u8 _hidReportDescriptor[] PROGMEM = {
 };
 
 Keyboard_::Keyboard_(void) : 
-HIDDevice((uint8_t*)_hidReportDescriptor, sizeof(_hidReportDescriptor), HID_REPORTID_KEYBOARD),
-leds(0)
+HIDDevice((uint8_t*)_hidReportDescriptor, sizeof(_hidReportDescriptor), HID_REPORTID_KEYBOARD)
+#if defined(HID_KEYBOARD_LEDS_ENABLED)
+,leds(0)
+#endif
 {
 	// HID Descriptor is appended via the inherited HIDDevice class
 }
@@ -99,6 +104,7 @@ void Keyboard_::sendReport(HID_KeyboardReport_Data_t* keys)
 	SendReport(keys,sizeof(HID_KeyboardReport_Data_t));
 }
 
+#if defined(HID_KEYBOARD_LEDS_ENABLED)
 void Keyboard_::setReportData(const void* data, int len){
     // Save led state
     if(len == 1)
@@ -108,6 +114,7 @@ void Keyboard_::setReportData(const void* data, int len){
 uint8_t Keyboard_::getLeds(void){
     return leds;
 }
+#endif
 
 
 // press() adds the specified key (printing, non-printing, or modifier)

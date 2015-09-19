@@ -49,9 +49,9 @@ public:
   const uint8_t reportID;
   
   virtual void setReportData(const void* data, int len);
-  
-protected:
-  // TODO make this public for custom, professional usage?
+
+  // Public for custom, professional usage, like raw Keyboard  
+//protected:
   void SendReport(const void* data, int len);
 };
 

@@ -23,7 +23,6 @@
 
 #define HID_h
 
-#include <stdint.h>
 #include <Arduino.h>
 
 #if defined(USBCON)

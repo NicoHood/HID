@@ -33,6 +33,8 @@ THE SOFTWARE.
 #error "This is not an USB AVR or you use an old version of the IDE."
 #endif
 
+#define HID_KEYBOARD_LEDS_ENABLED
+
 //#define LAYOUT_US_ENGLISH
 //#define LAYOUT_CANADIAN_FRENCH
 //#define LAYOUT_CANADIAN_MULTILINGUAL
@@ -103,8 +105,6 @@ THE SOFTWARE.
 #endif
 
 #include "HID.h"
-
-extern HID_ HID;
 
 #include "HID-Tables.h"
 
