@@ -210,6 +210,16 @@ HID_::HID_(void)
 	HID_ENDPOINT_INT = PUSB_AddFunction(&node, &HID_INTERFACE);
 }
 
+HID_::operator bool() {
+	if(USBDevice.configured()){
+		delay(10);
+		return true;
+	}
+	else{
+		return false;
+	}
+}
+
 int HID_::begin(void)
 {
 }

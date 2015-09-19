@@ -70,6 +70,7 @@ class HID_
 {
 public:
   HID_(void);
+  operator bool();
   
   // Only access this class via the HIDDevice
 private:
