@@ -68,11 +68,14 @@ public:
   size_t press(uint8_t k);
   size_t release(uint8_t k);
   void releaseAll(void);
+  void send_now(void);
   
   size_t writeKeycode(uint8_t k);
   size_t pressKeycode(uint8_t k);
   size_t releaseKeycode(uint8_t k);
+  size_t addKeyToReport(uint8_t k);
   size_t addKeycodeToReport(uint8_t k);
+  size_t removeKeyFromReport(uint8_t k);
   size_t removeKeycodeFromReport(uint8_t k);
 
 #if defined(HID_KEYBOARD_LEDS_ENABLED)

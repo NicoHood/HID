@@ -25,7 +25,9 @@ getLeds	KEYWORD2
 pressKeycode	KEYWORD2
 releaseKeycode	KEYWORD2
 writeKeycode	KEYWORD2
+addKeyToReport	KEYWORD2
 addKeycodeToReport	KEYWORD2
+removeKeyFromReport	KEYWORD2
 removeKeycodeFromReport	KEYWORD2
 
 write_unicode	KEYWORD2

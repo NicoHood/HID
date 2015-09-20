@@ -111,6 +111,10 @@ void Keyboard_::sendReport(HID_KeyboardReport_Data_t* keys)
 	SendReport(keys,sizeof(HID_KeyboardReport_Data_t));
 }
 
+void Keyboard_::send_now(void){
+	sendReport(&_keyReport);
+}
+
 #if defined(HID_KEYBOARD_LEDS_ENABLED)
 void Keyboard_::setReportData(const void* data, int len){
     // Save led state
@@ -130,43 +134,11 @@ uint8_t Keyboard_::getLeds(void){
 // call release(), releaseAll(), or otherwise clear the report and resend.
 size_t Keyboard_::press(uint8_t k) 
 {
-	uint8_t i;
-	if (k >= 136) {			// it's a non-printing key (not a modifier)
-		k = k - 136;
-	} else if (k >= 128) {	// it's a modifier key
-		_keyReport.modifiers |= (1<<(k-128));
-		k = 0;
-	} else {				// it's a printing key
-		k = pgm_read_byte(_asciimap + k);
-		if (!k) {
-			setWriteError();
-			return 0;
-		}
-		if (k & SHIFT) {						// it's a capital letter or other character reached with shift
-			_keyReport.modifiers |= 0x02;	// the left shift modifier
-			k = k ^ SHIFT;
-		}
+	size_t ret = addKeyToReport(k);
+	if(ret){
+		sendReport(&_keyReport);
 	}
-	
-	// Add k to the key report only if it's not already present
-	// and if there is an empty slot.
-	if (_keyReport.keys[0] != k && _keyReport.keys[1] != k && 
-		_keyReport.keys[2] != k && _keyReport.keys[3] != k &&
-		_keyReport.keys[4] != k && _keyReport.keys[5] != k) {
-		
-		for (i=0; i<6; i++) {
-			if (_keyReport.keys[i] == 0x00) {
-				_keyReport.keys[i] = k;
-				break;
-			}
-		}
-		if (i == 6) {
-			setWriteError();
-			return 0;
-		}	
-	}
-	sendReport(&_keyReport);
-	return 1;
+	return ret;
 }
 
 // release() takes the specified key out of the persistent key report and
@@ -229,6 +201,28 @@ size_t Keyboard_::pressKeycode(uint8_t k)
 	sendReport(&_keyReport);
 }
 
+size_t Keyboard_::addKeyToReport(uint8_t k)
+{
+	if (k >= 136) {			// it's a non-printing key (not a modifier)
+		k = k - 136;
+	} else if (k >= 128) {	// it's a modifier key
+		_keyReport.modifiers |= (1<<(k-128));
+		k = 0;
+	} else {				// it's a printing key
+		k = pgm_read_byte(_asciimap + k);
+		if (!k) {
+			setWriteError();
+			return 0;
+		}
+		if (k & SHIFT) {						// it's a capital letter or other character reached with shift
+			_keyReport.modifiers |= 0x02;	// the left shift modifier
+			k = k ^ SHIFT;
+		}
+	}
+
+	return addKeycodeToReport(k);
+}
+
 size_t Keyboard_::addKeycodeToReport(uint8_t k)
 {
 	uint8_t index = 0;
@@ -281,6 +275,27 @@ size_t Keyboard_::releaseKeycode(uint8_t k)
 		return 0;
 	}
 	sendReport(&_keyReport);
+}
+
+size_t Keyboard_::removeKeyFromReport(uint8_t k)
+{
+	if (k >= 136) {			// it's a non-printing key (not a modifier)
+		k = k - 136;
+	} else if (k >= 128) {	// it's a modifier key
+		_keyReport.modifiers &= ~(1<<(k-128));
+		k = 0;
+	} else {				// it's a printing key
+		k = pgm_read_byte(_asciimap + k);
+		if (!k) {
+			return 0;
+		}
+		if (k & SHIFT) {							// it's a capital letter or other character reached with shift
+			_keyReport.modifiers &= ~(0x02);	// the left shift modifier
+			k = k ^ SHIFT;
+		}
+	}
+	
+	return removeKeycodeFromReport(k);
 }
 
 size_t Keyboard_::removeKeycodeFromReport(uint8_t k)

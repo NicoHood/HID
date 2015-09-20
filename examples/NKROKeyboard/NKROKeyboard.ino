@@ -4,7 +4,7 @@
 
   NKROKeyboard example
 
-  Press a button to press a lot of keys at the same time.
+  Press a button to hold a lot of keys at the same time.
   NKRO can push 113 keys at the same time,
   the other Keyboards only 6 keys + 8 modifiers!
 
@@ -26,36 +26,24 @@ void setup() {
 }
 
 void loop() {
-  // Press a lot of keys at the same time
+  // Hold a lot of keys at the same time
   if (!digitalRead(pinButton)) {
     digitalWrite(pinLed, HIGH);
 
-    NKROKeyboard.press('a');
-    NKROKeyboard.press('b');
-    NKROKeyboard.press('c');
-    NKROKeyboard.press('d');
-    NKROKeyboard.press('e');
-    NKROKeyboard.press('f');
-    NKROKeyboard.press('g');
-    NKROKeyboard.press('h');
-    NKROKeyboard.press('i');
-    NKROKeyboard.press('j');
-    NKROKeyboard.press('k');
-    NKROKeyboard.press('l');
-    NKROKeyboard.press('m');
-    NKROKeyboard.press('n');
-    NKROKeyboard.press('o');
-    NKROKeyboard.press('p');
-    NKROKeyboard.press('q');
-    NKROKeyboard.press('r');
-    NKROKeyboard.press('s');
-    NKROKeyboard.press('t');
-    NKROKeyboard.press('u');
-    NKROKeyboard.press('v');
-    NKROKeyboard.press('w');
-    NKROKeyboard.press('x');
-    NKROKeyboard.press('y');
-    NKROKeyboard.press('z');
+    // Do not press to many at once or some OS will have problems.
+    // Note that the resulting pressed order might differ,
+    // because all keys are pressed at the same time.
+    NKROKeyboard.addKeyToReport('0');
+    NKROKeyboard.addKeyToReport('1');
+    NKROKeyboard.addKeyToReport('2');
+    NKROKeyboard.addKeyToReport('3');
+    NKROKeyboard.addKeyToReport('4');
+    NKROKeyboard.addKeyToReport('5');
+    NKROKeyboard.addKeyToReport('6');
+    NKROKeyboard.addKeyToReport('7');
+    NKROKeyboard.addKeyToReport('8');
+    NKROKeyboard.addKeyToReport('9');
+    NKROKeyboard.send_now();
 
     // Release all keys and hit enter
     NKROKeyboard.releaseAll();
