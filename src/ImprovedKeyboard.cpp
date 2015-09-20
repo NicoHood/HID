@@ -118,8 +118,8 @@ void Keyboard_::send_now(void){
 #if defined(HID_KEYBOARD_LEDS_ENABLED)
 void Keyboard_::setReportData(const void* data, uint8_t len){
     // Save led state
-    if(len == 1)
-    	leds = *(uint8_t*)data;
+    if(len == 2)
+    	leds = *(uint8_t*)(data+1);
 }
 
 uint8_t Keyboard_::getLeds(void){

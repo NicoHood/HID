@@ -38,7 +38,6 @@ THE SOFTWARE.
 #include "HID-Project.h"
 #include "ImprovedKeylayouts.h"
 
-//  Low level key report: up to 6 keys and shift, ctrl etc at once
 typedef union{
 	// Low level key report: up to 6 keys and shift, ctrl etc at once
 	uint8_t whole8[];

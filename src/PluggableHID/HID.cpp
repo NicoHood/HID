@@ -171,16 +171,10 @@ bool HID_::HID_Setup(USBSetup& setup, u8 i)
 						uint8_t length = setup.wLength;
 						uint8_t data[length];
 						USB_RecvControl(data, length);
-							
-						// Skip report ID data, if any
-						if(ID){
-							current->setReportData(data+1, length-1);
-						}
-						// TODO test this case
-						else{
-							current->setReportData(data, length);
-						}
 						
+						// Data may contain the report ID again (Keyboard), maybe not (RawHID)
+						current->setReportData(data, length);
+
 						// Dont search any further
 						break;
 					}
