@@ -30,7 +30,7 @@ HIDDevice((uint8_t*)teensykeyboard_hid_report_desc, sizeof(teensykeyboard_hid_re
 }
 
 #if defined(HID_KEYBOARD_LEDS_ENABLED)
-void usb_keyboard_class::setReportData(const void* data, int len){
+void usb_keyboard_class::setReportData(const void* data, uint8_t len){
     // Save led state
     if(len == 1)
     	leds = *(uint8_t*)data;

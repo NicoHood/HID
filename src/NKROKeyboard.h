@@ -56,7 +56,7 @@ protected:
 	HID_NKROKeyboardReport_Data_t _keyReport;
 	void sendReport(HID_NKROKeyboardReport_Data_t* keys);
 #if defined(HID_KEYBOARD_LEDS_ENABLED)
-  virtual void setReportData(const void* data, int len);
+  virtual void setReportData(const void* data, uint8_t len);
   uint8_t leds;
 #endif
 public:

@@ -160,12 +160,14 @@ bool HID_::HID_Setup(USBSetup& setup, u8 i)
 				// Get reportID and search for the suited HIDDevice
 				uint8_t ID = setup.wValueL;
 				HIDDevice *current = rootDevice;
+
 				while(current != NULL) 
 				{
 					// Search HIDDevice for report ID
 					if(current->reportID == ID)
 					{
 						// Get the data length information and the corresponding bytes
+						// Assuming the host will never send more than 255 bytes
 						uint8_t length = setup.wLength;
 						uint8_t data[length];
 						USB_RecvControl(data, length);

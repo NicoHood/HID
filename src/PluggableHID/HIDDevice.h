@@ -49,7 +49,7 @@ public:
   const uint16_t descriptorLength;
   const uint8_t reportID;
   
-  virtual void setReportData(const void* data, int len);
+  virtual void setReportData(const void* data, uint8_t len);
 
 protected:
   // Could be used and inherited public for custom, professional usage, like raw Keyboard
