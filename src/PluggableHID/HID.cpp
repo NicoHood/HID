@@ -158,7 +158,7 @@ bool HID_::HID_Setup(USBSetup& setup, u8 i)
 			if (HID_SET_REPORT == r)
 			{
 				// Get reportID and search for the suited HIDDevice
-				uint8_t ID = setup.wIndex;
+				uint8_t ID = setup.wValueL;
 				HIDDevice *current = rootDevice;
 				while(current != NULL) 
 				{
