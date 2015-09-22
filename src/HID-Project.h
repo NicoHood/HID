@@ -92,6 +92,12 @@ THE SOFTWARE.
 #define HID_REPORTID_KEYBOARD 2
 #endif
 
+#ifndef HID_REPORTID_RAWHID
+// On Windows you might want to use 0 here and no other HID device combined.
+// Make sure to also disable the boot protocol for keyboard or mouse.
+#define HID_REPORTID_RAWHID 3
+#endif
+
 #ifndef HID_REPORTID_CONSUMERCONTROL
 #define HID_REPORTID_CONSUMERCONTROL 4
 #endif
@@ -131,6 +137,7 @@ THE SOFTWARE.
 #include "Consumer.h"
 #include "Gamepad.h"
 #include "System.h"
+#include "RawHID.h"
 
 // Include Teensy HID afterwards to overwrite key definitions if used
 #ifdef USE_TEENSY_KEYBOARD

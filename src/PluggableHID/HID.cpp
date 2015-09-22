@@ -27,16 +27,7 @@ HID_ HID;
 
 //================================================================================
 //================================================================================
-
-//	HID report descriptor
-
-#define LSB(_x) ((_x) & 0xFF)
-#define MSB(_x) ((_x) >> 8)
-
-#define RAWHID_USAGE_PAGE	0xFFC0
-#define RAWHID_USAGE		0x0C00
-#define RAWHID_TX_SIZE 64
-#define RAWHID_RX_SIZE 64
+//	HID Interface
 
 // Static variables
 uint8_t HID_::HID_ENDPOINT_INT;
