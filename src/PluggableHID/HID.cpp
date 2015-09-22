@@ -167,14 +167,14 @@ bool HID_::HID_Setup(USBSetup& setup, u8 i)
 					if(current->reportID == ID)
 					{
 						// Get the data length information and the corresponding bytes
-						uint16_t length = (setup.wValueH << 8) | setup.wLength;
+						int length = ((setup.wValueH << 8) | setup.wLength);
 
-						// Ensure that there IS some data TODO needed?
-						if(length)
+						// Ensure that there IS some data
+						if(length > 0)
 						{
 							void* data = malloc(length);
 							if(data){
-								uint16_t recvLength = length;
+								auto recvLength = length;
 								//TODO loop can be improved maybe? Or does the compiler do this already?
 								while(recvLength > USB_EP_SIZE){
 									USB_RecvControl(data + (length - recvLength), USB_EP_SIZE);

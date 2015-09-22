@@ -128,7 +128,7 @@ class usb_keyboard_class : public Print, private HIDDevice
 	uint8_t keyboard_report_data[8];
 	
 #if defined(HID_KEYBOARD_LEDS_ENABLED)
-  virtual void setReportData(void* &data, uint16_t len);
+  virtual void setReportData(void* &data, int len);
   uint8_t leds;
 #endif
 };
