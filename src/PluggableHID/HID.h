@@ -78,6 +78,7 @@ private:
   int begin(void);
   void SendReport(uint8_t id, const void* data, int len);
   void AppendDescriptor(HIDDevice* device);
+  void SetInterface(InterfaceDescriptor interface);
   
   // Static functions
   static int HID_GetInterface(u8* interfaceNum);

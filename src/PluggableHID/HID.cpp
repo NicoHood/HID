@@ -55,19 +55,23 @@ uint8_t HID_::_hid_idle = 1;
 int HID_::HID_GetInterface(u8* interfaceNum)
 {
 	interfaceNum[0] += 1;	// uses 1
-	_hidInterface =
-	{
+	_hidInterface.hid =
 #if defined(USE_BOOT_KEYBOARD_PROTOCOL)
-		D_INTERFACE(HID_INTERFACE,1,3,1,1),
+		D_INTERFACE(HID_INTERFACE,1,3,1,1);
 #elif defined(USE_BOOT_MOUSE_PROTOCOL)
-		D_INTERFACE(HID_INTERFACE,1,3,1,2),
+		D_INTERFACE(HID_INTERFACE,1,3,1,2);
 #else
-		D_INTERFACE(HID_INTERFACE,1,3,0,0),
+		D_INTERFACE(HID_INTERFACE,1,3,0,0);
 #endif
-		D_HIDREPORT(sizeof_hidReportDescriptor),
-		D_ENDPOINT(USB_ENDPOINT_IN (HID_ENDPOINT_INT),USB_ENDPOINT_TYPE_INTERRUPT,USB_EP_SIZE,0x01)
-	};
+	_hidInterface.desc = D_HIDREPORT(sizeof_hidReportDescriptor);
+	_hidInterface.in = D_ENDPOINT(USB_ENDPOINT_IN (HID_ENDPOINT_INT),USB_ENDPOINT_TYPE_INTERRUPT,USB_EP_SIZE,0x01);
 	return USB_SendControl(0,&_hidInterface,sizeof(_hidInterface));
+}
+
+void HID_::SetInterface(InterfaceDescriptor interface)
+{
+	// Change the HID Interface (required for BOOT protocol)
+	_hidInterface.hid = interface;
 }
 
 int HID_::HID_GetDescriptor(int8_t t)
