@@ -20,7 +20,7 @@ void HIDDevice::SendRawReport(const void* data, int len){
     HID.SendReport(HID_REPORTID_NONE, data, len);
 }
 
-void HIDDevice::setReportData(const void* data, uint8_t len){
+void HIDDevice::setReportData(void* &data, uint16_t len){
     // Discard this information if its not implemented by the HIDDevice
 }
 

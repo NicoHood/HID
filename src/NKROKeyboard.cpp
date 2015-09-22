@@ -121,7 +121,7 @@ void NKROKeyboard_::send_now(void){
 }
 
 #if defined(HID_KEYBOARD_LEDS_ENABLED)
-void NKROKeyboard_::setReportData(const void* data, uint8_t len){
+void NKROKeyboard_::setReportData(void* &data, uint16_t len){
     // Save led state
     if(len == 2)
     	leds = *(uint8_t*)(data+1);

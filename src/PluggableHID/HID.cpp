@@ -169,11 +169,22 @@ bool HID_::HID_Setup(USBSetup& setup, u8 i)
 						// Get the data length information and the corresponding bytes
 						// Assuming the host will never send more than 255 bytes
 						uint8_t length = setup.wLength;
-						uint8_t data[length];
-						USB_RecvControl(data, length);
+						void* data = malloc(length);
+						if(data){
+							uint8_t recvLength = length;
+							//TODO loop can be improved maybe? Or does the compiler do this already?
+							while(recvLength > USB_EP_SIZE){
+								USB_RecvControl(data + (length - recvLength), USB_EP_SIZE);
+								recvLength -= USB_EP_SIZE;
+							}
+							USB_RecvControl(data + (length - recvLength), recvLength);
 						
-						// Data may contain the report ID again (Keyboard), maybe not (RawHID)
-						current->setReportData(data, length);
+							// Data may contain the report ID again (Keyboard), maybe not (RawHID)
+							current->setReportData(data, length);
+						}
+						
+						// Release data if the pointer still exists
+						free(data);
 
 						// Dont search any further
 						break;
