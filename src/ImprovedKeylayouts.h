@@ -46,6 +46,7 @@ THE SOFTWARE.
 #define KEY_BACKSPACE		(RAW_KEYBOARD_BACKSPACE + 136)
 #define KEY_TAB				(RAW_KEYBOARD_TAB + 136)
 #define KEY_RETURN			(RAW_KEYBOARD_RETURN + 136)
+#define KEY_ENTER KEY_RETURN
 #define KEY_ESC				(RAW_KEYBOARD_ESC + 136)
 #define KEY_INSERT			(RAW_KEYBOARD_INSERT + 136)
 #define KEY_DELETE			(RAW_KEYBOARD_DELETE + 136)
@@ -196,7 +197,7 @@ static const uint8_t _asciimap[128] PROGMEM =
 	0x00,             // BEL
 	RAW_KEYBOARD_BACKSPACE,			// BS	Backspace
 	RAW_KEYBOARD_TAB,			// TAB	Tab
-	RAW_KEYBOARD_RETURN,			// LF	Enter
+	RAW_KEYBOARD_ENTER,			// LF	Enter
 	0x00,             // VT 
 	0x00,             // FF 
 	0x00,             // CR 
