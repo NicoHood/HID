@@ -155,7 +155,7 @@ public:
 
 	using Print::write;
 	virtual size_t write(uint8_t b){
-		write(&b, 1);
+		return write(&b, 1);
 	}
 
 	virtual size_t write(const uint8_t *buffer, size_t size){
@@ -187,7 +187,7 @@ private:
 			// Save new data
 			dataLength = len;
 			dataHead = (uint8_t*) data;
-			dataTail = (uint8_t*)(data + len);
+			dataTail = (uint8_t*)(data) + len;
 						
 			// Clear the passed in pointer to not free the data
 			data = NULL;
