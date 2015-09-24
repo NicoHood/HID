@@ -122,7 +122,7 @@ public:
 
 	inline void press(uint16_t m) {
 		// search for a free spot
-		for (int i = 0; i < sizeof(HID_ConsumerControlReport_Data_t) / 2; i++) {
+		for (uint8_t i = 0; i < sizeof(HID_ConsumerControlReport_Data_t) / 2; i++) {
 			if (_report.whole16[i] == 0x00) {
 				_report.whole16[i] = m;
 				break;
@@ -133,7 +133,7 @@ public:
 
 	inline void release(uint16_t m) {
 		// search and release the keypress
-		for (int i = 0; i < sizeof(HID_ConsumerControlReport_Data_t) / 2; i++) {
+		for (uint8_t i = 0; i < sizeof(HID_ConsumerControlReport_Data_t) / 2; i++) {
 			if (_report.whole16[i] == m) {
 				_report.whole16[i] = 0x00;
 				// no break to delete multiple keys
