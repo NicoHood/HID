@@ -6,14 +6,6 @@
 
   Shows how to send bytes via RawHID.
   Press a button to send some example values.
-  Keep in mind that you can only send full data packets,
-  the rest is filled with zero!
-
-  Definitions from HID_Reports.h:
-  RAWHID_USAGE_PAGE 0xFFC0 // recommended: 0xFF00 to 0xFFFF
-  RAWHID_USAGE    0x0C00 // recommended: 0x0100 to 0xFFFF
-  RAWHID_TX_SIZE 15 // 1 byte for report ID
-  RAWHID_RX_SIZE 15 // 1 byte for report ID
 
   See HID Project documentation for more information.
   https://github.com/NicoHood/HID/wiki/RawHID-API
