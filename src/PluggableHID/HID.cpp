@@ -228,6 +228,7 @@ HID_::operator bool() {
 
 int HID_::begin(void)
 {
+	return 0;
 }
 
 #endif /* if defined(USBCON) */
