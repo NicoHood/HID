@@ -89,6 +89,10 @@ THE SOFTWARE.
 // LAYOUT_US_ENGLISH
 //================================================================================
 
+#if !defined(LAYOUT_US_ENGLISH) && !defined(LAYOUT_UNITED_KINGDOM)
+#error This API does not support non english layouts. Please select an US or UK Keyboard.
+#endif
+
 #define RAW_KEYBOARD_LEFT_CTRL   (1 << 0)
 #define RAW_KEYBOARD_LEFT_SHIFT  (1 << 1)
 #define RAW_KEYBOARD_LEFT_ALT    (1 << 2)
@@ -182,6 +186,7 @@ THE SOFTWARE.
 #define RAW_KEYBOARD_DOWN_ARROW		0x51
 #define RAW_KEYBOARD_UP_ARROW		0x52
 #define RAW_KEYBOARD_NUM_LOCK		0x53
+#define RAW_KEYBOARD_NON_US			0x64
 #define RAW_KEYBOARD_MENU			0x65
 
 #define SHIFT 0x80
@@ -222,8 +227,16 @@ static const uint8_t _asciimap[128] PROGMEM =
 
 	RAW_KEYBOARD_SPACE,		   //  ' '
 	RAW_KEYBOARD_1|SHIFT,	   // !
+#ifdef LAYOUT_UNITED_KINGDOM
+	RAW_KEYBOARD_2|SHIFT,	   // "
+#else
 	RAW_KEYBOARD_QUOTE|SHIFT,	   // "
+#endif
+#ifdef LAYOUT_UNITED_KINGDOM
+	RAW_KEYBOARD_BACKSLASH
+#else
 	RAW_KEYBOARD_3|SHIFT,    // #
+#endif
 	RAW_KEYBOARD_4|SHIFT,    // $
 	RAW_KEYBOARD_5|SHIFT,    // %
 	RAW_KEYBOARD_7|SHIFT,    // &
@@ -252,7 +265,11 @@ static const uint8_t _asciimap[128] PROGMEM =
 	RAW_KEYBOARD_EQUAL,          // =
 	RAW_KEYBOARD_PERIOD|SHIFT,      // >
 	RAW_KEYBOARD_SLASH|SHIFT,      // ?
+#ifdef LAYOUT_UNITED_KINGDOM
+	RAW_KEYBOARD_QUOTE|SHIFT,      // @
+#else
 	RAW_KEYBOARD_2|SHIFT,      // @
+#endif
 	RAW_KEYBOARD_A|SHIFT,      // A
 	RAW_KEYBOARD_B|SHIFT,      // B
 	RAW_KEYBOARD_C|SHIFT,      // C
@@ -280,7 +297,11 @@ static const uint8_t _asciimap[128] PROGMEM =
 	RAW_KEYBOARD_Y|SHIFT,      // Y
 	RAW_KEYBOARD_Z|SHIFT,      // Z
 	RAW_KEYBOARD_LEFT_BRACE,          // [
+#ifdef LAYOUT_UNITED_KINGDOM
+	RAW_KEYBOARD_NON_US,    // bslash
+#else
 	RAW_KEYBOARD_BACKSLASH,          // bslash
+#endif
 	RAW_KEYBOARD_RIGHT_BRACE,          // ]
 	RAW_KEYBOARD_6|SHIFT,    // ^
 	RAW_KEYBOARD_MINUS|SHIFT,    // _
@@ -312,8 +333,16 @@ static const uint8_t _asciimap[128] PROGMEM =
 	RAW_KEYBOARD_Y,          // y
 	RAW_KEYBOARD_Z,          // z
 	RAW_KEYBOARD_LEFT_BRACE|SHIFT,    // {
+#ifdef LAYOUT_UNITED_KINGDOM
+	RAW_KEYBOARD_NON_US|SHIFT,    // |
+#else
 	RAW_KEYBOARD_BACKSLASH|SHIFT,    // |
+#endif
 	RAW_KEYBOARD_RIGHT_BRACE|SHIFT,    // }
+#ifdef LAYOUT_UNITED_KINGDOM
+	RAW_KEYBOARD_BACKSLASH|SHIFT,    // ~
+#else
 	RAW_KEYBOARD_TILDE|SHIFT,    // ~
+#endif
 	0x00				// DEL
 };
