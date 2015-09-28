@@ -221,21 +221,21 @@ static const uint8_t _asciimap[128] PROGMEM =
 	0x00,             // US 
 
 	RAW_KEYBOARD_SPACE,		   //  ' '
-	0x1e|SHIFT,	   // !
-	0x34|SHIFT,	   // "
-	0x20|SHIFT,    // #
-	0x21|SHIFT,    // $
-	0x22|SHIFT,    // %
-	0x24|SHIFT,    // &
-	0x34,          // '
-	0x26|SHIFT,    // (
-	0x27|SHIFT,    // )
-	0x25|SHIFT,    // *
-	0x2e|SHIFT,    // +
-	0x36,          // ,
+	RAW_KEYBOARD_1|SHIFT,	   // !
+	RAW_KEYBOARD_QUOTE|SHIFT,	   // "
+	RAW_KEYBOARD_3|SHIFT,    // #
+	RAW_KEYBOARD_4|SHIFT,    // $
+	RAW_KEYBOARD_5|SHIFT,    // %
+	RAW_KEYBOARD_7|SHIFT,    // &
+	RAW_KEYBOARD_QUOTE,          // '
+	RAW_KEYBOARD_9|SHIFT,    // (
+	RAW_KEYBOARD_0|SHIFT,    // )
+	RAW_KEYBOARD_8|SHIFT,    // *
+	RAW_KEYBOARD_EQUAL|SHIFT,    // +
+	RAW_KEYBOARD_COMMA,          // ,
 	RAW_KEYBOARD_MINUS,          // -
-	0x37,          // .
-	0x38,          // /
+	RAW_KEYBOARD_PERIOD,          // .
+	RAW_KEYBOARD_SLASH,          // /
 	RAW_KEYBOARD_0,          // 0
 	RAW_KEYBOARD_1,          // 1
 	RAW_KEYBOARD_2,          // 2
@@ -246,13 +246,13 @@ static const uint8_t _asciimap[128] PROGMEM =
 	RAW_KEYBOARD_7,          // 7
 	RAW_KEYBOARD_8,          // 8
 	RAW_KEYBOARD_9,          // 9
-	0x33|SHIFT,      // :
-	0x33,          // ;
-	0x36|SHIFT,      // <
-	0x2e,          // =
-	0x37|SHIFT,      // >
-	0x38|SHIFT,      // ?
-	0x1f|SHIFT,      // @
+	RAW_KEYBOARD_SEMICOLON|SHIFT,      // :
+	RAW_KEYBOARD_SEMICOLON,          // ;
+	RAW_KEYBOARD_COMMA|SHIFT,      // <
+	RAW_KEYBOARD_EQUAL,          // =
+	RAW_KEYBOARD_PERIOD|SHIFT,      // >
+	RAW_KEYBOARD_SLASH|SHIFT,      // ?
+	RAW_KEYBOARD_2|SHIFT,      // @
 	RAW_KEYBOARD_A|SHIFT,      // A
 	RAW_KEYBOARD_B|SHIFT,      // B
 	RAW_KEYBOARD_C|SHIFT,      // C
@@ -279,12 +279,12 @@ static const uint8_t _asciimap[128] PROGMEM =
 	RAW_KEYBOARD_X|SHIFT,      // X
 	RAW_KEYBOARD_Y|SHIFT,      // Y
 	RAW_KEYBOARD_Z|SHIFT,      // Z
-	0x2f,          // [
-	0x31,          // bslash
-	0x30,          // ]
-	0x23|SHIFT,    // ^
-	0x2d|SHIFT,    // _
-	0x35,          // `
+	RAW_KEYBOARD_LEFT_BRACE,          // [
+	RAW_KEYBOARD_BACKSLASH,          // bslash
+	RAW_KEYBOARD_RIGHT_BRACE,          // ]
+	RAW_KEYBOARD_6|SHIFT,    // ^
+	RAW_KEYBOARD_MINUS|SHIFT,    // _
+	RAW_KEYBOARD_TILDE,          // `
 	RAW_KEYBOARD_A,          // a
 	RAW_KEYBOARD_B,          // b
 	RAW_KEYBOARD_C,          // c
@@ -311,9 +311,9 @@ static const uint8_t _asciimap[128] PROGMEM =
 	RAW_KEYBOARD_X,          // x
 	RAW_KEYBOARD_Y,          // y
 	RAW_KEYBOARD_Z,          // z
-	0x2f|SHIFT,    // 
-	0x31|SHIFT,    // |
-	0x30|SHIFT,    // }
-	0x35|SHIFT,    // ~
-	0				// DEL
+	RAW_KEYBOARD_LEFT_BRACE|SHIFT,    // {
+	RAW_KEYBOARD_BACKSLASH|SHIFT,    // |
+	RAW_KEYBOARD_RIGHT_BRACE|SHIFT,    // }
+	RAW_KEYBOARD_TILDE|SHIFT,    // ~
+	0x00				// DEL
 };
