@@ -55,12 +55,9 @@ int BootKeyboard_::getDescriptor(USBSetup& setup)
 
 bool BootKeyboard_::setup(USBSetup& setup)
 {
-	// Check if this is a HID Class Descriptor request
-	if (setup.bmRequestType != REQUEST_DEVICETOHOST_STANDARD_INTERFACE) { return false; }
-	if (setup.wValueH != HID_REPORT_DESCRIPTOR_TYPE) { return false; }
-
-	// In a HID Class Descriptor wIndex cointains the interface number
-	if (setup.wIndex != pluggedInterface) { return false; }
+	if (pluggedInterface != setup.wIndex) {
+		return false;
+	}
 
 	uint8_t request = setup.bRequest;
 	uint8_t requestType = setup.bmRequestType;
@@ -89,7 +86,11 @@ bool BootKeyboard_::setup(USBSetup& setup)
 		}
 		if (request == HID_SET_REPORT)
 		{
-		//TODO
+			// Check if data has the correct length
+			auto length = setup.wLength;
+			if(length == sizeof(leds)){
+				USB_RecvControl(&leds, length);
+			}
 		}
 	}
 
