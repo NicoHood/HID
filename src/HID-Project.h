@@ -27,123 +27,30 @@ THE SOFTWARE.
 // Software version
 #define HID_PROJECT_VERSION 240
 
-#include <Arduino.h>
+#include <Arduino.h> //TODO
+
+#if ARDUINO < 10606
+#error HID Project requires Arduino IDE 1.6.6 or greater. Please update your IDE.
+#endif
 
 #if !defined(USBCON)
-#error "This is not an USB AVR or you use an old version of the IDE."
+#error HID Project can only be used with an USB MCU.
 #endif
 
-//================================================================================
-// Settings
-//================================================================================
-
-#define HID_KEYBOARD_LEDS_ENABLED
-#define USE_BOOT_KEYBOARD_PROTOCOL
-//#define USE_BOOT_MOUSE_PROTOCOL
-
-//#define LAYOUT_US_ENGLISH
-//#define LAYOUT_CANADIAN_FRENCH
-//#define LAYOUT_CANADIAN_MULTILINGUAL
-//#define LAYOUT_DANISH
-//#define LAYOUT_FINNISH
-//#define LAYOUT_FRENCH
-//#define LAYOUT_FRENCH_BELGIAN
-//#define LAYOUT_FRENCH_SWISS
-//#define LAYOUT_GERMAN
-//#define LAYOUT_GERMAN_MAC
-//#define LAYOUT_GERMAN_SWISS
-//#define LAYOUT_ICELANDIC
-//#define LAYOUT_IRISH
-//#define LAYOUT_ITALIAN
-//#define LAYOUT_NORWEGIAN
-//#define LAYOUT_PORTUGUESE
-//#define LAYOUT_PORTUGUESE_BRAZILIAN
-//#define LAYOUT_SPANISH
-//#define LAYOUT_SPANISH_LATIN_AMERICA
-//#define LAYOUT_SWEDISH
-//#define LAYOUT_TURKISH
-//#define LAYOUT_UNITED_KINGDOM
-//#define LAYOUT_US_INTERNATIONAL
-
-//================================================================================
-// Definitions and Helpers
-//================================================================================
-
-// Default US keyboard layout
-#if !defined(LAYOUT_CANADIAN_FRENCH) && !defined(LAYOUT_CANADIAN_MULTILINGUAL) \
-&& !defined(LAYOUT_DANISH) && !defined(LAYOUT_FINNISH) && !defined(LAYOUT_FRENCH) \
-&& !defined(LAYOUT_FRENCH_BELGIAN) && !defined(LAYOUT_FRENCH_SWISS) && !defined(LAYOUT_GERMAN) \
-&& !defined(LAYOUT_GERMAN_MAC) && !defined(LAYOUT_GERMAN_SWISS) && !defined(LAYOUT_ICELANDIC) \
-&& !defined(LAYOUT_IRISH) && !defined(LAYOUT_ITALIAN) && !defined(LAYOUT_NORWEGIAN) \
-&& !defined(LAYOUT_PORTUGUESE) && !defined(LAYOUT_PORTUGUESE_BRAZILIAN) \
-&& !defined(LAYOUT_SPANISH) && !defined(LAYOUT_SPANISH_LATIN_AMERICA) \
-&& !defined(LAYOUT_SWEDISH) && !defined(LAYOUT_TURKISH) && !defined(LAYOUT_UNITED_KINGDOM) \
-&& !defined(LAYOUT_US_INTERNATIONAL) && !defined(LAYOUT_US_ENGLISH)
-#define LAYOUT_US_ENGLISH
-#endif
-
-#define HID_REPORTID_NONE 0
-
-#ifndef HID_REPORTID_MOUSE
-#define HID_REPORTID_MOUSE 1
-#endif
-
-#ifndef HID_REPORTID_KEYBOARD
-#define HID_REPORTID_KEYBOARD 2
-#endif
-
-#ifndef HID_REPORTID_RAWHID
-// On Windows you might want to use 0 here and no other HID device combined.
-// Make sure to also disable the boot protocol for keyboard or mouse.
-#define HID_REPORTID_RAWHID 3
-#endif
-
-#ifndef HID_REPORTID_CONSUMERCONTROL
-#define HID_REPORTID_CONSUMERCONTROL 4
-#endif
-
-#ifndef HID_REPORTID_SYSTEMCONTROL
-#define HID_REPORTID_SYSTEMCONTROL 5
-#endif
-
-#ifndef HID_REPORTID_GAMEPAD
-#define HID_REPORTID_GAMEPAD 6
-#endif
-
-#ifndef HID_REPORTID_MOUSE_ABSOLUTE
-#define HID_REPORTID_MOUSE_ABSOLUTE 7
-#endif
-
-#ifndef HID_REPORTID_NKRO_KEYBOARD
-#define HID_REPORTID_NKRO_KEYBOARD 8
-#endif
-
-#ifndef HID_REPORTID_TEENSY_KEYBOARD
-#define HID_REPORTID_TEENSY_KEYBOARD 9
-#endif
-
-#if defined(USE_BOOT_KEYBOARD_PROTOCOL) && defined(USE_BOOT_MOUSE_PROTOCOL)
-// Technically it is possible but not within this (simpler) API.
-#error "You cannot use a boot compatible keyboard and mouse at the same time."
-#endif
-
-#include "HID.h"
-
-#include "HID-Tables.h"
 
 // Include all HID libraries (.a linkage required to work) properly
-#include "AbsoluteMouse.h"
-#include "ImprovedMouse.h"
-#include "Consumer.h"
-#include "Gamepad.h"
-#include "System.h"
-#include "RawHID.h"
+//#include "AbsoluteMouse.h"
+//#include "ImprovedMouse.h"
+//#include "Consumer.h"
+//#include "Gamepad.h"
+//#include "System.h"
+//#include "RawHID.h"
 
 // Include Teensy HID afterwards to overwrite key definitions if used
 #ifdef USE_TEENSY_KEYBOARD
-#include "TeensyKeyboard.h"
+//#include "TeensyKeyboard.h"
 #else
-#include "ImprovedKeylayouts.h"
-#include "ImprovedKeyboard.h"
-#include "NKROKeyboard.h"
+#include "SingleReport/BootKeyboard.h"
+#include "MultiReport/ImprovedKeyboard.h"
+//#include "NKROKeyboard.h"
 #endif
