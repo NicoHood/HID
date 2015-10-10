@@ -46,21 +46,21 @@ class KeyboardAPI : public Print
 {
 public:
 //TODO nkro compatiblity, merge them
-  void begin(void);
-  void end(void);
-  size_t write(uint8_t k);
-  size_t press(uint8_t k);
-  size_t release(uint8_t k);
-  void releaseAll(void);
-  void send_now(void);
+  inline void begin(void);
+  inline void end(void);
+  inline size_t write(uint8_t k);
+  inline size_t press(uint8_t k);
+  inline size_t release(uint8_t k);
+  inline void releaseAll(void);
+  inline void send_now(void);
   
-  size_t writeKeycode(uint8_t k);
-  size_t pressKeycode(uint8_t k);
-  size_t releaseKeycode(uint8_t k);
-  size_t addKeyToReport(uint8_t k);
-  size_t addKeycodeToReport(uint8_t k);
-  size_t removeKeyFromReport(uint8_t k);
-  size_t removeKeycodeFromReport(uint8_t k);
+  inline size_t writeKeycode(uint8_t k);
+  inline size_t pressKeycode(uint8_t k);
+  inline size_t releaseKeycode(uint8_t k);
+  inline size_t addKeyToReport(uint8_t k);
+  inline size_t addKeycodeToReport(uint8_t k);
+  inline size_t removeKeyFromReport(uint8_t k);
+  inline size_t removeKeycodeFromReport(uint8_t k);
 
   // Sending is public in the base class for advanced users.
   virtual void SendReport(void* data, int length) = 0;
@@ -68,3 +68,6 @@ public:
 protected:
   HID_KeyboardReport_Data_t _keyReport;
 };
+
+// Implementation is inline
+#include "KeyboardAPI.hpp"

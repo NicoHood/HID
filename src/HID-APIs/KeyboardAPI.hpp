@@ -21,8 +21,8 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
 
-#include "KeyboardAPI.h"
-
+// Include guard
+#pragma once
 
 void KeyboardAPI::begin(void)
 {
