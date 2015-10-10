@@ -6,18 +6,11 @@
 
   Press a button to toogle caps lock.
   Caps lock state is represented by the onboard led.
+  Leds are only supported on single report HID devices.
 
   See HID Project documentation for more information.
   https://github.com/NicoHood/HID/wiki/Keyboard-API
 */
-
-// Choose your favourite keyboard
-#define USBKEYBOARD Keyboard
-
-//#define USBKEYBOARD NKROKeyboard
-
-//#define USBKEYBOARD TeensyKeyboard
-//#define USE_TEENSY_KEYBOARD
 
 #include "HID-Project.h"
 
@@ -29,21 +22,21 @@ void setup() {
   pinMode(pinButton, INPUT_PULLUP);
 
   // Sends a clean report to the host. This is important on any Arduino type.
-  USBKEYBOARD.begin();
+  BootKeyboard.begin();
 }
 
 
 void loop() {
   // Update Led equal to the caps lock state.
   // Keep in mind that on a 16u2 and Arduino Micro HIGH and LOW for TX/RX Leds are inverted.
-  if (USBKEYBOARD.getLeds() & LED_CAPS_LOCK)
+  if (BootKeyboard.getLeds() & LED_CAPS_LOCK)
     digitalWrite(pinLed, HIGH);
   else
     digitalWrite(pinLed, LOW);
 
   // Trigger caps lock manually via button
   if (!digitalRead(pinButton)) {
-    USBKEYBOARD.write(KEY_CAPS_LOCK);
+    BootKeyboard.write(KEY_CAPS_LOCK);
 
     // Simple debounce
     delay(300);
