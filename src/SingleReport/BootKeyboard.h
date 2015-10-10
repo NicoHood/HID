@@ -35,6 +35,7 @@ class BootKeyboard_ : public PUSBListNode, public KeyboardAPI
 public:
     BootKeyboard_(void);
     uint8_t getLeds(void);
+    uint8_t getProtocol(void);
 
 protected:
     // Implementation of the PUSBListNode

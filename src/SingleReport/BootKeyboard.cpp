@@ -101,6 +101,10 @@ uint8_t BootKeyboard_::getLeds(void){
     return leds;
 }
 
+uint8_t BootKeyboard_::getProtocol(void){
+    return protocol;
+}
+
 void BootKeyboard_::sendReport(void* data, int length){
 	USB_Send(pluggedEndpoint | TRANSFER_RELEASE, data, length);
 }
