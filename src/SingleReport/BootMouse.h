@@ -47,7 +47,7 @@ protected:
     uint8_t protocol;
     uint8_t idle;
     
-    virtual void sendReport(void* data, int length) override;
+    virtual void SendReport(void* data, int length) override;
 };
 extern BootMouse_ BootMouse;
 

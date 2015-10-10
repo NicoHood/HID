@@ -95,7 +95,7 @@ uint8_t BootMouse_::getProtocol(void){
     return protocol;
 }
 
-void BootMouse_::sendReport(void* data, int length){
+void BootMouse_::SendReport(void* data, int length){
 	if(protocol == HID_BOOT_PROTOCOL){
 		USB_Send(pluggedEndpoint | TRANSFER_RELEASE, data, sizeof(HID_BootMouseReport_Data_t));
 	}

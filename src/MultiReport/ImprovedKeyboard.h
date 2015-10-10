@@ -37,7 +37,7 @@ public:
     Keyboard_(void);
 
 protected: 
-    virtual inline void sendReport(void* data, int length) override;
+    virtual inline void SendReport(void* data, int length) override;
 };
 extern Keyboard_ Keyboard;
 

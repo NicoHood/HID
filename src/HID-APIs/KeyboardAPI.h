@@ -63,7 +63,7 @@ public:
   size_t removeKeycodeFromReport(uint8_t k);
 
   // Sending is public in the base class for advanced users.
-  virtual void sendReport(void* data, int length) = 0;
+  virtual void SendReport(void* data, int length) = 0;
   
 protected:
   HID_KeyboardReport_Data_t _keyReport;

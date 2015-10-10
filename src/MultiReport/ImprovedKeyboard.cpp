@@ -65,7 +65,7 @@ Keyboard_::Keyboard_(void)
 	HID().AppendDescriptor(&node);
 }
 
-void Keyboard_::sendReport(void* data, int length)
+void Keyboard_::SendReport(void* data, int length)
 {
 	HID().SendReport(HID_REPORTID_KEYBOARD, data, length);
 }

@@ -37,7 +37,7 @@ void KeyboardAPI::end(void)
 
 
 void KeyboardAPI::send_now(void){
-	sendReport(&_keyReport, sizeof(_keyReport));
+	SendReport(&_keyReport, sizeof(_keyReport));
 }
 
 

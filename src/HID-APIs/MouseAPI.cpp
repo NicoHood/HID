@@ -54,7 +54,7 @@ void MouseAPI::move(signed char x, signed char y, signed char wheel)
 	report.xAxis = x;
 	report.yAxis = y;
 	report.wheel = wheel;
-	sendReport(&report, sizeof(report));
+	SendReport(&report, sizeof(report));
 }
 
 void MouseAPI::buttons(uint8_t b)
