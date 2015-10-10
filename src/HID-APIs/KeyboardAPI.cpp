@@ -23,18 +23,6 @@ THE SOFTWARE.
 
 #include "KeyboardAPI.h"
 
-const uint8_t _hidReportDescriptorKeyboard[] PROGMEM = {
-	HID_REPORT_KEYBOARD,
-};
-
-const uint8_t _hidMultiReportDescriptorKeyboard[] PROGMEM = {
-	HID_MULTIREPORT_KEYBOARD,
-};
-
-static_assert(sizeof _hidReportDescriptorKeyboard == HID_REPORT_KEYBOARD_SIZE, "Oops, sizes are not equal.");
-static_assert(sizeof _hidMultiReportDescriptorKeyboard == HID_MULTIREPORT_KEYBOARD_SIZE, "Oops, sizes are not equal.");
-
-
 
 void KeyboardAPI::begin(void)
 {
