@@ -37,9 +37,9 @@ THE SOFTWARE.
 #define HID_REPORT_DESCRIPTOR_TYPE      0x22
 #define HID_PHYSICAL_DESCRIPTOR_TYPE    0x23
 
-// Keyboard/Mouse protocols (normal or bios) HID1.11 Page 8 4.2 Subclass
-#define HID_PROTOCOL_NO_SUBCLASS	0
-#define HID_PROTOCOL_BOOT			1
+// Keyboard/Mouse protocols (normal or bios) HID1.11 Page 54 7.2.5 Get_Protocol Request
+#define HID_BOOT_PROTOCOL	0
+#define HID_REPORT_PROTOCOL	1
 
 typedef struct
 {
