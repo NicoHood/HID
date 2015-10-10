@@ -5,6 +5,10 @@
   Mouse example
   Press a button to click or move the mouse.
 
+  You may also use BootMouse to enable a bios compatible mouse.
+  However this is very unusual and not recommended.
+  Bios mice dont support wheels which can cause problems after a reboot.
+
   See HID Project documentation for more Information.
   https://github.com/NicoHood/HID/wiki/Mouse-API
 */

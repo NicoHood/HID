@@ -39,7 +39,8 @@ THE SOFTWARE.
 
 // Include all HID libraries (.a linkage required to work) properly
 //#include "AbsoluteMouse.h"
-//#include "ImprovedMouse.h"
+#include "SingleReport/BootMouse.h"
+#include "MultiReport/ImprovedMouse.h"
 //#include "Consumer.h"
 //#include "Gamepad.h"
 //#include "System.h"
