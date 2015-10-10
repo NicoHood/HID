@@ -22,7 +22,6 @@ THE SOFTWARE.
 */
 
 #include "BootKeyboard.h"
-#include "HID-Driver.h"
 
 static const uint8_t _hidReportDescriptorKeyboard[] PROGMEM = {
     //  Keyboard
@@ -81,7 +80,7 @@ int BootKeyboard_::getInterface(uint8_t* interfaceCount)
 {
 	*interfaceCount += 1; // uses 1
 	HIDDescriptor hidInterface = {
-		D_INTERFACE(pluggedInterface, 1, 3, 1, 1), // Boot compatible keyboard
+		D_INTERFACE(pluggedInterface, 1, USB_DEVICE_CLASS_HUMAN_INTERFACE, HID_SUBCLASS_BOOT_INTERFACE, HID_PROTOCOL_KEYBOARD),
 		D_HIDREPORT(sizeof(_hidReportDescriptorKeyboard)),
 		D_ENDPOINT(USB_ENDPOINT_IN(pluggedEndpoint), USB_ENDPOINT_TYPE_INTERRUPT, USB_EP_SIZE, 0x01)
 	};

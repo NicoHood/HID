@@ -37,7 +37,6 @@ THE SOFTWARE.
 #error HID Project can only be used with an USB MCU.
 #endif
 
-
 // Include all HID libraries (.a linkage required to work) properly
 //#include "AbsoluteMouse.h"
 //#include "ImprovedMouse.h"

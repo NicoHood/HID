@@ -74,4 +74,7 @@ AbsoluteMouse	KEYWORD1
 # Constants (LITERAL1)
 #######################################
 
+HID_BOOT_PROTOCOL	LITERAL1
+HID_REPORT_PROTOCOL	LITERAL1
+
 #TODO add key definitions like KEY_ENTER

@@ -26,8 +26,8 @@ THE SOFTWARE.
 
 #include <Arduino.h>
 #include "PluggableUSB.h"
-#include "HID-Settings.h"
 #include "HID.h"
+#include "HID-Settings.h"
 #include "../HID-APIs/KeyboardAPI.h"
 
 
