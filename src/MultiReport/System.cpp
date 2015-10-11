@@ -21,36 +21,38 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
 
-// Include guard
-#pragma once
+#include "System.h"
 
-// Software version
-#define HID_PROJECT_VERSION 240
 
-#include <Arduino.h> //TODO
+static const uint8_t _hidMultiReportDescriptorSystem[] PROGMEM = {
+	//TODO limit to system keys only?
+	/*  System Control (Power Down, Sleep, Wakeup, ...) */
+	0x05, 0x01,								/* USAGE_PAGE (Generic Desktop) */
+	0x09, 0x80,								/* USAGE (System Control) */
+	0xa1, 0x01, 							/* COLLECTION (Application) */
+	0x85, HID_REPORTID_SYSTEMCONTROL,		/* REPORT_ID */
+	/* 1 system key */
+	0x15, 0x00, 							/* LOGICAL_MINIMUM (0) */
+	0x26, 0xff, 0x00, 						/* LOGICAL_MAXIMUM (255) */
+	0x19, 0x00, 							/* USAGE_MINIMUM (Undefined) */
+	0x29, 0xff, 							/* USAGE_MAXIMUM (System Menu Down) */
+	0x95, 0x01, 							/* REPORT_COUNT (1) */
+	0x75, 0x08, 							/* REPORT_SIZE (8) */
+	0x81, 0x00, 							/* INPUT (Data,Ary,Abs) */
+	0xc0 									/* END_COLLECTION */
+};
 
-#if ARDUINO < 10606
-#error HID Project requires Arduino IDE 1.6.6 or greater. Please update your IDE.
-#endif
+System_::System_(void) 
+{
+	static HIDDescriptorListNode node(_hidMultiReportDescriptorSystem, sizeof(_hidMultiReportDescriptorSystem));
+	HID().AppendDescriptor(&node);
+}
 
-#if !defined(USBCON)
-#error HID Project can only be used with an USB MCU.
-#endif
 
-// Include all HID libraries (.a linkage required to work) properly
-#include "MultiReport/AbsoluteMouse.h"
-#include "SingleReport/BootMouse.h"
-#include "MultiReport/ImprovedMouse.h"
-//#include "Consumer.h"
-//#include "Gamepad.h"
-#include "MultiReport/System.h"
-//#include "RawHID.h"
+void System_::SendReport(void* data, int length)
+{
+	HID().SendReport(HID_REPORTID_SYSTEMCONTROL, data, length);
+}
 
-// Include Teensy HID afterwards to overwrite key definitions if used
-#ifdef USE_TEENSY_KEYBOARD
-//#include "TeensyKeyboard.h"
-#else
-#include "SingleReport/BootKeyboard.h"
-#include "MultiReport/ImprovedKeyboard.h"
-//#include "NKROKeyboard.h"
-#endif
+System_ System;
+

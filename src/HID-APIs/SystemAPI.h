@@ -24,33 +24,32 @@ THE SOFTWARE.
 // Include guard
 #pragma once
 
-// Software version
-#define HID_PROJECT_VERSION 240
+#include <Arduino.h>
+#include "HID-Settings.h"
 
-#include <Arduino.h> //TODO
+#define SYSTEM_POWER_DOWN	0x81
+#define SYSTEM_SLEEP	0x82
+#define SYSTEM_WAKE_UP	0x83
 
-#if ARDUINO < 10606
-#error HID Project requires Arduino IDE 1.6.6 or greater. Please update your IDE.
-#endif
+typedef union{
+	// Every usable system control key possible
+	uint8_t whole8[];
+	uint8_t key;
+} HID_SystemControlReport_Data_t;
 
-#if !defined(USBCON)
-#error HID Project can only be used with an USB MCU.
-#endif
+class SystemAPI{
+public:
+	inline SystemAPI(void);
+	inline void begin(void);
+	inline void end(void);
+	inline void write(uint8_t s);
+	inline void press(uint8_t s);
+	inline void release(void);
+	inline void releaseAll(void);
+	
+	// Sending is public in the base class for advanced users.
+	virtual void SendReport(void* data, int length) = 0;
+};
 
-// Include all HID libraries (.a linkage required to work) properly
-#include "MultiReport/AbsoluteMouse.h"
-#include "SingleReport/BootMouse.h"
-#include "MultiReport/ImprovedMouse.h"
-//#include "Consumer.h"
-//#include "Gamepad.h"
-#include "MultiReport/System.h"
-//#include "RawHID.h"
-
-// Include Teensy HID afterwards to overwrite key definitions if used
-#ifdef USE_TEENSY_KEYBOARD
-//#include "TeensyKeyboard.h"
-#else
-#include "SingleReport/BootKeyboard.h"
-#include "MultiReport/ImprovedKeyboard.h"
-//#include "NKROKeyboard.h"
-#endif
+// Implementation is inline
+#include "SystemAPI.hpp"
