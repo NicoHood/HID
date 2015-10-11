@@ -47,8 +47,8 @@ void ConsumerAPI::write(uint16_t m) {
 void ConsumerAPI::press(uint16_t m) {
 	// search for a free spot
 	for (uint8_t i = 0; i < sizeof(HID_ConsumerControlReport_Data_t) / 2; i++) {
-		if (_report.whole16[i] == 0x00) {
-			_report.whole16[i] = m;
+		if (_report.keys[i] == 0x00) {
+			_report.keys[i] = m;
 			break;
 		}
 	}
@@ -58,8 +58,8 @@ void ConsumerAPI::press(uint16_t m) {
 void ConsumerAPI::release(uint16_t m) {
 	// search and release the keypress
 	for (uint8_t i = 0; i < sizeof(HID_ConsumerControlReport_Data_t) / 2; i++) {
-		if (_report.whole16[i] == m) {
-			_report.whole16[i] = 0x00;
+		if (_report.keys[i] == m) {
+			_report.keys[i] = 0x00;
 			// no break to delete multiple keys
 		}
 	}

@@ -63,6 +63,7 @@ typedef union {
 	uint8_t whole8[];
 	uint16_t whole16[];
 	uint32_t whole32[];
+	uint16_t keys[4];
 	struct {
 		uint16_t key1;
 		uint16_t key2;
