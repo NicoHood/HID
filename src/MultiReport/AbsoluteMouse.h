@@ -24,33 +24,20 @@ THE SOFTWARE.
 // Include guard
 #pragma once
 
-// Software version
-#define HID_PROJECT_VERSION 240
+#include <Arduino.h>
+#include "PluggableUSB.h"
+#include "HID.h"
+#include "HID-Settings.h"
+#include "../HID-APIs/AbsoluteMouseAPI.h"
 
-#include <Arduino.h> //TODO
 
-#if ARDUINO < 10606
-#error HID Project requires Arduino IDE 1.6.6 or greater. Please update your IDE.
-#endif
+class AbsoluteMouse_ : public AbsoluteMouseAPI
+{
+public:
+    AbsoluteMouse_(void);
 
-#if !defined(USBCON)
-#error HID Project can only be used with an USB MCU.
-#endif
+protected: 
+    virtual inline void SendReport(void* data, int length) override;
+};
+extern AbsoluteMouse_ AbsoluteMouse;
 
-// Include all HID libraries (.a linkage required to work) properly
-#include "MultiReport/AbsoluteMouse.h"
-#include "SingleReport/BootMouse.h"
-#include "MultiReport/ImprovedMouse.h"
-//#include "Consumer.h"
-//#include "Gamepad.h"
-//#include "System.h"
-//#include "RawHID.h"
-
-// Include Teensy HID afterwards to overwrite key definitions if used
-#ifdef USE_TEENSY_KEYBOARD
-//#include "TeensyKeyboard.h"
-#else
-#include "SingleReport/BootKeyboard.h"
-#include "MultiReport/ImprovedKeyboard.h"
-//#include "NKROKeyboard.h"
-#endif
