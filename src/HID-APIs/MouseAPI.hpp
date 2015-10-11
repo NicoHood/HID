@@ -21,7 +21,8 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
 
-#include "MouseAPI.h"
+// Include guard
+#pragma once
 
 MouseAPI::MouseAPI(void) : _buttons(0)
 {

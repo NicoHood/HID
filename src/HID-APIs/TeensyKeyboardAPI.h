@@ -28,85 +28,54 @@ THE SOFTWARE.
 #include "HID-Settings.h"
 #include "TeensyKeylayouts.h"
 
-#define HID_REPORT_KEYBOARD_START \
-    0x05, 0x01,                      /* USAGE_PAGE (Generic Desktop)	  47 */ \
-    0x09, 0x06,                      /* USAGE (Keyboard) */ \
-    0xa1, 0x01                      /* COLLECTION (Application) */
-    
-#define HID_REPORT_KEYBOARD_REPORTID \
-    0x85, HID_REPORTID_KEYBOARD      /*   REPORT_ID TODO order important?*/
-    
-#define HID_REPORT_KEYBOARD_START2 \
-    0x05, 0x07                      /*   USAGE_PAGE (Keyboard) */ 
-
-#define HID_REPORT_KEYBOARD_MODIFIERS \
-      /* Keyboard Modifiers (shift, alt, ...) */ \
-    0x19, 0xe0,                      /*   USAGE_MINIMUM (Keyboard LeftControl) */ \
-    0x29, 0xe7,                      /*   USAGE_MAXIMUM (Keyboard Right GUI) */ \
-    0x15, 0x00,                      /*   LOGICAL_MINIMUM (0) */ \
-    0x25, 0x01,                      /*   LOGICAL_MAXIMUM (1) */ \
-    0x75, 0x01,                      /*   REPORT_SIZE (1) */ \
-	0x95, 0x08,                      /*   REPORT_COUNT (8) */ \
-    0x81, 0x02                      /*   INPUT (Data,Var,Abs) */
-
-#define HID_REPORT_KEYBOARD_RESERVED \
-      /* Reserved byte TODO consumer and or system?*/ \
-    0x95, 0x01,                      /*   REPORT_COUNT (1) */ \
-    0x75, 0x08,                      /*   REPORT_SIZE (8) */ \
-    0x81, 0x03                      /*   INPUT (Cnst,Var,Abs) */ \
-
-#define HID_REPORT_KEYBOARD_KEYS \
-      /* 6 Keyboard keys */ \
-    0x95, 0x06,                      /*   REPORT_COUNT (6) */ \
-    0x75, 0x08,                      /*   REPORT_SIZE (8) */ \
-    0x15, 0x00,                      /*   LOGICAL_MINIMUM (0) */ \
-    0x26, 0xE7, 0x00,                /*   LOGICAL_MAXIMUM (231) */ \
-    0x05, 0x07,                      /*   USAGE_PAGE (Keyboard) */ \
-    0x19, 0x00,                      /*   USAGE_MINIMUM (Reserved (no event indicated)) */ \
-    0x29, 0xE7,                      /*   USAGE_MAXIMUM (Keyboard Right GUI) */ \
-    0x81, 0x00                      /*   INPUT (Data,Ary,Abs) */
-
-#define HID_REPORT_KEYBOARD_LEDS \
-	/* 5 LEDs for num lock etc */ \
-	0x05, 0x08,						 /*   USAGE_PAGE (LEDs) */ \
-	0x19, 0x01,						 /*   USAGE_MINIMUM (Num Lock) */ \
-	0x29, 0x05,						 /*   USAGE_MAXIMUM (Kana) TODO */ \
-	0x95, 0x05,						 /*   REPORT_COUNT (5) */ \
-	0x75, 0x01,						 /*   REPORT_SIZE (1) */ \
-	0x91, 0x02,						 /*   OUTPUT (Data,Var,Abs) */ \
-	/*  Reserved 3 bits TODO */ \
-	0x95, 0x01,						 /*   REPORT_COUNT (1) */ \
-	0x75, 0x03,						 /*   REPORT_SIZE (3) */ \
-	0x91, 0x03						 /*   OUTPUT (Cnst,Var,Abs) */
-
-#define HID_REPORT_KEYBOARD_END \
-      /* End */ \
-    0xc0                            /* END_COLLECTION */
-
-#define HID_REPORT_KEYBOARD \
-HID_REPORT_KEYBOARD_START, \
-HID_REPORT_KEYBOARD_START2, \
-HID_REPORT_KEYBOARD_MODIFIERS, \
-HID_REPORT_KEYBOARD_RESERVED, \
-HID_REPORT_KEYBOARD_KEYS, \
-HID_REPORT_KEYBOARD_LEDS, \
-HID_REPORT_KEYBOARD_END
-
-#define HID_MULTIREPORT_KEYBOARD \
-HID_REPORT_KEYBOARD_START, \
-HID_REPORT_KEYBOARD_REPORTID, \
-HID_REPORT_KEYBOARD_START2, \
-HID_REPORT_KEYBOARD_MODIFIERS, \
-HID_REPORT_KEYBOARD_RESERVED, \
-HID_REPORT_KEYBOARD_KEYS, \
-HID_REPORT_KEYBOARD_END
-
-#define HID_REPORT_KEYBOARD_SIZE sizeof ((uint8_t[]) {HID_REPORT_KEYBOARD})
-#define HID_MULTIREPORT_KEYBOARD_SIZE sizeof ((uint8_t[]) {HID_MULTIREPORT_KEYBOARD})
-
-extern const uint8_t _hidReportDescriptorKeyboard[HID_REPORT_KEYBOARD_SIZE] PROGMEM;
-extern const uint8_t _hidMultiReportDescriptorKeyboard[HID_MULTIREPORT_KEYBOARD_SIZE] PROGMEM;
-
+// Keyboard Protocol 1, HID 1.11 spec, Appendix B, page 59-60
+static const uint8_t PROGMEM teensykeyboard_hid_report_desc[] = {
+        0x05, 0x01,             //  Usage Page (Generic Desktop),
+        0x09, 0x06,             //  Usage (Keyboard),
+        0xA1, 0x01,             //  Collection (Application),
+        0x85, HID_REPORTID_TEENSY_KEYBOARD,   //   REPORT_ID
+        0x75, 0x01,             //  Report Size (1),
+        0x95, 0x08,             //  Report Count (8),
+        0x05, 0x07,             //  Usage Page (Key Codes),
+        0x19, 0xE0,             //  Usage Minimum (224),
+        0x29, 0xE7,             //  Usage Maximum (231),
+        0x15, 0x00,             //  Logical Minimum (0),
+        0x25, 0x01,             //  Logical Maximum (1),
+        0x81, 0x02,             //  Input (Data, Variable, Absolute), ;Modifier byte
+        0x95, 0x08,             //  Report Count (8),
+        0x75, 0x01,             //  Report Size (1),
+        0x15, 0x00,		//  Logical Minimum (0),
+        0x25, 0x01,             //  Logical Maximum (1),
+        0x05, 0x0C,             //  Usage Page (Consumer),
+	0x09, 0xE9,		//  Usage (Volume Increment),
+	0x09, 0xEA,		//  Usage (Volume Decrement),
+	0x09, 0xE2,		//  Usage (Mute),
+	0x09, 0xCD,		//  Usage (Play/Pause),
+	0x09, 0xB5,		//  Usage (Scan Next Track),
+	0x09, 0xB6,		//  Usage (Scan Previous Track),
+	0x09, 0xB7,		//  Usage (Stop),
+	0x09, 0xB8,		//  Usage (Eject),
+// Note: Teensy ledreport was not modified to 8 bit, nor left out when leds are deactivated
+        0x81, 0x02,             //  Input (Data, Variable, Absolute), ;Media keys
+        0x95, 0x05,             //  Report Count (5),
+        0x75, 0x01,             //  Report Size (1),
+        0x05, 0x08,             //  Usage Page (LEDs),
+        0x19, 0x01,             //  Usage Minimum (1),
+        0x29, 0x05,             //  Usage Maximum (5),
+        0x91, 0x02,             //  Output (Data, Variable, Absolute), ;LED report
+        0x95, 0x01,             //  Report Count (1),
+        0x75, 0x03,             //  Report Size (3),
+        0x91, 0x03,             //  Output (Constant),                 ;LED report padding
+        0x95, 0x06,             //  Report Count (6),
+        0x75, 0x08,             //  Report Size (8),
+        0x15, 0x00,             //  Logical Minimum (0),
+        0x25, 0x7F,             //  Logical Maximum(104),
+        0x05, 0x07,             //  Usage Page (Key Codes),
+        0x19, 0x00,             //  Usage Minimum (0),
+        0x29, 0x7F,             //  Usage Maximum (104),
+        0x81, 0x00,             //  Input (Data, Array),		;Normal keys
+        0xc0			// End Collection
+};
 
 typedef union{
 	// Low level key report: up to 6 keys and shift, ctrl etc at once
@@ -160,3 +129,5 @@ private:
 	uint8_t keyboard_report_data[8];
 };
 
+// Implementation is inline
+#include "TeensyKeyboardAPI.hpp"

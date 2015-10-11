@@ -21,7 +21,8 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
 
-#include "TeensyKeyboardAPI.h"
+// Include guard
+#pragma once
 
 // Step #1, decode UTF8 to Unicode code points
 //
