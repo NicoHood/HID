@@ -8,6 +8,8 @@
   NKRO can push 113 keys at the same time,
   the other Keyboards only 6 keys + 8 modifiers!
 
+  You may also use SingleNKROKeyboard to enable a single report NKROKeyboard.
+
   See HID Project documentation for more information.
   https://github.com/NicoHood/HID/wiki/Keyboard-API
 */

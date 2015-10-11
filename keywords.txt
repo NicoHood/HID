@@ -72,6 +72,7 @@ Gamepad3	KEYWORD1
 Gamepad4	KEYWORD1
 TeensyKeyboard	KEYWORD1
 NKROKeyboard	KEYWORD1
+SingleNKROKeyboard	KEYWORD1
 AbsoluteMouse	KEYWORD1
 
 #######################################

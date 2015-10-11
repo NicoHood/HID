@@ -5,7 +5,7 @@
   Mouse example
   Press a button to click or move the mouse.
 
-  You may also use BootMouse to enable a bios compatible mouse.
+  You may also use BootMouse to enable a bios compatible (single report) mouse.
   However this is very unusual and not recommended.
   Bios mice dont support wheels which can cause problems after a reboot.
 

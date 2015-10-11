@@ -24,35 +24,34 @@ THE SOFTWARE.
 // Include guard
 #pragma once
 
-// Software version
-#define HID_PROJECT_VERSION 240
+#include <Arduino.h>
+#include "PluggableUSB.h"
+#include "HID.h"
+#include "HID-Settings.h"
+#include "../HID-APIs/NKROKeyboardAPI.h"
 
-#include <Arduino.h> //TODO
 
-#if ARDUINO < 10606
-#error HID Project requires Arduino IDE 1.6.6 or greater. Please update your IDE.
-#endif
+class SingleNKROKeyboard_ : public PUSBListNode, public NKROKeyboardAPI
+{
+public:
+    SingleNKROKeyboard_(void);
+    uint8_t getLeds(void);
+    uint8_t getProtocol(void);
 
-#if !defined(USBCON)
-#error HID Project can only be used with an USB MCU.
-#endif
+protected:
+    // Implementation of the PUSBListNode
+    int getInterface(uint8_t* interfaceCount);
+    int getDescriptor(USBSetup& setup);
+    bool setup(USBSetup& setup);
+    
+    uint8_t epType[1];
+    uint8_t protocol;
+    uint8_t idle;
+    
+    uint8_t leds;
+    
+    virtual void SendReport(void* data, int length) override;
+};
+extern SingleNKROKeyboard_ SingleNKROKeyboard;
 
-// Include all HID libraries (.a linkage required to work) properly
-#include "MultiReport/AbsoluteMouse.h"
-#include "SingleReport/BootMouse.h"
-#include "MultiReport/ImprovedMouse.h"
-#include "MultiReport/Consumer.h"
-#include "SingleReport/SingleGamepad.h"
-#include "MultiReport/Gamepad.h"
-#include "MultiReport/System.h"
-//#include "RawHID.h"
 
-// Include Teensy HID afterwards to overwrite key definitions if used
-#ifdef USE_TEENSY_KEYBOARD
-//#include "TeensyKeyboard.h"
-#else
-#include "SingleReport/BootKeyboard.h"
-#include "MultiReport/ImprovedKeyboard.h"
-#include "SingleReport/SingleNKROKeyboard.h"
-#include "MultiReport/NKROKeyboard.h"
-#endif
