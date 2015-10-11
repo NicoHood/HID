@@ -35,7 +35,7 @@ void GamepadAPI::begin(void){
 }
 
 void GamepadAPI::end(void){
-	memset(&_report, 0, sizeof(_report));
+	memset(&_report, 0x00, sizeof(_report));
 	SendReport(&_report, sizeof(_report));
 }
 
