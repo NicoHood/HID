@@ -42,6 +42,7 @@ THE SOFTWARE.
 #include "SingleReport/BootMouse.h"
 #include "MultiReport/ImprovedMouse.h"
 #include "MultiReport/Consumer.h"
+#include "SingleReport/SingleGamepad.h"
 #include "MultiReport/Gamepad.h"
 #include "MultiReport/System.h"
 //#include "RawHID.h"

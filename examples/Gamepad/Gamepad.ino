@@ -5,6 +5,9 @@
   Gamepad example
   Press a button and demonstrate Gamepad actions
 
+  You can also use Gamepad1,2,3 and 4 as single report.
+  This will use 1 endpoint for each gamepad.
+
   See HID Project documentation for more infos
   https://github.com/NicoHood/HID/wiki/Gamepad-API
 */
