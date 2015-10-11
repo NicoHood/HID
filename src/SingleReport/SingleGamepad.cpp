@@ -21,7 +21,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
 
-#include "Gamepad.h"
+#include "SingleGamepad.h"
 
 static const uint8_t _hidReportDescriptorGamepad[] PROGMEM = {
 	/* Gamepad with 32 buttons and 6 axis*/
