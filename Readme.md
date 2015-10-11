@@ -8,8 +8,8 @@ with a lot of new functions like extended HID. It also supports HoodLoader1+2.
 The idea is to enable enhanced USB functions to almost all 'standard' Arduino boards.
 
 **Supported Arduinos (IDE 1.6.6 or higher!):**
-* Uno (with HoodLoader2)
-* Mega (with HoodLoader2)
+* Uno (with [HoodLoader2](https://github.com/NicoHood/HoodLoader2))
+* Mega (with [HoodLoader2](https://github.com/NicoHood/HoodLoader2))
 * Leonardo
 * (Pro)Micro
 * Any other 8u2/16u2/at90usb8/162/32u2/32u4 compatible board
