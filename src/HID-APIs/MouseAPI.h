@@ -80,7 +80,7 @@ public:
   
 protected:
   uint8_t _buttons;
-  void buttons(uint8_t b);
+  inline void buttons(uint8_t b);
 };
 
 // Implementation is inline
