@@ -21,36 +21,37 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
 
-// Include guard
-#pragma once
+#include "Consumer.h"
 
-// Software version
-#define HID_PROJECT_VERSION 240
 
-#include <Arduino.h> //TODO
+static const uint8_t _hidMultiReportDescriptorConsumer[] PROGMEM = {
+	/* Consumer Control (Sound/Media keys) */
+	0x05, 0x0C,									/* usage page (consumer device) */
+	0x09, 0x01, 								/* usage -- consumer control */
+	0xA1, 0x01, 								/* collection (application) */
+	0x85, HID_REPORTID_CONSUMERCONTROL, 		/* report id */
+	/* 4 Media Keys */
+	0x15, 0x00, 								/* logical minimum */
+	0x26, 0xFF, 0x03, 							/* logical maximum (3ff) */
+	0x19, 0x00, 								/* usage minimum (0) */
+	0x2A, 0xFF, 0x03, 							/* usage maximum (3ff) */
+	0x95, 0x04, 								/* report count (4) */
+	0x75, 0x10, 								/* report size (16) */
+	0x81, 0x00, 								/* input */
+	0xC0 /* end collection */
+};
 
-#if ARDUINO < 10606
-#error HID Project requires Arduino IDE 1.6.6 or greater. Please update your IDE.
-#endif
+Consumer_::Consumer_(void) 
+{
+	static HIDDescriptorListNode node(_hidMultiReportDescriptorConsumer, sizeof(_hidMultiReportDescriptorConsumer));
+	HID().AppendDescriptor(&node);
+}
 
-#if !defined(USBCON)
-#error HID Project can only be used with an USB MCU.
-#endif
 
-// Include all HID libraries (.a linkage required to work) properly
-#include "MultiReport/AbsoluteMouse.h"
-#include "SingleReport/BootMouse.h"
-#include "MultiReport/ImprovedMouse.h"
-#include "MultiReport/Consumer.h"
-//#include "Gamepad.h"
-#include "MultiReport/System.h"
-//#include "RawHID.h"
+void Consumer_::SendReport(void* data, int length)
+{
+	HID().SendReport(HID_REPORTID_CONSUMERCONTROL, data, length);
+}
 
-// Include Teensy HID afterwards to overwrite key definitions if used
-#ifdef USE_TEENSY_KEYBOARD
-//#include "TeensyKeyboard.h"
-#else
-#include "SingleReport/BootKeyboard.h"
-#include "MultiReport/ImprovedKeyboard.h"
-//#include "NKROKeyboard.h"
-#endif
+Consumer_ Consumer;
+

@@ -27,56 +27,68 @@ THE SOFTWARE.
 #include <Arduino.h>
 #include "HID-Settings.h"
 
-#define MOUSE_LEFT		(1 << 0)
-#define MOUSE_RIGHT		(1 << 1)
-#define MOUSE_MIDDLE	(1 << 2)
-#define MOUSE_PREV		(1 << 3)
-#define MOUSE_NEXT		(1 << 4)
-// actually this mouse report has 8 buttons (for smaller descriptor)
-// but the last 3 wont do anything from what I tested
-#define MOUSE_ALL (MOUSE_LEFT | MOUSE_RIGHT | MOUSE_MIDDLE | MOUSE_PREV | MOUSE_NEXT)
+// Media key definitions, see official USB docs for more
+#define MEDIA_FAST_FORWARD	0xB3
+#define MEDIA_REWIND	0xB4
+#define MEDIA_NEXT	0xB5
+#define MEDIA_PREVIOUS	0xB6
+#define MEDIA_PREV	MEDIA_PREVIOUS
+#define MEDIA_STOP	0xB7
+#define MEDIA_PLAY_PAUSE	0xCD
+
+#define MEDIA_VOLUME_MUTE	0xE2
+#define MEDIA_VOLUME_UP	0xE9
+#define MEDIA_VOLUME_DOWN	0xEA
+#define MEDIA_VOL_MUTE MEDIA_VOLUME_MUTE
+#define MEDIA_VOL_UP MEDIA_VOLUME_UP
+#define MEDIA_VOL_DOWN MEDIA_VOLUME_DOWN
+
+#define CONSUMER_SCREENSAVER 0x19e
+
+#define CONSUMER_PROGRAMMABLE_BUTTON_CONFIGURATION 0x182
+#define CONSUMER_CONTROL_CONFIGURATION 0x183
+#define CONSUMER_EMAIL_READER	0x18A
+#define CONSUMER_CALCULATOR	0x192
+#define CONSUMER_EXPLORER	0x194
+
+#define CONSUMER_BROWSER_HOME	0x223
+#define CONSUMER_BROWSER_BACK	0x224
+#define CONSUMER_BROWSER_FORWARD	0x225
+#define CONSUMER_BROWSER_REFRESH	0x227
+#define CONSUMER_BROWSER_BOOKMARKS	0x22A
 
 
-typedef union{
-	// Absolute mouse report: 8 buttons, 2 absolute axis, wheel
+typedef union {
+	// Every usable Consumer key possible, up to 4 keys presses possible
 	uint8_t whole8[];
 	uint16_t whole16[];
 	uint32_t whole32[];
-	struct{
-		uint8_t buttons;
-		int16_t xAxis;
-		int16_t yAxis;
-		int8_t wheel;
+	struct {
+		uint16_t key1;
+		uint16_t key2;
+		uint16_t key3;
+		uint16_t key4;
 	};
-} HID_MouseAbsoluteReport_Data_t;
+} HID_ConsumerControlReport_Data_t;
 
-
-class AbsoluteMouseAPI
+class ConsumerAPI
 {
-protected:
-	int16_t xAxis;
-	int16_t yAxis;
-	uint8_t _buttons;
-	inline void buttons(uint8_t b);
-
-	inline int16_t qadd16(int16_t base, int16_t increment);
-
 public:
-	inline AbsoluteMouseAPI(void);
+	inline ConsumerAPI(void);
 	inline void begin(void);
 	inline void end(void);
-
-	inline void click(uint8_t b = MOUSE_LEFT);
-	inline void moveTo(int x, int y, signed char wheel = 0);
-	inline void move(int x, int y, signed char wheel = 0);
-	inline void press(uint8_t b = MOUSE_LEFT);
-	inline void release(uint8_t b = MOUSE_LEFT);
-	inline bool isPressed(uint8_t b = MOUSE_LEFT);
+	inline void write(uint16_t m);
+	inline void press(uint16_t m);
+	inline void release(uint16_t m);
+	inline void releaseAll(void);
 	
 	// Sending is public in the base class for advanced users.
 	virtual void SendReport(void* data, int length) = 0;
+
+protected:
+	HID_ConsumerControlReport_Data_t _report;
 };
 
 // Implementation is inline
-#include "AbsoluteMouseAPI.hpp"
+#include "ConsumerAPI.hpp"
 

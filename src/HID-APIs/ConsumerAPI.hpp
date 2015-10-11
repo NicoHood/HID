@@ -24,33 +24,48 @@ THE SOFTWARE.
 // Include guard
 #pragma once
 
-// Software version
-#define HID_PROJECT_VERSION 240
+ConsumerAPI::ConsumerAPI(void)
+{
+	// Empty
+}
 
-#include <Arduino.h> //TODO
+void ConsumerAPI::begin(void) {
+	// release all buttons
+	end();
+}
 
-#if ARDUINO < 10606
-#error HID Project requires Arduino IDE 1.6.6 or greater. Please update your IDE.
-#endif
+void ConsumerAPI::end(void) {
+	memset(&_report, 0, sizeof(_report));
+	SendReport(&_report, sizeof(_report));
+}
 
-#if !defined(USBCON)
-#error HID Project can only be used with an USB MCU.
-#endif
+void ConsumerAPI::write(uint16_t m) {
+	press(m);
+	release(m);
+}
 
-// Include all HID libraries (.a linkage required to work) properly
-#include "MultiReport/AbsoluteMouse.h"
-#include "SingleReport/BootMouse.h"
-#include "MultiReport/ImprovedMouse.h"
-#include "MultiReport/Consumer.h"
-//#include "Gamepad.h"
-#include "MultiReport/System.h"
-//#include "RawHID.h"
+void ConsumerAPI::press(uint16_t m) {
+	// search for a free spot
+	for (uint8_t i = 0; i < sizeof(HID_ConsumerControlReport_Data_t) / 2; i++) {
+		if (_report.whole16[i] == 0x00) {
+			_report.whole16[i] = m;
+			break;
+		}
+	}
+	SendReport(&_report, sizeof(_report));
+}
 
-// Include Teensy HID afterwards to overwrite key definitions if used
-#ifdef USE_TEENSY_KEYBOARD
-//#include "TeensyKeyboard.h"
-#else
-#include "SingleReport/BootKeyboard.h"
-#include "MultiReport/ImprovedKeyboard.h"
-//#include "NKROKeyboard.h"
-#endif
+void ConsumerAPI::release(uint16_t m) {
+	// search and release the keypress
+	for (uint8_t i = 0; i < sizeof(HID_ConsumerControlReport_Data_t) / 2; i++) {
+		if (_report.whole16[i] == m) {
+			_report.whole16[i] = 0x00;
+			// no break to delete multiple keys
+		}
+	}
+	SendReport(&_report, sizeof(_report));
+}
+
+void ConsumerAPI::releaseAll(void) {
+	end();
+}
