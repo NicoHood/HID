@@ -24,33 +24,81 @@ THE SOFTWARE.
 // Include guard
 #pragma once
 
-// Software version
-#define HID_PROJECT_VERSION 240
+GamepadAPI::GamepadAPI(void)
+{
+	// Empty
+}
 
-#include <Arduino.h> //TODO
+void GamepadAPI::begin(void){
+	// release all buttons
+	end();
+}
 
-#if ARDUINO < 10606
-#error HID Project requires Arduino IDE 1.6.6 or greater. Please update your IDE.
-#endif
+void GamepadAPI::end(void){
+	memset(&_report, 0, sizeof(_report));
+	SendReport(&_report, sizeof(_report));
+}
 
-#if !defined(USBCON)
-#error HID Project can only be used with an USB MCU.
-#endif
+void GamepadAPI::write(void){ 
+	SendReport(&_report, sizeof(_report)); 
+}
 
-// Include all HID libraries (.a linkage required to work) properly
-#include "MultiReport/AbsoluteMouse.h"
-#include "SingleReport/BootMouse.h"
-#include "MultiReport/ImprovedMouse.h"
-#include "MultiReport/Consumer.h"
-#include "MultiReport/Gamepad.h"
-#include "MultiReport/System.h"
-//#include "RawHID.h"
 
-// Include Teensy HID afterwards to overwrite key definitions if used
-#ifdef USE_TEENSY_KEYBOARD
-//#include "TeensyKeyboard.h"
-#else
-#include "SingleReport/BootKeyboard.h"
-#include "MultiReport/ImprovedKeyboard.h"
-//#include "NKROKeyboard.h"
-#endif
+void GamepadAPI::press(uint8_t b){ 
+	_report.buttons |= (uint32_t)1 << (b - 1); 
+}
+
+
+void GamepadAPI::release(uint8_t b){ 
+	_report.buttons &= ~((uint32_t)1 << (b - 1)); 
+}
+
+
+void GamepadAPI::releaseAll(void){ 
+	memset(&_report, 0x00, sizeof(_report)); 
+}
+
+void GamepadAPI::buttons(uint32_t b){ 
+	_report.buttons = b; 
+}
+
+
+void GamepadAPI::xAxis(int16_t a){ 
+	_report.xAxis = a; 
+}
+
+
+void GamepadAPI::yAxis(int16_t a){ 
+	_report.yAxis = a; 
+}
+
+
+void GamepadAPI::zAxis(int8_t a){ 
+	_report.zAxis = a; 
+}
+
+
+void GamepadAPI::rxAxis(int16_t a){ 
+	_report.rxAxis = a; 
+}
+
+
+void GamepadAPI::ryAxis(int16_t a){ 
+	_report.ryAxis = a; 
+}
+
+
+void GamepadAPI::rzAxis(int8_t a){ 
+	_report.rzAxis = a; 
+}
+
+
+void GamepadAPI::dPad1(int8_t d){ 
+	_report.dPad1 = d; 
+}
+
+
+void GamepadAPI::dPad2(int8_t d){ 
+	_report.dPad2 = d; 
+}
+
