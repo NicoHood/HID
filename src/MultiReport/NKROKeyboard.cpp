@@ -41,7 +41,6 @@ static const uint8_t _hidMultiReportDescriptorNKROKeyboard[] PROGMEM = {
     0x81, 0x02,                      /*   INPUT (Data,Var,Abs) */
 
 	/* 104 Keys as bitmap */
-	0x05, 0x07,						/*   Usage Page (Key Codes) TODO needed?*/
 	0x19, 0x00,						/*   Usage Minimum (0) */
 	0x29, NKRO_KEY_COUNT - 1,		/*   Usage Maximum (103) */
 	0x15, 0x00,						/*   Logical Minimum (0) */
@@ -55,7 +54,6 @@ static const uint8_t _hidMultiReportDescriptorNKROKeyboard[] PROGMEM = {
     0x75, 0x08,                      /*   REPORT_SIZE (8) */
     0x15, 0x00,                      /*   LOGICAL_MINIMUM (0) */
     0x26, 0xE7, 0x00,                /*   LOGICAL_MAXIMUM (231) */
-    /*0x05, 0x07,                         USAGE_PAGE (Keyboard) TODO */
     0x19, 0x00,                      /*   USAGE_MINIMUM (Reserved (no event indicated)) */
     0x29, 0xE7,                      /*   USAGE_MAXIMUM (Keyboard Right GUI) */
     0x81, 0x00,                      /*   INPUT (Data,Ary,Abs) */

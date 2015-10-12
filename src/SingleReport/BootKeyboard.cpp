@@ -47,14 +47,10 @@ static const uint8_t _hidReportDescriptorKeyboard[] PROGMEM = {
 	/* 5 LEDs for num lock etc, 3 left for advanced, custom usage */
 	0x05, 0x08,						 /*   USAGE_PAGE (LEDs) */
 	0x19, 0x01,						 /*   USAGE_MINIMUM (Num Lock) */
-	0x29, 0x05,						 /*   USAGE_MAXIMUM (Kana) TODO*/
+	0x29, 0x08,						 /*   USAGE_MAXIMUM (Kana + 3 custom)*/
 	0x95, 0x08,						 /*   REPORT_COUNT (8) */
 	0x75, 0x01,						 /*   REPORT_SIZE (1) */
 	0x91, 0x02,						 /*   OUTPUT (Data,Var,Abs) */
-	/*  Reserved 3 bits TODO */
-	//0x95, 0x01,						 /*   REPORT_COUNT (1) */
-	//0x75, 0x03,						 /*   REPORT_SIZE (3) */
-	//0x91, 0x03,						 /*   OUTPUT (Cnst,Var,Abs) */
 
     /* 6 Keyboard keys */
     0x95, 0x06,                      /*   REPORT_COUNT (6) */

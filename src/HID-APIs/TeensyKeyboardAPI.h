@@ -55,8 +55,9 @@ static const uint8_t PROGMEM teensykeyboard_hid_report_desc[] = {
 	0x09, 0xB6,		//  Usage (Scan Previous Track),
 	0x09, 0xB7,		//  Usage (Stop),
 	0x09, 0xB8,		//  Usage (Eject),
-// Note: Teensy ledreport was not modified to 8 bit, nor left out when leds are deactivated
         0x81, 0x02,             //  Input (Data, Variable, Absolute), ;Media keys
+        
+        // Note: Teensy ledreport was not modified to 8 bit, nor left out when leds are deactivated
         0x95, 0x05,             //  Report Count (5),
         0x75, 0x01,             //  Report Size (1),
         0x05, 0x08,             //  Usage Page (LEDs),

@@ -42,17 +42,13 @@ static const uint8_t _hidReportDescriptorNKRO[] PROGMEM = {
 	/* 5 LEDs for num lock etc, 3 left for advanced, custom usage */
 	0x05, 0x08,						 /*   USAGE_PAGE (LEDs) */
 	0x19, 0x01,						 /*   USAGE_MINIMUM (Num Lock) */
-	0x29, 0x05,						 /*   USAGE_MAXIMUM (Kana) */
+	0x29, 0x08,						 /*   USAGE_MAXIMUM (Kana + 3 custom)*/
 	0x95, 0x08,						 /*   REPORT_COUNT (8) */
 	0x75, 0x01,						 /*   REPORT_SIZE (1) */
 	0x91, 0x02,						 /*   OUTPUT (Data,Var,Abs) */
-	/*  Reserved 3 bits */
-	//0x95, 0x01,						 /*   REPORT_COUNT (1) */
-	//0x75, 0x03,						 /*   REPORT_SIZE (3) */
-	//0x91, 0x03,						 /*   OUTPUT (Cnst,Var,Abs) */
 
 	/* 104 Keys as bitmap */
-	0x05, 0x07,						/*   Usage Page (Key Codes) */
+    0x05, 0x07,                     /*   USAGE_PAGE (Keyboard) */
 	0x19, 0x00,						/*   Usage Minimum (0) */
 	0x29, NKRO_KEY_COUNT - 1,		/*   Usage Maximum (103) */
 	0x15, 0x00,						/*   Logical Minimum (0) */
@@ -66,7 +62,6 @@ static const uint8_t _hidReportDescriptorNKRO[] PROGMEM = {
     0x75, 0x08,                      /*   REPORT_SIZE (8) */
     0x15, 0x00,                      /*   LOGICAL_MINIMUM (0) */
     0x26, 0xE7, 0x00,                /*   LOGICAL_MAXIMUM (231) */
-    /*0x05, 0x07,                         USAGE_PAGE (Keyboard) */
     0x19, 0x00,                      /*   USAGE_MINIMUM (Reserved (no event indicated)) */
     0x29, 0xE7,                      /*   USAGE_MAXIMUM (Keyboard Right GUI) */
     0x81, 0x00,                      /*   INPUT (Data,Ary,Abs) */

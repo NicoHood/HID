@@ -50,7 +50,6 @@ static const uint8_t _hidMultiReportDescriptorKeyboard[] PROGMEM = {
     0x75, 0x08,                      /*   REPORT_SIZE (8) */
     0x15, 0x00,                      /*   LOGICAL_MINIMUM (0) */
     0x26, 0xE7, 0x00,                /*   LOGICAL_MAXIMUM (231) */
-    0x05, 0x07,                      /*   USAGE_PAGE (Keyboard) */
     0x19, 0x00,                      /*   USAGE_MINIMUM (Reserved (no event indicated)) */
     0x29, 0xE7,                      /*   USAGE_MAXIMUM (Keyboard Right GUI) */
     0x81, 0x00,                      /*   INPUT (Data,Ary,Abs) */
