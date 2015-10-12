@@ -31,7 +31,7 @@ THE SOFTWARE.
 #include "../HID-APIs/GamepadAPI.h"
 
 
-class SingleGamepad_ : public PUSBListNode, public GamepadAPI
+class SingleGamepad_ : public PluggableUSBModule, public GamepadAPI
 {
 public:
     SingleGamepad_(void);

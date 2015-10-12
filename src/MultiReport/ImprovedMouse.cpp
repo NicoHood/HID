@@ -59,7 +59,7 @@ static const uint8_t _hidMultiReportDescriptorMouse[] PROGMEM = {
 
 Mouse_::Mouse_(void) 
 {
-	static HIDDescriptorListNode node(_hidMultiReportDescriptorMouse, sizeof(_hidMultiReportDescriptorMouse));
+	static HIDSubDescriptor node(_hidMultiReportDescriptorMouse, sizeof(_hidMultiReportDescriptorMouse));
 	HID().AppendDescriptor(&node);
 }
 

@@ -75,7 +75,7 @@ static const uint8_t _hidReportDescriptorNKRO[] PROGMEM = {
 	0xC0						     /*   End Collection */
 };
 
-SingleNKROKeyboard_::SingleNKROKeyboard_(void) : PUSBListNode(1, 1, epType), protocol(1), idle(1), leds(0)
+SingleNKROKeyboard_::SingleNKROKeyboard_(void) : PluggableUSBModule(1, 1, epType), protocol(1), idle(1), leds(0)
 {
 	epType[0] = EP_TYPE_INTERRUPT_IN;
 	PluggableUSB().plug(this);

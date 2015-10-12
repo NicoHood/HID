@@ -61,7 +61,7 @@ static const uint8_t _hidMultiReportDescriptorKeyboard[] PROGMEM = {
 
 Keyboard_::Keyboard_(void) 
 {
-	static HIDDescriptorListNode node(_hidMultiReportDescriptorKeyboard, sizeof(_hidMultiReportDescriptorKeyboard));
+	static HIDSubDescriptor node(_hidMultiReportDescriptorKeyboard, sizeof(_hidMultiReportDescriptorKeyboard));
 	HID().AppendDescriptor(&node);
 }
 

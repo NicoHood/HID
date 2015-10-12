@@ -31,7 +31,7 @@ THE SOFTWARE.
 #include "../HID-APIs/KeyboardAPI.h"
 
 
-class BootKeyboard_ : public PUSBListNode, public KeyboardAPI
+class BootKeyboard_ : public PluggableUSBModule, public KeyboardAPI
 {
 public:
     BootKeyboard_(void);

@@ -44,7 +44,7 @@ static const uint8_t _hidMultiReportDescriptorSystem[] PROGMEM = {
 
 System_::System_(void) 
 {
-	static HIDDescriptorListNode node(_hidMultiReportDescriptorSystem, sizeof(_hidMultiReportDescriptorSystem));
+	static HIDSubDescriptor node(_hidMultiReportDescriptorSystem, sizeof(_hidMultiReportDescriptorSystem));
 	HID().AppendDescriptor(&node);
 }
 

@@ -43,7 +43,7 @@ static const uint8_t _hidMultiReportDescriptorConsumer[] PROGMEM = {
 
 Consumer_::Consumer_(void) 
 {
-	static HIDDescriptorListNode node(_hidMultiReportDescriptorConsumer, sizeof(_hidMultiReportDescriptorConsumer));
+	static HIDSubDescriptor node(_hidMultiReportDescriptorConsumer, sizeof(_hidMultiReportDescriptorConsumer));
 	HID().AppendDescriptor(&node);
 }
 

@@ -65,7 +65,7 @@ static const uint8_t _hidMultiReportDescriptorAbsoluteMouse[] PROGMEM = {
 
 AbsoluteMouse_::AbsoluteMouse_(void) 
 {
-	static HIDDescriptorListNode node(_hidMultiReportDescriptorAbsoluteMouse, sizeof(_hidMultiReportDescriptorAbsoluteMouse));
+	static HIDSubDescriptor node(_hidMultiReportDescriptorAbsoluteMouse, sizeof(_hidMultiReportDescriptorAbsoluteMouse));
 	HID().AppendDescriptor(&node);
 }
 

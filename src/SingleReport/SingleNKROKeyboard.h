@@ -31,7 +31,7 @@ THE SOFTWARE.
 #include "../HID-APIs/NKROKeyboardAPI.h"
 
 
-class SingleNKROKeyboard_ : public PUSBListNode, public NKROKeyboardAPI
+class SingleNKROKeyboard_ : public PluggableUSBModule, public NKROKeyboardAPI
 {
 public:
     SingleNKROKeyboard_(void);

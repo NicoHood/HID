@@ -74,7 +74,7 @@ static const uint8_t _hidMultiReportDescriptorGamepad[] PROGMEM = {
 
 Gamepad_::Gamepad_(void) 
 {
-	static HIDDescriptorListNode node(_hidMultiReportDescriptorGamepad, sizeof(_hidMultiReportDescriptorGamepad));
+	static HIDSubDescriptor node(_hidMultiReportDescriptorGamepad, sizeof(_hidMultiReportDescriptorGamepad));
 	HID().AppendDescriptor(&node);
 }
 

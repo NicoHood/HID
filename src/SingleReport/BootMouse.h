@@ -31,7 +31,7 @@ THE SOFTWARE.
 #include "../HID-APIs/MouseAPI.h"
 
 
-class BootMouse_ : public PUSBListNode, public MouseAPI
+class BootMouse_ : public PluggableUSBModule, public MouseAPI
 {
 public:
     BootMouse_(void);

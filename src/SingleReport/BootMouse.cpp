@@ -54,7 +54,7 @@ static const uint8_t _hidReportDescriptorMouse[] PROGMEM = {
     0xc0                            /* END_COLLECTION */
 };
 
-BootMouse_::BootMouse_(void) : PUSBListNode(1, 1, epType), protocol(1), idle(1)
+BootMouse_::BootMouse_(void) : PluggableUSBModule(1, 1, epType), protocol(1), idle(1)
 {
 	epType[0] = EP_TYPE_INTERRUPT_IN;
 	PluggableUSB().plug(this);

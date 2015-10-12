@@ -66,7 +66,7 @@ typedef union{
 	uint8_t buff[RAWHID_RX_SIZE];
 } HID_RawKeyboardRXReport_Data_t;
 
-class RawHID_ : public PUSBListNode, public Stream
+class RawHID_ : public PluggableUSBModule, public Stream
 {
 public:
 	RawHID_(void);

@@ -47,7 +47,7 @@ static const uint8_t  _hidReportDescriptorRawHID[] PROGMEM = {
     0xC0                         /* end collection */ 
 };
 
-RawHID_::RawHID_(void) : PUSBListNode(1, 1, epType), protocol(1), idle(1), dataLength(0)
+RawHID_::RawHID_(void) : PluggableUSBModule(1, 1, epType), protocol(1), idle(1), dataLength(0)
 {
 	epType[0] = EP_TYPE_INTERRUPT_IN;
 	PluggableUSB().plug(this);

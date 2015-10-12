@@ -66,7 +66,7 @@ static const uint8_t _hidMultiReportDescriptorNKROKeyboard[] PROGMEM = {
 
 NKROKeyboard_::NKROKeyboard_(void) 
 {
-	static HIDDescriptorListNode node(_hidMultiReportDescriptorNKROKeyboard, sizeof(_hidMultiReportDescriptorNKROKeyboard));
+	static HIDSubDescriptor node(_hidMultiReportDescriptorNKROKeyboard, sizeof(_hidMultiReportDescriptorNKROKeyboard));
 	HID().AppendDescriptor(&node);
 }
 

@@ -70,7 +70,7 @@ static const uint8_t _hidReportDescriptorKeyboard[] PROGMEM = {
     0xc0                            /* END_COLLECTION */
 };
 
-BootKeyboard_::BootKeyboard_(void) : PUSBListNode(1, 1, epType), protocol(1), idle(1), leds(0)
+BootKeyboard_::BootKeyboard_(void) : PluggableUSBModule(1, 1, epType), protocol(1), idle(1), leds(0)
 {
 	epType[0] = EP_TYPE_INTERRUPT_IN;
 	PluggableUSB().plug(this);

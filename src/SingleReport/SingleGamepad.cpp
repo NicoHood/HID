@@ -70,7 +70,7 @@ static const uint8_t _hidReportDescriptorGamepad[] PROGMEM = {
 	0xc0								/* END_COLLECTION */
 };
 
-SingleGamepad_::SingleGamepad_(void) : PUSBListNode(1, 1, epType), protocol(1), idle(1)
+SingleGamepad_::SingleGamepad_(void) : PluggableUSBModule(1, 1, epType), protocol(1), idle(1)
 {
 	epType[0] = EP_TYPE_INTERRUPT_IN;
 	PluggableUSB().plug(this);
