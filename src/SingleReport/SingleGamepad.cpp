@@ -70,7 +70,7 @@ static const uint8_t _hidReportDescriptorGamepad[] PROGMEM = {
 	0xc0								/* END_COLLECTION */
 };
 
-SingleGamepad_::SingleGamepad_(void) : PluggableUSBModule(1, 1, epType), protocol(1), idle(1)
+SingleGamepad_::SingleGamepad_(void) : PluggableUSBModule(1, 1, epType), protocol(HID_REPORT_PROTOCOL), idle(1)
 {
 	epType[0] = EP_TYPE_INTERRUPT_IN;
 	PluggableUSB().plug(this);
@@ -95,6 +95,10 @@ int SingleGamepad_::getDescriptor(USBSetup& setup)
 
 	// In a HID Class Descriptor wIndex cointains the interface number
 	if (setup.wIndex != pluggedInterface) { return 0; }
+
+	// Reset the protocol on reenumeration. Normally the host should not assume the state of the protocol
+	// due to the USB specs, but Windows and Linux just assumes its in report mode.
+	protocol = HID_REPORT_PROTOCOL;
 
 	return USB_SendControl(TRANSFER_PGM, _hidReportDescriptorGamepad, sizeof(_hidReportDescriptorGamepad));
 }
