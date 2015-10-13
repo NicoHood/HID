@@ -18,13 +18,14 @@ static char get_keystroke(void);
 int main()
 {
 	int i, r, num;
-	char c, buf[64];
+	char c, buf[200];
 
 	// C-based example is 16C0:0480:FFAB:0200
 	r = rawhid_open(1, 0x16C0, 0x0480, 0xFFAB, 0x0200);
 	if (r <= 0) {
-		// Arduino-based example is 16C0:0486:FFAB:0200
-		r = rawhid_open(1, 0x16C0, 0x0486, 0xFFAB, 0x0200);
+		// Arduino-based example is 0x2341:XXXX:FFC0:0C00
+		// To keep compatible with other vendors we only use the raw HID number
+		r = rawhid_open(1, -1, -1, 0xFFC0, 0x0C00);
 		if (r <= 0) {
 			printf("no rawhid device found\n");
 			return -1;
@@ -52,10 +53,10 @@ int main()
 		while ((c = get_keystroke()) >= 32) {
 			printf("\ngot key '%c', sending...\n", c);
 			buf[0] = c;
-			for (i=1; i<64; i++) {
-				buf[i] = 0;
+			for (i=1; i<sizeof(buf); i++) {
+				buf[i] = i;
 			}
-			rawhid_send(0, buf, 64, 100);
+			rawhid_send(0, buf, sizeof(buf), 100);
 		}
 	}
 }

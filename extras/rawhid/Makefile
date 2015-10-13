@@ -7,7 +7,7 @@ PROG = rawhid_test
 
 # To set up Ubuntu Linux to cross compile for Windows:
 #
-#    apt-get install mingw32 mingw32-binutils mingw32-runtime
+#    apt-get install mingw32 mingw32-binutils mingw32-runtime libusb-dev
 #
 # Just edit the variable above for WINDOWS, then use "make" to build rawhid.exe
 
