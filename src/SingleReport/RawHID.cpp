@@ -56,7 +56,7 @@ RawHID_::RawHID_(void) : PluggableUSBModule(1, 1, epType), protocol(HID_REPORT_P
 int RawHID_::getInterface(uint8_t* interfaceCount)
 {
 	// TODO add a 2nd OUT endpoint to get more speed???
-	// Maybe as optional device
+	// Maybe as optional device FastRawHID with different USAGE PAGE
 	*interfaceCount += 1; // uses 1
 	HIDDescriptor hidInterface = {
 		D_INTERFACE(pluggedInterface, 1, USB_DEVICE_CLASS_HUMAN_INTERFACE, HID_SUBCLASS_NONE, HID_PROTOCOL_NONE),
@@ -115,7 +115,38 @@ bool RawHID_::setup(USBSetup& setup)
 		}
 		if (request == HID_SET_REPORT)
 		{
-			// TODO
+			// Get the data length information and the corresponding bytes
+			int length = setup.wLength;
+
+			// Ensure that there IS some data
+			if(length > 0)
+			{
+				void* data = malloc(length);
+				if(data){
+					auto recvLength = length;
+					//TODO loop can be improved maybe? Or does the compiler do this already?
+					while(recvLength > USB_EP_SIZE){
+						USB_RecvControl((uint8_t*)data + (length - recvLength), USB_EP_SIZE);
+						recvLength -= USB_EP_SIZE;
+					}
+					USB_RecvControl((uint8_t*)data + (length - recvLength), recvLength);
+
+					// Only overwrite the buffer if its empty.
+					// This avoids corrupted data while reading.
+					if(!dataLength){
+						// Save new data
+						dataLength = length;
+						dataHead = (uint8_t*) data;
+						dataTail = (uint8_t*)(data) + length;
+						
+						// Clear the passed in pointer to not free the data
+						data = NULL;
+					}
+				}
+
+				// Release data if the pointer still exists
+				free(data);
+			}
 		}
 	}
 

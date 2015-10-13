@@ -120,8 +120,7 @@ public:
 	}
 
 	virtual size_t write(uint8_t *buffer, size_t size){
-		// TODO this only sends the report ID in the first packat
-		// TODO this will split the data into USB_EP_SIZE packets
+		// TODO this will split the data into proper USB_EP_SIZE packets already
 		SendReport(buffer, size);
 		return size;
 	
@@ -152,21 +151,6 @@ protected:
     uint8_t protocol;
     uint8_t idle;
     
-    
-	virtual void setReportData(void* &data, int len){
-		// Only overwrite the buffer if its empty.
-		// This avoids corrupted data while reading.
-		if(!dataLength){
-			// Save new data
-			dataLength = len;
-			dataHead = (uint8_t*) data;
-			dataTail = (uint8_t*)(data) + len;
-						
-			// Clear the passed in pointer to not free the data
-			data = NULL;
-		}
-	}
-	
 	// Buffer pointers to hold the received data
 	int dataLength;
 	uint8_t* dataHead;

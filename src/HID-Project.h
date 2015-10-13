@@ -45,7 +45,7 @@ THE SOFTWARE.
 #include "SingleReport/SingleGamepad.h"
 #include "MultiReport/Gamepad.h"
 #include "MultiReport/System.h"
-//#include "RawHID.h"
+#include "SingleReport/RawHID.h"
 
 // Include Teensy HID afterwards to overwrite key definitions if used
 #ifdef USE_TEENSY_KEYBOARD
