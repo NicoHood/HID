@@ -48,6 +48,7 @@ THE SOFTWARE.
 #include "SingleReport/RawHID.h"
 
 // Include Teensy HID afterwards to overwrite key definitions if used
+// TODO include Teensy API if non english keyboard layout was used
 #ifdef USE_TEENSY_KEYBOARD
 //#include "TeensyKeyboard.h"
 #else

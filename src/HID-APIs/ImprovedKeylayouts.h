@@ -24,325 +24,265 @@ THE SOFTWARE.
 // Include guard
 #pragma once
 
-//================================================================================
-// Key definitions
-//================================================================================
+#if !defined(LAYOUT_US_ENGLISH)
+#error This API does not support non US english layouts.
+#endif
 
-// Modifiers
-#define KEY_LEFT_CTRL		0x80
-#define KEY_LEFT_SHIFT		0x81
-#define KEY_LEFT_ALT		0x82
-#define KEY_LEFT_GUI		0x83
-#define KEY_RIGHT_CTRL		0x84
-#define KEY_RIGHT_SHIFT		0x85
-#define KEY_RIGHT_ALT		0x86
-#define KEY_RIGHT_GUI		0x87
-
-// Normal keys
-#define KEY_UP_ARROW		(RAW_KEYBOARD_UP_ARROW + 136)
-#define KEY_DOWN_ARROW		(RAW_KEYBOARD_DOWN_ARROW + 136)
-#define KEY_LEFT_ARROW		(RAW_KEYBOARD_LEFT_ARROW + 136)
-#define KEY_RIGHT_ARROW		(RAW_KEYBOARD_RIGHT_ARROW + 136)
-#define KEY_BACKSPACE		(RAW_KEYBOARD_BACKSPACE + 136)
-#define KEY_TAB				(RAW_KEYBOARD_TAB + 136)
+// Key alias
 #define KEY_RETURN			KEY_ENTER
-#define KEY_ENTER 			(RAW_KEYBOARD_ENTER + 136)
-#define KEY_ESC				(RAW_KEYBOARD_ESC + 136)
-#define KEY_INSERT			(RAW_KEYBOARD_INSERT + 136)
-#define KEY_DELETE			(RAW_KEYBOARD_DELETE + 136)
-#define KEY_PAGE_UP			(RAW_KEYBOARD_PAGE_UP + 136)
-#define KEY_PAGE_DOWN		(RAW_KEYBOARD_PAGE_DOWN + 136)
-#define KEY_HOME			(RAW_KEYBOARD_HOME + 136)
-#define KEY_END				(RAW_KEYBOARD_END + 136)
-#define KEY_CAPS_LOCK		(RAW_KEYBOARD_CAPS_LOCK + 136)
-#define KEY_F1				(RAW_KEYBOARD_F1 + 136)
-#define KEY_F2				(RAW_KEYBOARD_F2 + 136)
-#define KEY_F3				(RAW_KEYBOARD_F3 + 136)
-#define KEY_F4				(RAW_KEYBOARD_F4 + 136)
-#define KEY_F5				(RAW_KEYBOARD_F5 + 136)
-#define KEY_F6				(RAW_KEYBOARD_F6 + 136)
-#define KEY_F7				(RAW_KEYBOARD_F7 + 136)
-#define KEY_F8				(RAW_KEYBOARD_F8 + 136)
-#define KEY_F9				(RAW_KEYBOARD_F9 + 136)
-#define KEY_F10				(RAW_KEYBOARD_F10 + 136)
-#define KEY_F11				(RAW_KEYBOARD_F11 + 136)
-#define KEY_F12				(RAW_KEYBOARD_F12 + 136)
-
-
-// New key definitions
-#define KEY_PRINT			(RAW_KEYBOARD_PRINT + 136)
-#define KEY_NUM_LOCK		(RAW_KEYBOARD_NUM_LOCK + 136)
-#define KEY_SCROLL_LOCK		(RAW_KEYBOARD_SCROLL_LOCK + 136)
-#define KEY_PAUSE			(RAW_KEYBOARD_PAUSE + 136)
-#define KEY_MENU			(RAW_KEYBOARD_MENU + 136)
-#define KEY_SPACE           ' '
 #define KEY_LEFT_WINDOWS	KEY_LEFT_GUI
 #define KEY_RIGHT_WINDOWS	KEY_RIGHT_GUI
 #define KEY_PRINTSCREEN		KEY_PRINT
 
+enum KeyboardModifier : uint8_t {
+	KEY_LEFT_CTRL		= (1 << 0),
+	KEY_LEFT_SHIFT		= (1 << 1),
+	KEY_LEFT_ALT		= (1 << 2),
+	KEY_LEFT_GUI		= (1 << 3),
+	KEY_RIGHT_CTRL		= (1 << 4),
+	KEY_RIGHT_SHIFT		= (1 << 5),
+	KEY_RIGHT_ALT		= (1 << 6),
+	KEY_RIGHT_GUI		= (1 << 7),
+};
+
+enum KeyboardKeycode : uint8_t {
+	KEY_RESERVED		=  0,
+	KEY_ERRORROLLOVER	=  1,
+	KEY_POSTFAIL		=  2,
+	KEY_ERRORUNDEFINED	=  3,
+    KEY_A               =  4,
+    KEY_B               =  5,
+    KEY_C               =  6,
+    KEY_D               =  7,
+    KEY_E               =  8,
+    KEY_F               =  9,
+    KEY_G               = 10,
+    KEY_H               = 11,
+    KEY_I               = 12,
+    KEY_J               = 13,
+    KEY_K               = 14,
+    KEY_L               = 15,
+    KEY_M               = 16,
+    KEY_N               = 17,
+    KEY_O               = 18,
+    KEY_P               = 19,
+    KEY_Q               = 20,
+    KEY_R               = 21,
+    KEY_S               = 22,
+    KEY_T               = 23,
+    KEY_U               = 24,
+    KEY_V               = 25,
+    KEY_W               = 26,
+    KEY_X               = 27,
+    KEY_Y               = 28,
+    KEY_Z               = 29,
+    KEY_1               = 30,
+    KEY_2               = 31,
+    KEY_3               = 32,
+    KEY_4               = 33,
+    KEY_5               = 34,
+    KEY_6               = 35,
+    KEY_7               = 36,
+    KEY_8               = 37,
+    KEY_9               = 38,
+    KEY_0               = 39,
+    KEY_ENTER           = 40,
+    KEY_ESC             = 41,
+    KEY_BACKSPACE       = 42,
+    KEY_TAB             = 43,
+    KEY_SPACE           = 44,
+    KEY_MINUS           = 45,
+    KEY_EQUAL           = 46,
+    KEY_LEFT_BRACE      = 47,
+    KEY_RIGHT_BRACE     = 48,
+    KEY_BACKSLASH       = 49,
+    KEY_NON_US_NUM      = 50,
+    KEY_SEMICOLON       = 51,
+    KEY_QUOTE           = 52,
+    KEY_TILDE           = 53,
+    KEY_COMMA           = 54,
+    KEY_PERIOD          = 55,
+    KEY_SLASH           = 56,
+    KEY_CAPS_LOCK		= 0x39,
+    KEY_F1				= 0x3A,
+    KEY_F2				= 0x3B,
+    KEY_F3				= 0x3C,
+    KEY_F4				= 0x3D,
+    KEY_F5				= 0x3E,
+    KEY_F6				= 0x3F,
+    KEY_F7				= 0x40,
+    KEY_F8				= 0x41,
+    KEY_F9				= 0x42,
+    KEY_F10			    = 0x43,
+    KEY_F11			    = 0x44,
+    KEY_F12			    = 0x45,
+    KEY_PRINT			= 0x46,
+    KEY_SCROLL_LOCK	    = 0x47,
+    KEY_PAUSE			= 0x48,
+    KEY_INSERT			= 0x49,
+    KEY_HOME			= 0x4A,
+    KEY_PAGE_UP		    = 0x4B,
+    KEY_DELETE			= 0x4C,
+    KEY_END			    = 0x4D,
+    KEY_PAGE_DOWN		= 0x4E,
+    KEY_RIGHT_ARROW	    = 0x4F,
+    KEY_LEFT_ARROW		= 0x50,
+    KEY_DOWN_ARROW		= 0x51,
+    KEY_UP_ARROW		= 0x52,
+    KEY_NUM_LOCK		= 0x53,
+    
+    KEY_NON_US			= 0x64,
+    KEY_MENU			= 0x65,
+    KEY_POWER			= 0x66,
+    
+    KEY_VOLUME_MUTE	    = 0x7F,
+    KEY_VOLUME_UP		= 0x80,
+    KEY_VOLUME_DOWN	    = 0x81,
+};
+
 // Keyboard Leds
-#define LED_NUM_LOCK			0x01
-#define LED_CAPS_LOCK			0x02
-#define LED_SCROLL_LOCK			0x04
-
-//================================================================================
-// LAYOUT_US_ENGLISH
-//================================================================================
-
-#if !defined(LAYOUT_US_ENGLISH) && !defined(LAYOUT_UNITED_KINGDOM)
-#error This API does not support non english layouts. Please select an US or UK Keyboard.
-#endif
-
-#define RAW_KEYBOARD_LEFT_CTRL   (1 << 0)
-#define RAW_KEYBOARD_LEFT_SHIFT  (1 << 1)
-#define RAW_KEYBOARD_LEFT_ALT    (1 << 2)
-#define RAW_KEYBOARD_LEFT_GUI  	 (1 << 3)
-#define RAW_KEYBOARD_RIGHT_CTRL  (1 << 4)
-#define RAW_KEYBOARD_RIGHT_SHIFT (1 << 5)
-#define RAW_KEYBOARD_RIGHT_ALT   (1 << 6)
-#define RAW_KEYBOARD_RIGHT_GUI 	 (1 << 7)
-
-#define RAW_KEYBOARD_KEY(key) ((key>='a' && key<='z') ? (0x04 + key-'a') :\
-(key>='A' && key<='Z') ? (0x04 + key-'A') : (key>='1' && key<='9') ? (0x1E + key-'1') : 0x27)
-
-#define RAW_KEYBOARD_A           ( 4  )
-#define RAW_KEYBOARD_B           ( 5  )
-#define RAW_KEYBOARD_C           ( 6  )
-#define RAW_KEYBOARD_D           ( 7  )
-#define RAW_KEYBOARD_E           ( 8  )
-#define RAW_KEYBOARD_F           ( 9  )
-#define RAW_KEYBOARD_G           ( 10 )
-#define RAW_KEYBOARD_H           ( 11 )
-#define RAW_KEYBOARD_I           ( 12 )
-#define RAW_KEYBOARD_J           ( 13 )
-#define RAW_KEYBOARD_K           ( 14 )
-#define RAW_KEYBOARD_L           ( 15 )
-#define RAW_KEYBOARD_M           ( 16 )
-#define RAW_KEYBOARD_N           ( 17 )
-#define RAW_KEYBOARD_O           ( 18 )
-#define RAW_KEYBOARD_P           ( 19 )
-#define RAW_KEYBOARD_Q           ( 20 )
-#define RAW_KEYBOARD_R           ( 21 )
-#define RAW_KEYBOARD_S           ( 22 )
-#define RAW_KEYBOARD_T           ( 23 )
-#define RAW_KEYBOARD_U           ( 24 )
-#define RAW_KEYBOARD_V           ( 25 )
-#define RAW_KEYBOARD_W           ( 26 )
-#define RAW_KEYBOARD_X           ( 27 )
-#define RAW_KEYBOARD_Y           ( 28 )
-#define RAW_KEYBOARD_Z           ( 29 )
-#define RAW_KEYBOARD_1           ( 30 )
-#define RAW_KEYBOARD_2           ( 31 )
-#define RAW_KEYBOARD_3           ( 32 )
-#define RAW_KEYBOARD_4           ( 33 )
-#define RAW_KEYBOARD_5           ( 34 )
-#define RAW_KEYBOARD_6           ( 35 )
-#define RAW_KEYBOARD_7           ( 36 )
-#define RAW_KEYBOARD_8           ( 37 )
-#define RAW_KEYBOARD_9           ( 38 )
-#define RAW_KEYBOARD_0           ( 39 )
-#define RAW_KEYBOARD_ENTER       ( 40 )
-#define RAW_KEYBOARD_ESC         ( 41 )
-#define RAW_KEYBOARD_BACKSPACE   ( 42 )
-#define RAW_KEYBOARD_TAB         ( 43 )
-#define RAW_KEYBOARD_SPACE       ( 44 )
-#define RAW_KEYBOARD_MINUS       ( 45 )
-#define RAW_KEYBOARD_EQUAL       ( 46 )
-#define RAW_KEYBOARD_LEFT_BRACE  ( 47 )
-#define RAW_KEYBOARD_RIGHT_BRACE ( 48 )
-#define RAW_KEYBOARD_BACKSLASH   ( 49 )
-#define RAW_KEYBOARD_NON_US_NUM  ( 50 )
-#define RAW_KEYBOARD_SEMICOLON   ( 51 )
-#define RAW_KEYBOARD_QUOTE       ( 52 )
-#define RAW_KEYBOARD_TILDE       ( 53 )
-#define RAW_KEYBOARD_COMMA       ( 54 )
-#define RAW_KEYBOARD_PERIOD      ( 55 )
-#define RAW_KEYBOARD_SLASH       ( 56 )
-
-#define RAW_KEYBOARD_CAPS_LOCK		0x39
-#define RAW_KEYBOARD_F1				0x3A
-#define RAW_KEYBOARD_F2				0x3B
-#define RAW_KEYBOARD_F3				0x3C
-#define RAW_KEYBOARD_F4				0x3D
-#define RAW_KEYBOARD_F5				0x3E
-#define RAW_KEYBOARD_F6				0x3F
-#define RAW_KEYBOARD_F7				0x40
-#define RAW_KEYBOARD_F8				0x41
-#define RAW_KEYBOARD_F9				0x42
-#define RAW_KEYBOARD_F10			0x43
-#define RAW_KEYBOARD_F11			0x44
-#define RAW_KEYBOARD_F12			0x45
-#define RAW_KEYBOARD_PRINT			0x46
-#define RAW_KEYBOARD_SCROLL_LOCK	0x47
-#define RAW_KEYBOARD_PAUSE			0x48
-#define RAW_KEYBOARD_INSERT			0x49
-#define RAW_KEYBOARD_HOME			0x4A
-#define RAW_KEYBOARD_PAGE_UP		0x4B
-#define RAW_KEYBOARD_DELETE			0x4C
-#define RAW_KEYBOARD_END			0x4D
-#define RAW_KEYBOARD_PAGE_DOWN		0x4E
-#define RAW_KEYBOARD_RIGHT_ARROW	0x4F
-#define RAW_KEYBOARD_LEFT_ARROW		0x50
-#define RAW_KEYBOARD_DOWN_ARROW		0x51
-#define RAW_KEYBOARD_UP_ARROW		0x52
-#define RAW_KEYBOARD_NUM_LOCK		0x53
-#define RAW_KEYBOARD_NON_US			0x64
-#define RAW_KEYBOARD_MENU			0x65
+enum KeyboardLeds : uint8_t {
+	LED_NUM_LOCK		= (1 << 0),
+	LED_CAPS_LOCK		= (1 << 1),
+	LED_SCROLL_LOCK		= (1 << 2),
+	LED_COMPOSE			= (1 << 3),
+	LED_KANA			= (1 << 4),
+	LED_POWER			= (1 << 5),
+	LED_SHIFT			= (1 << 6),
+	LED_DO_NOT_DISTURB	= (1 << 7),
+};
 
 #define SHIFT 0x80
-static const uint8_t _asciimap[128] PROGMEM =
+static const uint8_t _asciimap[] PROGMEM =
 {
-	0x00,             // NUL
-	0x00,             // SOH
-	0x00,             // STX
-	0x00,             // ETX
-	0x00,             // EOT
-	0x00,             // ENQ
-	0x00,             // ACK  
-	0x00,             // BEL
-	RAW_KEYBOARD_BACKSPACE,			// BS	Backspace
-	RAW_KEYBOARD_TAB,			// TAB	Tab
-	RAW_KEYBOARD_ENTER,			// LF	Enter
-	0x00,             // VT 
-	0x00,             // FF 
-	0x00,             // CR 
-	0x00,             // SO 
-	0x00,             // SI 
-	0x00,             // DEL
-	0x00,             // DC1
-	0x00,             // DC2
-	0x00,             // DC3
-	0x00,             // DC4
-	0x00,             // NAK
-	0x00,             // SYN
-	0x00,             // ETB
-	0x00,             // CAN
-	0x00,             // EM 
-	0x00,             // SUB
-	0x00,             // ESC
-	0x00,             // FS 
-	0x00,             // GS 
-	0x00,             // RS 
-	0x00,             // US 
+	KEY_RESERVED,           // NUL
+	KEY_RESERVED,           // SOH
+	KEY_RESERVED,           // STX
+	KEY_RESERVED,           // ETX
+	KEY_RESERVED,           // EOT
+	KEY_RESERVED,           // ENQ
+	KEY_RESERVED,           // ACK  
+	KEY_RESERVED,           // BEL
+	KEY_BACKSPACE,			// BS	Backspace
+	KEY_TAB,				// TAB	Tab
+	KEY_ENTER,				// LF	Enter
+	KEY_RESERVED,           // VT 
+	KEY_RESERVED,           // FF 
+	KEY_RESERVED,           // CR 
+	KEY_RESERVED,           // SO 
+	KEY_RESERVED,           // SI 
+	KEY_RESERVED,           // DEL
+	KEY_RESERVED,           // DC1
+	KEY_RESERVED,           // DC2
+	KEY_RESERVED,           // DC3
+	KEY_RESERVED,           // DC4
+	KEY_RESERVED,           // NAK
+	KEY_RESERVED,           // SYN
+	KEY_RESERVED,           // ETB
+	KEY_RESERVED,           // CAN
+	KEY_RESERVED,           // EM 
+	KEY_RESERVED,           // SUB
+	KEY_RESERVED,           // ESC
+	KEY_RESERVED,           // FS 
+	KEY_RESERVED,           // GS 
+	KEY_RESERVED,           // RS 
+	KEY_RESERVED,           // US 
 
-	RAW_KEYBOARD_SPACE,		   //  ' '
-	RAW_KEYBOARD_1|SHIFT,	   // !
-#ifdef LAYOUT_UNITED_KINGDOM
-	RAW_KEYBOARD_2|SHIFT,	   // "
-#else
-	RAW_KEYBOARD_QUOTE|SHIFT,	   // "
-#endif
-#ifdef LAYOUT_UNITED_KINGDOM
-	RAW_KEYBOARD_BACKSLASH
-#else
-	RAW_KEYBOARD_3|SHIFT,    // #
-#endif
-	RAW_KEYBOARD_4|SHIFT,    // $
-	RAW_KEYBOARD_5|SHIFT,    // %
-	RAW_KEYBOARD_7|SHIFT,    // &
-	RAW_KEYBOARD_QUOTE,          // '
-	RAW_KEYBOARD_9|SHIFT,    // (
-	RAW_KEYBOARD_0|SHIFT,    // )
-	RAW_KEYBOARD_8|SHIFT,    // *
-	RAW_KEYBOARD_EQUAL|SHIFT,    // +
-	RAW_KEYBOARD_COMMA,          // ,
-	RAW_KEYBOARD_MINUS,          // -
-	RAW_KEYBOARD_PERIOD,          // .
-	RAW_KEYBOARD_SLASH,          // /
-	RAW_KEYBOARD_0,          // 0
-	RAW_KEYBOARD_1,          // 1
-	RAW_KEYBOARD_2,          // 2
-	RAW_KEYBOARD_3,          // 3
-	RAW_KEYBOARD_4,          // 4
-	RAW_KEYBOARD_5,          // 5
-	RAW_KEYBOARD_6,          // 6
-	RAW_KEYBOARD_7,          // 7
-	RAW_KEYBOARD_8,          // 8
-	RAW_KEYBOARD_9,          // 9
-	RAW_KEYBOARD_SEMICOLON|SHIFT,      // :
-	RAW_KEYBOARD_SEMICOLON,          // ;
-	RAW_KEYBOARD_COMMA|SHIFT,      // <
-	RAW_KEYBOARD_EQUAL,          // =
-	RAW_KEYBOARD_PERIOD|SHIFT,      // >
-	RAW_KEYBOARD_SLASH|SHIFT,      // ?
-#ifdef LAYOUT_UNITED_KINGDOM
-	RAW_KEYBOARD_QUOTE|SHIFT,      // @
-#else
-	RAW_KEYBOARD_2|SHIFT,      // @
-#endif
-	RAW_KEYBOARD_A|SHIFT,      // A
-	RAW_KEYBOARD_B|SHIFT,      // B
-	RAW_KEYBOARD_C|SHIFT,      // C
-	RAW_KEYBOARD_D|SHIFT,      // D
-	RAW_KEYBOARD_E|SHIFT,      // E
-	RAW_KEYBOARD_F|SHIFT,      // F
-	RAW_KEYBOARD_G|SHIFT,      // G
-	RAW_KEYBOARD_H|SHIFT,      // H
-	RAW_KEYBOARD_I|SHIFT,      // I
-	RAW_KEYBOARD_J|SHIFT,      // J
-	RAW_KEYBOARD_K|SHIFT,      // K
-	RAW_KEYBOARD_L|SHIFT,      // L
-	RAW_KEYBOARD_M|SHIFT,      // M
-	RAW_KEYBOARD_N|SHIFT,      // N
-	RAW_KEYBOARD_O|SHIFT,      // O
-	RAW_KEYBOARD_P|SHIFT,      // P
-	RAW_KEYBOARD_Q|SHIFT,      // Q
-	RAW_KEYBOARD_R|SHIFT,      // R
-	RAW_KEYBOARD_S|SHIFT,      // S
-	RAW_KEYBOARD_T|SHIFT,      // T
-	RAW_KEYBOARD_U|SHIFT,      // U
-	RAW_KEYBOARD_V|SHIFT,      // V
-	RAW_KEYBOARD_W|SHIFT,      // W
-	RAW_KEYBOARD_X|SHIFT,      // X
-	RAW_KEYBOARD_Y|SHIFT,      // Y
-	RAW_KEYBOARD_Z|SHIFT,      // Z
-	RAW_KEYBOARD_LEFT_BRACE,          // [
-#ifdef LAYOUT_UNITED_KINGDOM
-	RAW_KEYBOARD_NON_US,    // bslash
-#else
-	RAW_KEYBOARD_BACKSLASH,          // bslash
-#endif
-	RAW_KEYBOARD_RIGHT_BRACE,          // ]
-	RAW_KEYBOARD_6|SHIFT,    // ^
-	RAW_KEYBOARD_MINUS|SHIFT,    // _
-	RAW_KEYBOARD_TILDE,          // `
-	RAW_KEYBOARD_A,          // a
-	RAW_KEYBOARD_B,          // b
-	RAW_KEYBOARD_C,          // c
-	RAW_KEYBOARD_D,          // d
-	RAW_KEYBOARD_E,          // e
-	RAW_KEYBOARD_F,          // f
-	RAW_KEYBOARD_G,          // g
-	RAW_KEYBOARD_H,          // h
-	RAW_KEYBOARD_I,          // i
-	RAW_KEYBOARD_J,          // j
-	RAW_KEYBOARD_K,          // k
-	RAW_KEYBOARD_L,          // l
-	RAW_KEYBOARD_M,          // m
-	RAW_KEYBOARD_N,          // n
-	RAW_KEYBOARD_O,          // o
-	RAW_KEYBOARD_P,          // p
-	RAW_KEYBOARD_Q,          // q
-	RAW_KEYBOARD_R,          // r
-	RAW_KEYBOARD_S,          // s
-	RAW_KEYBOARD_T,          // t
-	RAW_KEYBOARD_U,          // u
-	RAW_KEYBOARD_V,          // v
-	RAW_KEYBOARD_W,          // w
-	RAW_KEYBOARD_X,          // x
-	RAW_KEYBOARD_Y,          // y
-	RAW_KEYBOARD_Z,          // z
-	RAW_KEYBOARD_LEFT_BRACE|SHIFT,    // {
-#ifdef LAYOUT_UNITED_KINGDOM
-	RAW_KEYBOARD_NON_US|SHIFT,    // |
-#else
-	RAW_KEYBOARD_BACKSLASH|SHIFT,    // |
-#endif
-	RAW_KEYBOARD_RIGHT_BRACE|SHIFT,    // }
-#ifdef LAYOUT_UNITED_KINGDOM
-	RAW_KEYBOARD_BACKSLASH|SHIFT,    // ~
-#else
-	RAW_KEYBOARD_TILDE|SHIFT,    // ~
-#endif
-	0x00				// DEL
+	KEY_SPACE,		   		// ' ' Space
+	KEY_1|SHIFT,	   		// !
+	KEY_QUOTE|SHIFT,	   	// "
+	KEY_3|SHIFT,    		// #
+	KEY_4|SHIFT,    		// $
+	KEY_5|SHIFT,    		// %
+	KEY_7|SHIFT,    		// &
+	KEY_QUOTE,          	// '
+	KEY_9|SHIFT,    		// (
+	KEY_0|SHIFT,    		// )
+	KEY_8|SHIFT,    		// *
+	KEY_EQUAL|SHIFT,    	// +
+	KEY_COMMA,          	// ,
+	KEY_MINUS,          	// -
+	KEY_PERIOD,          	// .
+	KEY_SLASH,          	// /
+	KEY_0,          		// 0
+	KEY_1,          		// 1
+	KEY_2,          		// 2
+	KEY_3,          		// 3
+	KEY_4,          		// 4
+	KEY_5,          		// 5
+	KEY_6,          		// 6
+	KEY_7,          		// 7
+	KEY_8,          		// 8
+	KEY_9,          		// 9
+	KEY_SEMICOLON|SHIFT,	// :
+	KEY_SEMICOLON,          // ;
+	KEY_COMMA|SHIFT,      	// <
+	KEY_EQUAL,          	// =
+	KEY_PERIOD|SHIFT,      	// >
+	KEY_SLASH|SHIFT,      	// ?
+	KEY_2|SHIFT,      		// @
+	KEY_A|SHIFT,      		// A
+	KEY_B|SHIFT,      		// B
+	KEY_C|SHIFT,      		// C
+	KEY_D|SHIFT,      		// D
+	KEY_E|SHIFT,      		// E
+	KEY_F|SHIFT,      		// F
+	KEY_G|SHIFT,      		// G
+	KEY_H|SHIFT,      		// H
+	KEY_I|SHIFT,      		// I
+	KEY_J|SHIFT,      		// J
+	KEY_K|SHIFT,      		// K
+	KEY_L|SHIFT,      		// L
+	KEY_M|SHIFT,      		// M
+	KEY_N|SHIFT,      		// N
+	KEY_O|SHIFT,      		// O
+	KEY_P|SHIFT,      		// P
+	KEY_Q|SHIFT,      		// Q
+	KEY_R|SHIFT,      		// R
+	KEY_S|SHIFT,      		// S
+	KEY_T|SHIFT,      		// T
+	KEY_U|SHIFT,      		// U
+	KEY_V|SHIFT,      		// V
+	KEY_W|SHIFT,      		// W
+	KEY_X|SHIFT,      		// X
+	KEY_Y|SHIFT,      		// Y
+	KEY_Z|SHIFT,      		// Z
+	KEY_LEFT_BRACE,         // [
+	KEY_BACKSLASH,          // bslash
+	KEY_RIGHT_BRACE,        // ]
+	KEY_6|SHIFT,    		// ^
+	KEY_MINUS|SHIFT,    	// _
+	KEY_TILDE,          	// `
+	KEY_A,          		// a
+	KEY_B,          		// b
+	KEY_C,          		// c
+	KEY_D,          		// d
+	KEY_E,          		// e
+	KEY_F,          		// f
+	KEY_G,          		// g
+	KEY_H,          		// h
+	KEY_I,          		// i
+	KEY_J,          		// j
+	KEY_K,         		 	// k
+	KEY_L,          		// l
+	KEY_M,          		// m
+	KEY_N,          		// n
+	KEY_O,          		// o
+	KEY_P,          		// p
+	KEY_Q,          		// q
+	KEY_R,          		// r
+	KEY_S,          		// s
+	KEY_T,          		// t
+	KEY_U,          		// u
+	KEY_V,          		// v
+	KEY_W,          		// w
+	KEY_X,          		// x
+	KEY_Y,          		// y
+	KEY_Z,          		// z
+	KEY_LEFT_BRACE|SHIFT,   // {
+	KEY_BACKSLASH|SHIFT,    // |
+	KEY_RIGHT_BRACE|SHIFT,  // }
+	KEY_TILDE|SHIFT,    	// ~
+	KEY_RESERVED			// DEL
 };
+

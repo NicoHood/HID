@@ -29,7 +29,6 @@ THE SOFTWARE.
 #include "ImprovedKeylayouts.h"
 #include "HID-Tables.h" //TODO
 
-
 typedef union{
 	// Low level key report: up to 6 keys and shift, ctrl etc at once
 	uint8_t whole8[];
@@ -48,19 +47,36 @@ public:
 //TODO nkro compatiblity, merge them
   inline void begin(void);
   inline void end(void);
-  inline size_t write(uint8_t k);
-  inline size_t press(uint8_t k);
-  inline size_t release(uint8_t k);
-  inline void releaseAll(void);
-  inline void send_now(void);
   
-  inline size_t writeKeycode(uint8_t k);
-  inline size_t pressKeycode(uint8_t k);
-  inline size_t releaseKeycode(uint8_t k);
-  inline size_t addKeyToReport(uint8_t k);
-  inline size_t addKeycodeToReport(uint8_t k);
-  inline size_t removeKeyFromReport(uint8_t k);
-  inline size_t removeKeycodeFromReport(uint8_t k);
+  inline size_t write(uint8_t k);
+  inline size_t write(KeyboardKeycode k);
+  inline size_t write(KeyboardModifier k);
+  
+  inline size_t press(uint8_t k);
+  inline size_t press(KeyboardKeycode k);
+  inline size_t press(KeyboardModifier k);
+  
+  inline size_t release(uint8_t k);
+  inline size_t release(KeyboardKeycode k);
+  inline size_t release(KeyboardModifier k);
+  
+  inline size_t add(uint8_t k);
+  inline size_t add(KeyboardKeycode k);
+  inline size_t add(KeyboardModifier k);
+  
+  inline size_t remove(uint8_t k);
+  inline size_t remove(KeyboardKeycode k);
+  inline size_t remove(KeyboardModifier k);
+  
+  // TODO media, system
+  inline void setMedia(uint8_t m){
+    _keyReport.reserved = m;
+    send_now();
+  }
+ 
+  inline void releaseAll(void);
+  inline void removeAll(void);
+  inline void send_now(void);
 
   // Sending is public in the base class for advanced users.
   virtual void SendReport(void* data, int length) = 0;
