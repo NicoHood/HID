@@ -39,10 +39,15 @@ static const uint8_t _hidReportDescriptorKeyboard[] PROGMEM = {
 	0x95, 0x08,                      /*   REPORT_COUNT (8) */
     0x81, 0x02,                      /*   INPUT (Data,Var,Abs) */
 
-    /* Reserved byte TODO consumer and or system */
+    /* Reserved byte, used for consumer reports, only works with linux */
+	0x05, 0x0C,             		 /*   Usage Page (Consumer) */
     0x95, 0x01,                      /*   REPORT_COUNT (1) */
     0x75, 0x08,                      /*   REPORT_SIZE (8) */
-    0x81, 0x03,                      /*   INPUT (Cnst,Var,Abs) */
+    0x15, 0x00,                      /*   LOGICAL_MINIMUM (0) */
+    0x26, 0xFF, 0x00,                /*   LOGICAL_MAXIMUM (255) */
+    0x19, 0x00,                      /*   USAGE_MINIMUM (0) */
+    0x29, 0xFF,                      /*   USAGE_MAXIMUM (255) */
+    0x81, 0x00,                      /*   INPUT (Data,Ary,Abs) */
 
 	/* 5 LEDs for num lock etc, 3 left for advanced, custom usage */
 	0x05, 0x08,						 /*   USAGE_PAGE (LEDs) */
@@ -53,11 +58,11 @@ static const uint8_t _hidReportDescriptorKeyboard[] PROGMEM = {
 	0x91, 0x02,						 /*   OUTPUT (Data,Var,Abs) */
 
     /* 6 Keyboard keys */
+    0x05, 0x07,                      /*   USAGE_PAGE (Keyboard) */
     0x95, 0x06,                      /*   REPORT_COUNT (6) */
     0x75, 0x08,                      /*   REPORT_SIZE (8) */
     0x15, 0x00,                      /*   LOGICAL_MINIMUM (0) */
     0x26, 0xE7, 0x00,                /*   LOGICAL_MAXIMUM (231) */
-    0x05, 0x07,                      /*   USAGE_PAGE (Keyboard) */
     0x19, 0x00,                      /*   USAGE_MINIMUM (Reserved (no event indicated)) */
     0x29, 0xE7,                      /*   USAGE_MAXIMUM (Keyboard Right GUI) */
     0x81, 0x00,                      /*   INPUT (Data,Ary,Abs) */
