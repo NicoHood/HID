@@ -152,7 +152,7 @@ enum KeyboardKeycode : uint8_t {
     KEY_POWER			= 0x66, // PowerOff (Ubuntu)
     KEY_PAD_EQUALS		= 0x67, // Dont confuse with KEYPAD_EQUAL_SIGN
     KEY_F13				= 0x68, // Tools (Ubunutu)
-    KEY_F14				= 0x69, // Launch5 (Ubuntu), Laptop ECO button
+    KEY_F14				= 0x69, // Launch5 (Ubuntu)
     KEY_F15				= 0x6A, // Launch6 (Ubuntu)
     KEY_F16				= 0x6B, // Launch7 (Ubuntu)
     KEY_F17				= 0x6C, // Launch8 (Ubuntu)
