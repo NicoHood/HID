@@ -27,7 +27,6 @@ THE SOFTWARE.
 #include <Arduino.h>
 #include "HID-Settings.h"
 #include "ImprovedKeylayouts.h"
-#include "HID-Tables.h" //TODO
 
 typedef union{
 	// Low level key report: up to 6 keys and shift, ctrl etc at once
