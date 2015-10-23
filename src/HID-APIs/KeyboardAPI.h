@@ -47,17 +47,17 @@ public:
   inline void begin(void);
   inline void end(void);
   
+  inline size_t write(uint8_t k);
+  inline size_t write(KeyboardKeycode k);
+  inline size_t write(KeyboardModifier k);
   
-  template<class TYPE>
-  inline size_t write(TYPE k);
-  inline virtual size_t write(uint8_t k) override;
+  inline size_t press(uint8_t k);
+  inline size_t press(KeyboardKeycode k);
+  inline size_t press(KeyboardModifier k);
   
-  
-  template<class TYPE>
-  inline size_t press(TYPE k);
-  
-  template<class TYPE>
-  inline size_t release(TYPE k);
+  inline size_t release(uint8_t k);
+  inline size_t release(KeyboardKeycode k);
+  inline size_t release(KeyboardModifier k);
   
   inline size_t add(uint8_t k);
   inline size_t add(KeyboardKeycode k);

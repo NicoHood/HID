@@ -36,8 +36,8 @@ void KeyboardAPI::end(void)
 }
 
 
-template<class TYPE>
-size_t KeyboardAPI::write(TYPE k)
+// TODO template??
+size_t KeyboardAPI::write(uint8_t k)
 {	
 	// Press and release key (if press was successfull)
 	auto ret = press(k);
@@ -48,14 +48,29 @@ size_t KeyboardAPI::write(TYPE k)
 }
 
 
-size_t KeyboardAPI::write(uint8_t k)
+size_t KeyboardAPI::write(KeyboardKeycode k)
 {	
-	return write<uint8_t>(k);
+	// Press and release key (if press was successfull)
+	auto ret = press(k);
+	if(ret){
+		release(k);
+	}
+	return ret;
 }
 
 
-template<class TYPE>
-size_t KeyboardAPI::press(TYPE k)
+size_t KeyboardAPI::write(KeyboardModifier k)
+{	
+	// Press and release key (if press was successfull)
+	auto ret = press(k);
+	if(ret){
+		release(k);
+	}
+	return ret;
+}
+
+
+size_t KeyboardAPI::press(uint8_t k) 
 {
 	// Press key and send report to host
 	auto ret = add(k);
@@ -66,11 +81,21 @@ size_t KeyboardAPI::press(TYPE k)
 }
 
 
-template<class TYPE>
-size_t KeyboardAPI::release(TYPE k)
+size_t KeyboardAPI::press(KeyboardKeycode k) 
 {
-	// Release key and send report to host
-	auto ret = remove(k);
+	// Press key and send report to host
+	auto ret = add(k);
+	if(ret){
+		send_now();
+	}
+	return ret;
+}
+
+
+size_t KeyboardAPI::press(KeyboardModifier k) 
+{
+	// Press modifier key and send report to host
+	auto ret = add(k);
 	if(ret){
 		send_now();
 	}
@@ -123,6 +148,39 @@ size_t KeyboardAPI::add(KeyboardModifier k)
 	// Add modifier key
 	_keyReport.modifiers |= k;
 	return 1;
+}
+
+
+size_t KeyboardAPI::release(uint8_t k) 
+{
+	// Release key and send report to host
+	auto ret = remove(k);
+	if(ret){
+		send_now();
+	}
+	return ret;
+}
+
+
+size_t KeyboardAPI::release(KeyboardKeycode k) 
+{
+	// Release key and send report to host
+	auto ret = remove(k);
+	if(ret){
+		send_now();
+	}
+	return ret;
+}
+
+
+size_t KeyboardAPI::release(KeyboardModifier k) 
+{
+	// Release modifier key and send report to host
+	auto ret = remove(k);
+	if(ret){
+		send_now();
+	}
+	return ret;
 }
 
 
