@@ -91,6 +91,8 @@ Version History
 * Added a few key definitions
 * Uses .alinkage custom IDE option
 * Added BootKeyboard support (BIOS compatibility)
+* KEY_MENU switched to KEY_APPLICATION
+* KEY_RETURN is not KEY_ENTER anymore!
 
 2.3 Release (never released)
 * Updated Libraries
