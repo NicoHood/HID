@@ -11,7 +11,7 @@
   You may also use SingleNKROKeyboard to enable a single report NKROKeyboard.
 
   See HID Project documentation for more information.
-  https://github.com/NicoHood/HID/wiki/Keyboard-API
+  https://github.com/NicoHood/HID/wiki/Keyboard-API#nkro-keyboard
 */
 
 #include "HID-Project.h"

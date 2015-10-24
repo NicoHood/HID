@@ -8,7 +8,7 @@
   Led indicats if we are in bios.
 
   See HID Project documentation for more information.
-  https://github.com/NicoHood/HID/wiki/Keyboard-API
+  https://github.com/NicoHood/HID/wiki/Keyboard-API#boot-keyboard
 */
 
 #include "HID-Project.h"
