@@ -36,7 +36,6 @@ void KeyboardAPI::end(void)
 }
 
 
-// TODO template??
 size_t KeyboardAPI::write(uint8_t k)
 {	
 	// Press and release key (if press was successfull)
@@ -61,6 +60,17 @@ size_t KeyboardAPI::write(KeyboardKeycode k)
 
 size_t KeyboardAPI::write(KeyboardModifier k)
 {	
+	// Press and release key (if press was successfull)
+	auto ret = press(k);
+	if(ret){
+		release(k);
+	}
+	return ret;
+}
+
+
+size_t KeyboardAPI::write(ConsumerKeycode k)
+{
 	// Press and release key (if press was successfull)
 	auto ret = press(k);
 	if(ret){
@@ -103,6 +113,17 @@ size_t KeyboardAPI::press(KeyboardModifier k)
 }
 
 
+size_t KeyboardAPI::press(ConsumerKeycode k)
+{
+	// Press key and send report to host
+	auto ret = add(k);
+	if(ret){
+		send_now();
+	}
+	return ret;
+}
+
+
 size_t KeyboardAPI::add(uint8_t k) 
 {
 	// Ignore invalid input
@@ -131,7 +152,7 @@ size_t KeyboardAPI::add(KeyboardKeycode k)
 	{
 		// Is key already in the list or did we found an empty slot?
 		auto key = _keyReport.keys[i];
-		if (key == uint8_t(k) || key == 0) {
+		if (key == uint8_t(k) || key == KEY_RESERVED) {
 			_keyReport.keys[i] = k;
 			return 1;
 		}
@@ -147,6 +168,21 @@ size_t KeyboardAPI::add(KeyboardModifier k)
 {
 	// Add modifier key
 	_keyReport.modifiers |= k;
+	return 1;
+}
+
+
+size_t KeyboardAPI::add(ConsumerKeycode k) 
+{
+	if(k > 0xFF){
+		// No 2 byte keys are supported
+		setWriteError();
+		return 0;
+	}
+	
+	// Place the key inside the reserved keyreport position.
+	// This does not work on Windows.
+	_keyReport.reserved = k;
 	return 1;
 }
 
@@ -184,6 +220,17 @@ size_t KeyboardAPI::release(KeyboardModifier k)
 }
 
 
+size_t KeyboardAPI::release(ConsumerKeycode k) 
+{
+	// Release key and send report to host
+	auto ret = remove(k);
+	if(ret){
+		send_now();
+	}
+	return ret;
+}
+
+
 size_t KeyboardAPI::remove(uint8_t k) 
 {
 	// Ignore invalid input
@@ -208,7 +255,7 @@ size_t KeyboardAPI::remove(KeyboardKeycode k)
 	// Test the key report to see if k is present. Clear it if it exists.
 	for (uint8_t i = 0; i < 6; i++) {
 		if (_keyReport.keys[i] == k) {
-			_keyReport.keys[i] = 0x00;
+			_keyReport.keys[i] = KEY_RESERVED;
 			return 1;
 		}
 	}
@@ -232,6 +279,20 @@ size_t KeyboardAPI::remove(KeyboardModifier k)
 }
 
 
+size_t KeyboardAPI::remove(ConsumerKeycode k) 
+{
+	if(k > 0xFF){
+		// No 2 byte keys are supported
+		return 0;
+	}
+	
+	// Always release the key, to make it simpler releasing a consumer key
+	// without releasing all other normal keyboard keys.
+	_keyReport.reserved = HID_CONSUMER_UNASSIGNED;
+	return 1;
+}
+
+
 void KeyboardAPI::releaseAll(void)
 {
 	// Release all keys
@@ -249,6 +310,13 @@ void KeyboardAPI::removeAll(void)
 
 void KeyboardAPI::send_now(void){
 	SendReport(&_keyReport, sizeof(_keyReport));
+}
+
+
+void KeyboardAPI::wakeupHost(void){
+#ifdef USBCON
+	USBDevice.wakeupHost();
+#endif
 }
 
 

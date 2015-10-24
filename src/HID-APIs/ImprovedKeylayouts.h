@@ -133,6 +133,7 @@ enum KeyboardKeycode : uint8_t {
     KEYPAD_SUBTRACT	    = 0x56,
     KEYPAD_ADD	        = 0x57,
     KEYPAD_ENTER 		= 0x59,
+    KEY_RETURN          = 0x59, // Alias
     KEYPAD_1 			= 0x59,
     KEYPAD_2 			= 0x5A,
     KEYPAD_3 			= 0x5B,
@@ -146,6 +147,7 @@ enum KeyboardKeycode : uint8_t {
     KEYPAD_DOT			= 0x63,
     KEY_NON_US			= 0x64,
     KEY_APPLICATION		= 0x65, // Context menu/right click
+    KEY_MENU            = 0x65, // Alias
     
     // Most of the following keys will only work with Linux or not at all.
     // F13+ keys are mostly used for laptop functions like ECO key.
@@ -165,7 +167,7 @@ enum KeyboardKeycode : uint8_t {
     KEY_F24				= 0x73, // Disabled (Ubuntu)
     KEY_EXECUTE			= 0x74, // Open (Ubuntu)
     KEY_HELP			= 0x75, // Help (Ubuntu)
-    KEY_MENU			= 0x76, // Disabled (Ubuntu)
+    KEY_MENU2			= 0x76, // Disabled (Ubuntu)
     KEY_SELECT			= 0x77, // Disabled (Ubuntu)
     KEY_STOP			= 0x78, // Cancel (Ubuntu)
     KEY_AGAIN			= 0x79, // Redo (Ubuntu)
@@ -206,7 +208,7 @@ enum KeyboardKeycode : uint8_t {
     KEY_CANCEL		        = 0x9B, // Disabled (Ubuntu)
     KEY_CLEAR		        = 0x9C, // Delete (Ubuntu)
     KEY_PRIOR		        = 0x9D, // Disabled (Ubuntu)
-    KEY_RETURN		        = 0x9E, // Disabled (Ubuntu), Do not confuse this with KEY_ENTER
+    KEY_RETURN2		        = 0x9E, // Disabled (Ubuntu), Do not confuse this with KEY_ENTER
     KEY_SEPARATOR		    = 0x9F, // Disabled (Ubuntu)
     KEY_OUT		            = 0xA0, // Disabled (Ubuntu)
     KEY_OPER		        = 0xA1, // Disabled (Ubuntu)

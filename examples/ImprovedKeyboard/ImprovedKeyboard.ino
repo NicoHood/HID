@@ -38,8 +38,25 @@ void loop() {
     // Write single keys, do not use a number here!
     //Keyboard.write(KEY_ENTER);
 
+
     // If you really wish to press a RAW keycode without the name use this:
     //Keyboard.write(KeyboardKeycode(40));
+
+    // Use (a limited number of) consumer keys.
+    // Only works with the lower 255 keys and on linux only.
+    //Keyboard.write(MEDIA_PLAY_PAUSE);
+
+    // Linux also supports several system function via consumer report.
+    //Keyboard.write(CONSUMER_POWER);
+    //Keyboard.write(CONSUMER_SLEEP);
+
+    // You can also use some special keyboard keys on linux.
+    //Keyboard.write(KEY_POWER);
+    //Keyboard.write(KEY_F13);
+
+    // You can wakeup you PC from sleep.
+    // This might be not supported on all hardware, but on all OS types.
+    //Keyboard.wakeupHost();
 
     // Simple debounce
     delay(300);

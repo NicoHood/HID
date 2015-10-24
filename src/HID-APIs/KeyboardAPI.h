@@ -27,6 +27,7 @@ THE SOFTWARE.
 #include <Arduino.h>
 #include "HID-Settings.h"
 #include "ImprovedKeylayouts.h"
+#include "ConsumerAPI.h"
 
 typedef union{
 	// Low level key report: up to 6 keys and shift, ctrl etc at once
@@ -36,46 +37,45 @@ typedef union{
 	struct{
 		uint8_t modifiers;
 		uint8_t reserved;
-		uint8_t keys[6];
+		KeyboardKeycode keys[6];
 	};
 } HID_KeyboardReport_Data_t;
 
 class KeyboardAPI : public Print
 {
 public:
-//TODO nkro compatiblity, merge them
   inline void begin(void);
   inline void end(void);
   
   inline size_t write(uint8_t k);
   inline size_t write(KeyboardKeycode k);
   inline size_t write(KeyboardModifier k);
+  inline size_t write(ConsumerKeycode k);
   
   inline size_t press(uint8_t k);
   inline size_t press(KeyboardKeycode k);
   inline size_t press(KeyboardModifier k);
+  inline size_t press(ConsumerKeycode k);
   
   inline size_t release(uint8_t k);
   inline size_t release(KeyboardKeycode k);
   inline size_t release(KeyboardModifier k);
+  inline size_t release(ConsumerKeycode k);
   
   inline size_t add(uint8_t k);
   inline size_t add(KeyboardKeycode k);
   inline size_t add(KeyboardModifier k);
+  inline size_t add(ConsumerKeycode k);
   
   inline size_t remove(uint8_t k);
   inline size_t remove(KeyboardKeycode k);
   inline size_t remove(KeyboardModifier k);
-  
-  // TODO media, system
-  inline void setMedia(uint8_t m){
-    _keyReport.reserved = m;
-    send_now();
-  }
+  inline size_t remove(ConsumerKeycode k);
  
   inline void releaseAll(void);
   inline void removeAll(void);
   inline void send_now(void);
+  inline void wakeupHost(void);
 
   // Sending is public in the base class for advanced users.
   virtual void SendReport(void* data, int length) = 0;
