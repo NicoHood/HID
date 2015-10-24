@@ -84,6 +84,7 @@ enum KeyboardKeycode : uint8_t {
     KEY_9               = 38,
     KEY_0               = 39,
     KEY_ENTER           = 40,
+    KEY_RETURN          = 40, // Alias
     KEY_ESC             = 41,
     KEY_BACKSPACE       = 42,
     KEY_TAB             = 43,
@@ -132,8 +133,7 @@ enum KeyboardKeycode : uint8_t {
     KEYPAD_MULTIPLY	    = 0x55,
     KEYPAD_SUBTRACT	    = 0x56,
     KEYPAD_ADD	        = 0x57,
-    KEYPAD_ENTER 		= 0x59,
-    KEY_RETURN          = 0x59, // Alias
+    KEYPAD_ENTER 		= 0x58,
     KEYPAD_1 			= 0x59,
     KEYPAD_2 			= 0x5A,
     KEYPAD_3 			= 0x5B,
