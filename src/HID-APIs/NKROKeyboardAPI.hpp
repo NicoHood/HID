@@ -83,10 +83,14 @@ size_t NKROKeyboardAPI::removeAll(void)
 	for (uint8_t i = 0; i < sizeof(_keyReport.allkeys); i++)
 	{
 		// Is a key in the list or did we found an empty slot?
-		//TODO count every bit?
-		if(_keyReport.allkeys[i]){
-			ret++;
+		auto bits = _keyReport.allkeys[i];
+		do {
+			if(bits & 0x01){
+				ret++;
+			}
+			bits >>=1;
 		}
+		while(bits);
 		_keyReport.allkeys[i] = 0x00;
 	}
 	return ret;
