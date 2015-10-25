@@ -37,9 +37,11 @@ typedef union{
 	struct{
 		uint8_t modifiers;
 		uint8_t reserved;
-		KeyboardKeycode keys[6];
+		KeyboardKeycode keycodes[6];
 	};
+	uint8_t keys[8];
 } HID_KeyboardReport_Data_t;
+
 
 class KeyboardAPI : public Print
 {
@@ -47,42 +49,64 @@ public:
   inline void begin(void);
   inline void end(void);
   
-  inline size_t write(uint8_t k);
+  // Raw Keycode API functions
   inline size_t write(KeyboardKeycode k);
-  inline size_t write(KeyboardModifier k);
-  inline size_t write(ConsumerKeycode k);
-  
-  inline size_t press(uint8_t k);
   inline size_t press(KeyboardKeycode k);
-  inline size_t press(KeyboardModifier k);
-  inline size_t press(ConsumerKeycode k);
-  
-  inline size_t release(uint8_t k);
   inline size_t release(KeyboardKeycode k);
-  inline size_t release(KeyboardModifier k);
-  inline size_t release(ConsumerKeycode k);
-  
-  inline size_t add(uint8_t k);
-  inline size_t add(KeyboardKeycode k);
-  inline size_t add(KeyboardModifier k);
-  inline size_t add(ConsumerKeycode k);
-  
-  inline size_t remove(uint8_t k);
   inline size_t remove(KeyboardKeycode k);
-  inline size_t remove(KeyboardModifier k);
-  inline size_t remove(ConsumerKeycode k);
- 
+  inline size_t add(KeyboardKeycode k);
   inline size_t releaseAll(void);
-  inline size_t removeAll(void);
-  inline int send(void);
-  inline void wakeupHost(void);
-
-  // Sending is public in the base class for advanced users.
-  virtual int SendReport(void* data, int length) = 0;
+  //press(uint8_t key, uint8_t modifier) TODO variadic template
   
+  // Print API functions
+  inline virtual size_t write(uint8_t k) override;
+  inline size_t press(uint8_t k);
+  inline size_t release(uint8_t k);
+  inline size_t add(uint8_t k);
+  inline size_t remove(uint8_t k);
+
+  // Needs to be implemented in a lower level
+  virtual size_t removeAll(void) = 0;
+  virtual int send(void) = 0;
+
+private:
+  virtual size_t set(KeyboardKeycode k, bool s) = 0;
+  inline size_t set(uint8_t k, bool s);
+};
+
+class DefaultKeyboardAPI : public KeyboardAPI
+{
+public:
+  // Implement adding/removing key functions
+  inline virtual size_t removeAll(void) override;
+
+  // Add special consumer key API for the reserved byte
+  inline size_t write(ConsumerKeycode k);
+  inline size_t press(ConsumerKeycode k);
+  inline size_t remove(ConsumerKeycode k);
+  inline size_t add(ConsumerKeycode k);
+  inline size_t release(ConsumerKeycode k);
+
+  // Also use the base class functions
+  // http://en.cppreference.com/w/cpp/language/using_declaration
+  using KeyboardAPI::write;
+  using KeyboardAPI::press;
+  using KeyboardAPI::remove;
+  using KeyboardAPI::add;
+  using KeyboardAPI::release;
+
+  // Needs to be implemented in a lower level
+  virtual int send(void) = 0;
+
 protected:
   HID_KeyboardReport_Data_t _keyReport;
+
+private:
+  inline virtual size_t set(KeyboardKeycode k, bool s) override;
 };
+
+//TODO NKRO API
+
 
 // Implementation is inline
 #include "KeyboardAPI.hpp"

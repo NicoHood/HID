@@ -24,26 +24,20 @@ THE SOFTWARE.
 // Include guard
 #pragma once
 
+
 void KeyboardAPI::begin(void)
 {
-	releaseAll();
+	// Force API to send a clean report.
+	// This is important for and HID bridge where the receiver stays on,
+	// while the sender is resetted.
+	removeAll();
+	send();
 }
 
 
 void KeyboardAPI::end(void)
 {
 	releaseAll();
-}
-
-
-size_t KeyboardAPI::write(uint8_t k)
-{	
-	// Press and release key (if press was successfull)
-	auto ret = press(k);
-	if(ret){
-		release(k);
-	}
-	return ret;
 }
 
 
@@ -58,19 +52,55 @@ size_t KeyboardAPI::write(KeyboardKeycode k)
 }
 
 
-size_t KeyboardAPI::write(KeyboardModifier k)
-{	
-	// Press and release key (if press was successfull)
-	auto ret = press(k);
+size_t KeyboardAPI::press(KeyboardKeycode k) 
+{
+	// Press key and send report to host
+	auto ret = add(k);
 	if(ret){
-		release(k);
+		send();
 	}
 	return ret;
 }
 
 
-size_t KeyboardAPI::write(ConsumerKeycode k)
+size_t KeyboardAPI::release(KeyboardKeycode k) 
 {
+	// Release key and send report to host
+	auto ret = remove(k);
+	if(ret){
+		send();
+	}
+	return ret;
+}
+
+
+size_t KeyboardAPI::add(KeyboardKeycode k) 
+{
+	// Add key to report
+	return set(k, true);
+}
+
+
+size_t KeyboardAPI::remove(KeyboardKeycode k) 
+{
+	// Remove key from report
+	return set(k, false);
+}
+
+
+size_t KeyboardAPI::releaseAll(void)
+{
+	// Release all keys
+	auto ret = removeAll();
+	if(ret){
+		send();
+	}
+	return ret;
+}
+
+
+size_t KeyboardAPI::write(uint8_t k)
+{	
 	// Press and release key (if press was successfull)
 	auto ret = press(k);
 	if(ret){
@@ -91,32 +121,10 @@ size_t KeyboardAPI::press(uint8_t k)
 }
 
 
-size_t KeyboardAPI::press(KeyboardKeycode k) 
+size_t KeyboardAPI::release(uint8_t k) 
 {
-	// Press key and send report to host
-	auto ret = add(k);
-	if(ret){
-		send();
-	}
-	return ret;
-}
-
-
-size_t KeyboardAPI::press(KeyboardModifier k) 
-{
-	// Press modifier key and send report to host
-	auto ret = add(k);
-	if(ret){
-		send();
-	}
-	return ret;
-}
-
-
-size_t KeyboardAPI::press(ConsumerKeycode k)
-{
-	// Press key and send report to host
-	auto ret = add(k);
+	// Release key and send report to host
+	auto ret = remove(k);
 	if(ret){
 		send();
 	}
@@ -126,6 +134,19 @@ size_t KeyboardAPI::press(ConsumerKeycode k)
 
 size_t KeyboardAPI::add(uint8_t k) 
 {
+	// Add key to report
+	return set(k, true);
+}
+
+
+size_t KeyboardAPI::remove(uint8_t k) 
+{
+	// Remove key from report
+	return set(k, false);
+}
+
+
+size_t KeyboardAPI::set(uint8_t k, bool s){
 	// Ignore invalid input
 	if(k >= sizeof(_asciimap)){
 		setWriteError();
@@ -134,45 +155,108 @@ size_t KeyboardAPI::add(uint8_t k)
 
 	// Read key from ascii lookup table
 	k = pgm_read_byte(_asciimap + k);
-	auto ret = add(KeyboardKeycode(k & ~SHIFT));
+	auto ret = set(KeyboardKeycode(k & ~SHIFT), s);
 	
-	// Only press shift and send if keycode was successfully added
-	if(ret && k & SHIFT){
-		add(KEY_LEFT_SHIFT);
+	// Only add shift if keycode was successfully added before.
+	// Always try to release shift (if used).
+	if((k & SHIFT) && (ret || !s)){
+		ret |= set(KEY_LEFT_SHIFT, s);
 	}
 	return ret;
 }
 
 
-size_t KeyboardAPI::add(KeyboardKeycode k) 
+size_t DefaultKeyboardAPI::set(KeyboardKeycode k, bool s) 
 {
-	// Add k to the key report only if it's not already present
-	// and if there is an empty slot.
-	for (uint8_t i = 0; i < sizeof(_keyReport.keys); i++)
+	// It's a modifier key
+	if(k >= KEY_LEFT_CTRL && k <= KEY_RIGHT_GUI)
 	{
-		// Is key already in the list or did we found an empty slot?
-		auto key = _keyReport.keys[i];
-		if (key == uint8_t(k) || key == KEY_RESERVED) {
-			_keyReport.keys[i] = k;
-			return 1;
+		// Convert key into bitfield (0 - 7)
+		k = KeyboardKeycode(uint8_t(k) - uint8_t(KEY_LEFT_CTRL));
+		if(s){
+			_keyReport.modifiers = (1 << k);
+		}
+		else{
+			_keyReport.modifiers &= ~(1 << k);
+		}
+		return 1;
+	}
+	// Its a normal key
+	else{
+		// Add k to the key report only if it's not already present
+		// and if there is an empty slot. Remove the first available key.
+		for (uint8_t i = 0; i < sizeof(_keyReport.keycodes); i++)
+		{
+			auto key = _keyReport.keycodes[i];
+			
+			// Is key already in the list or did we found an empty slot?
+			if (s && (key == uint8_t(k) || key == KEY_RESERVED)) {
+				_keyReport.keycodes[i] = k;
+				return 1;
+			}
+			
+			// Test the key report to see if k is present. Clear it if it exists.
+			if (!s && (key == k)) {
+				_keyReport.keycodes[i] = KEY_RESERVED;
+				return 1;
+			}
 		}
 	}
 	
-	// No empty key position was found
-	setWriteError();
+	// No empty/pressed key was found
 	return 0;
 }
 
-
-size_t KeyboardAPI::add(KeyboardModifier k) 
+size_t DefaultKeyboardAPI::removeAll(void)
 {
-	// Add modifier key
-	_keyReport.modifiers |= k;
-	return 1;
+	// Release all keys
+	uint8_t ret = 0;
+	for (uint8_t i = 0; i < sizeof(_keyReport.keys); i++)
+	{
+		// Is a key in the list or did we found an empty slot?
+		if(_keyReport.keys[i]){
+			ret++;
+		}
+		_keyReport.keys[i] = 0x00;
+	}
+	return ret;
 }
 
 
-size_t KeyboardAPI::add(ConsumerKeycode k) 
+size_t DefaultKeyboardAPI::write(ConsumerKeycode k)
+{
+	// Press and release key (if press was successfull)
+	auto ret = press(k);
+	if(ret){
+		release(k);
+	}
+	return ret;
+}
+
+
+size_t DefaultKeyboardAPI::press(ConsumerKeycode k)
+{
+	// Press key and send report to host
+	auto ret = add(k);
+	if(ret){
+		send();
+	}
+	return ret;
+}
+
+
+size_t DefaultKeyboardAPI::release(ConsumerKeycode k) 
+{
+	// Release key and send report to host
+	auto ret = remove(k);
+	if(ret){
+		send();
+	}
+	return ret;
+}
+
+
+size_t DefaultKeyboardAPI::add(ConsumerKeycode k) 
 {
 	// No 2 byte keys are supported
 	if(k > 0xFF){
@@ -187,99 +271,7 @@ size_t KeyboardAPI::add(ConsumerKeycode k)
 }
 
 
-size_t KeyboardAPI::release(uint8_t k) 
-{
-	// Release key and send report to host
-	auto ret = remove(k);
-	if(ret){
-		send();
-	}
-	return ret;
-}
-
-
-size_t KeyboardAPI::release(KeyboardKeycode k) 
-{
-	// Release key and send report to host
-	auto ret = remove(k);
-	if(ret){
-		send();
-	}
-	return ret;
-}
-
-
-size_t KeyboardAPI::release(KeyboardModifier k) 
-{
-	// Release modifier key and send report to host
-	auto ret = remove(k);
-	if(ret){
-		send();
-	}
-	return ret;
-}
-
-
-size_t KeyboardAPI::release(ConsumerKeycode k) 
-{
-	// Release key and send report to host
-	auto ret = remove(k);
-	if(ret){
-		send();
-	}
-	return ret;
-}
-
-
-size_t KeyboardAPI::remove(uint8_t k) 
-{
-	// Ignore invalid input
-	if(k >= sizeof(_asciimap)){
-		return 0;
-	}
-
-	// Read key from ascii lookup table
-	k = pgm_read_byte(_asciimap + k);
-	auto ret = remove(KeyboardKeycode(k & ~SHIFT));
-	
-	// Always try to release shift (if used)
-	if(k & SHIFT){
-		ret |= remove(KEY_LEFT_SHIFT);
-	}
-	return ret;
-}
-
-
-size_t KeyboardAPI::remove(KeyboardKeycode k) 
-{
-	// Test the key report to see if k is present. Clear it if it exists.
-	for (uint8_t i = 0; i < sizeof(_keyReport.keys); i++) {
-		if (_keyReport.keys[i] == k) {
-			_keyReport.keys[i] = KEY_RESERVED;
-			return 1;
-		}
-	}
-	
-	// No pressed key was found
-	return 0;
-}
-
-
-size_t KeyboardAPI::remove(KeyboardModifier k) 
-{
-	// Release modifier key
-	auto oldModifier = _keyReport.modifiers;
-	_keyReport.modifiers &= ~k;
-	
-	// Check if we actually released a key
-	if(_keyReport.modifiers != oldModifier){
-		return 1;
-	}
-	return 0;
-}
-
-
-size_t KeyboardAPI::remove(ConsumerKeycode k) 
+size_t DefaultKeyboardAPI::remove(ConsumerKeycode k) 
 {
 	// No 2 byte keys are supported
 	if(k > 0xFF){
@@ -291,46 +283,3 @@ size_t KeyboardAPI::remove(ConsumerKeycode k)
 	_keyReport.reserved = HID_CONSUMER_UNASSIGNED;
 	return 1;
 }
-
-
-size_t KeyboardAPI::releaseAll(void)
-{
-	// Release all keys
-	auto ret = removeAll();
-	if(ret){
-		send();
-	}
-	return ret;
-}
-
-
-size_t KeyboardAPI::removeAll(void)
-{
-	// Release all keys
-	uint8_t ret = 0;
-	for (uint8_t i = 0; i < sizeof(_keyReport.keys); i++)
-	{
-		// Is a key in the list or did we found an empty slot?
-		if(_keyReport.keys[i]){
-			ret++;
-		}
-
-		_keyReport.keys[i] = KEY_RESERVED;
-	}
-	return ret;
-}
-
-
-int KeyboardAPI::send(void){
-	// TODO set write error if usb send fails/disconnected?
-	return SendReport(&_keyReport, sizeof(_keyReport));
-}
-
-
-void KeyboardAPI::wakeupHost(void){
-#ifdef USBCON
-	USBDevice.wakeupHost();
-#endif
-}
-
-

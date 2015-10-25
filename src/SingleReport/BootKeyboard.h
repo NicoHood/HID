@@ -31,12 +31,13 @@ THE SOFTWARE.
 #include "../HID-APIs/KeyboardAPI.h"
 
 
-class BootKeyboard_ : public PluggableUSBModule, public KeyboardAPI
+class BootKeyboard_ : public PluggableUSBModule, public DefaultKeyboardAPI
 {
 public:
     BootKeyboard_(void);
     uint8_t getLeds(void);
     uint8_t getProtocol(void);
+    void wakeupHost(void);
 
 protected:
     // Implementation of the PUSBListNode
@@ -50,7 +51,7 @@ protected:
     
     uint8_t leds;
     
-    virtual int SendReport(void* data, int length) override;
+    virtual int send(void) override;
 };
 extern BootKeyboard_ BootKeyboard;
 

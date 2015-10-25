@@ -70,9 +70,13 @@ Keyboard_::Keyboard_(void)
 	HID().AppendDescriptor(&node);
 }
 
-int Keyboard_::SendReport(void* data, int length)
+int Keyboard_::send(void)
 {
-	return HID().SendReport(HID_REPORTID_KEYBOARD, data, length);
+	return HID().SendReport(HID_REPORTID_KEYBOARD, &_keyReport, sizeof(_keyReport));
+}
+
+void Keyboard_::wakeupHost(void){
+	USBDevice.wakeupHost();
 }
 
 Keyboard_ Keyboard;

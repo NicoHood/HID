@@ -29,19 +29,6 @@ THE SOFTWARE.
 #endif
 
 // Hut1_12v2.pdf
-enum KeyboardModifier : uint8_t {
-	KEY_LEFT_CTRL		= (1 << 0),
-	KEY_LEFT_SHIFT		= (1 << 1),
-	KEY_LEFT_ALT		= (1 << 2),
-	KEY_LEFT_GUI		= (1 << 3),
-	KEY_LEFT_WINDOWS	= (1 << 3), // Alias
-	KEY_RIGHT_CTRL		= (1 << 4),
-	KEY_RIGHT_SHIFT		= (1 << 5),
-	KEY_RIGHT_ALT		= (1 << 6),
-	KEY_RIGHT_GUI		= (1 << 7),
-	KEY_RIGHT_WINDOWS	= (1 << 7), // Alias
-};
-
 enum KeyboardKeycode : uint8_t {
 	KEY_RESERVED		=  0,
 	KEY_ERROR_ROLLOVER	=  1,
@@ -267,15 +254,16 @@ enum KeyboardKeycode : uint8_t {
     KEYPAD_DECIMAL	            = 0xDC, // Disabled (Ubuntu)
     KEYPAD_HEXADECIMAL	        = 0xDD, // Disabled (Ubuntu)
     
-    // Used in KeyboardModifier enum directly
-    //KEY_LEFT_CTRL		    = 0xE0,
-	//KEY_LEFT_SHIFT		= 0xE1,
-	//KEY_LEFT_ALT		    = 0xE2,
-	//KEY_LEFT_GUI		    = 0xE3,
-	//KEY_RIGHT_CTRL		= 0xE4,
-	//KEY_RIGHT_SHIFT		= 0xE5,
-	//KEY_RIGHT_ALT		    = 0xE6,
-	//KEY_RIGHT_GUI		    = 0xE7,
+    KEY_LEFT_CTRL		    = 0xE0,
+	KEY_LEFT_SHIFT		    = 0xE1,
+	KEY_LEFT_ALT		    = 0xE2,
+	KEY_LEFT_GUI		    = 0xE3,
+	KEY_LEFT_WINDOWS	    = 0xE3, // Alias
+	KEY_RIGHT_CTRL		    = 0xE4,
+	KEY_RIGHT_SHIFT		    = 0xE5,
+	KEY_RIGHT_ALT		    = 0xE6,
+	KEY_RIGHT_GUI		    = 0xE7,
+	KEY_RIGHT_WINDOWS	    = 0xE7, // Alias
 	
     // Keyboard HID mappings
 

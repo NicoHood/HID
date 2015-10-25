@@ -31,13 +31,14 @@ THE SOFTWARE.
 #include "../HID-APIs/KeyboardAPI.h"
 
 
-class Keyboard_ : public KeyboardAPI
+class Keyboard_ : public DefaultKeyboardAPI
 {
 public:
     Keyboard_(void);
+    void wakeupHost(void);
 
 protected: 
-    virtual inline int SendReport(void* data, int length) override;
+    virtual inline int send(void) override;
 };
 extern Keyboard_ Keyboard;
 
