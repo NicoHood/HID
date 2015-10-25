@@ -151,8 +151,8 @@ uint8_t SingleNKROKeyboard_::getLeds(void){
     return leds;
 }
 
-void SingleNKROKeyboard_::SendReport(void* data, int length){
-	USB_Send(pluggedEndpoint | TRANSFER_RELEASE, data, length);
+int SingleNKROKeyboard_::send(void){
+	return USB_Send(pluggedEndpoint | TRANSFER_RELEASE, &_keyReport, sizeof(_keyReport));
 }
 
 SingleNKROKeyboard_ SingleNKROKeyboard;

@@ -37,7 +37,7 @@ public:
     NKROKeyboard_(void);
 
 protected: 
-    virtual inline void SendReport(void* data, int length) override;
+    virtual inline int send(void) override;
 };
 extern NKROKeyboard_ NKROKeyboard;
 

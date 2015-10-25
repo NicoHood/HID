@@ -50,7 +50,7 @@ protected:
     
     uint8_t leds;
     
-    virtual void SendReport(void* data, int length) override;
+    virtual inline int send(void) override;
 };
 extern SingleNKROKeyboard_ SingleNKROKeyboard;
 

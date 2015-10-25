@@ -24,10 +24,7 @@ THE SOFTWARE.
 // Include guard
 #pragma once
 
-#include <Arduino.h>
-#include "HID-Settings.h"
-#include "ImprovedKeylayouts.h"
-#include "HID-Tables.h" //TODO
+#include "KeyboardAPI.h"
 
 // Max value for USB EP_SIZE 16
 // +1 reportID, +1 modifier, +1 custom key
@@ -43,34 +40,24 @@ typedef union{
 		uint8_t keys[NKRO_KEY_COUNT / 8];
 		uint8_t key;
 	};
+	uint8_t allkeys[2 + NKRO_KEY_COUNT / 8];
 } HID_NKROKeyboardReport_Data_t;
 
 	
-class NKROKeyboardAPI : public Print
+class NKROKeyboardAPI : public KeyboardAPI
 {
 public:
-	inline NKROKeyboardAPI(void);
-	inline void begin(void);
-	inline void end(void);
-	inline size_t write(uint8_t k);
-	inline size_t press(uint8_t k);
-	inline size_t release(uint8_t k);
-	inline void releaseAll(void);
-	inline void send_now(void);
+  // Implement adding/removing key functions
+  inline virtual size_t removeAll(void) override;
 
-	inline size_t writeKeycode(uint8_t k);
-	inline size_t pressKeycode(uint8_t k);
-	inline size_t releaseKeycode(uint8_t k);
-	inline size_t addKeyToReport(uint8_t k);
-	inline size_t addKeycodeToReport(uint8_t k);
-	inline size_t removeKeyFromReport(uint8_t k);
-	inline size_t removeKeycodeFromReport(uint8_t k);
-	
-	// Sending is public in the base class for advanced users.
-	virtual void SendReport(void* data, int length) = 0;
-	
+  // Needs to be implemented in a lower level
+  virtual int send(void) = 0;
+
 protected:
-	HID_NKROKeyboardReport_Data_t _keyReport;
+  HID_NKROKeyboardReport_Data_t _keyReport;
+
+private:
+  inline virtual size_t set(KeyboardKeycode k, bool s) override;
 };
 
 // Implementation is inline
