@@ -253,7 +253,7 @@ size_t KeyboardAPI::remove(uint8_t k)
 size_t KeyboardAPI::remove(KeyboardKeycode k) 
 {
 	// Test the key report to see if k is present. Clear it if it exists.
-	for (uint8_t i = 0; i < 6; i++) {
+	for (uint8_t i = 0; i < sizeof(_keyReport.keys); i++) {
 		if (_keyReport.keys[i] == k) {
 			_keyReport.keys[i] = KEY_RESERVED;
 			return 1;
