@@ -32,6 +32,7 @@ enum ConsumerKeycode : uint16_t {
 	CONSUMER_POWER	= 0x30,
 	CONSUMER_SLEEP = 0x32,
 
+	MEDIA_RECORD = 0xB2,
 	MEDIA_FAST_FORWARD	= 0xB3,
 	MEDIA_REWIND	= 0xB4,
 	MEDIA_NEXT	= 0xB5,
@@ -39,6 +40,7 @@ enum ConsumerKeycode : uint16_t {
 	MEDIA_PREV	= 0xB6, // Alias
 	MEDIA_STOP	= 0xB7,
 	MEDIA_PLAY_PAUSE	= 0xCD,
+	MEDIA_PAUSE	= 0xB0,
 
 	MEDIA_VOLUME_MUTE	= 0xE2,
 	MEDIA_VOL_MUTE = 0xE2, // Alias
