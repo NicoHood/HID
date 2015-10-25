@@ -28,7 +28,7 @@ THE SOFTWARE.
 #include "PluggableUSB.h"
 #include "HID.h"
 #include "HID-Settings.h"
-#include "../HID-APIs/KeyboardAPI.h"
+#include "../HID-APIs/DefaultKeyboardAPI.h"
 
 
 class Keyboard_ : public DefaultKeyboardAPI
