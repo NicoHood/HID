@@ -72,13 +72,13 @@ public:
   inline size_t remove(KeyboardModifier k);
   inline size_t remove(ConsumerKeycode k);
  
-  inline void releaseAll(void);
-  inline void removeAll(void);
-  inline void send_now(void);
+  inline size_t releaseAll(void);
+  inline size_t removeAll(void);
+  inline int send(void);
   inline void wakeupHost(void);
 
   // Sending is public in the base class for advanced users.
-  virtual void SendReport(void* data, int length) = 0;
+  virtual int SendReport(void* data, int length) = 0;
   
 protected:
   HID_KeyboardReport_Data_t _keyReport;

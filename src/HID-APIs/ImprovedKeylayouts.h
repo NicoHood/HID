@@ -128,6 +128,10 @@ enum KeyboardKeycode : uint8_t {
     KEY_LEFT_ARROW		= 0x50,
     KEY_DOWN_ARROW		= 0x51,
     KEY_UP_ARROW		= 0x52,
+    KEY_RIGHT   	    = 0x4F, // Alias
+    KEY_LEFT	    	= 0x50, // Alias
+    KEY_DOWN	    	= 0x51, // Alias
+    KEY_UP	        	= 0x52, // Alias
     KEY_NUM_LOCK		= 0x53,
     KEYPAD_DIVIDE	    = 0x54,
     KEYPAD_MULTIPLY	    = 0x55,

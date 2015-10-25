@@ -50,7 +50,7 @@ protected:
     
     uint8_t leds;
     
-    virtual void SendReport(void* data, int length) override;
+    virtual int SendReport(void* data, int length) override;
 };
 extern BootKeyboard_ BootKeyboard;
 

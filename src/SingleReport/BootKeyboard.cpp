@@ -156,8 +156,8 @@ uint8_t BootKeyboard_::getProtocol(void){
     return protocol;
 }
 
-void BootKeyboard_::SendReport(void* data, int length){
-	USB_Send(pluggedEndpoint | TRANSFER_RELEASE, data, length);
+int BootKeyboard_::SendReport(void* data, int length){
+	return USB_Send(pluggedEndpoint | TRANSFER_RELEASE, data, length);
 }
 
 BootKeyboard_ BootKeyboard;

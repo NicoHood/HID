@@ -85,7 +85,7 @@ size_t KeyboardAPI::press(uint8_t k)
 	// Press key and send report to host
 	auto ret = add(k);
 	if(ret){
-		send_now();
+		send();
 	}
 	return ret;
 }
@@ -96,7 +96,7 @@ size_t KeyboardAPI::press(KeyboardKeycode k)
 	// Press key and send report to host
 	auto ret = add(k);
 	if(ret){
-		send_now();
+		send();
 	}
 	return ret;
 }
@@ -107,7 +107,7 @@ size_t KeyboardAPI::press(KeyboardModifier k)
 	// Press modifier key and send report to host
 	auto ret = add(k);
 	if(ret){
-		send_now();
+		send();
 	}
 	return ret;
 }
@@ -118,7 +118,7 @@ size_t KeyboardAPI::press(ConsumerKeycode k)
 	// Press key and send report to host
 	auto ret = add(k);
 	if(ret){
-		send_now();
+		send();
 	}
 	return ret;
 }
@@ -174,8 +174,8 @@ size_t KeyboardAPI::add(KeyboardModifier k)
 
 size_t KeyboardAPI::add(ConsumerKeycode k) 
 {
+	// No 2 byte keys are supported
 	if(k > 0xFF){
-		// No 2 byte keys are supported
 		setWriteError();
 		return 0;
 	}
@@ -192,7 +192,7 @@ size_t KeyboardAPI::release(uint8_t k)
 	// Release key and send report to host
 	auto ret = remove(k);
 	if(ret){
-		send_now();
+		send();
 	}
 	return ret;
 }
@@ -203,7 +203,7 @@ size_t KeyboardAPI::release(KeyboardKeycode k)
 	// Release key and send report to host
 	auto ret = remove(k);
 	if(ret){
-		send_now();
+		send();
 	}
 	return ret;
 }
@@ -214,7 +214,7 @@ size_t KeyboardAPI::release(KeyboardModifier k)
 	// Release modifier key and send report to host
 	auto ret = remove(k);
 	if(ret){
-		send_now();
+		send();
 	}
 	return ret;
 }
@@ -225,7 +225,7 @@ size_t KeyboardAPI::release(ConsumerKeycode k)
 	// Release key and send report to host
 	auto ret = remove(k);
 	if(ret){
-		send_now();
+		send();
 	}
 	return ret;
 }
@@ -281,8 +281,8 @@ size_t KeyboardAPI::remove(KeyboardModifier k)
 
 size_t KeyboardAPI::remove(ConsumerKeycode k) 
 {
+	// No 2 byte keys are supported
 	if(k > 0xFF){
-		// No 2 byte keys are supported
 		return 0;
 	}
 	
@@ -293,23 +293,37 @@ size_t KeyboardAPI::remove(ConsumerKeycode k)
 }
 
 
-void KeyboardAPI::releaseAll(void)
+size_t KeyboardAPI::releaseAll(void)
 {
 	// Release all keys
-	removeAll();
-	send_now();
+	auto ret = removeAll();
+	if(ret){
+		send();
+	}
+	return ret;
 }
 
 
-void KeyboardAPI::removeAll(void)
+size_t KeyboardAPI::removeAll(void)
 {
 	// Release all keys
-	memset(&_keyReport, 0x00, sizeof(_keyReport));
+	uint8_t ret = 0;
+	for (uint8_t i = 0; i < sizeof(_keyReport.keys); i++)
+	{
+		// Is a key in the list or did we found an empty slot?
+		if(_keyReport.keys[i]){
+			ret++;
+		}
+
+		_keyReport.keys[i] = KEY_RESERVED;
+	}
+	return ret;
 }
 
 
-void KeyboardAPI::send_now(void){
-	SendReport(&_keyReport, sizeof(_keyReport));
+int KeyboardAPI::send(void){
+	// TODO set write error if usb send fails/disconnected?
+	return SendReport(&_keyReport, sizeof(_keyReport));
 }
 
 

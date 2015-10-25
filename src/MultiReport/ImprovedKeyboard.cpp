@@ -70,9 +70,9 @@ Keyboard_::Keyboard_(void)
 	HID().AppendDescriptor(&node);
 }
 
-void Keyboard_::SendReport(void* data, int length)
+int Keyboard_::SendReport(void* data, int length)
 {
-	HID().SendReport(HID_REPORTID_KEYBOARD, data, length);
+	return HID().SendReport(HID_REPORTID_KEYBOARD, data, length);
 }
 
 Keyboard_ Keyboard;
