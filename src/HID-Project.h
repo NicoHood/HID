@@ -27,6 +27,9 @@ THE SOFTWARE.
 // Software version
 #define HID_PROJECT_VERSION 240
 
+// TODO remove https://github.com/arduino/arduino-builder/issues/33
+#include <Arduino.h>
+
 #if ARDUINO < 10606
 #error HID Project requires Arduino IDE 1.6.6 or greater. Please update your IDE.
 #endif

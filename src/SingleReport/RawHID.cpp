@@ -47,6 +47,12 @@ static const uint8_t  _hidReportDescriptorRawHID[] PROGMEM = {
     0xC0                         /* end collection */ 
 };
 
+// Weak implementation of the Event function
+void RawHIDEvent(void) __attribute__ ((weak));
+void RawHIDEvent(void){
+	// Empty
+}
+
 RawHID_::RawHID_(void) : PluggableUSBModule(1, 1, epType), protocol(HID_REPORT_PROTOCOL), idle(1), dataLength(0)
 {
 	epType[0] = EP_TYPE_INTERRUPT_IN;
@@ -55,7 +61,6 @@ RawHID_::RawHID_(void) : PluggableUSBModule(1, 1, epType), protocol(HID_REPORT_P
 
 int RawHID_::getInterface(uint8_t* interfaceCount)
 {
-	// TODO add a 2nd OUT endpoint to get more speed???
 	// Maybe as optional device FastRawHID with different USAGE PAGE
 	*interfaceCount += 1; // uses 1
 	HIDDescriptor hidInterface = {
@@ -117,36 +122,40 @@ bool RawHID_::setup(USBSetup& setup)
 		{
 			// Get the data length information and the corresponding bytes
 			int length = setup.wLength;
-
-			// Ensure that there IS some data
-			if(length > 0)
+			while(length)
 			{
-				void* data = malloc(length);
-				if(data){
-					auto recvLength = length;
-					//TODO loop can be improved maybe? Or does the compiler do this already?
-					while(recvLength > USB_EP_SIZE){
-						USB_RecvControl((uint8_t*)data + (length - recvLength), USB_EP_SIZE);
-						recvLength -= USB_EP_SIZE;
-					}
-					USB_RecvControl((uint8_t*)data + (length - recvLength), recvLength);
-
-					// Only overwrite the buffer if its empty.
-					// This avoids corrupted data while reading.
-					if(!dataLength){
-						// Save new data
-						dataLength = length;
-						dataHead = (uint8_t*) data;
-						dataTail = (uint8_t*)(data) + length;
-						
-						// Clear the passed in pointer to not free the data
-						data = NULL;
-					}
+				// Dont receive more than the USB EP has to offer
+				// TODO use fixed 64 because control EP always have 64 bytes even on 16 u2. Test!
+				auto recvLength = length;
+				if(recvLength > USB_EP_SIZE){
+					recvLength = USB_EP_SIZE;
 				}
-
-				// Release data if the pointer still exists
-				free(data);
+				if(recvLength > int(sizeof(data))){
+					recvLength = int(sizeof(data));
+				}
+				length -= recvLength;
+				
+				// Only receive data if the last one was read fully.
+				// Discard data if it wasnt read yet.
+				// To not miss any data you can use the (weak) event function.
+				if(!dataLength)
+				{
+					// Write data to fit to the end (not the beginning) of the array
+					USB_RecvControl(data + (sizeof(data) - recvLength), recvLength);
+					dataLength = recvLength;
+					RawHIDEvent();
+				}
+				// Do not read the data, flag an error to the USB Host
+				// TODO always return no error, even if data was discarded? -> use break then
+				else{
+					return false;
+				}
 			}
+			
+			// Flag no error
+			// TODO this is required to get hyperion working
+			// however this blocks the CDC serial!?
+			return true;
 		}
 	}
 

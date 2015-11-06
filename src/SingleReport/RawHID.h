@@ -40,6 +40,8 @@ THE SOFTWARE.
 // Keep one byte offset for the reportID if used
 #if (HID_REPORTID_RAWHID)
 #define RAWHID_SIZE (USB_EP_SIZE-1)
+#error RAWHID does not work properly with a report ID and multiple reports.
+#error Please remove this manually if you know what you are doing.
 #else
 #define RAWHID_SIZE (USB_EP_SIZE)
 #endif
@@ -84,36 +86,28 @@ public:
 	}
 	
 	virtual int read(){
-		if(dataLength){
-			// Get next data byte
-			uint8_t data = *(dataTail - dataLength);
-			dataLength--;
-			
-			// Release buffer if its read fully
-			if(!dataLength){
-				free(dataHead);
-			}
-
-			return data;
+		// Check if we have data available
+		if(dataLength)
+		{
+			// Get next data byte (from the start to the end)
+			return data[sizeof(data) - dataLength--];
 		}
 		return -1;
 	}
 	
 	virtual int peek(){
+		// Check if we have data available
 		if(dataLength){
-			return *(dataTail - dataLength);
+			return data[sizeof(data) - dataLength];
 		}
 		return -1;
 	}
 	
 	virtual void flush(void){
-		// Delete all incoming bytes
-		if(dataLength){
-			free(dataHead);
-			dataLength = 0;
-		}
+		// Writing will always flush by the USB driver
 	}
 
+	// Wrapper for a single byte
 	using Print::write;
 	virtual size_t write(uint8_t b){
 		return write(&b, 1);
@@ -153,8 +147,7 @@ protected:
     
 	// Buffer pointers to hold the received data
 	int dataLength;
-	uint8_t* dataHead;
-	uint8_t* dataTail;
+	uint8_t data[RAWHID_RX_SIZE];
 };
 extern RawHID_ RawHID;
 

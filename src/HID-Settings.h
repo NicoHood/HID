@@ -82,7 +82,7 @@ THE SOFTWARE.
 #ifndef HID_REPORTID_RAWHID
 // This will not work properly in most cases.
 // The number is just kept from the old number counting.
-#define HID_REPORTID_RAWHID 3
+//#define HID_REPORTID_RAWHID 3
 #endif
 
 #ifndef HID_REPORTID_CONSUMERCONTROL
