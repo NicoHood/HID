@@ -120,7 +120,11 @@ bool BootKeyboard_::setup(USBSetup& setup)
 			return true;
 		}
 		if (request == HID_GET_PROTOCOL) {
-			// TODO: Send8(protocol);
+			UEDATX = protocol;
+			return true;
+		}
+		if (request == HID_GET_IDLE) {
+			UEDATX = idle;
 			return true;
 		}
 	}
