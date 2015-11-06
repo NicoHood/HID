@@ -25,7 +25,7 @@ THE SOFTWARE.
 #pragma once
 
 // Software version
-#define HID_PROJECT_VERSION 240
+#define HID_PROJECT_VERSION 250
 
 // TODO remove https://github.com/arduino/arduino-builder/issues/33
 #include <Arduino.h>

@@ -1,4 +1,4 @@
-Arduino HID Project 2.4
+Arduino HID Project 2.5
 =======================
 
 ![Header Picture](header.jpg)
@@ -49,6 +49,8 @@ www.nicohood.de
 Version History
 ===============
 ```
+2.5 Release (xx.xx.2015)
+
 2.4 Release (06.11.2015)
 * Added Arduino IDE 1.6.6 compatibility with Pluggable HID
 * Improved Pluggable HID (see Arduyuino changelog for my improvements)
