@@ -5,6 +5,8 @@
   AbsoluteMouse example
   Press a button to click, moveTo the mouse.
 
+  You may also use SingleAbsoluteMouse to use a single report.
+
   See HID Project documentation for more infos
   https://github.com/NicoHood/HID/wiki/Mouse-API
   https://github.com/NicoHood/HID/wiki/AbsoluteMouse-API

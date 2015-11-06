@@ -76,6 +76,7 @@ TeensyKeyboard	KEYWORD1
 NKROKeyboard	KEYWORD1
 SingleNKROKeyboard	KEYWORD1
 AbsoluteMouse	KEYWORD1
+SingleAbsoluteMouse	KEYWORD1
 
 #######################################
 # Constants (LITERAL1)
