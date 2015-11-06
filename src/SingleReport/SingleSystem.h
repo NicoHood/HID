@@ -24,36 +24,32 @@ THE SOFTWARE.
 // Include guard
 #pragma once
 
-// Software version
-#define HID_PROJECT_VERSION 240
-
-// TODO remove https://github.com/arduino/arduino-builder/issues/33
 #include <Arduino.h>
+#include "PluggableUSB.h"
+#include "HID.h"
+#include "HID-Settings.h"
+#include "../HID-APIs/SystemAPI.h"
 
-#if ARDUINO < 10606
-#error HID Project requires Arduino IDE 1.6.6 or greater. Please update your IDE.
-#endif
 
-#if !defined(USBCON)
-#error HID Project can only be used with an USB MCU.
-#endif
+class SingleSystem_ : public PluggableUSBModule, public SystemAPI
+{
+public:
+    SingleSystem_(void);
+    uint8_t getLeds(void);
+    uint8_t getProtocol(void);
 
-// Include all HID libraries (.a linkage required to work) properly
-#include "MultiReport/AbsoluteMouse.h"
-#include "SingleReport/BootMouse.h"
-#include "MultiReport/ImprovedMouse.h"
-#include "SingleReport/SingleConsumer.h"
-#include "MultiReport/Consumer.h"
-#include "SingleReport/SingleGamepad.h"
-#include "MultiReport/Gamepad.h"
-#include "SingleReport/SingleSystem.h"
-#include "MultiReport/System.h"
-#include "SingleReport/RawHID.h"
-#include "SingleReport/BootKeyboard.h"
-#include "MultiReport/ImprovedKeyboard.h"
-#include "SingleReport/SingleNKROKeyboard.h"
-#include "MultiReport/NKROKeyboard.h"
+protected:
+    // Implementation of the PUSBListNode
+    int getInterface(uint8_t* interfaceCount);
+    int getDescriptor(USBSetup& setup);
+    bool setup(USBSetup& setup);
+    
+    uint8_t epType[1];
+    uint8_t protocol;
+    uint8_t idle;
+    
+    virtual inline void SendReport(void* data, int length) override;
+};
+extern SingleSystem_ SingleSystem;
 
-// Include Teensy HID afterwards to overwrite key definitions if used
-// TODO include Teensy API if non english keyboard layout was used
 

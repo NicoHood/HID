@@ -1,12 +1,14 @@
 /*
- Copyright (c) 2014-2015 NicoHood
- See the readme for credit to other people.
+  Copyright (c) 2014-2015 NicoHood
+  See the readme for credit to other people.
 
- System example
- Press a button to put pc into sleep/shut it down or wake it up again.
- 
- See HID Project documentation for more Consumer keys.
- https://github.com/NicoHood/HID/wiki/System-API
+  System example
+  Press a button to put pc into sleep/shut it down or wake it up again.
+
+  You may also use SingleSystem to use a single report.
+
+  See HID Project documentation for more Consumer keys.
+  https://github.com/NicoHood/HID/wiki/System-API
 */
 
 #include "HID-Project.h"
@@ -37,7 +39,7 @@ void loop() {
     delay(300);
     digitalWrite(pinLed, LOW);
   }
-  
+
   if (!digitalRead(pinButtonW)) {
     digitalWrite(pinLed, HIGH);
 
