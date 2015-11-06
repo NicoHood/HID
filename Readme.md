@@ -1,15 +1,32 @@
-Arduino HID Project 2.2
+Arduino HID Project 2.4
 =======================
 
 ![Header Picture](header.jpg)
 
-##IDE 1.6.6 compatible library is [now available here.](https://github.com/NicoHood/HID/tree/dev_2_4)
-Install it as library, not as hardware file. IDE 1.6.6 introduced pluggable HID where you
-dont need to patch the whole Arduino-Core anymore.
-
-This project went through a lot of phases and has now reached a new Arduino USB-Core
+This project went through a lot of phases and has now reached a new Arduino ~~USB-Core~~ Library
 with a lot of new functions like extended HID. It also supports HoodLoader1+2.
 The idea is to enable enhanced USB functions to almost all 'standard' Arduino boards.
+
+**Supported Arduinos (IDE 1.6.6 or higher!):**
+* Uno (with [HoodLoader2](https://github.com/NicoHood/HoodLoader2))
+* Mega (with [HoodLoader2](https://github.com/NicoHood/HoodLoader2))
+* Leonardo
+* (Pro)Micro
+* Any other 8u2/16u2/at90usb8/162/32u2/32u4 compatible board
+* No SAM/ARM support (Due, Zero etc)
+
+**Supported HID devices:**
+* Keyboard with Leds out (8 modifiers + 6 keys pressed at the same time, + 1 limited linux consumer key)
+* ~~Teensy Keyboard with different keyboard layouts (german, french and many more)~~ soon
+* NKRO Keyboard with Leds out (press up to 113 keys at the same time)
+* Mouse (5 buttons, move, wheel)
+* BootKeyboard/BootMouse BIOS protocol support
+* Absolute Mouse
+* Consumer/Media Keys (4 keys for music player, web browser and more)
+* System Key (for PC standby/shutdown)
+* Gamepad (32 buttons, 4 16bit axis, 2 8bit axis, 2 D-Pads)
+* RawHID
+* Each device is available as single or multi report device (except RawHID)
 
 See the [wiki](https://github.com/NicoHood/HID/wiki/Features) for more information about features etc.
 
@@ -19,13 +36,14 @@ Download
 
 You have 3 versions you can download:
 * The master includes all fixes to the current stable release. Download it by clicking download at the right.
+You might need to get the latest hourly build of the Arduino IDE to use the current master.
 Use the [online Wiki](https://github.com/NicoHood/HID/wiki) to get the newest documentation.
 * Download an offline version in [releases](https://github.com/NicoHood/HID/releases).
 It's a snapshot of the current stable release but might have missed some updates that the current master branch has included.
 This also includes an offline version of the wiki. Offline versions will be available after some time when the official release is out.
-* Select [branch 'dev'](https://github.com/NicoHood/HID/tree/dev) to test the bleeding edge of this software. It might now work at all or has a lot of debugging stuff in it.
-If the dev version gets near to a new release a note will be placed here, that you can test the new dev beta.
-Currently there is no beta available.
+* Select [branch 'dev'](https://github.com/NicoHood/HID/tree/dev) to test the bleeding edge of this software.
+It might not work at all or has a lot of debugging stuff in it. An hourly IDE build is highly suggested.
+If the dev version gets near to a new release a big banner will be placed at the top.
 
 
 Wiki
@@ -44,27 +62,34 @@ You can contact me on my wordpress blog in the contact section.
 www.nicohood.de
 
 
-TODO
-====
-
-Under Construction. This is a todo list for myself.
-
-```
-Keyboard Layout for different Languages
-Clean up USB Core code from fixed values. Use better understandable definitions
-Magic key fix for 32u4?
-
-Check Keyboard keycode function again
-Generalize HID key definitions via HIDTables for example?
-
-Test with Android phone (HL1)
-improve keywords.txt
-```
-
-
 Version History
 ===============
 ```
+2.4 Release (xx.xx.2015)
+* Added Arduino IDE 1.6.6 compatibility with Pluggable HID
+* Improved Pluggable HID (see Arduyuino changelog for my improvements)
+* Changed USB-Core into a simple library, only made possible with Pluggable HID
+* Removed HID presets in boards menu (like mouse + keyboard + consumer + system)
+* Added Teensy Keyboard
+* Added NKRO Keyboard
+* Added Led report for Keyboard
+* Added 1 Linux consumer key for keyboard
+* Added BootKeyboard/Mouse support (BIOS compatibility)
+* Added RawHID
+* Added a few key definitions
+* Renew whole Keyboard API and its definitions via enum
+* Uses .alinkage custom IDE option
+* Improved and updated examples
+* A lot of other minor and major fixes I missed to mention.
+
+
+2.3 Release (never released)
+* Updated Libraries
+* Updated Arduino Core
+* Added Minor Consumer definitions
+* Fixed platforms.txt
+* SERIAL_RX_BUFFER_SIZE reverted to 16 (TODO add -D to build option)
+
 2.2 Release (12.04.2015)
 * added experimental, not finished nor documented HID-Bridge between 16u2 and 328/2560
 * increased HW Serial1 RX buffer size from 16 to 32 (TX still 16)
