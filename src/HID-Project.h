@@ -27,8 +27,6 @@ THE SOFTWARE.
 // Software version
 #define HID_PROJECT_VERSION 240
 
-#include <Arduino.h> //TODO
-
 #if ARDUINO < 10606
 #error HID Project requires Arduino IDE 1.6.6 or greater. Please update your IDE.
 #endif
@@ -46,14 +44,11 @@ THE SOFTWARE.
 #include "MultiReport/Gamepad.h"
 #include "MultiReport/System.h"
 #include "SingleReport/RawHID.h"
-
-// Include Teensy HID afterwards to overwrite key definitions if used
-// TODO include Teensy API if non english keyboard layout was used
-#ifdef USE_TEENSY_KEYBOARD
-//#include "TeensyKeyboard.h"
-#else
 #include "SingleReport/BootKeyboard.h"
 #include "MultiReport/ImprovedKeyboard.h"
 #include "SingleReport/SingleNKROKeyboard.h"
 #include "MultiReport/NKROKeyboard.h"
-#endif
+
+// Include Teensy HID afterwards to overwrite key definitions if used
+// TODO include Teensy API if non english keyboard layout was used
+
