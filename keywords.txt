@@ -65,6 +65,7 @@ BootMouse	KEYWORD1
 RawHID	KEYWORD1
 System	KEYWORD1
 Consumer	KEYWORD1
+SingleConsumer	KEYWORD1
 Gamepad	KEYWORD1
 Gamepad1	KEYWORD1
 Gamepad2	KEYWORD1

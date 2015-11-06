@@ -5,6 +5,8 @@
   Consumer example
   Press a button to play/pause music player
 
+  You may also use SingleConsumer to use a single report.
+
   See HID Project documentation for more Consumer keys.
   https://github.com/NicoHood/HID/wiki/Consumer-API
 */
