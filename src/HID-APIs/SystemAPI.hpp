@@ -35,11 +35,11 @@ void SystemAPI::begin(void){
 }
 
 void SystemAPI::end(void){
-	uint8_t _report = 0;
+	SystemKeycode _report = HID_SYSTEM_UNASSIGNED;
 	SendReport(&_report, sizeof(_report));
 }
 
-void SystemAPI::write(uint8_t s){
+void SystemAPI::write(SystemKeycode s){
 	press(s);
 	release();
 }
@@ -52,7 +52,7 @@ void SystemAPI::releaseAll(void){
 	begin();
 }
 
-void SystemAPI::press(uint8_t s){
+void SystemAPI::press(SystemKeycode s){
 #ifdef USBCON
 	if (s == SYSTEM_WAKE_UP)
 		USBDevice.wakeupHost();
