@@ -43,6 +43,9 @@ public:
         if(length > 0){
             featureReport = (uint8_t*)report;
             featureLength = length;
+            
+            // Disable feature report by default
+            disableFeatureReport();
         }
     }
     
