@@ -48,8 +48,8 @@ static const uint8_t  _hidReportDescriptorRawHID[] PROGMEM = {
 };
 
 // Weak implementation of the Event function
-void RawHIDEvent(void) __attribute__ ((weak));
-void RawHIDEvent(void){
+void RawHIDEvent(uint8_t num) __attribute__ ((weak));
+void RawHIDEvent(uint8_t num){
 	// Empty
 }
 
@@ -122,6 +122,7 @@ bool RawHID_::setup(USBSetup& setup)
 		{
 			// Get the data length information and the corresponding bytes
 			int length = setup.wLength;
+			uint8_t num = 0;
 			while(length)
 			{
 				// Dont receive more than the USB EP has to offer
@@ -143,7 +144,7 @@ bool RawHID_::setup(USBSetup& setup)
 					// Write data to fit to the end (not the beginning) of the array
 					USB_RecvControl(data + (sizeof(data) - recvLength), recvLength);
 					dataLength = recvLength;
-					RawHIDEvent();
+					RawHIDEvent(num++);
 				}
 				// Do not read the data, flag an error to the USB Host
 				// TODO always return no error, even if data was discarded? -> use break then

@@ -82,7 +82,7 @@ void loop() {
   }
 }
 
-void RawHIDEvent(void) {
+void RawHIDEvent(uint8_t num) {
   // This event is called via interrupt.
   // Do not use print inside, or other long function calls!
   // If you not use this event function,
