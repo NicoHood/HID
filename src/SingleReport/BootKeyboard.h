@@ -38,6 +38,28 @@ public:
     uint8_t getLeds(void);
     uint8_t getProtocol(void);
     void wakeupHost(void);
+    
+    void setFeatureReport(void* report, int length){
+        if(length > 0){
+            featureReport = (uint8_t*)report;
+            featureLength = length;
+        }
+    }
+    
+    int availableFeatureReport(void){
+        if(featureLength < 0){
+            return featureLength & ~0x8000;
+        }
+        return 0;
+    }
+    
+    void enableFeatureReport(void){
+        featureLength &= ~0x8000;
+    }
+    
+    void disableFeatureReport(void){
+        featureLength |= 0x8000;
+    }
 
 protected:
     // Implementation of the PUSBListNode
@@ -50,6 +72,9 @@ protected:
     uint8_t idle;
     
     uint8_t leds;
+    
+    uint8_t* featureReport;
+    int featureLength;
     
     virtual int send(void) override;
 };
