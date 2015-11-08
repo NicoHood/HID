@@ -144,7 +144,7 @@ int rawhid_send(int num, void *buf, int len, int timeout)
 	if (hid->ep_out) {
 		return usb_interrupt_write(hid->usb, hid->ep_out, buf, len, timeout);
 	} else {
-		return usb_control_msg(hid->usb, 0x21, 9, 0, hid->iface, buf, len, timeout);
+		return usb_control_msg(hid->usb, 0x21, 9, 0x0200, hid->iface, buf, len, timeout);
 	}
 }
 
