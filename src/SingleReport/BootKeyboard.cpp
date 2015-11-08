@@ -158,6 +158,7 @@ bool BootKeyboard_::setup(USBSetup& setup)
 					disableFeatureReport();
 					return true;
 				}
+				// TODO fake clear data?
 			}
 
 			// Output (set led states)

@@ -5,7 +5,11 @@
   KeyboardFeatureReport example
 
   Shows how to use BootKeyboard with a modified Hyperion Lightpack device.
+  This example also works with RawHID.
   Might only work under linux.
+  https://github.com/tvdzwan/hyperion/pull/407
+  https://github.com/tvdzwan/hyperion/wiki
+  https://github.com/FastLED/FastLED
 
   See HID Project documentation for more information.
   https://github.com/NicoHood/HID/wiki/RawHID-API
