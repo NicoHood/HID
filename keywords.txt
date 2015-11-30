@@ -13,6 +13,8 @@
 begin	KEYWORD2
 end	KEYWORD2
 press	KEYWORD2
+add	KEYWORD2
+remove	KEYWORD2
 release	KEYWORD2
 releaseAll	KEYWORD2
 
@@ -36,7 +38,7 @@ set_key4	KEYWORD2
 set_key5	KEYWORD2
 set_key6	KEYWORD2
 set_media	KEYWORD2
-send_now	KEYWORD2
+send	KEYWORD2
 
 buttons	KEYWORD2
 xAxis	KEYWORD2

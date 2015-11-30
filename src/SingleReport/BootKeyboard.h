@@ -63,6 +63,8 @@ public:
     void disableFeatureReport(void){
         featureLength |= 0x8000;
     }
+    
+    virtual int send(void) final;
 
 protected:
     // Implementation of the PUSBListNode
@@ -78,8 +80,6 @@ protected:
     
     uint8_t* featureReport;
     int featureLength;
-    
-    virtual int send(void) override;
 };
 extern BootKeyboard_ BootKeyboard;
 

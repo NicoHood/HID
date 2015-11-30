@@ -37,6 +37,8 @@ public:
     SingleNKROKeyboard_(void);
     uint8_t getLeds(void);
     uint8_t getProtocol(void);
+    
+    virtual int send(void) final;
 
 protected:
     // Implementation of the PUSBListNode
@@ -49,8 +51,6 @@ protected:
     uint8_t idle;
     
     uint8_t leds;
-    
-    virtual inline int send(void) override;
 };
 extern SingleNKROKeyboard_ SingleNKROKeyboard;
 

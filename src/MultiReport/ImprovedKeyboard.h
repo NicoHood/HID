@@ -37,8 +37,7 @@ public:
     Keyboard_(void);
     void wakeupHost(void);
 
-protected: 
-    virtual inline int send(void) override;
+    virtual inline int send(void) final;
 };
 extern Keyboard_ Keyboard;
 
