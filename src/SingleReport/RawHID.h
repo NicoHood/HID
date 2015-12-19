@@ -73,32 +73,73 @@ class RawHID_ : public PluggableUSBModule, public Stream
 public:
 	RawHID_(void);
 
-	void begin(void){
-		// empty
+    void setFeatureReport(void* report, int length){
+        if(length > 0){
+            featureReport = (uint8_t*)report;
+            featureLength = length;
+            
+            // Disable feature report by default
+            disableFeatureReport();
+        }
+    }
+    
+    int availableFeatureReport(void){
+        if(featureLength < 0){
+            return featureLength & ~0x8000;
+        }
+        return 0;
+    }
+    
+    void enableFeatureReport(void){
+        featureLength &= ~0x8000;
+    }
+    
+    void disableFeatureReport(void){
+        featureLength |= 0x8000;
+    }
+
+	void begin(void* report, int length){
+        if(length > 0){
+            data = (uint8_t*)report;
+            dataLength = length;
+            dataAvailable = 0;
+        }
 	}
 
 	void end(void){
-		// empty
+		disable();
+		dataLength = 0;
+	}
+	
+	void enable(void){
+		dataAvailable = 0;
+	}
+	
+	void disable(void){
+		dataAvailable = -1;
 	}
 	
 	virtual int available(void){
-		return dataLength;
+		if(dataAvailable < 0){
+			return 0;
+		}
+		return dataAvailable;
 	}
 	
 	virtual int read(){
 		// Check if we have data available
-		if(dataLength)
+		if(dataAvailable > 0)
 		{
 			// Get next data byte (from the start to the end)
-			return data[sizeof(data) - dataLength--];
+			return data[dataLength - dataAvailable--];
 		}
 		return -1;
 	}
 	
 	virtual int peek(){
 		// Check if we have data available
-		if(dataLength){
-			return data[sizeof(data) - dataLength];
+		if(dataAvailable > 0){
+			return data[dataLength - dataAvailable];
 		}
 		return -1;
 	}
@@ -114,26 +155,8 @@ public:
 	}
 
 	virtual size_t write(uint8_t *buffer, size_t size){
-		// TODO this will split the data into proper USB_EP_SIZE packets already
-		SendReport(buffer, size);
-		return size;
-	
-		size_t bytesleft = size;
-		// First work through the buffer thats already there
-		while (bytesleft >= RAWHID_TX_SIZE){
-			SendReport(&buffer[size - bytesleft], RAWHID_TX_SIZE);
-			bytesleft -= RAWHID_TX_SIZE;
-		}
-		
-		// Write down the leftover bytes and fill with zeros
-		if (bytesleft){
-			SendReport(&buffer[size - bytesleft], bytesleft);
-		}
-		
-		return size;
+		return USB_Send(pluggedEndpoint | TRANSFER_RELEASE, buffer, size);
 	}
-	
-	void SendReport(void* data, int length);
 	
 protected:
     // Implementation of the PUSBListNode
@@ -147,7 +170,11 @@ protected:
     
 	// Buffer pointers to hold the received data
 	int dataLength;
-	uint8_t data[RAWHID_RX_SIZE];
+	int dataAvailable;
+	uint8_t* data;
+	
+	uint8_t* featureReport;
+	int featureLength;
 };
 extern RawHID_ RawHID;
 

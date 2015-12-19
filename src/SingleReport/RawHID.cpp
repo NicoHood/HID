@@ -47,13 +47,7 @@ static const uint8_t  _hidReportDescriptorRawHID[] PROGMEM = {
     0xC0                         /* end collection */ 
 };
 
-// Weak implementation of the Event function
-void RawHIDEvent(void) __attribute__ ((weak));
-void RawHIDEvent(void){
-	// Empty
-}
-
-RawHID_::RawHID_(void) : PluggableUSBModule(1, 1, epType), protocol(HID_REPORT_PROTOCOL), idle(1), dataLength(0)
+RawHID_::RawHID_(void) : PluggableUSBModule(1, 1, epType), protocol(HID_REPORT_PROTOCOL), idle(1), dataLength(0), dataAvailable(0), featureReport(NULL), featureLength(0)
 {
 	epType[0] = EP_TYPE_INTERRUPT_IN;
 	PluggableUSB().plug(this);
@@ -120,50 +114,36 @@ bool RawHID_::setup(USBSetup& setup)
 		}
 		if (request == HID_SET_REPORT)
 		{
-			// Get the data length information and the corresponding bytes
+			// Check if data has the correct length afterwards
 			int length = setup.wLength;
-			while(length)
-			{
-				// Dont receive more than the USB EP has to offer
-				// TODO use fixed 64 because control EP always have 64 bytes even on 16 u2. Test!
-				auto recvLength = length;
-				if(recvLength > USB_EP_SIZE){
-					recvLength = USB_EP_SIZE;
-				}
-				if(recvLength > int(sizeof(data))){
-					recvLength = int(sizeof(data));
-				}
-				length -= recvLength;
-				
-				// Only receive data if the last one was read fully.
-				// Discard data if it wasnt read yet.
-				// To not miss any data you can use the (weak) event function.
-				if(!dataLength)
-				{
-					// Write data to fit to the end (not the beginning) of the array
-					USB_RecvControl(data + (sizeof(data) - recvLength), recvLength);
-					dataLength = recvLength;
-					RawHIDEvent();
-				}
-				// Do not read the data, flag an error to the USB Host
-				// TODO always return no error, even if data was discarded? -> use break then
-				else{
-					return false;
+
+			// Feature (set feature report)
+			if(setup.wValueH == HID_REPORT_TYPE_FEATURE){
+				// No need to check for negative featureLength values,
+				// except the host tries to send more then 32k bytes.
+				// We dont have that much ram anyways.
+				if (length == featureLength) {
+					USB_RecvControl(featureReport, featureLength);
+
+					// Block until data is read (make length negative)
+					disableFeatureReport();
+					return true;
 				}
 			}
-			
-			// Flag no error
-			// TODO this is required to get hyperion working
-			// however this blocks the CDC serial!?
-			return true;
+
+			// Output (set out report)
+			else if(setup.wValueH == HID_REPORT_TYPE_OUTPUT){
+				if(!dataAvailable && length <= dataLength){
+					// Write data to fit to the end (not the beginning) of the array
+					USB_RecvControl(data + dataLength - length, length);
+					dataAvailable = length;
+					return true;
+				}
+			}
 		}
 	}
 
 	return false;
-}
-
-void RawHID_::SendReport(void* data, int length){
-	USB_Send(pluggedEndpoint | TRANSFER_RELEASE, data, length);
 }
 
 RawHID_ RawHID;

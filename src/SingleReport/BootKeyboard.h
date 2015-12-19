@@ -38,6 +38,33 @@ public:
     uint8_t getLeds(void);
     uint8_t getProtocol(void);
     void wakeupHost(void);
+    
+    void setFeatureReport(void* report, int length){
+        if(length > 0){
+            featureReport = (uint8_t*)report;
+            featureLength = length;
+            
+            // Disable feature report by default
+            disableFeatureReport();
+        }
+    }
+    
+    int availableFeatureReport(void){
+        if(featureLength < 0){
+            return featureLength & ~0x8000;
+        }
+        return 0;
+    }
+    
+    void enableFeatureReport(void){
+        featureLength &= ~0x8000;
+    }
+    
+    void disableFeatureReport(void){
+        featureLength |= 0x8000;
+    }
+    
+    virtual int send(void) final;
 
 protected:
     // Implementation of the PUSBListNode
@@ -51,7 +78,8 @@ protected:
     
     uint8_t leds;
     
-    virtual int send(void) override;
+    uint8_t* featureReport;
+    int featureLength;
 };
 extern BootKeyboard_ BootKeyboard;
 

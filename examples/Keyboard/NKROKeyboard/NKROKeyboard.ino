@@ -35,17 +35,17 @@ void loop() {
     // Do not press to many at once or some OS will have problems.
     // Note that the resulting pressed order might differ,
     // because all keys are pressed at the same time.
-    NKROKeyboard.addKeyToReport('0');
-    NKROKeyboard.addKeyToReport('1');
-    NKROKeyboard.addKeyToReport('2');
-    NKROKeyboard.addKeyToReport('3');
-    NKROKeyboard.addKeyToReport('4');
-    NKROKeyboard.addKeyToReport('5');
-    NKROKeyboard.addKeyToReport('6');
-    NKROKeyboard.addKeyToReport('7');
-    NKROKeyboard.addKeyToReport('8');
-    NKROKeyboard.addKeyToReport('9');
-    NKROKeyboard.send_now();
+    NKROKeyboard.add('0');
+    NKROKeyboard.add('1');
+    NKROKeyboard.add('2');
+    NKROKeyboard.add('3');
+    NKROKeyboard.add('4');
+    NKROKeyboard.add('5');
+    NKROKeyboard.add('6');
+    NKROKeyboard.add('7');
+    NKROKeyboard.add('8');
+    NKROKeyboard.add('9');
+    NKROKeyboard.send();
 
     // Release all keys and hit enter
     NKROKeyboard.releaseAll();

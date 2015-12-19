@@ -1,0 +1,44 @@
+# Original taken and modified from:
+# https://github.com/ihowson/Teensy-Raw-HID-in-Python/blob/master/teensy_loader_cli/49-teensy.rules
+#
+# This file must be placed at:
+#
+# /etc/udev/rules.d/ArduinoRawHID.rules    (preferred location)
+#   or
+# /lib/udev/rules.d/ArduinoRawHID.rules    (req'd on some broken systems)
+#
+# SUBSYSTEMS=="usb", ATTRS{idVendor}=="0x2341", ATTRS{idProduct}=="0x8036", MODE:="0666"
+#
+# Reload udev rules:
+# udevadm control --reload && udevadm trigger
+#
+#
+# Arduino devices (leonardo only, or all Arduino devices):
+#SUBSYSTEMS=="usb", ATTRS{idVendor}=="2341", ATTRS{idProduct}=="8036", MODE:="0666"
+SUBSYSTEMS=="usb", ATTRS{idVendor}=="2341", MODE:="0666"
+#
+#
+#SUBSYSTEMS=="usb", ATTRS{idVendor}=="16c0", ATTRS{idProduct}=="04[789]?", MODE:="0666"
+#SUBSYSTEMS=="usb", ATTRS{idVendor}=="16c0", ATTRS{idProduct}=="8000", MODE:="0666"
+#KERNEL=="ttyACM*", ATTRS{idVendor}=="16c0", ATTRS{idProduct}=="04[789]?", SYMLINK+="ttyUSB00%n", MODE:="0666", ENV{ID_MM_DEVICE_IGNORE}="1"
+#
+# If you share your linux system with other users, or just don't like the
+# idea of write permission for everybody, you can replace MODE:="0666" with
+# OWNER:="yourusername" to create the device owned by you, or with
+# GROUP:="somegroupname" and mange access using standard unix groups.
+#
+#
+# If using USB Serial you get a new device each time (Ubuntu 9.10)
+# eg: /dev/ttyACM0, ttyACM1, ttyACM2, ttyACM3, ttyACM4, etc
+#    apt-get remove --purge modemmanager     (reboot may be necessary)
+#
+#
+# Older modem proding (eg, Ubuntu 9.04) caused very slow serial device detection.
+# To fix, add this near top of /lib/udev/rules.d/77-nm-probe-modem-capabilities.rules
+#   SUBSYSTEMS=="usb", ATTRS{idVendor}=="16c0", ATTRS{idProduct}=="04[789]?", GOTO="nm_modem_probe_end" 
+#
+#
+# (old udev rules)
+#SUBSYSTEMS=="usb", ATTRS{idVendor}=="16c0", ATTRS{idProduct}=="047[78]", MODE:="0666"
+#SUBSYSTEMS=="usb", ATTRS{idVendor}=="16c0", ATTRS{idProduct}=="048[02]", MODE:="0666"
+#KERNEL=="ttyACM*", SYMLINK+="ttyUSB00%n", MODE:="0666"

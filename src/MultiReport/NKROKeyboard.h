@@ -36,8 +36,7 @@ class NKROKeyboard_ : public NKROKeyboardAPI
 public:
     NKROKeyboard_(void);
 
-protected: 
-    virtual inline int send(void) override;
+    virtual int send(void) final;
 };
 extern NKROKeyboard_ NKROKeyboard;
 
