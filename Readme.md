@@ -49,7 +49,7 @@ www.nicohood.de
 Version History
 ===============
 ```
-2.4.1 Release (xx.xx.2015)
+2.4.1 Release (19.12.2015)
 * RawHID Improvements
 * Added Keyboard Feature Report
 * NKRO and Keyboard API fixes
