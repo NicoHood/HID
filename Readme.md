@@ -1,4 +1,4 @@
-Arduino HID Project 2.4.1
+Arduino HID Project 2.4.2
 =========================
 
 ![Header Picture](header.jpg)
