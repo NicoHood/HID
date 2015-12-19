@@ -49,6 +49,9 @@ www.nicohood.de
 Version History
 ===============
 ```
+2.4.2 Release (xx.xx.2016)
+* RawHID >64 byte fix
+
 2.4.1 Release (19.12.2015)
 * RawHID Improvements
 * Added Keyboard Feature Report

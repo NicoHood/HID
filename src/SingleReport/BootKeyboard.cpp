@@ -152,7 +152,7 @@ bool BootKeyboard_::setup(USBSetup& setup)
 				// except the host tries to send more then 32k bytes.
 				// We dont have that much ram anyways.
 				if (length == featureLength) {
-					USB_RecvControl(featureReport, featureLength);
+					USB_RecvControlLong(featureReport, featureLength);
 
 					// Block until data is read (make length negative)
 					disableFeatureReport();
@@ -164,7 +164,7 @@ bool BootKeyboard_::setup(USBSetup& setup)
 			// Output (set led states)
 			else if(setup.wValueH == HID_REPORT_TYPE_OUTPUT){
 				if(length == sizeof(leds)){
-					USB_RecvControl(&leds, length);
+					USB_RecvControlLong(&leds, length);
 					return true;
 				}
 			}
@@ -173,7 +173,7 @@ bool BootKeyboard_::setup(USBSetup& setup)
 			else if(setup.wValueH == HID_REPORT_TYPE_INPUT)
 			{
 				if(length == sizeof(_keyReport)){
-					USB_RecvControl(&_keyReport, length);
+					USB_RecvControlLong(&_keyReport, length);
 					return true;
 				}
 			}
