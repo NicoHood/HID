@@ -123,7 +123,7 @@ bool RawHID_::setup(USBSetup& setup)
 				// except the host tries to send more then 32k bytes.
 				// We dont have that much ram anyways.
 				if (length == featureLength) {
-					USB_RecvControlLong(featureReport, featureLength);
+					USB_RecvControl(featureReport, featureLength);
 
 					// Block until data is read (make length negative)
 					disableFeatureReport();
@@ -135,7 +135,7 @@ bool RawHID_::setup(USBSetup& setup)
 			else if(setup.wValueH == HID_REPORT_TYPE_OUTPUT){
 				if(!dataAvailable && length <= dataLength){
 					// Write data to fit to the end (not the beginning) of the array
-					USB_RecvControlLong(data + dataLength - length, length);
+					USB_RecvControl(data + dataLength - length, length);
 					dataAvailable = length;
 					return true;
 				}
