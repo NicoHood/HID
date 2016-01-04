@@ -49,7 +49,7 @@ www.nicohood.de
 Version History
 ===============
 ```
-2.4.2 Release (xx.xx.2016)
+2.4.2 Release (04.01.2016)
 * RawHID >64 byte fix (Arduino IDE 1.6.8 fix)
 * Fixed Keyboard modifier add() issue #68
 
