@@ -33,7 +33,7 @@ size_t DefaultKeyboardAPI::set(KeyboardKeycode k, bool s)
 		// Convert key into bitfield (0 - 7)
 		k = KeyboardKeycode(uint8_t(k) - uint8_t(KEY_LEFT_CTRL));
 		if(s){
-			_keyReport.modifiers = (1 << k);
+			_keyReport.modifiers |= (1 << k);
 		}
 		else{
 			_keyReport.modifiers &= ~(1 << k);

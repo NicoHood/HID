@@ -50,7 +50,8 @@ Version History
 ===============
 ```
 2.4.2 Release (xx.xx.2016)
-* RawHID >64 byte fix
+* RawHID >64 byte fix (Arduino IDE 1.6.8 fix)
+* Fixed Keyboard modifier add() issue #68
 
 2.4.1 Release (19.12.2015)
 * RawHID Improvements
