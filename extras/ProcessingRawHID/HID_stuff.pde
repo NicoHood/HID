@@ -4,7 +4,15 @@ import java.util.*;
 
 HIDManager hid_mgr = null;
 
+boolean thisIsWindows = false; //windows require a '0' report ID
+
 public int init_HID() {
+
+  String OS = System.getProperty("os.name", "generic").toLowerCase(Locale.ENGLISH);
+  if (OS.indexOf("win") >= 0) {
+    thisIsWindows = true;
+  }
+
   try {
     ClassPathLibraryLoader.loadNativeHIDLibrary();
     hid_mgr = HIDManager.getInstance();
@@ -59,8 +67,16 @@ public HIDDeviceInfo[] filter_HID_ID_usage(int vid, int pid, int usage_page, int
 
 public void HID_write_to_device (byte data[], HIDDevice device) {
   try {
-    if (device!=null) 
-      device.write(data);
+    if (device!=null) {
+      if (thisIsWindows) {
+        byte dataWithReportID[] = new byte[data.length+1];
+        dataWithReportID[0] = 0;
+        System.arraycopy(data, 0, dataWithReportID, 1, data.length);
+        device.write(dataWithReportID);
+      } else {
+        device.write(data);
+      }
+    }
   }
   catch (Exception ex) {
     ex.printStackTrace();
@@ -73,7 +89,7 @@ public byte[] HID_read_from_device (HIDDevice device, int timeout) {
     if (device!=null) {
       int returnedBytes = device.readTimeout(buf, timeout);
       byte retBuf[];
-      retBuf=Arrays.copyOf(buf,returnedBytes);
+      retBuf=Arrays.copyOf(buf, returnedBytes);
       return retBuf;
     }
   }
@@ -90,3 +106,4 @@ void delay_ms(int ms) {
   catch(Exception e) {
   }
 }
+
