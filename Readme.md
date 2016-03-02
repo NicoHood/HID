@@ -1,4 +1,4 @@
-Arduino HID Project 2.4.2
+Arduino HID Project 2.4.3
 =========================
 
 ![Header Picture](header.jpg)
@@ -7,7 +7,7 @@ This project went through a lot of phases and has now reached a new Arduino ~~US
 with a lot of new functions like extended HID. It also supports HoodLoader1+2.
 The idea is to enable enhanced USB functions to almost all 'standard' Arduino boards.
 
-**Supported Arduinos (IDE 1.6.8 or higher!):**
+**Supported Arduinos (IDE 1.6.7 or higher!):**
 * Uno (with [HoodLoader2](https://github.com/NicoHood/HoodLoader2))
 * Mega (with [HoodLoader2](https://github.com/NicoHood/HoodLoader2))
 * Leonardo
@@ -49,6 +49,9 @@ www.nicohood.de
 Version History
 ===============
 ```
+2.4.3 Release (02.03.2016)
+* Fixed NKRO Keyboard modifier add() #76
+
 2.4.2 Release (04.01.2016)
 * RawHID >64 byte fix (Arduino IDE 1.6.8 fix)
 * Fixed Keyboard modifier add() issue #68
@@ -227,7 +230,7 @@ Licence and Copyright
 If you use this library for any cool project let me know!
 
 ```
-Copyright (c) 2014-2015 NicoHood
+Copyright (c) 2014-2016 NicoHood
 See the readme for credit to other people.
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
