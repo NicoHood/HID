@@ -1,4 +1,4 @@
-/*
+ /*
 Copyright (c) 2016 Deqing Sun
 
 This is a simple Processing sketch that talks to Arduino with RawHID firmware.
@@ -52,11 +52,13 @@ void draw() {
 void keyPressed() {
   if (key == ' ') {
     if (target_device!=null) {
-      byte buf[]=new byte[4];
+      byte buf[]=new byte[64];
       buf[0]=(byte)1;
       buf[1]=(byte)2;
       buf[2]=(byte)3;
       buf[3]=(byte)4;
+      buf[62]=(byte)63;
+      buf[63]=(byte)64;
       HID_write_to_device(buf, target_device);
     }
   }
