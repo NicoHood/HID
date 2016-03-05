@@ -71,12 +71,12 @@ public:
 	inline void move(int x, int y, signed char wheel = 0);
 	inline void press(uint8_t b = MOUSE_LEFT);
 	inline void release(uint8_t b = MOUSE_LEFT);
+	inline void releaseAll(void);
 	inline bool isPressed(uint8_t b = MOUSE_LEFT);
-	
+
 	// Sending is public in the base class for advanced users.
 	virtual void SendReport(void* data, int length) = 0;
 };
 
 // Implementation is inline
 #include "AbsoluteMouseAPI.hpp"
-
