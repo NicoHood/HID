@@ -1,4 +1,4 @@
-Arduino HID Project 2.4.3
+Arduino HID Project 2.4.4
 =========================
 
 ![Header Picture](header.jpg)
@@ -41,14 +41,15 @@ An offline snapshot is available in [releases](https://github.com/NicoHood/HID/r
 Contact
 =======
 
-You can contact me on my wordpress blog in the contact section.
-
 www.nicohood.de
 
 
 Version History
 ===============
 ```
+2.4.4 Release (xx.xx.2016)
+* Added releaseAll() to Mouse API
+
 2.4.3 Release (02.03.2016)
 * Fixed NKRO Keyboard modifier add() #76
 
