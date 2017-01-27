@@ -54,17 +54,17 @@ THE SOFTWARE.
 
 typedef union{
 	// a RAWHID_TX_SIZE byte buffer for tx
-	uint8_t whole8[];
-	uint16_t whole16[];
-	uint32_t whole32[];
+	uint8_t whole8[0];
+	uint16_t whole16[0];
+	uint32_t whole32[0];
 	uint8_t buff[RAWHID_TX_SIZE];
 } HID_RawKeyboardTXReport_Data_t;
 
 typedef union{
 	// a RAWHID_TX_SIZE byte buffer for rx
-	uint8_t whole8[];
-	uint16_t whole16[];
-	uint32_t whole32[];
+	uint8_t whole8[0];
+	uint16_t whole16[0];
+	uint32_t whole32[0];
 	uint8_t buff[RAWHID_RX_SIZE];
 } HID_RawKeyboardRXReport_Data_t;
 
@@ -77,23 +77,23 @@ public:
         if(length > 0){
             featureReport = (uint8_t*)report;
             featureLength = length;
-            
+
             // Disable feature report by default
             disableFeatureReport();
         }
     }
-    
+
     int availableFeatureReport(void){
         if(featureLength < 0){
             return featureLength & ~0x8000;
         }
         return 0;
     }
-    
+
     void enableFeatureReport(void){
         featureLength &= ~0x8000;
     }
-    
+
     void disableFeatureReport(void){
         featureLength |= 0x8000;
     }
@@ -110,22 +110,22 @@ public:
 		disable();
 		dataLength = 0;
 	}
-	
+
 	void enable(void){
 		dataAvailable = 0;
 	}
-	
+
 	void disable(void){
 		dataAvailable = -1;
 	}
-	
+
 	virtual int available(void){
 		if(dataAvailable < 0){
 			return 0;
 		}
 		return dataAvailable;
 	}
-	
+
 	virtual int read(){
 		// Check if we have data available
 		if(dataAvailable > 0)
@@ -135,7 +135,7 @@ public:
 		}
 		return -1;
 	}
-	
+
 	virtual int peek(){
 		// Check if we have data available
 		if(dataAvailable > 0){
@@ -143,7 +143,7 @@ public:
 		}
 		return -1;
 	}
-	
+
 	virtual void flush(void){
 		// Writing will always flush by the USB driver
 	}
@@ -157,24 +157,23 @@ public:
 	virtual size_t write(uint8_t *buffer, size_t size){
 		return USB_Send(pluggedEndpoint | TRANSFER_RELEASE, buffer, size);
 	}
-	
+
 protected:
     // Implementation of the PUSBListNode
     int getInterface(uint8_t* interfaceCount);
     int getDescriptor(USBSetup& setup);
     bool setup(USBSetup& setup);
-    
+
     uint8_t epType[1];
     uint8_t protocol;
     uint8_t idle;
-    
+
 	// Buffer pointers to hold the received data
 	int dataLength;
 	int dataAvailable;
 	uint8_t* data;
-	
+
 	uint8_t* featureReport;
 	int featureLength;
 };
 extern RawHID_ RawHID;
-

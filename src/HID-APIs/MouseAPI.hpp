@@ -29,12 +29,12 @@ MouseAPI::MouseAPI(void) : _buttons(0)
 	// Empty
 }
 
-void MouseAPI::begin(void) 
+void MouseAPI::begin(void)
 {
     end();
 }
 
-void MouseAPI::end(void) 
+void MouseAPI::end(void)
 {
     _buttons = 0;
     move(0, 0, 0);
@@ -67,7 +67,7 @@ void MouseAPI::buttons(uint8_t b)
 	}
 }
 
-void MouseAPI::press(uint8_t b) 
+void MouseAPI::press(uint8_t b)
 {
 	buttons(_buttons | b);
 }
@@ -77,10 +77,15 @@ void MouseAPI::release(uint8_t b)
 	buttons(_buttons & ~b);
 }
 
+void MouseAPI::releaseAll(void)
+{
+  _buttons = 0;
+	move(0,0,0);
+}
+
 bool MouseAPI::isPressed(uint8_t b)
 {
-	if ((b & _buttons) > 0) 
+	if ((b & _buttons) > 0)
 		return true;
 	return false;
 }
-

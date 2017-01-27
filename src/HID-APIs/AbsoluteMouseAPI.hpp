@@ -32,7 +32,7 @@ void AbsoluteMouseAPI::buttons(uint8_t b){
 }
 
 int16_t AbsoluteMouseAPI::qadd16(int16_t base, int16_t increment) {
-	// Separate between subtracting and adding  
+	// Separate between subtracting and adding
 	if (increment < 0) {
 		// Subtracting more would cause an undefined overflow
  		if ((int16_t)0x8000 - increment > base)
@@ -50,7 +50,7 @@ int16_t AbsoluteMouseAPI::qadd16(int16_t base, int16_t increment) {
 	return base;
 }
 
-AbsoluteMouseAPI::AbsoluteMouseAPI(void): 
+AbsoluteMouseAPI::AbsoluteMouseAPI(void):
 xAxis(0), yAxis(0), _buttons(0)
 {
 	// Empty
@@ -96,6 +96,11 @@ void AbsoluteMouseAPI::press(uint8_t b){
 void AbsoluteMouseAPI::release(uint8_t b){
 	// release LEFT by default
 	buttons(_buttons & ~b);
+}
+
+void AbsoluteMouseAPI::releaseAll(void){
+	_buttons = 0;
+	moveTo(xAxis, yAxis, 0);
 }
 
 bool AbsoluteMouseAPI::isPressed(uint8_t b){

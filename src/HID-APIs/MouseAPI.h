@@ -39,9 +39,9 @@ THE SOFTWARE.
 
 typedef union{
 	// Mouse report: 8 buttons, position, wheel
-	uint8_t whole8[];
-	uint16_t whole16[];
-	uint32_t whole32[];
+	uint8_t whole8[0];
+	uint16_t whole16[0];
+	uint32_t whole32[0];
 	struct{
 		uint8_t buttons;
 		int8_t xAxis;
@@ -53,9 +53,9 @@ typedef union{
 typedef union{
 	// BootMouse report: 3 buttons, position
 	// Wheel is not supported by boot protocol
-	uint8_t whole8[];
-	uint16_t whole16[];
-	uint32_t whole32[];
+	uint8_t whole8[0];
+	uint16_t whole16[0];
+	uint32_t whole32[0];
 	struct{
 		uint8_t buttons;
 		int8_t xAxis;
@@ -70,14 +70,15 @@ public:
   inline void begin(void);
   inline void end(void);
   inline void click(uint8_t b = MOUSE_LEFT);
-  inline void move(signed char x, signed char y, signed char wheel = 0); 
+  inline void move(signed char x, signed char y, signed char wheel = 0);
   inline void press(uint8_t b = MOUSE_LEFT);   // press LEFT by default
   inline void release(uint8_t b = MOUSE_LEFT); // release LEFT by default
+	inline void releaseAll(void);
   inline bool isPressed(uint8_t b = MOUSE_LEFT); // check LEFT by default
-  
+
   // Sending is public in the base class for advanced users.
   virtual void SendReport(void* data, int length) = 0;
-  
+
 protected:
   uint8_t _buttons;
   inline void buttons(uint8_t b);
