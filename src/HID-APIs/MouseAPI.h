@@ -39,9 +39,9 @@ THE SOFTWARE.
 
 typedef union{
 	// Mouse report: 8 buttons, position, wheel
-	uint8_t whole8[];
-	uint16_t whole16[];
-	uint32_t whole32[];
+	uint8_t whole8[0];
+	uint16_t whole16[0];
+	uint32_t whole32[0];
 	struct{
 		uint8_t buttons;
 		int8_t xAxis;
@@ -53,9 +53,9 @@ typedef union{
 typedef union{
 	// BootMouse report: 3 buttons, position
 	// Wheel is not supported by boot protocol
-	uint8_t whole8[];
-	uint16_t whole16[];
-	uint32_t whole32[];
+	uint8_t whole8[0];
+	uint16_t whole16[0];
+	uint32_t whole32[0];
 	struct{
 		uint8_t buttons;
 		int8_t xAxis;

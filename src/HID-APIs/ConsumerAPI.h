@@ -450,9 +450,9 @@ enum ConsumerKeycode : uint16_t {
 
 typedef union {
 	// Every usable Consumer key possible, up to 4 keys presses possible
-	uint8_t whole8[];
-	uint16_t whole16[];
-	uint32_t whole32[];
+	uint8_t whole8[0];
+	uint16_t whole16[0];
+	uint32_t whole32[0];
 	ConsumerKeycode keys[4];
 	struct {
 		ConsumerKeycode key1;
@@ -472,7 +472,7 @@ public:
 	inline void press(ConsumerKeycode m);
 	inline void release(ConsumerKeycode m);
 	inline void releaseAll(void);
-	
+
 	// Sending is public in the base class for advanced users.
 	virtual void SendReport(void* data, int length) = 0;
 
@@ -482,4 +482,3 @@ protected:
 
 // Implementation is inline
 #include "ConsumerAPI.hpp"
-

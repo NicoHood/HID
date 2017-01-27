@@ -29,9 +29,9 @@ THE SOFTWARE.
 
 typedef union{
 	// Low level key report: up to 6 keys and shift, ctrl etc at once
-	uint8_t whole8[];
-	uint16_t whole16[];
-	uint32_t whole32[];
+	uint8_t whole8[0];
+	uint16_t whole16[0];
+	uint32_t whole32[0];
 	struct{
 		uint8_t modifiers;
 		uint8_t reserved;
@@ -74,4 +74,3 @@ private:
 
 // Implementation is inline
 #include "DefaultKeyboardAPI.hpp"
-

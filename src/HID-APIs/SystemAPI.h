@@ -76,7 +76,7 @@ enum SystemKeycode : uint8_t {
 
 typedef union{
 	// Every usable system control key possible
-	uint8_t whole8[];
+	uint8_t whole8[0];
 	uint8_t key;
 } HID_SystemControlReport_Data_t;
 
@@ -89,7 +89,7 @@ public:
 	inline void press(SystemKeycode s);
 	inline void release(void);
 	inline void releaseAll(void);
-	
+
 	// Sending is public in the base class for advanced users.
 	virtual void SendReport(void* data, int length) = 0;
 };

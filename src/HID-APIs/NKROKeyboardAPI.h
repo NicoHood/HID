@@ -32,9 +32,9 @@ THE SOFTWARE.
 
 typedef union{
 	// Modifier + keymap + 1 custom key
-	uint8_t whole8[];
-	uint16_t whole16[];
-	uint32_t whole32[];
+	uint8_t whole8[0];
+	uint16_t whole16[0];
+	uint32_t whole32[0];
 	struct{
 		uint8_t modifiers;
 		uint8_t keys[NKRO_KEY_COUNT / 8];
@@ -43,7 +43,7 @@ typedef union{
 	uint8_t allkeys[2 + NKRO_KEY_COUNT / 8];
 } HID_NKROKeyboardReport_Data_t;
 
-	
+
 class NKROKeyboardAPI : public KeyboardAPI
 {
 public:
@@ -62,4 +62,3 @@ private:
 
 // Implementation is inline
 #include "NKROKeyboardAPI.hpp"
-

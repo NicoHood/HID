@@ -39,9 +39,9 @@ THE SOFTWARE.
 
 typedef union{
 	// Absolute mouse report: 8 buttons, 2 absolute axis, wheel
-	uint8_t whole8[];
-	uint16_t whole16[];
-	uint32_t whole32[];
+	uint8_t whole8[0];
+	uint16_t whole16[0];
+	uint32_t whole32[0];
 	struct{
 		uint8_t buttons;
 		int16_t xAxis;
