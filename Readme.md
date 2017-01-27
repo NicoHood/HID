@@ -47,8 +47,9 @@ www.nicohood.de
 Version History
 ===============
 ```
-2.4.4 Release (xx.xx.2016)
+2.4.4 Release (27.01.2017)
 * Added releaseAll() to Mouse API
+* Fix flexible array errors
 
 2.4.3 Release (02.03.2016)
 * Fixed NKRO Keyboard modifier add() #76
