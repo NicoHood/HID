@@ -4,7 +4,7 @@ Arduino HID Project 2.4.4
 ![Header Picture](header.jpg)
 
 This project went through a lot of phases and has now reached a new Arduino ~~USB-Core~~ Library
-with a lot of new functions like extended HID. It also supports HoodLoader1+2.
+with a lot of new functions like extended HID. It also supports HoodLoader2 (version 1 is no longer supported).
 The idea is to enable enhanced USB functions to almost all 'standard' Arduino boards.
 
 **Supported Arduinos (IDE 1.6.7 or higher!):**
