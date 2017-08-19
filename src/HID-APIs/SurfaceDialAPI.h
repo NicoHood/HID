@@ -24,34 +24,43 @@ THE SOFTWARE.
 // Include guard
 #pragma once
 
-// Software version
-#define HID_PROJECT_VERSION 244
+#include <Arduino.h>
+#include "HID-Settings.h"
 
-#if ARDUINO < 10607
-#error HID Project requires Arduino IDE 1.6.7 or greater. Please update your IDE.
-#endif
+typedef union{
+	// SurfaceDial report: 1 button, 15-bit rotation, position
+	uint8_t whole8[0];
+	uint16_t whole16[0];
+	uint32_t whole32[0];
+	struct{
+		uint16_t button: 1;
+		uint16_t rotation: 15;
+		//int8_t xAxis;
+		//int8_t yAxis;
+		
+	};
+} HID_SurfaceDialReport_Data_t;
 
-#if !defined(USBCON)
-#error HID Project can only be used with an USB MCU.
-#endif
+class SurfaceDialAPI
+{
+public:
+  inline SurfaceDialAPI(void);
+  inline void begin(void);
+  inline void end(void);
+  inline void click(void);
+  inline void rotate(int16_t rotation);
+  inline void press(void);
+  inline void release(void);
+	inline void releaseAll(void);
+  inline bool isPressed();
 
-// Include all HID libraries (.a linkage required to work) properly
-#include "SingleReport/SingleAbsoluteMouse.h"
-#include "MultiReport/AbsoluteMouse.h"
-#include "SingleReport/BootMouse.h"
-#include "MultiReport/ImprovedMouse.h"
-#include "SingleReport/SingleConsumer.h"
-#include "MultiReport/Consumer.h"
-#include "SingleReport/SingleGamepad.h"
-#include "MultiReport/Gamepad.h"
-#include "SingleReport/SingleSystem.h"
-#include "MultiReport/System.h"
-#include "SingleReport/RawHID.h"
-#include "SingleReport/BootKeyboard.h"
-#include "MultiReport/ImprovedKeyboard.h"
-#include "SingleReport/SingleNKROKeyboard.h"
-#include "MultiReport/NKROKeyboard.h"
-#include "MultiReport/SurfaceDial.h"
+  // Sending is public in the base class for advanced users.
+  virtual void SendReport(void* data, int length) = 0;
 
-// Include Teensy HID afterwards to overwrite key definitions if used
-// TODO include Teensy API if non english keyboard layout was used
+protected:
+  bool _button;
+  inline void button(bool b);
+};
+
+// Implementation is inline
+#include "SurfaceDialAPI.hpp"
