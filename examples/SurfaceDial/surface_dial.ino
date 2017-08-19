@@ -1,8 +1,21 @@
+/*
+  Copyright (c) 2017 wind-rider
+  See the readme for credit to other people.
+
+  Surface dial example
+  
+  Use an encoder and a button. See the connection diagram how to wire it up.
+
+  The encoder processing code is coming from https://www.allwinedesigns.com/blog/pocketnc-jog-wheel
+*/
+
 #include "HID-Project.h"
 
+// input pins for encoder channel A and channel B
 int pinA = 2;
 int pinB = 3;
 
+// input pin for pushbutton
 int pinButton = 4;
 
 volatile bool previousButtonValue = false;
