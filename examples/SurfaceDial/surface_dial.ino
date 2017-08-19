@@ -4,7 +4,12 @@
 
   Surface dial example
   
-  Use an encoder and a button. See the connection diagram how to wire it up.
+  Use an encoder and a button to create a Surface Dial-compatible device.
+  See the connection diagram how to wire it up.
+
+  Please note that:
+   - I tested it using an Arduino Pro Micro; TinkerCad didn't have that in its component library
+   - you obviously don't need a motor, but TinkerCad didn't have a separate encoder
 
   The encoder processing code is coming from https://www.allwinedesigns.com/blog/pocketnc-jog-wheel
 */
