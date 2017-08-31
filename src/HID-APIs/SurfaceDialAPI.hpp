@@ -24,34 +24,67 @@ THE SOFTWARE.
 // Include guard
 #pragma once
 
-// Software version
-#define HID_PROJECT_VERSION 244
+SurfaceDialAPI::SurfaceDialAPI(void) : _button(false)
+{
+	// Empty
+}
 
-#if ARDUINO < 10607
-#error HID Project requires Arduino IDE 1.6.7 or greater. Please update your IDE.
-#endif
+void SurfaceDialAPI::begin(void)
+{
+	end();
+}
 
-#if !defined(USBCON)
-#error HID Project can only be used with an USB MCU.
-#endif
+void SurfaceDialAPI::end(void)
+{
+	_button = false;
+	rotate(0);
+}
 
-// Include all HID libraries (.a linkage required to work) properly
-#include "SingleReport/SingleAbsoluteMouse.h"
-#include "MultiReport/AbsoluteMouse.h"
-#include "SingleReport/BootMouse.h"
-#include "MultiReport/ImprovedMouse.h"
-#include "SingleReport/SingleConsumer.h"
-#include "MultiReport/Consumer.h"
-#include "SingleReport/SingleGamepad.h"
-#include "MultiReport/Gamepad.h"
-#include "SingleReport/SingleSystem.h"
-#include "MultiReport/System.h"
-#include "SingleReport/RawHID.h"
-#include "SingleReport/BootKeyboard.h"
-#include "MultiReport/ImprovedKeyboard.h"
-#include "SingleReport/SingleNKROKeyboard.h"
-#include "MultiReport/NKROKeyboard.h"
-#include "MultiReport/SurfaceDial.h"
+void SurfaceDialAPI::click(void)
+{
+	_button = true;
+	rotate(0);
+	_button = false;
+	rotate(0);
+}
 
-// Include Teensy HID afterwards to overwrite key definitions if used
-// TODO include Teensy API if non english keyboard layout was used
+void SurfaceDialAPI::rotate(int16_t rotation)
+{
+	HID_SurfaceDialReport_Data_t report;
+	report.button = _button;
+	report.rotation = rotation;
+	//report.xAxis = x;
+	//report.yAxis = y;
+
+	SendReport(&report, sizeof(report));
+}
+
+void SurfaceDialAPI::button(bool b)
+{
+	if (b != _button)
+	{
+		_button = b;
+		rotate(0);
+	}
+}
+
+void SurfaceDialAPI::press(void)
+{
+	button(true);
+}
+
+void SurfaceDialAPI::release(void)
+{
+	button(false);
+}
+
+void SurfaceDialAPI::releaseAll(void)
+{
+	_button = false;
+	rotate(0);
+}
+
+bool SurfaceDialAPI::isPressed()
+{
+	return _button;	
+}
