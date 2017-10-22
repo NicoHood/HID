@@ -56,7 +56,11 @@ size_t DefaultKeyboardAPI::set(KeyboardKeycode k, bool s)
 			
 			// Test the key report to see if k is present. Clear it if it exists.
 			if (!s && (key == k)) {
-				_keyReport.keycodes[i] = KEY_RESERVED;
+				for (uint8_t j = i; j < sizeof(_keyReport.keycodes)-1; ++j)
+				{
+					_keyReport.keycodes[j] = _keyReport.keycodes[j + 1];
+				}
+				_keyReport.keycodes[sizeof(_keyReport.keycodes) - 1] = KEY_RESERVED;
 				return 1;
 			}
 		}
