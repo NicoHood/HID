@@ -24,50 +24,63 @@ THE SOFTWARE.
 // Include guard
 #pragma once
 
+DefaultKeyboardAPI::DefaultKeyboardAPI()
+{
+    memset(&_keyReport, 0, sizeof(_keyReport));
+}
 
 size_t DefaultKeyboardAPI::set(KeyboardKeycode k, bool s) 
 {
-	// It's a modifier key
-	if(k >= KEY_LEFT_CTRL && k <= KEY_RIGHT_GUI)
-	{
-		// Convert key into bitfield (0 - 7)
-		k = KeyboardKeycode(uint8_t(k) - uint8_t(KEY_LEFT_CTRL));
-		if(s){
-			_keyReport.modifiers |= (1 << k);
-		}
-		else{
-			_keyReport.modifiers &= ~(1 << k);
-		}
-		return 1;
-	}
-	// Its a normal key
-	else{
-		// Add k to the key report only if it's not already present
-		// and if there is an empty slot. Remove the first available key.
-		for (uint8_t i = 0; i < sizeof(_keyReport.keycodes); i++)
-		{
-			auto key = _keyReport.keycodes[i];
-			
-			// Is key already in the list or did we found an empty slot?
-			if (s && (key == uint8_t(k) || key == KEY_RESERVED)) {
-				_keyReport.keycodes[i] = k;
-				return 1;
-			}
-			
-			// Test the key report to see if k is present. Clear it if it exists.
-			if (!s && (key == k)) {
-				for (uint8_t j = i; j < sizeof(_keyReport.keycodes)-1; ++j)
-				{
-					_keyReport.keycodes[j] = _keyReport.keycodes[j + 1];
-				}
-				_keyReport.keycodes[sizeof(_keyReport.keycodes) - 1] = KEY_RESERVED;
-				return 1;
-			}
-		}
-	}
-	
-	// No empty/pressed key was found
-	return 0;
+    size_t numKeysFound = 0;
+    // It's a modifier key
+    if (k >= KEY_LEFT_CTRL && k <= KEY_RIGHT_GUI)
+    {
+        // Convert key into bitfield (0 - 7)
+        k = KeyboardKeycode(uint8_t(k) - uint8_t(KEY_LEFT_CTRL));
+        if (s) {
+            _keyReport.modifiers |= (1 << k);
+        }
+        else {
+            _keyReport.modifiers &= ~(1 << k);
+        }
+        numKeysFound = 1;
+    }
+    // It's a normal key being pressed
+    else if (s) {
+        // Find the first empty slot or the spot where it's already pressed
+        auto firstEmptySlot = _keyReport.keycodes;
+        auto keycodesEnd = &_keyReport.keycodes[sizeof(_keyReport.keycodes)];
+        while (firstEmptySlot < keycodesEnd && *firstEmptySlot != KEY_RESERVED && *firstEmptySlot != k) {
+            ++firstEmptySlot;
+        }
+
+        if (firstEmptySlot < keycodesEnd && *firstEmptySlot == KEY_RESERVED) {
+            // We found a slot
+            *firstEmptySlot = k;
+            numKeysFound = 1;
+        }
+        else {
+            // No joy or it's already pressed
+            numKeysFound = 0;
+        }
+    }
+    // It's a normal key being released
+    else {
+        // Find the occurrence of k in .keycodes
+        auto p = _keyReport.keycodes;
+        auto keycodesEnd = &_keyReport.keycodes[sizeof(_keyReport.keycodes)];
+        while (p < keycodesEnd && *p != k && *p != KEY_RESERVED) {
+            ++p;
+        }
+
+        numKeysFound = (p < keycodesEnd && *p != KEY_RESERVED) ? 1 : 0;
+        // Shift the remainder of the array (if any) up a slot, stepping on indexOfK.
+        for (;p < keycodesEnd && *p != KEY_RESERVED; ++p) {
+            *p = (p + 1 >= keycodesEnd) ? KEY_RESERVED : p[1];
+        }
+    }
+
+    return numKeysFound;
 }
 
 size_t DefaultKeyboardAPI::removeAll(void)

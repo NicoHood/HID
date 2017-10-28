@@ -44,6 +44,8 @@ typedef union{
 class DefaultKeyboardAPI : public KeyboardAPI
 {
 public:
+  inline DefaultKeyboardAPI();
+
   // Add special consumer key API for the reserved byte
   inline size_t write(ConsumerKeycode k);
   inline size_t press(ConsumerKeycode k);
