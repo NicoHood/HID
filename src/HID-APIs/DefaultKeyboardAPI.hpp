@@ -42,28 +42,35 @@ size_t DefaultKeyboardAPI::set(KeyboardKeycode k, bool s)
 	}
 	// Its a normal key
 	else{
+        const int numKeycodeSlots = sizeof(_keyReport.keycodes) / sizeof(_keyReport.keycodes[0]);
 		// Add k to the key report only if it's not already present
 		// and if there is an empty slot. Remove the first available key.
-		for (uint8_t i = 0; i < sizeof(_keyReport.keycodes); i++)
-		{
-			auto key = _keyReport.keycodes[i];
-			
-			// Is key already in the list or did we found an empty slot?
-			if (s && (key == uint8_t(k) || key == KEY_RESERVED)) {
-				_keyReport.keycodes[i] = k;
-				return 1;
-			}
-			
-			// Test the key report to see if k is present. Clear it if it exists.
-			if (!s && (key == k)) {
-				_keyReport.keycodes[i] = KEY_RESERVED;
-				return 1;
-			}
-		}
+        uint8_t emptySlot = numKeycodeSlots;
+        uint8_t foundSlot = numKeycodeSlots;
+        for (uint8_t i = 0; i < numKeycodeSlots; i++)
+        {
+            auto key = _keyReport.keycodes[i];
+            if (key == KEY_RESERVED) {
+                emptySlot = i;
+            }
+            else if (key == k) {
+                foundSlot = i;
+            }
+        }
+
+        if (s && foundSlot == numKeycodeSlots && emptySlot < numKeycodeSlots) {
+            _keyReport.keycodes[emptySlot] = k;
+            return 1;
+        }
+        else if (!s && foundSlot < numKeycodeSlots) {
+            _keyReport.keycodes[foundSlot] = KEY_RESERVED;
+            return 1;
+        }
+        else {
+            // No empty/pressed key was found
+            return 0;
+        }
 	}
-	
-	// No empty/pressed key was found
-	return 0;
 }
 
 size_t DefaultKeyboardAPI::removeAll(void)
