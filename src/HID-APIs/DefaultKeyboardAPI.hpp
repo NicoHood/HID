@@ -49,8 +49,8 @@ size_t DefaultKeyboardAPI::set(KeyboardKeycode k, bool s)
 			++p;
 		}
 
-		// if we're pressing the key and we didn't find it already pressed and there's room
-		if (s && p < keycodesEnd && *p == KEY_RESERVED) {
+		// if we're pressing the key and we either found it already pressed or found an empty slot
+		if (s && p < keycodesEnd) {
 			*p = k;
 			numKeysFound = 1;
 		}
