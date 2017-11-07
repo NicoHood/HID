@@ -24,11 +24,6 @@ THE SOFTWARE.
 // Include guard
 #pragma once
 
-DefaultKeyboardAPI::DefaultKeyboardAPI()
-{
-	memset(&_keyReport, 0, sizeof(_keyReport));
-}
-
 size_t DefaultKeyboardAPI::set(KeyboardKeycode k, bool s) 
 {
 	const auto keycodesEnd = &_keyReport.keycodes[sizeof(_keyReport.keycodes) / sizeof(_keyReport.keycodes[0])];
