@@ -47,9 +47,9 @@ size_t DefaultKeyboardAPI::set(KeyboardKeycode k, bool s)
 		// and if there is an empty slot. Remove the first available key.
 		uint8_t emptySlot = numKeycodeSlots;
 		uint8_t foundSlot = numKeycodeSlots;
-		for (uint8_t i = 0; i < numKeycodeSlots; i++)
+		for (uint8_t i = numKeycodeSlots; i > 0; --i)
 		{
-			auto key = _keyReport.keycodes[i];
+			auto key = _keyReport.keycodes[i-1];
 			if (key == KEY_RESERVED) {
 				emptySlot = i;
 			}
@@ -60,16 +60,11 @@ size_t DefaultKeyboardAPI::set(KeyboardKeycode k, bool s)
 
 		if (s && foundSlot == numKeycodeSlots && emptySlot < numKeycodeSlots) {
 			_keyReport.keycodes[emptySlot] = k;
-			return 1;
 		}
 		else if (!s && foundSlot < numKeycodeSlots) {
 			_keyReport.keycodes[foundSlot] = KEY_RESERVED;
-			return 1;
 		}
-		else {
-			// No empty/pressed key was found
-			return 0;
-		}
+		return foundSlot < numKeycodeSlots || (s && emptySlot < numKeycodeSlots);
 	}
 }
 
