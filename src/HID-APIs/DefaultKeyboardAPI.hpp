@@ -42,7 +42,7 @@ size_t DefaultKeyboardAPI::set(KeyboardKeycode k, bool s)
 	}
 	// Its a normal key
 	else{
-		const int numKeycodeSlots = sizeof(_keyReport.keycodes) / sizeof(_keyReport.keycodes[0]);
+		const uint8_t numKeycodeSlots = sizeof(_keyReport.keycodes) / sizeof(_keyReport.keycodes[0]);
 		// Add k to the key report only if it's not already present
 		// and if there is an empty slot. Remove the first available key.
 		uint8_t emptySlot = numKeycodeSlots;
