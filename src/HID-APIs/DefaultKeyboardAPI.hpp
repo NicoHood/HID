@@ -56,8 +56,8 @@ size_t DefaultKeyboardAPI::set(KeyboardKeycode k, bool s)
 		}
 		// else if we're releasing and we found the key
 		else if (!s && p < keycodesEnd && *p == k) {
-			// Shift the remainder of the array (if any) up a slot, stepping on indexOfK.
-			for (;p + 1 < keycodesEnd && *p != KEY_RESERVED; ++p) {
+			// Shift the remainder of the array (if any) up a slot
+			for (;p + 1 < keycodesEnd && p[1] != KEY_RESERVED; ++p) {
 				*p = p[1];
 			}
 			*p = KEY_RESERVED;
