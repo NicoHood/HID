@@ -24,46 +24,51 @@ THE SOFTWARE.
 // Include guard
 #pragma once
 
-
 size_t DefaultKeyboardAPI::set(KeyboardKeycode k, bool s) 
 {
+	const auto keycodesEnd = &_keyReport.keycodes[sizeof(_keyReport.keycodes) / sizeof(_keyReport.keycodes[0])];
+	size_t numKeysFound = 0;
 	// It's a modifier key
-	if(k >= KEY_LEFT_CTRL && k <= KEY_RIGHT_GUI)
+	if (k >= KEY_LEFT_CTRL && k <= KEY_RIGHT_GUI)
 	{
 		// Convert key into bitfield (0 - 7)
 		k = KeyboardKeycode(uint8_t(k) - uint8_t(KEY_LEFT_CTRL));
-		if(s){
+		if (s) {
 			_keyReport.modifiers |= (1 << k);
 		}
-		else{
+		else {
 			_keyReport.modifiers &= ~(1 << k);
 		}
-		return 1;
+		numKeysFound = 1;
 	}
-	// Its a normal key
-	else{
-		// Add k to the key report only if it's not already present
-		// and if there is an empty slot. Remove the first available key.
-		for (uint8_t i = 0; i < sizeof(_keyReport.keycodes); i++)
-		{
-			auto key = _keyReport.keycodes[i];
-			
-			// Is key already in the list or did we found an empty slot?
-			if (s && (key == uint8_t(k) || key == KEY_RESERVED)) {
-				_keyReport.keycodes[i] = k;
-				return 1;
+	// It's a normal key being pressed
+	else {
+		// Find the occurrence of k in .keycodes or the first empty slot
+		auto p = _keyReport.keycodes;
+		while (p < keycodesEnd && *p != k && *p != KEY_RESERVED) {
+			++p;
+		}
+
+		// if we're pressing the key and we either found it already pressed or found an empty slot
+		if (s && p < keycodesEnd) {
+			*p = k;
+			numKeysFound = 1;
+		}
+		// else if we're releasing and we found the key
+		else if (!s && p < keycodesEnd && *p == k) {
+			// Shift the remainder of the array (if any) up a slot
+			for (;p + 1 < keycodesEnd && p[1] != KEY_RESERVED; ++p) {
+				*p = p[1];
 			}
-			
-			// Test the key report to see if k is present. Clear it if it exists.
-			if (!s && (key == k)) {
-				_keyReport.keycodes[i] = KEY_RESERVED;
-				return 1;
-			}
+			*p = KEY_RESERVED;
+			numKeysFound = 1;
+		}
+		else {
+			numKeysFound = 0;
 		}
 	}
-	
-	// No empty/pressed key was found
-	return 0;
+
+	return numKeysFound;
 }
 
 size_t DefaultKeyboardAPI::removeAll(void)
