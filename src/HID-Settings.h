@@ -112,3 +112,63 @@ THE SOFTWARE.
 #ifndef HID_REPORTID_SURFACEDIAL
 #define HID_REPORTID_SURFACEDIAL 10
 #endif
+
+#if defined(ARDUINO_ARCH_AVR)
+
+#include "PluggableUSB.h"
+
+#define EPTYPE_DESCRIPTOR_SIZE      uint8_t
+
+#elif defined(ARDUINO_ARCH_SAM)
+
+#include "USB/PluggableUSB.h"
+
+#define EPTYPE_DESCRIPTOR_SIZE      uint32_t
+#define EP_TYPE_INTERRUPT_IN        (UOTGHS_DEVEPTCFG_EPSIZE_512_BYTE | \
+                                    UOTGHS_DEVEPTCFG_EPDIR_IN |         \
+                                    UOTGHS_DEVEPTCFG_EPTYPE_BLK |       \
+                                    UOTGHS_DEVEPTCFG_EPBK_1_BANK |      \
+                                    UOTGHS_DEVEPTCFG_NBTRANS_1_TRANS |  \
+                                    UOTGHS_DEVEPTCFG_ALLOC)
+#define EP_TYPE_INTERRUPT_OUT       (UOTGHS_DEVEPTCFG_EPSIZE_512_BYTE | \
+                                    UOTGHS_DEVEPTCFG_EPTYPE_BLK |       \
+                                    UOTGHS_DEVEPTCFG_EPBK_1_BANK |      \
+                                    UOTGHS_DEVEPTCFG_NBTRANS_1_TRANS |  \
+                                    UOTGHS_DEVEPTCFG_ALLOC)
+#define USB_EP_SIZE                 EPX_SIZE
+#define USB_SendControl             USBD_SendControl
+#define USB_Available               USBD_Available
+#define USB_Recv                    USBD_Recv
+#define USB_Send                    USBD_Send
+#define USB_Flush                   USBD_Flush
+
+#elif defined(ARDUINO_ARCH_SAMD)
+
+#include "USB/PluggableUSB.h"
+
+#define EPTYPE_DESCRIPTOR_SIZE      uint32_t
+#define EP_TYPE_INTERRUPT_IN        USB_ENDPOINT_TYPE_INTERRUPT | USB_ENDPOINT_IN(0);
+#define EP_TYPE_INTERRUPT_OUT       USB_ENDPOINT_TYPE_INTERRUPT | USB_ENDPOINT_OUT(0);
+#define USB_EP_SIZE                 EPX_SIZE
+//#define USB_SendControl           USBDevice.sendControl -> real C++ functions to take care of PGM overloading
+#define USB_Available               USBDevice.available
+#define USB_Recv                    USBDevice.recv
+#define USB_RecvControl             USBDevice.recvControl
+#define USB_Send                    USBDevice.send
+#define USB_Flush                   USBDevice.flush
+
+int USB_SendControl(void* y, uint8_t z);
+int USB_SendControl(uint8_t x, const void* y, uint8_t z);
+
+#define TRANSFER_PGM                0
+#define TRANSFER_RELEASE            0
+
+#define HID_REPORT_TYPE_INPUT       1
+#define HID_REPORT_TYPE_OUTPUT      2
+#define HID_REPORT_TYPE_FEATURE     3
+
+#else
+
+#error "Unsupported architecture"
+
+#endif

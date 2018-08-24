@@ -121,12 +121,16 @@ bool BootKeyboard_::setup(USBSetup& setup)
 		}
 		if (request == HID_GET_PROTOCOL) {
 			// TODO improve
+#ifdef __AVR__
 			UEDATX = protocol;
+#endif
 			return true;
 		}
 		if (request == HID_GET_IDLE) {
 			// TODO improve
+#ifdef __AVR__
 			UEDATX = idle;
+#endif
 			return true;
 		}
 	}
@@ -196,7 +200,9 @@ int BootKeyboard_::send(void){
 }
 
 void BootKeyboard_::wakeupHost(void){
+#ifdef __AVR__
 	USBDevice.wakeupHost();
+#endif
 }
 
 
