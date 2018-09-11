@@ -42,27 +42,11 @@ size_t DefaultKeyboardAPI::set(KeyboardKeycode k, bool s)
 	}
 	// Its a normal key
 	else{
-		// my code starts
-
 		// get size of keycodes during compile time
 		const uint8_t keycodesSize = sizeof(_keyReport.keycodes);
 
-
-		// if we are removing keys
-		if (!s) {
-			// iterate through the keycodes
-			for (uint8_t i = 0; i < keycodesSize; i++)
-			{
-				auto key = _keyReport.keycodes[i];
-				// if target key is found
-				if (key == k) {
-					// remove target and exit
-					_keyReport.keycodes[i] = KEY_RESERVED;
-					return 1;
-				}
-			}
-		} // if we are adding an element to keycodes
-		else {
+		// if we are adding an element to keycodes
+		if (s){
 			// iterate through the keycodes
 			for (uint8_t i = 0; i < keycodesSize; i++)
 			{
@@ -85,11 +69,19 @@ size_t DefaultKeyboardAPI::set(KeyboardKeycode k, bool s)
 					return 1;
 				}
 			}
+		} else { // we are removing k from keycodes
+			// iterate through the keycodes
+			for (uint8_t i = 0; i < keycodesSize; i++)
+			{
+				auto key = _keyReport.keycodes[i];
+				// if target key is found
+				if (key == k) {
+					// remove target and exit
+					_keyReport.keycodes[i] = KEY_RESERVED;
+					return 1;
+				}
+			}
 		}
-
-
-
-		// my code ends
 	}
 
 	// No empty/pressed key was found
