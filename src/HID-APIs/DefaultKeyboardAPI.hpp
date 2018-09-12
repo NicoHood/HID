@@ -60,32 +60,45 @@ size_t DefaultKeyboardAPI::set(KeyboardKeycode k, bool s)
 			}
 		} else { // we are removing k from keycodes
 			// this will replace the first instance of k with the last entry in the pseudo-linkedlist
-			// if list is not empty
-			if (_keyReport.keycodes[0] != KEY_RESERVED) {
-				uint8_t keyIndex = 255; // if keyIndex == 255 then k does not exist in keycodes
+
+			uint8_t keyIndex = 255; // if keyIndex == 255 then k does not exist in keycodes
+
+			// iterate through the keycodes
+			for (uint8_t i = 0; i < keycodesSize; i++)
+			{
+				auto key = _keyReport.keycodes[i];
+
+				// if target key is found
+				if (key == uint8_t(k)) {
+					// record target key index to keyIndex;
+					keyIndex = i;
+					break;
+				}
+			}
+
+			// if the target key is found (AKA if there is a key to remove)
+			if (keyIndex != 255)
+			{
+				// iterate through the keycodes from the back
 				KeyboardKeycode lastElement;
-				for (uint8_t i = 0; i < keycodesSize; i++)
+				for (uint8_t i = keycodesSize; i > 0; --i)
 				{
-					auto key = _keyReport.keycodes[i];
+					// slot is occupied
+					if (_keyReport.keycodes[i] != KEY_RESERVED)
+					{
+						_keyReport.keycodes[i] = KEY_RESERVED; // remove last element
 
-					if (key == uint8_t(k)) {
-						keyIndex = i;
-						continue;
-					}
-
-					// if the next element is null or if this is the last element
-					if ((i < keycodesSize-1 && _keyReport.keycodes[i+1] == KEY_RESERVED) || i == keycodesSize-1) {
-						lastElement = key; // set temp key to last filled slot
-						_keyReport.keycodes[i] = KEY_RESERVED; // clear last filled slot
+						// target key is the last non-null element in the pseudo-linkedlist
+						if (i == keyIndex)
+						{
+							return 1; // no further operations needed, exit now
+						}
+						lastElement = _keyReport.keycodes[i]; // copy current element to temp
 						break;
 					}
 				}
-
-				// if target key found
-				if (keyIndex != 255 && k != lastElement) {
-					_keyReport.keycodes[keyIndex] = lastElement; // replace target key
-					return 1;
-				}
+				_keyReport.keycodes[keyIndex] = lastElement; // replace k with last element
+				return 1;
 			}
 		}
 	}
