@@ -51,57 +51,39 @@ size_t DefaultKeyboardAPI::set(KeyboardKeycode k, bool s)
 			for (uint8_t i = 0; i < keycodesSize; i++)
 			{
 				auto key = _keyReport.keycodes[i];
-
-				// write to keycodes on first instance of k or null in keycodes
-				if (key == uint8_t(k) || key == KEY_RESERVED) {
+				// if target key is found
+				if (key == uint8_t(k)) {
+					// do nothing and exit
+					return 1;
+				}
+			}
+			// iterate through the keycodes again, this only happens if no existing
+			// keycodes matches k
+			for (uint8_t i = 0; i < keycodesSize; i++)
+			{
+				auto key = _keyReport.keycodes[i];
+				// if first instance of empty slot is found
+				if (key == KEY_RESERVED) {
+					// change empty slot to k and exit
 					_keyReport.keycodes[i] = k;
 					return 1;
 				}
 			}
 		} else { // we are removing k from keycodes
-			// this will replace the first instance of k with the last entry in the pseudo-linkedlist
-
-			uint8_t keyIndex = 255; // if keyIndex == 255 then k does not exist in keycodes
-
 			// iterate through the keycodes
 			for (uint8_t i = 0; i < keycodesSize; i++)
 			{
 				auto key = _keyReport.keycodes[i];
-
 				// if target key is found
-				if (key == uint8_t(k)) {
-					// record target key index to keyIndex;
-					keyIndex = i;
-					break;
+				if (key == k) {
+					// remove target and exit
+					_keyReport.keycodes[i] = KEY_RESERVED;
+					return 1;
 				}
-			}
-
-			// if the target key is found (AKA if there is a key to remove)
-			if (keyIndex != 255)
-			{
-				// iterate through the keycodes from the back
-				KeyboardKeycode lastElement;
-				for (uint8_t i = keycodesSize; i > 0; --i)
-				{
-					// slot is occupied
-					if (_keyReport.keycodes[i] != KEY_RESERVED)
-					{
-						_keyReport.keycodes[i] = KEY_RESERVED; // remove last element
-
-						// target key is the last non-null element in the pseudo-linkedlist
-						if (i == keyIndex)
-						{
-							return 1; // no further operations needed, exit now
-						}
-						lastElement = _keyReport.keycodes[i]; // copy current element to temp
-						break;
-					}
-				}
-				_keyReport.keycodes[keyIndex] = lastElement; // replace k with last element
-				return 1;
 			}
 		}
 	}
+
 	// No empty/pressed key was found
 	return 0;
 }
