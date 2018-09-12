@@ -63,7 +63,7 @@ size_t DefaultKeyboardAPI::set(KeyboardKeycode k, bool s)
 			// if list is not empty
 			if (_keyReport.keycodes[0] != KEY_RESERVED) {
 				uint8_t keyIndex = 255; // if keyIndex == 255 then k does not exist in keycodes
-				uint8_t lastIndex;
+				KeyboardKeycode lastElement;
 				for (uint8_t i = 0; i < keycodesSize; i++)
 				{
 					auto key = _keyReport.keycodes[i];
@@ -75,15 +75,15 @@ size_t DefaultKeyboardAPI::set(KeyboardKeycode k, bool s)
 
 					// if the next element is null or if this is the last element
 					if ((i < keycodesSize-1 && _keyReport.keycodes[i+1] == KEY_RESERVED) || i == keycodesSize-1) {
-						lastIndex = i; // set temp key to last filled slot index
+						lastElement = key; // set temp key to last filled slot
+						_keyReport.keycodes[i] = KEY_RESERVED; // clear last filled slot
 						break;
 					}
 				}
 
-				// replace target key with last element, replace last element with null
-				if (keyIndex != 255) {
-					_keyReport.keycodes[keyIndex] = _keyReport.keycodes[lastIndex]; // replace target key
-					_keyReport.keycodes[lastIndex] = KEY_RESERVED;
+				// if target key found
+				if (keyIndex != 255 && k != lastElement) {
+					_keyReport.keycodes[keyIndex] = lastElement; // replace target key
 					return 1;
 				}
 			}
