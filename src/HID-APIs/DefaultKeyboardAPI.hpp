@@ -25,7 +25,7 @@ THE SOFTWARE.
 #pragma once
 
 
-size_t DefaultKeyboardAPI::set(KeyboardKeycode k, bool s) 
+size_t DefaultKeyboardAPI::set(KeyboardKeycode k, bool s)
 {
 	// It's a modifier key
 	if(k >= KEY_LEFT_CTRL && k <= KEY_RIGHT_GUI)
@@ -42,26 +42,48 @@ size_t DefaultKeyboardAPI::set(KeyboardKeycode k, bool s)
 	}
 	// Its a normal key
 	else{
-		// Add k to the key report only if it's not already present
-		// and if there is an empty slot. Remove the first available key.
-		for (uint8_t i = 0; i < sizeof(_keyReport.keycodes); i++)
-		{
-			auto key = _keyReport.keycodes[i];
-			
-			// Is key already in the list or did we found an empty slot?
-			if (s && (key == uint8_t(k) || key == KEY_RESERVED)) {
-				_keyReport.keycodes[i] = k;
-				return 1;
+		// get size of keycodes during compile time
+		const uint8_t keycodesSize = sizeof(_keyReport.keycodes);
+
+		// if we are adding an element to keycodes
+		if (s){
+			// iterate through the keycodes
+			for (uint8_t i = 0; i < keycodesSize; i++)
+			{
+				auto key = _keyReport.keycodes[i];
+				// if target key is found
+				if (key == uint8_t(k)) {
+					// do nothing and exit
+					return 1;
+				}
 			}
-			
-			// Test the key report to see if k is present. Clear it if it exists.
-			if (!s && (key == k)) {
-				_keyReport.keycodes[i] = KEY_RESERVED;
-				return 1;
+			// iterate through the keycodes again, this only happens if no existing
+			// keycodes matches k
+			for (uint8_t i = 0; i < keycodesSize; i++)
+			{
+				auto key = _keyReport.keycodes[i];
+				// if first instance of empty slot is found
+				if (key == KEY_RESERVED) {
+					// change empty slot to k and exit
+					_keyReport.keycodes[i] = k;
+					return 1;
+				}
+			}
+		} else { // we are removing k from keycodes
+			// iterate through the keycodes
+			for (uint8_t i = 0; i < keycodesSize; i++)
+			{
+				auto key = _keyReport.keycodes[i];
+				// if target key is found
+				if (key == k) {
+					// remove target and exit
+					_keyReport.keycodes[i] = KEY_RESERVED;
+					return 1;
+				}
 			}
 		}
 	}
-	
+
 	// No empty/pressed key was found
 	return 0;
 }
@@ -104,7 +126,7 @@ size_t DefaultKeyboardAPI::press(ConsumerKeycode k)
 }
 
 
-size_t DefaultKeyboardAPI::release(ConsumerKeycode k) 
+size_t DefaultKeyboardAPI::release(ConsumerKeycode k)
 {
 	// Release key and send report to host
 	auto ret = remove(k);
@@ -115,14 +137,14 @@ size_t DefaultKeyboardAPI::release(ConsumerKeycode k)
 }
 
 
-size_t DefaultKeyboardAPI::add(ConsumerKeycode k) 
+size_t DefaultKeyboardAPI::add(ConsumerKeycode k)
 {
 	// No 2 byte keys are supported
 	if(k > 0xFF){
 		setWriteError();
 		return 0;
 	}
-	
+
 	// Place the key inside the reserved keyreport position.
 	// This does not work on Windows.
 	_keyReport.reserved = k;
@@ -130,13 +152,13 @@ size_t DefaultKeyboardAPI::add(ConsumerKeycode k)
 }
 
 
-size_t DefaultKeyboardAPI::remove(ConsumerKeycode k) 
+size_t DefaultKeyboardAPI::remove(ConsumerKeycode k)
 {
 	// No 2 byte keys are supported
 	if(k > 0xFF){
 		return 0;
 	}
-	
+
 	// Always release the key, to make it simpler releasing a consumer key
 	// without releasing all other normal keyboard keys.
 	_keyReport.reserved = HID_CONSUMER_UNASSIGNED;
