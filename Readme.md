@@ -1,4 +1,4 @@
-Arduino HID Project 2.4.4
+Arduino HID Project 2.5.0
 =========================
 
 ![Header Picture](header.jpg)
@@ -47,6 +47,10 @@ www.nicohood.de
 Version History
 ===============
 ```
+2.5.0 Release (15.09.2018)
+* Ported to SAMD architecture #146
+* Fixed bad keyboard report issue #148
+
 2.4.4 Release (27.01.2017)
 * Added releaseAll() to Mouse API
 * Fix flexible array errors
