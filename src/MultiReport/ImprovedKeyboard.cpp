@@ -76,7 +76,9 @@ int Keyboard_::send(void)
 }
 
 void Keyboard_::wakeupHost(void){
+#ifdef __AVR__
 	USBDevice.wakeupHost();
+#endif
 }
 
 Keyboard_ Keyboard;
