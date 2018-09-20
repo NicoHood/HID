@@ -13,7 +13,10 @@ The idea is to enable enhanced USB functions to almost all 'standard' Arduino bo
 * Leonardo
 * (Pro)Micro
 * Any other 8u2/16u2/at90usb8/162/32u2/32u4 compatible board
-* No SAM/ARM support (Due, Zero etc)
+* Zero
+* MKR1000
+* Any other Samd21 compatible board
+* No ATSAM3 support (Due, etc)
 
 **Supported HID devices:**
 * Keyboard with Leds out (8 modifiers + 6 keys pressed at the same time, + 1 limited linux consumer key)
