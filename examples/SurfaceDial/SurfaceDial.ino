@@ -10,6 +10,8 @@
    - I tested it using an Arduino Pro Micro; TinkerCad didn't have that in its component library
    - you obviously don't need a motor, but TinkerCad didn't have a separate encoder
   The encoder processing code is coming from https://www.allwinedesigns.com/blog/pocketnc-jog-wheel
+
+  Edited by OmegaRogue
 */
 
 #include "HID-Project.h"
