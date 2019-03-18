@@ -53,18 +53,19 @@ void SurfaceDialAPI::rotate(int16_t rotation)
 	reportData(rotation, _xAxis, _yAxis);
 }
 
-void SurfaceDialAPI::position(int8_t x, int8_t y)
+void SurfaceDialAPI::position(int16_t x, int16_t y)
 {
 	reportData(0, x, y);
 }
 
-void SurfaceDialAPI::reportData(int16_t rotation, int8_t x, int8_t y)
+void SurfaceDialAPI::reportData(int16_t rotation, int16_t x, int16_t y)
 {
 	HID_SurfaceDialReport_Data_t report;
 	_xAxis = x;
 	_yAxis = y;
 	report.button = _button;
 	report.rotation = rotation;
+	report.width = 3000;
 	if(_onScreen)
 	{
 		report.xAxis = _xAxis;
@@ -82,12 +83,12 @@ void SurfaceDialAPI::button(bool b)
 	}
 }
 
-void SurfaceDialAPI::xAxis(int8_t x)
+void SurfaceDialAPI::xAxis(int16_t x)
 {
 	_xAxis = x;
 	reportData(0, _xAxis, _yAxis);
 }
-void SurfaceDialAPI::yAxis(int8_t y)
+void SurfaceDialAPI::yAxis(int16_t y)
 {
 	_yAxis = y;
 	reportData(0, _xAxis, _yAxis);
@@ -120,6 +121,7 @@ void SurfaceDialAPI::update()
 	HID_SurfaceDialReport_Data_t report;
 	report.button = _button;
 	report.rotation = 0;
+	report.width = 3000;
 	if(_onScreen)
 	{
 		report.xAxis = _xAxis;
@@ -138,12 +140,12 @@ bool SurfaceDialAPI::getOnScreen()
 	return _onScreen;
 }
 
-int8_t SurfaceDialAPI::getX()
+int16_t SurfaceDialAPI::getX()
 {
 	return _xAxis;
 }
 
-int8_t SurfaceDialAPI::getY()
+int16_t SurfaceDialAPI::getY()
 {
 	return _yAxis;
 }
