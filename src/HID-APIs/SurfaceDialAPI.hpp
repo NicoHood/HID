@@ -24,7 +24,7 @@ THE SOFTWARE.
 // Include guard
 #pragma once
 
-SurfaceDialAPI::SurfaceDialAPI(void) : _button(false)
+SurfaceDialAPI::SurfaceDialAPI(void) : _button(false), _xAxis(0), _yAxis(0), _onScreen(false)
 {
 	// Empty
 }

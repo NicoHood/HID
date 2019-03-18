@@ -52,29 +52,29 @@ public:
   inline void end(void);
   inline void click(void);
   inline void rotate(int16_t rotation);
-	inline void position(int16_t x, int16_t y);
-	inline void reportData(int16_t rotation, int16_t x, int16_t y);
+  inline void position(int16_t x, int16_t y);
+  inline void reportData(int16_t rotation, int16_t x, int16_t y);
   inline void press(void);
   inline void release(void);
-	inline void releaseAll(void);
+  inline void releaseAll(void);
   inline bool isPressed();
-	inline int8_t getX();
-	inline int8_t getY();
-	inline bool getOnScreen();
-	inline void update();
+  inline int8_t getX();
+  inline int8_t getY();
+  inline bool getOnScreen();
+  inline void update();
 
   // Sending is public in the base class for advanced users.
   virtual void SendReport(void* data, int length) = 0;
 
 protected:
   bool _button;
-	bool _onScreen;
-	int16_t _xAxis;
-	int16_t _yAxis;
+  bool _onScreen;
+  int16_t _xAxis;
+  int16_t _yAxis;
   inline void button(bool b);
-	inline void xAxis(int16_t x);
-	inline void yAxis(int16_t y);
-	inline void onScreen(bool s);
+  inline void xAxis(int16_t x);
+  inline void yAxis(int16_t y);
+  inline void onScreen(bool s);
 };
 
 // Implementation is inline
