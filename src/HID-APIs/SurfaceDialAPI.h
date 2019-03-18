@@ -37,6 +37,7 @@ typedef union{
 		uint16_t rotation: 15;
 		int8_t xAxis: 8;
 		int8_t yAxis: 8;
+		
 
 	};
 } HID_SurfaceDialReport_Data_t;
@@ -50,7 +51,7 @@ public:
   inline void click(void);
   inline void rotate(int16_t rotation);
 	inline void position(int8_t x, int8_t y);
-	inline void posrot(int16_t rotation, int8_t x, int8_t y);
+	inline void reportData(int16_t rotation, int8_t x, int8_t y);
   inline void press(void);
   inline void release(void);
 	inline void releaseAll(void);

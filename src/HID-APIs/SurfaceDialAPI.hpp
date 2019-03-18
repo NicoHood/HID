@@ -50,15 +50,15 @@ void SurfaceDialAPI::click(void)
 
 void SurfaceDialAPI::rotate(int16_t rotation)
 {
-	posrot(rotation, _xAxis, _yAxis);
+	reportData(rotation, _xAxis, _yAxis);
 }
 
 void SurfaceDialAPI::position(int8_t x, int8_t y)
 {
-	posrot(0, x, y);
+	reportData(0, x, y);
 }
 
-void SurfaceDialAPI::posrot(int16_t rotation, int8_t x, int8_t y)
+void SurfaceDialAPI::reportData(int16_t rotation, int8_t x, int8_t y)
 {
 	HID_SurfaceDialReport_Data_t report;
 	_xAxis = x;
@@ -85,12 +85,12 @@ void SurfaceDialAPI::button(bool b)
 void SurfaceDialAPI::xAxis(int8_t x)
 {
 	_xAxis = x;
-	posrot(0, _xAxis, _yAxis);
+	reportData(0, _xAxis, _yAxis);
 }
 void SurfaceDialAPI::yAxis(int8_t y)
 {
 	_yAxis = y;
-	posrot(0, _xAxis, _yAxis);
+	reportData(0, _xAxis, _yAxis);
 }
 
 void SurfaceDialAPI::press(void)
