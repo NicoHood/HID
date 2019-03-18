@@ -43,7 +43,7 @@ void setup() {
   attachInterrupt(digitalPinToInterrupt(pinB), changed, CHANGE);
 
   SurfaceDial.begin();
-  SurfaceDial.onScreen(true);
+  SurfaceDial.putOnScreen(true);
 }
 
 void changed() {
