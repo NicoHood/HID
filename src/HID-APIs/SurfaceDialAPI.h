@@ -57,6 +57,7 @@ public:
   inline void press(void);
   inline void release(void);
   inline void releaseAll(void);
+  inline void putOnScreen(bool s);
   inline bool isPressed();
   inline int8_t getX();
   inline int8_t getY();

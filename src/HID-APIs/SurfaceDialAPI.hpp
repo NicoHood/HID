@@ -116,6 +116,11 @@ void SurfaceDialAPI::onScreen(bool s)
 	update();
 }
 
+void SurfaceDialAPI::putOnScreen(bool s)
+{
+  onScreen(s);
+}
+
 void SurfaceDialAPI::update()
 {
 	HID_SurfaceDialReport_Data_t report;
