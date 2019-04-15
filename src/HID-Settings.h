@@ -28,7 +28,7 @@ THE SOFTWARE.
 // Settings
 //================================================================================
 
-//#define LAYOUT_US_ENGLISH
+#define LAYOUT_US_ENGLISH
 //#define LAYOUT_CANADIAN_FRENCH
 //#define LAYOUT_CANADIAN_MULTILINGUAL
 //#define LAYOUT_DANISH
@@ -36,7 +36,7 @@ THE SOFTWARE.
 //#define LAYOUT_FRENCH
 //#define LAYOUT_FRENCH_BELGIAN
 //#define LAYOUT_FRENCH_SWISS
-#define LAYOUT_GERMAN
+//define LAYOUT_GERMAN
 //#define LAYOUT_GERMAN_MAC
 //#define LAYOUT_GERMAN_SWISS
 //#define LAYOUT_ICELANDIC

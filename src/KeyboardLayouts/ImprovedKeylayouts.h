@@ -26,14 +26,14 @@ THE SOFTWARE.
 
 // Keyboard Modifiers
 enum KeyboardMods : uint16_t {
-	MOD_LEFT_CTRL		= 0b0000000100000000,
-	MOD_LEFT_SHIFT		= 0b0000001000000000,
-	MOD_LEFT_ALT		= 0b0000010000000000,
-	MOD_LEFT_GUI		= 0b0000100000000000,
-	MOD_RIGHT_CTRL		= 0b0001000000000000,
-	MOD_RIGHT_SHIFT		= 0b0010000000000000,
-	MOD_RIGHT_ALT		= 0b0100000000000000,
-	MOD_RIGHT_GUI		= 0b1000000000000000,
+	MOD_LEFT_CTRL		= (1 <<  8),
+	MOD_LEFT_SHIFT		= (1 <<  9),
+	MOD_LEFT_ALT		= (1 << 10),
+	MOD_LEFT_GUI		= (1 << 11),
+	MOD_RIGHT_CTRL		= (1 << 12),
+	MOD_RIGHT_SHIFT		= (1 << 13),
+	MOD_RIGHT_ALT		= (1 << 14),
+	MOD_RIGHT_GUI		= (uint16_t)(1 << 15),
 };
 
 // Keyboard Leds
@@ -49,7 +49,7 @@ enum KeyboardLeds : uint8_t {
 };
 
 #if defined(LAYOUT_US_ENGLISH)
-	//#include "ImprovedKeylayoutsUS.h"
+	#include "ImprovedKeylayoutsUS.h"
 #elif defined(LAYOUT_CANADIAN_FRENCH)
 #elif defined(LAYOUT_CANADIAN_MULTILINGUAL)
 #elif defined(LAYOUT_DANISH)
