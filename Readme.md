@@ -1,4 +1,4 @@
-Arduino HID Project 2.5.0
+Arduino HID Project 2.6.0
 =========================
 
 ![Header Picture](header.jpg)
@@ -52,6 +52,9 @@ www.nicohood.de
 Version History
 ===============
 ```
+2.6.0 Release (16.04.2019)
+* Added generic keyboard layout support #168
+
 2.5.0 Release (15.09.2018)
 * Ported to SAMD architecture #146
 * Fixed bad keyboard report issue #148
