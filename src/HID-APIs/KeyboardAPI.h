@@ -26,7 +26,7 @@ THE SOFTWARE.
 
 #include <Arduino.h>
 #include "HID-Settings.h"
-#include "ImprovedKeylayouts.h"
+#include "../KeyboardLayouts/ImprovedKeylayouts.h"
 
 
 class KeyboardAPI : public Print

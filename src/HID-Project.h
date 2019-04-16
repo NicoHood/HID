@@ -54,4 +54,3 @@ THE SOFTWARE.
 #include "MultiReport/SurfaceDial.h"
 
 // Include Teensy HID afterwards to overwrite key definitions if used
-// TODO include Teensy API if non english keyboard layout was used

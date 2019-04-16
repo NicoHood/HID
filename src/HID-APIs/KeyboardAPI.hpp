@@ -154,14 +154,39 @@ size_t KeyboardAPI::set(uint8_t k, bool s){
 	}
 
 	// Read key from ascii lookup table
-	k = pgm_read_byte(_asciimap + k);
-	auto ret = set(KeyboardKeycode(k & ~SHIFT), s);
+	uint16_t key = pgm_read_word(_asciimap + k);
+	auto ret = set(KeyboardKeycode((uint8_t)(key & 0xFF)), s);
 	
-	// Only add shift if keycode was successfully added before.
-	// Always try to release shift (if used).
-	if((k & SHIFT) && (ret || !s)){
-		ret |= set(KEY_LEFT_SHIFT, s);
+	// Only add modifier if keycode was successfully added before.
+	// Always try to release modifier (if used).
+	if(ret || !s){
+		if (key & MOD_LEFT_CTRL) {
+			ret |= set(KEY_LEFT_CTRL, s);
+		}
+		if (key & MOD_LEFT_SHIFT) {
+			ret |= set(KEY_LEFT_SHIFT, s);
+		}
+		if (key & MOD_LEFT_ALT) {
+			ret |= set(KEY_LEFT_ALT, s);
+		}
+		if (key & MOD_LEFT_GUI) {
+			ret |= set(KEY_LEFT_GUI, s);
+		}
+		if (key & MOD_RIGHT_CTRL) {
+			ret |= set(KEY_RIGHT_CTRL, s);
+		}
+		if (key & MOD_RIGHT_SHIFT) {
+			ret |= set(KEY_RIGHT_SHIFT, s);
+		}
+		if (key & MOD_RIGHT_ALT) {
+			ret |= set(KEY_RIGHT_ALT, s);
+		}
+		if (key & MOD_RIGHT_GUI) {
+			ret |= set(KEY_RIGHT_GUI, s);
+		}
 	}
+	
+
 	return ret;
 }
 
