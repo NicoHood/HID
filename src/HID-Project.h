@@ -25,7 +25,7 @@ THE SOFTWARE.
 #pragma once
 
 // Software version
-#define HID_PROJECT_VERSION 250
+#define HID_PROJECT_VERSION 260
 
 #if ARDUINO < 10607
 #error HID Project requires Arduino IDE 1.6.7 or greater. Please update your IDE.
@@ -54,4 +54,3 @@ THE SOFTWARE.
 #include "MultiReport/SurfaceDial.h"
 
 // Include Teensy HID afterwards to overwrite key definitions if used
-// TODO include Teensy API if non english keyboard layout was used

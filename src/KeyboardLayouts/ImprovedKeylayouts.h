@@ -24,11 +24,59 @@ THE SOFTWARE.
 // Include guard
 #pragma once
 
-#if !defined(LAYOUT_US_ENGLISH)
-#error This API does not support non US english layouts.
+// Keyboard Modifiers
+enum KeyboardMods : uint16_t {
+	MOD_LEFT_CTRL		= (1 <<  8),
+	MOD_LEFT_SHIFT		= (1 <<  9),
+	MOD_LEFT_ALT		= (1 << 10),
+	MOD_LEFT_GUI		= (1 << 11),
+	MOD_RIGHT_CTRL		= (1 << 12),
+	MOD_RIGHT_SHIFT		= (1 << 13),
+	MOD_RIGHT_ALT		= (1 << 14),
+	MOD_RIGHT_GUI		= (uint16_t)(1 << 15),
+};
+
+// Keyboard Leds
+enum KeyboardLeds : uint8_t {
+	LED_NUM_LOCK		= (1 << 0),
+	LED_CAPS_LOCK		= (1 << 1),
+	LED_SCROLL_LOCK		= (1 << 2),
+	LED_COMPOSE			= (1 << 3),
+	LED_KANA			= (1 << 4),
+	LED_POWER			= (1 << 5),
+	LED_SHIFT			= (1 << 6),
+	LED_DO_NOT_DISTURB	= (1 << 7),
+};
+
+#if defined(LAYOUT_US_ENGLISH)
+	#include "ImprovedKeylayoutsUS.h"
+#elif defined(LAYOUT_CANADIAN_FRENCH)
+#elif defined(LAYOUT_CANADIAN_MULTILINGUAL)
+#elif defined(LAYOUT_DANISH)
+#elif defined(LAYOUT_FINNISH)
+#elif defined(LAYOUT_FRENCH)
+#elif defined(LAYOUT_FRENCH_BELGIAN)
+#elif defined(LAYOUT_FRENCH_SWISS)
+#elif defined(LAYOUT_GERMAN)
+	#include "ImprovedKeylayoutsDE.h"
+#elif defined(LAYOUT_GERMAN_MAC)
+#elif defined(LAYOUT_GERMAN_SWISS)
+#elif defined(LAYOUT_ICELANDIC)
+#elif defined(LAYOUT_IRISH)
+#elif defined(LAYOUT_ITALIAN)
+#elif defined(LAYOUT_NORWEGIAN)
+#elif defined(LAYOUT_PORTUGUESE)
+#elif defined(LAYOUT_PORTUGUESE_BRAZILIAN)
+#elif defined(LAYOUT_SPANISH)
+#elif defined(LAYOUT_SPANISH_LATIN_AMERICA)
+#elif defined(LAYOUT_SWEDISH)
+#elif defined(LAYOUT_TURKISH)
+#elif defined(LAYOUT_UNITED_KINGDOM)
+#elif defined(LAYOUT_US_INTERNATIONAL)
 #endif
 
 // Hut1_12v2.pdf
+/*
 enum KeyboardKeycode : uint8_t {
 	KEY_RESERVED		=  0,
 	KEY_ERROR_ROLLOVER	=  1,
@@ -490,21 +538,10 @@ enum KeyboardKeycode : uint8_t {
     HID_KEYBOARD_RIGHT_ALT	= 0xE6,
     HID_KEYBOARD_RIGHT_GUI	= 0xE7,
 };
+*/
 
-// Keyboard Leds
-enum KeyboardLeds : uint8_t {
-	LED_NUM_LOCK		= (1 << 0),
-	LED_CAPS_LOCK		= (1 << 1),
-	LED_SCROLL_LOCK		= (1 << 2),
-	LED_COMPOSE			= (1 << 3),
-	LED_KANA			= (1 << 4),
-	LED_POWER			= (1 << 5),
-	LED_SHIFT			= (1 << 6),
-	LED_DO_NOT_DISTURB	= (1 << 7),
-};
-
-#define SHIFT 0x80
-static const uint8_t _asciimap[] PROGMEM =
+/*
+static const uint16_t _asciimap[] PROGMEM =
 {
 	KEY_RESERVED,           // NUL
 	KEY_RESERVED,           // SOH
@@ -636,4 +673,4 @@ static const uint8_t _asciimap[] PROGMEM =
 	KEY_TILDE|SHIFT,    	// ~
 	KEY_RESERVED			// DEL
 };
-
+*/
