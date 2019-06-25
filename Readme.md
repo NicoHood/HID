@@ -1,4 +1,4 @@
-Arduino HID Project 2.5.0
+Arduino HID Project 2.6.0
 =========================
 
 ![Header Picture](header.jpg)
@@ -6,6 +6,8 @@ Arduino HID Project 2.5.0
 This project went through a lot of phases and has now reached a new Arduino ~~USB-Core~~ Library
 with a lot of new functions like extended HID. It also supports HoodLoader2 (version 1 is no longer supported).
 The idea is to enable enhanced USB functions to almost all 'standard' Arduino boards.
+
+<a href="https://www.buymeacoffee.com/Mnwg9NrCK" target="_blank"><img src="https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png" alt="Buy Me A Coffee" style="height: auto !important;width: auto !important;" ></a>
 
 **Supported Arduinos (IDE 1.6.7 or higher!):**
 * Uno (with [HoodLoader2](https://github.com/NicoHood/HoodLoader2))
@@ -50,6 +52,9 @@ www.nicohood.de
 Version History
 ===============
 ```
+2.6.0 Release (16.04.2019)
+* Added generic keyboard layout support #168
+
 2.5.0 Release (15.09.2018)
 * Ported to SAMD architecture #146
 * Fixed bad keyboard report issue #148
