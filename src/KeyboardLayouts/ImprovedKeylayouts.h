@@ -81,8 +81,6 @@ enum KeyboardLeds : uint8_t {
 #elif defined(LAYOUT_TURKISH)
 #elif defined(LAYOUT_UNITED_KINGDOM)
 #elif defined(LAYOUT_US_INTERNATIONAL)
-#elif defined(LAYOUT_HID_SCANCODE)
-	#include "ImprovedKeylayoutsHIDScancode.h"
 #endif
 
 // Hut1_12v2.pdf
