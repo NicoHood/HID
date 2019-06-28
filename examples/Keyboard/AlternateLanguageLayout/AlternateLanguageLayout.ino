@@ -22,7 +22,7 @@
 
 void setup() {
   BootKeyboard.begin();
-  delay(300);
+  delay(2000);
   BootKeyboard.write(KEY_7|MOD_LEFT_SHIFT); // this outputs the / symbol as per the german input method
 }
 
