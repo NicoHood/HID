@@ -24,69 +24,10 @@ THE SOFTWARE.
 // Include guard
 #pragma once
 
-// Keyboard Modifiers
-enum KeyboardMods : uint16_t {
-	MOD_LEFT_CTRL		= (1 <<  8),
-	MOD_LEFT_SHIFT		= (1 <<  9),
-	MOD_LEFT_ALT		= (1 << 10),
-	MOD_LEFT_GUI		= (1 << 11),
-	MOD_RIGHT_CTRL		= (1 << 12),
-	MOD_RIGHT_SHIFT		= (1 << 13),
-	MOD_RIGHT_ALT		= (1 << 14),
-	MOD_RIGHT_GUI		= (uint16_t)(1 << 15),
-};
-
-// Keyboard Leds
-enum KeyboardLeds : uint8_t {
-	LED_NUM_LOCK		= (1 << 0),
-	LED_CAPS_LOCK		= (1 << 1),
-	LED_SCROLL_LOCK		= (1 << 2),
-	LED_COMPOSE			= (1 << 3),
-	LED_KANA			= (1 << 4),
-	LED_POWER			= (1 << 5),
-	LED_SHIFT			= (1 << 6),
-	LED_DO_NOT_DISTURB	= (1 << 7),
-};
-
-#ifndef HID_CUSTOM_LAYOUT
-	#define HID_CUSTOM_LAYOUT
-	#define LAYOUT_US_ENGLISH
-	#pragma message "Using default ASCII layout for keyboard modules"
-#else
-	#pragma message "Using custom layout for keyboard modules"
-#endif
-
-#if defined(LAYOUT_US_ENGLISH)
-	#include "ImprovedKeylayoutsUS.h"
-#elif defined(LAYOUT_CANADIAN_FRENCH)
-#elif defined(LAYOUT_CANADIAN_MULTILINGUAL)
-#elif defined(LAYOUT_DANISH)
-#elif defined(LAYOUT_FINNISH)
-#elif defined(LAYOUT_FRENCH)
-#elif defined(LAYOUT_FRENCH_BELGIAN)
-#elif defined(LAYOUT_FRENCH_SWISS)
-#elif defined(LAYOUT_GERMAN)
-	#include "ImprovedKeylayoutsDE.h"
-#elif defined(LAYOUT_GERMAN_MAC)
-#elif defined(LAYOUT_GERMAN_SWISS)
-#elif defined(LAYOUT_ICELANDIC)
-#elif defined(LAYOUT_IRISH)
-#elif defined(LAYOUT_ITALIAN)
-#elif defined(LAYOUT_NORWEGIAN)
-#elif defined(LAYOUT_PORTUGUESE)
-#elif defined(LAYOUT_PORTUGUESE_BRAZILIAN)
-#elif defined(LAYOUT_SPANISH)
-#elif defined(LAYOUT_SPANISH_LATIN_AMERICA)
-#elif defined(LAYOUT_SWEDISH)
-#elif defined(LAYOUT_TURKISH)
-#elif defined(LAYOUT_UNITED_KINGDOM)
-#elif defined(LAYOUT_US_INTERNATIONAL)
-#elif defined(LAYOUT_HID_SCANCODE)
-	#include "ImprovedKeylayoutsHIDScancode.h"
-#endif
+#include "ImprovedKeylayouts.h"
 
 // Hut1_12v2.pdf
-/*
+
 enum KeyboardKeycode : uint8_t {
 	KEY_RESERVED		=  0,
 	KEY_ERROR_ROLLOVER	=  1,
@@ -548,139 +489,265 @@ enum KeyboardKeycode : uint8_t {
     HID_KEYBOARD_RIGHT_ALT	= 0xE6,
     HID_KEYBOARD_RIGHT_GUI	= 0xE7,
 };
-*/
 
-/*
+
+
 static const uint16_t _asciimap[] PROGMEM =
 {
-	KEY_RESERVED,           // NUL
-	KEY_RESERVED,           // SOH
-	KEY_RESERVED,           // STX
-	KEY_RESERVED,           // ETX
-	KEY_RESERVED,           // EOT
-	KEY_RESERVED,           // ENQ
-	KEY_RESERVED,           // ACK
-	KEY_RESERVED,           // BEL
-	KEY_BACKSPACE,			// BS	Backspace
-	KEY_TAB,				// TAB	Tab
-	KEY_ENTER,				// LF	Enter
-	KEY_RESERVED,           // VT
-	KEY_RESERVED,           // FF
-	KEY_RESERVED,           // CR
-	KEY_RESERVED,           // SO
-	KEY_RESERVED,           // SI
-	KEY_RESERVED,           // DEL
-	KEY_RESERVED,           // DC1
-	KEY_RESERVED,           // DC2
-	KEY_RESERVED,           // DC3
-	KEY_RESERVED,           // DC4
-	KEY_RESERVED,           // NAK
-	KEY_RESERVED,           // SYN
-	KEY_RESERVED,           // ETB
-	KEY_RESERVED,           // CAN
-	KEY_RESERVED,           // EM
-	KEY_RESERVED,           // SUB
-	KEY_RESERVED,           // ESC
-	KEY_RESERVED,           // FS
-	KEY_RESERVED,           // GS
-	KEY_RESERVED,           // RS
-	KEY_RESERVED,           // US
-
-	KEY_SPACE,		   		// ' ' Space
-	KEY_1|SHIFT,	   		// !
-	KEY_QUOTE|SHIFT,	   	// "
-	KEY_3|SHIFT,    		// #
-	KEY_4|SHIFT,    		// $
-	KEY_5|SHIFT,    		// %
-	KEY_7|SHIFT,    		// &
-	KEY_QUOTE,          	// '
-	KEY_9|SHIFT,    		// (
-	KEY_0|SHIFT,    		// )
-	KEY_8|SHIFT,    		// *
-	KEY_EQUAL|SHIFT,    	// +
-	KEY_COMMA,          	// ,
-	KEY_MINUS,          	// -
-	KEY_PERIOD,          	// .
-	KEY_SLASH,          	// /
-	KEY_0,          		// 0
-	KEY_1,          		// 1
-	KEY_2,          		// 2
-	KEY_3,          		// 3
-	KEY_4,          		// 4
-	KEY_5,          		// 5
-	KEY_6,          		// 6
-	KEY_7,          		// 7
-	KEY_8,          		// 8
-	KEY_9,          		// 9
-	KEY_SEMICOLON|SHIFT,	// :
-	KEY_SEMICOLON,          // ;
-	KEY_COMMA|SHIFT,      	// <
-	KEY_EQUAL,          	// =
-	KEY_PERIOD|SHIFT,      	// >
-	KEY_SLASH|SHIFT,      	// ?
-	KEY_2|SHIFT,      		// @
-	KEY_A|SHIFT,      		// A
-	KEY_B|SHIFT,      		// B
-	KEY_C|SHIFT,      		// C
-	KEY_D|SHIFT,      		// D
-	KEY_E|SHIFT,      		// E
-	KEY_F|SHIFT,      		// F
-	KEY_G|SHIFT,      		// G
-	KEY_H|SHIFT,      		// H
-	KEY_I|SHIFT,      		// I
-	KEY_J|SHIFT,      		// J
-	KEY_K|SHIFT,      		// K
-	KEY_L|SHIFT,      		// L
-	KEY_M|SHIFT,      		// M
-	KEY_N|SHIFT,      		// N
-	KEY_O|SHIFT,      		// O
-	KEY_P|SHIFT,      		// P
-	KEY_Q|SHIFT,      		// Q
-	KEY_R|SHIFT,      		// R
-	KEY_S|SHIFT,      		// S
-	KEY_T|SHIFT,      		// T
-	KEY_U|SHIFT,      		// U
-	KEY_V|SHIFT,      		// V
-	KEY_W|SHIFT,      		// W
-	KEY_X|SHIFT,      		// X
-	KEY_Y|SHIFT,      		// Y
-	KEY_Z|SHIFT,      		// Z
-	KEY_LEFT_BRACE,         // [
-	KEY_BACKSLASH,          // bslash
-	KEY_RIGHT_BRACE,        // ]
-	KEY_6|SHIFT,    		// ^
-	KEY_MINUS|SHIFT,    	// _
-	KEY_TILDE,          	// `
-	KEY_A,          		// a
-	KEY_B,          		// b
-	KEY_C,          		// c
-	KEY_D,          		// d
-	KEY_E,          		// e
-	KEY_F,          		// f
-	KEY_G,          		// g
-	KEY_H,          		// h
-	KEY_I,          		// i
-	KEY_J,          		// j
-	KEY_K,         		 	// k
-	KEY_L,          		// l
-	KEY_M,          		// m
-	KEY_N,          		// n
-	KEY_O,          		// o
-	KEY_P,          		// p
-	KEY_Q,          		// q
-	KEY_R,          		// r
-	KEY_S,          		// s
-	KEY_T,          		// t
-	KEY_U,          		// u
-	KEY_V,          		// v
-	KEY_W,          		// w
-	KEY_X,          		// x
-	KEY_Y,          		// y
-	KEY_Z,          		// z
-	KEY_LEFT_BRACE|SHIFT,   // {
-	KEY_BACKSLASH|SHIFT,    // |
-	KEY_RIGHT_BRACE|SHIFT,  // }
-	KEY_TILDE|SHIFT,    	// ~
-	KEY_RESERVED			// DEL
+	KEY_RESERVED,
+	KEY_ERROR_ROLLOVER,
+	KEY_POST_FAIL,
+	KEY_ERROR_UNDEFINED,
+	KEY_A,
+	KEY_B,
+	KEY_C,
+	KEY_D,
+	KEY_E,
+	KEY_F,
+	KEY_G,
+	KEY_H,
+	KEY_I,
+	KEY_J,
+	KEY_K,
+	KEY_L,
+	KEY_M,
+	KEY_N,
+	KEY_O,
+	KEY_P,
+	KEY_Q,
+	KEY_R,
+	KEY_S,
+	KEY_T,
+	KEY_U,
+	KEY_V,
+	KEY_W,
+	KEY_X,
+	KEY_Y,
+	KEY_Z,
+	KEY_1,
+	KEY_2,
+	KEY_3,
+	KEY_4,
+	KEY_5,
+	KEY_6,
+	KEY_7,
+	KEY_8,
+	KEY_9,
+	KEY_0,
+	KEY_ENTER,
+	KEY_ESC,
+	KEY_BACKSPACE,
+	KEY_TAB,
+	KEY_SPACE,
+	KEY_MINUS,
+	KEY_EQUAL,
+	KEY_LEFT_BRACE,
+	KEY_RIGHT_BRACE,
+	KEY_BACKSLASH,
+	KEY_NON_US_NUM,
+	KEY_SEMICOLON,
+	KEY_QUOTE,
+	KEY_TILDE,
+	KEY_COMMA,
+	KEY_PERIOD,
+	KEY_SLASH,
+	KEY_CAPS_LOCK,
+	KEY_F1,
+	KEY_F2,
+	KEY_F3,
+	KEY_F4,
+	KEY_F5,
+	KEY_F6,
+	KEY_F7,
+	KEY_F8,
+	KEY_F9,
+	KEY_F10,
+	KEY_F11,
+	KEY_F12,
+	KEY_PRINTSCREEN,
+	KEY_SCROLL_LOCK,
+	KEY_PAUSE,
+	KEY_INSERT,
+	KEY_HOME,
+	KEY_PAGE_UP,
+	KEY_DELETE,
+	KEY_END,
+	KEY_PAGE_DOWN,
+	KEY_RIGHT_ARROW,
+	KEY_LEFT_ARROW,
+	KEY_DOWN_ARROW,
+	KEY_UP_ARROW,
+	KEY_NUM_LOCK,
+	KEYPAD_DIVIDE,
+	KEYPAD_MULTIPLY,
+	KEYPAD_SUBTRACT,
+	KEYPAD_ADD,
+	KEYPAD_ENTER,
+	KEYPAD_1,
+	KEYPAD_2,
+	KEYPAD_3,
+	KEYPAD_4,
+	KEYPAD_5,
+	KEYPAD_6,
+	KEYPAD_7,
+	KEYPAD_8,
+	KEYPAD_9,
+	KEYPAD_0,
+	KEYPAD_DOT,
+	KEY_NON_US,
+	KEY_MENU,
+	KEY_POWER,
+	KEY_PAD_EQUALS,
+	KEY_F13,
+	KEY_F14,
+	KEY_F15,
+	KEY_F16,
+	KEY_F17,
+	KEY_F18,
+	KEY_F19,
+	KEY_F20,
+	KEY_F21,
+	KEY_F22,
+	KEY_F23,
+	KEY_F24,
+	KEY_EXECUTE,
+	KEY_HELP,
+	KEY_MENU2,
+	KEY_SELECT,
+	KEY_STOP,
+	KEY_AGAIN,
+	KEY_UNDO,
+	KEY_CUT,
+	KEY_COPY,
+	KEY_PASTE,
+	KEY_FIND,
+	KEY_VOLUME_MUTE,
+	KEY_VOLUME_UP,
+	KEY_VOLUME_DOWN,
+	KEY_LOCKING_CAPS_LOCK,
+	KEY_LOCKING_NUM_LOCK,
+	KEY_LOCKING_SCROLL_LOCK,
+	KEYPAD_COMMA,
+	KEYPAD_EQUAL_SIGN,
+	KEY_INTERNATIONAL1,
+	KEY_INTERNATIONAL2,
+	KEY_INTERNATIONAL3,
+	KEY_INTERNATIONAL4,
+	KEY_INTERNATIONAL5,
+	KEY_INTERNATIONAL6,
+	KEY_INTERNATIONAL7,
+	KEY_INTERNATIONAL8,
+	KEY_INTERNATIONAL9,
+	KEY_LANG1,
+	KEY_LANG2,
+	KEY_LANG3,
+	KEY_LANG4,
+	KEY_LANG5,
+	KEY_LANG6,
+	KEY_LANG7,
+	KEY_LANG8,
+	KEY_LANG9,
+	KEY_ALTERNATE_ERASE,
+	KEY_SYSREQ_ATTENTION,
+	KEY_CANCEL,
+	KEY_CLEAR,
+	KEY_PRIOR,
+	KEY_RETURN2,
+	KEY_SEPARATOR,
+	KEY_OUT,
+	KEY_OPER,
+	KEY_CLEAR_AGAIN,
+	KEY_CRSEL_PROPS,
+	KEY_EXSEL,
+	0xa5, // padding null
+	0xa6, // padding null
+	0xa7, // padding null
+	0xa8, // padding null
+	0xa9, // padding null
+	0xaa, // padding null
+	0xab, // padding null
+	0xac, // padding null
+	0xad, // padding null
+	0xae, // padding null
+	0xaf, // padding null
+	KEY_PAD_00,
+	KEY_PAD_000,
+	KEY_THOUSANDS_SEPARATOR,
+	KEY_DECIMAL_SEPARATOR,
+	KEY_CURRENCY_UNIT,
+	KEY_CURRENCY_SUB_UNIT,
+	KEYPAD_LEFT_BRACE,
+	KEYPAD_RIGHT_BRACE,
+	KEYPAD_LEFT_CURLY_BRACE,
+	KEYPAD_RIGHT_CURLY_BRACE,
+	KEYPAD_TAB,
+	KEYPAD_BACKSPACE,
+	KEYPAD_A,
+	KEYPAD_B,
+	KEYPAD_C,
+	KEYPAD_D,
+	KEYPAD_E,
+	KEYPAD_F,
+	KEYPAD_XOR,
+	KEYPAD_CARET,
+	KEYPAD_PERCENT,
+	KEYPAD_LESS_THAN,
+	KEYPAD_GREATER_THAN,
+	KEYPAD_AMPERSAND,
+	KEYPAD_DOUBLEAMPERSAND,
+	KEYPAD_PIPE,
+	KEYPAD_DOUBLEPIPE,
+	KEYPAD_COLON,
+	KEYPAD_POUND_SIGN,
+	KEYPAD_SPACE,
+	KEYPAD_AT_SIGN,
+	KEYPAD_EXCLAMATION_POINT,
+	KEYPAD_MEMORY_STORE,
+	KEYPAD_MEMORY_RECALL,
+	KEYPAD_MEMORY_CLEAR,
+	KEYPAD_MEMORY_ADD,
+	KEYPAD_MEMORY_SUBTRACT,
+	KEYPAD_MEMORY_MULTIPLY,
+	KEYPAD_MEMORY_DIVIDE,
+	KEYPAD_PLUS_MINUS,
+	KEYPAD_CLEAR,
+	KEYPAD_CLEAR_ENTRY,
+	KEYPAD_BINARY,
+	KEYPAD_OCTAL,
+	KEYPAD_DECIMAL,
+	KEYPAD_HEXADECIMAL,
+	0xde, // padding null
+	0xdf, // padding null
+	KEY_LEFT_CTRL,
+	KEY_LEFT_SHIFT,
+	KEY_LEFT_ALT,
+	KEY_LEFT_GUI,
+	KEY_RIGHT_CTRL,
+	KEY_RIGHT_SHIFT,
+	KEY_RIGHT_ALT,
+	KEY_RIGHT_GUI,
+	0xe8, // KEY_MEDIA_PLAYPAUSE
+	0xe9, // KEY_MEDIA_STOPCD
+	0xea, // KEY_MEDIA_PREVIOUSSONG
+	0xeb, // KEY_MEDIA_NEXTSONG
+	0xec, // KEY_MEDIA_EJECTCD
+	0xed, // KEY_MEDIA_VOLUMEUP
+	0xee, // KEY_MEDIA_VOLUMEDOWN
+	0xef, // KEY_MEDIA_MUTE
+	0xf0, // KEY_MEDIA_WWW
+	0xf1, // KEY_MEDIA_BACK
+	0xf2, // KEY_MEDIA_FORWARD
+	0xf3, // KEY_MEDIA_STOP
+	0xf4, // KEY_MEDIA_FIND
+	0xf5, // KEY_MEDIA_SCROLLUP
+	0xf6, // KEY_MEDIA_SCROLLDOWN
+	0xf7, // KEY_MEDIA_EDIT
+	0xf8, // KEY_MEDIA_SLEEP
+	0xf9, // KEY_MEDIA_COFFEE
+	0xfa, // KEY_MEDIA_REFRESH
+	0xfb, // KEY_MEDIA_CALC
+	0xfc, // padding null
+	0xfd, // padding null
+	0xfe, // padding null
+	0xff // padding null
 };
-*/
