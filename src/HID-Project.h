@@ -25,7 +25,7 @@ THE SOFTWARE.
 #pragma once
 
 // Software version
-#define HID_PROJECT_VERSION 260
+#define HID_PROJECT_VERSION 261
 
 #if ARDUINO < 10607
 #error HID Project requires Arduino IDE 1.6.7 or greater. Please update your IDE.

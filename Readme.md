@@ -1,4 +1,4 @@
-Arduino HID Project 2.6.0
+Arduino HID Project 2.6.1
 =========================
 
 ![Header Picture](header.jpg)
@@ -52,6 +52,9 @@ www.nicohood.de
 Version History
 ===============
 ```
+2.6.1 Release (13.07.2019)
+* Allow keyboard layout change within arduino sketch #176
+
 2.6.0 Release (16.04.2019)
 * Added generic keyboard layout support #168
 
