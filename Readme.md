@@ -31,6 +31,7 @@ The idea is to enable enhanced USB functions to almost all 'standard' Arduino bo
 * System Key (for PC standby/shutdown)
 * Gamepad (32 buttons, 4 16bit axis, 2 8bit axis, 2 D-Pads)
 * RawHID
+* SurfaceDial
 * Each device is available as single or multi report device (except RawHID)
 
 See the [wiki](https://github.com/NicoHood/HID/wiki/Features) for more information about features etc.
