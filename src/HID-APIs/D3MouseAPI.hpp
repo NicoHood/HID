@@ -1,16 +1,16 @@
 #pragma once
 
-3DMouseAPI::3DMouseAPI(void) : _button(false)
+D3MouseAPI::D3MouseAPI(void) : _button(false)
 {
 	// Empty
 }
 
-void 3DMouseAPI::begin(void)
+void D3MouseAPI::begin(void)
 {
 	end();
 }
 
-void 3DMouseAPI::end(void)
+void D3MouseAPI::end(void)
 {
 	_button0 = false;
 	_button1 = false;
@@ -23,33 +23,34 @@ void 3DMouseAPI::end(void)
 	move("z", 0);
 }
 
-void 3DMouseAPI::click(int button)
+void D3MouseAPI::click(int button)
 {
-	switch(button){
-		case 0:
-			_button0 = true;
-			update(void);
-			_button0 = false;
-			update(void);
-			break;
-		case 0:
-			_button1 = true;
-			update(void);
-			_button1 = false;
-			update(void);
-			break;
-		case 0:
-			_button2 = true;
-			update(void);
-			_button2 = false;
-			update(void);
-			break;
+	switch (button)
+	{
+	case 0:
+		_button0 = true;
+		update(void);
+		_button0 = false;
+		update(void);
+		break;
+	case 1:
+		_button1 = true;
+		update(void);
+		_button1 = false;
+		update(void);
+		break;
+	case 2:
+		_button2 = true;
+		update(void);
+		_button2 = false;
+		update(void);
+		break;
 	}
 }
 
-void 3DMouseAPI::rotate(string axis, int16_t rotation)
+void D3MouseAPI::rotate(String axis, int16_t rotation)
 {
-	if(axis == "x")
+	if (axis == "x")
 		_xRot = rotation;
 	if (axis == "y")
 		_yRot = rotation;
@@ -57,7 +58,7 @@ void 3DMouseAPI::rotate(string axis, int16_t rotation)
 		_zRot = rotation;
 }
 
-void 3DMouseAPI::move(string axis, int16_t pos)
+void D3MouseAPI::move(String axis, int16_t pos)
 {
 	if (axis == "x")
 		_x = pos;
@@ -67,9 +68,9 @@ void 3DMouseAPI::move(string axis, int16_t pos)
 		_z = pos;
 }
 
-void 3DMouseAPI::update(void)
+void D3MouseAPI::update(void)
 {
-	HID_3DMouseReport_Data_t report;
+	HID_D3MouseReport_Data_t report;
 	report.button0 = _button0;
 	report.button1 = _button1;
 	report.button2 = _button2;
@@ -83,7 +84,7 @@ void 3DMouseAPI::update(void)
 	SendReport(&report, sizeof(report));
 }
 
-void 3DMouseAPI::button0(bool b)
+void D3MouseAPI::button0(bool b)
 {
 	if (b != _button0)
 	{
@@ -92,7 +93,7 @@ void 3DMouseAPI::button0(bool b)
 	}
 }
 
-void 3DMouseAPI::button1(bool b)
+void D3MouseAPI::button1(bool b)
 {
 	if (b != _button1)
 	{
@@ -101,7 +102,7 @@ void 3DMouseAPI::button1(bool b)
 	}
 }
 
-void 3DMouseAPI::button2(bool b)
+void D3MouseAPI::button2(bool b)
 {
 	if (b != _button2)
 	{
@@ -110,24 +111,23 @@ void 3DMouseAPI::button2(bool b)
 	}
 }
 
-
-
-void 3DMouseAPI::press(int button)
+void D3MouseAPI::press(int button)
 {
-	switch(button){
-		case 0:
-			button0(true);
-			break;
-		case 1:
-			button1(true);
-			break;
-		case 2:
-			button2(true);
-			break;
+	switch (button)
+	{
+	case 0:
+		button0(true);
+		break;
+	case 1:
+		button1(true);
+		break;
+	case 2:
+		button2(true);
+		break;
 	}
 }
 
-void 3DMouseAPI::release(void)
+void D3MouseAPI::release(void)
 {
 	switch (button)
 	{
@@ -143,7 +143,7 @@ void 3DMouseAPI::release(void)
 	}
 }
 
-void 3DMouseAPI::releaseAll(void)
+void D3MouseAPI::releaseAll(void)
 {
 	_button0 = false;
 	_button1 = false;
@@ -151,7 +151,7 @@ void 3DMouseAPI::releaseAll(void)
 	update();
 }
 
-bool 3DMouseAPI::isPressed()
+bool D3MouseAPI::isPressed()
 {
 	switch (button)
 	{
