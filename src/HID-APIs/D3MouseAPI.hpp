@@ -1,6 +1,6 @@
 #pragma once
 
-D3MouseAPI::D3MouseAPI(void) : _button(false)
+D3MouseAPI::D3MouseAPI(void) : _button0(false)
 {
 	// Empty
 }
@@ -29,21 +29,21 @@ void D3MouseAPI::click(int button)
 	{
 	case 0:
 		_button0 = true;
-		update(void);
+		update();
 		_button0 = false;
-		update(void);
+		update();
 		break;
 	case 1:
 		_button1 = true;
-		update(void);
+		update();
 		_button1 = false;
-		update(void);
+		update();
 		break;
 	case 2:
 		_button2 = true;
-		update(void);
+		update();
 		_button2 = false;
-		update(void);
+		update();
 		break;
 	}
 }
@@ -127,7 +127,7 @@ void D3MouseAPI::press(int button)
 	}
 }
 
-void D3MouseAPI::release(void)
+void D3MouseAPI::release(int button)
 {
 	switch (button)
 	{
@@ -151,7 +151,7 @@ void D3MouseAPI::releaseAll(void)
 	update();
 }
 
-bool D3MouseAPI::isPressed()
+bool D3MouseAPI::isPressed(int button)
 {
 	switch (button)
 	{
