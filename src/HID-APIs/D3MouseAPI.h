@@ -10,15 +10,15 @@ typedef union {
 
     struct
     {
-        uint8_t button0;
-        uint8_t button1;
-        uint8_t button2;
-        int16_t xAxis;
-        int16_t yAxis;
-        int16_t zAxis;
-        int16_t xRot;
-        int16_t yRot;
-        int16_t zRot;
+        uint8_t button0 : 1;
+        uint8_t button1 : 1;
+        uint8_t button2 : 1;
+        int16_t xAxis : 15;
+        int16_t yAxis : 15;
+        int16_t zAxis : 15;
+        int16_t xRot : 15;
+        int16_t yRot : 15;
+        int16_t zRot : 15;
     };
 } HID_D3MouseReport_Data_t;
 
@@ -35,6 +35,7 @@ class D3MouseAPI
     inline void release(int button);
     inline void releaseAll(void);
     inline bool isPressed(int button);
+    inline void update(void);
 
     virtual void SendReport(void *data, int length) = 0;
 
