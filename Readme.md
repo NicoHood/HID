@@ -1,4 +1,4 @@
-Arduino HID Project 2.6.0
+Arduino HID Project 2.6.1
 =========================
 
 ![Header Picture](header.jpg)
@@ -31,6 +31,7 @@ The idea is to enable enhanced USB functions to almost all 'standard' Arduino bo
 * System Key (for PC standby/shutdown)
 * Gamepad (32 buttons, 4 16bit axis, 2 8bit axis, 2 D-Pads)
 * RawHID
+* SurfaceDial
 * Each device is available as single or multi report device (except RawHID)
 
 See the [wiki](https://github.com/NicoHood/HID/wiki/Features) for more information about features etc.
@@ -52,6 +53,9 @@ www.nicohood.de
 Version History
 ===============
 ```
+2.6.1 Release (13.07.2019)
+* Allow keyboard layout change within arduino sketch #176
+
 2.6.0 Release (16.04.2019)
 * Added generic keyboard layout support #168
 
