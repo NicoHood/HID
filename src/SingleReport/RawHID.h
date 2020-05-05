@@ -29,7 +29,7 @@ THE SOFTWARE.
 #include "HID-Settings.h"
 
 // RawHID might never work with multireports, because of OS problems
-// therefore we have to make it a single report with no idea. No other HID device will be supported then.
+// therefore we have to make it a single report with no ID. No other HID device will be supported then.
 #undef RAWHID_USAGE_PAGE
 #define RAWHID_USAGE_PAGE	0xFFC0 // recommended: 0xFF00 to 0xFFFF
 
