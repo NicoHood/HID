@@ -27,12 +27,12 @@ THE SOFTWARE.
 #include "KeyboardAPI.h"
 #include "ConsumerAPI.h"
 
-typedef union{
+typedef union ATTRIBUTE_PACKED {
 	// Low level key report: up to 6 keys and shift, ctrl etc at once
 	uint8_t whole8[0];
 	uint16_t whole16[0];
 	uint32_t whole32[0];
-	struct{
+	struct ATTRIBUTE_PACKED {
 		uint8_t modifiers;
 		uint8_t reserved;
 		KeyboardKeycode keycodes[6];

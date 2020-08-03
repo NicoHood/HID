@@ -37,12 +37,12 @@ THE SOFTWARE.
 #define MOUSE_ALL (MOUSE_LEFT | MOUSE_RIGHT | MOUSE_MIDDLE | MOUSE_PREV | MOUSE_NEXT)
 
 
-typedef union{
+typedef union ATTRIBUTE_PACKED {
 	// Absolute mouse report: 8 buttons, 2 absolute axis, wheel
 	uint8_t whole8[0];
 	uint16_t whole16[0];
 	uint32_t whole32[0];
-	struct{
+	struct ATTRIBUTE_PACKED {
 		uint8_t buttons;
 		int16_t xAxis;
 		int16_t yAxis;

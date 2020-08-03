@@ -37,12 +37,12 @@ THE SOFTWARE.
 // but the last 3 wont do anything from what I tested
 #define MOUSE_ALL (MOUSE_LEFT | MOUSE_RIGHT | MOUSE_MIDDLE | MOUSE_PREV | MOUSE_NEXT)
 
-typedef union{
+typedef union ATTRIBUTE_PACKED {
 	// Mouse report: 8 buttons, position, wheel
 	uint8_t whole8[0];
 	uint16_t whole16[0];
 	uint32_t whole32[0];
-	struct{
+	struct ATTRIBUTE_PACKED {
 		uint8_t buttons;
 		int8_t xAxis;
 		int8_t yAxis;
@@ -50,13 +50,13 @@ typedef union{
 	};
 } HID_MouseReport_Data_t;
 
-typedef union{
+typedef union ATTRIBUTE_PACKED {
 	// BootMouse report: 3 buttons, position
 	// Wheel is not supported by boot protocol
 	uint8_t whole8[0];
 	uint16_t whole16[0];
 	uint32_t whole32[0];
-	struct{
+	struct ATTRIBUTE_PACKED {
 		uint8_t buttons;
 		int8_t xAxis;
 		int8_t yAxis;

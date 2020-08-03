@@ -451,13 +451,13 @@ enum ConsumerKeycode : uint16_t {
 };
 
 
-typedef union {
+typedef union ATTRIBUTE_PACKED {
 	// Every usable Consumer key possible, up to 4 keys presses possible
 	uint8_t whole8[0];
 	uint16_t whole16[0];
 	uint32_t whole32[0];
 	ConsumerKeycode keys[4];
-	struct {
+	struct ATTRIBUTE_PACKED {
 		ConsumerKeycode key1;
 		ConsumerKeycode key2;
 		ConsumerKeycode key3;

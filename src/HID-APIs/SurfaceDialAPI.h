@@ -27,12 +27,12 @@ THE SOFTWARE.
 #include <Arduino.h>
 #include "HID-Settings.h"
 
-typedef union{
+typedef union ATTRIBUTE_PACKED {
 	// SurfaceDial report: 1 button, 15-bit rotation, position
 	uint8_t whole8[0];
 	uint16_t whole16[0];
 	uint32_t whole32[0];
-	struct{
+	struct ATTRIBUTE_PACKED {
 		uint16_t button: 1;
 		uint16_t rotation: 15;
 		//int8_t xAxis;
