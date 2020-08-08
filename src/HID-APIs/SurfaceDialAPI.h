@@ -32,12 +32,15 @@ typedef union{
 	uint8_t whole8[0];
 	uint16_t whole16[0];
 	uint32_t whole32[0];
+	uint64_t whole64[0];
 	struct{
 		uint16_t button: 1;
 		uint16_t rotation: 15;
-		//int8_t xAxis;
-		//int8_t yAxis;
-		
+		int16_t xAxis: 16;
+		int16_t yAxis: 16;
+		uint16_t width: 16;
+
+
 	};
 } HID_SurfaceDialReport_Data_t;
 
@@ -49,17 +52,30 @@ public:
   inline void end(void);
   inline void click(void);
   inline void rotate(int16_t rotation);
+  inline void position(int16_t x, int16_t y);
+  inline void reportData(int16_t rotation, int16_t x, int16_t y);
   inline void press(void);
   inline void release(void);
-	inline void releaseAll(void);
+  inline void releaseAll(void);
+  inline void putOnScreen(bool s);
   inline bool isPressed();
+  inline int16_t getX();
+  inline int16_t getY();
+  inline bool getOnScreen();
+  inline void update();
 
   // Sending is public in the base class for advanced users.
   virtual void SendReport(void* data, int length) = 0;
 
 protected:
   bool _button;
+  bool _onScreen;
+  int16_t _xAxis;
+  int16_t _yAxis;
   inline void button(bool b);
+  inline void xAxis(int16_t x);
+  inline void yAxis(int16_t y);
+  inline void onScreen(bool s);
 };
 
 // Implementation is inline

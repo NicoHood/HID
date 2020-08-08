@@ -24,7 +24,7 @@ THE SOFTWARE.
 // Include guard
 #pragma once
 
-SurfaceDialAPI::SurfaceDialAPI(void) : _button(false)
+SurfaceDialAPI::SurfaceDialAPI(void) : _button(false), _xAxis(0), _yAxis(0), _onScreen(false)
 {
 	// Empty
 }
@@ -37,25 +37,40 @@ void SurfaceDialAPI::begin(void)
 void SurfaceDialAPI::end(void)
 {
 	_button = false;
-	rotate(0);
+	update();
 }
 
 void SurfaceDialAPI::click(void)
 {
 	_button = true;
-	rotate(0);
+	update();
 	_button = false;
-	rotate(0);
+	update();
 }
 
 void SurfaceDialAPI::rotate(int16_t rotation)
 {
+	reportData(rotation, _xAxis, _yAxis);
+}
+
+void SurfaceDialAPI::position(int16_t x, int16_t y)
+{
+	reportData(0, x, y);
+}
+
+void SurfaceDialAPI::reportData(int16_t rotation, int16_t x, int16_t y)
+{
 	HID_SurfaceDialReport_Data_t report;
+	_xAxis = x;
+	_yAxis = y;
 	report.button = _button;
 	report.rotation = rotation;
-	//report.xAxis = x;
-	//report.yAxis = y;
-
+	report.width = 3000;
+	if(_onScreen)
+	{
+		report.xAxis = _xAxis;
+		report.yAxis = _yAxis;
+	}
 	SendReport(&report, sizeof(report));
 }
 
@@ -64,8 +79,19 @@ void SurfaceDialAPI::button(bool b)
 	if (b != _button)
 	{
 		_button = b;
-		rotate(0);
+		update();
 	}
+}
+
+void SurfaceDialAPI::xAxis(int16_t x)
+{
+	_xAxis = x;
+	reportData(0, _xAxis, _yAxis);
+}
+void SurfaceDialAPI::yAxis(int16_t y)
+{
+	_yAxis = y;
+	reportData(0, _xAxis, _yAxis);
 }
 
 void SurfaceDialAPI::press(void)
@@ -81,10 +107,50 @@ void SurfaceDialAPI::release(void)
 void SurfaceDialAPI::releaseAll(void)
 {
 	_button = false;
-	rotate(0);
+	update();
+}
+
+void SurfaceDialAPI::onScreen(bool s)
+{
+	_onScreen = s;
+	update();
+}
+
+void SurfaceDialAPI::putOnScreen(bool s)
+{
+  onScreen(s);
+}
+
+void SurfaceDialAPI::update()
+{
+	HID_SurfaceDialReport_Data_t report;
+	report.button = _button;
+	report.rotation = 0;
+	report.width = 3000;
+	if(_onScreen)
+	{
+		report.xAxis = _xAxis;
+		report.yAxis = _yAxis;
+	}
+	SendReport(&report, sizeof(report));
 }
 
 bool SurfaceDialAPI::isPressed()
 {
-	return _button;	
+	return _button;
+}
+
+bool SurfaceDialAPI::getOnScreen()
+{
+	return _onScreen;
+}
+
+int16_t SurfaceDialAPI::getX()
+{
+	return _xAxis;
+}
+
+int16_t SurfaceDialAPI::getY()
+{
+	return _yAxis;
 }
