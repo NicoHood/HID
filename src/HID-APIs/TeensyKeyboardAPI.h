@@ -78,12 +78,12 @@ static const uint8_t PROGMEM teensykeyboard_hid_report_desc[] = {
         0xc0			// End Collection
 };
 
-typedef union{
+typedef union ATTRIBUTE_PACKED {
 	// Low level key report: up to 6 keys and shift, ctrl etc at once
 	uint8_t whole8[];
 	uint16_t whole16[];
 	uint32_t whole32[];
-	struct{
+	struct ATTRIBUTE_PACKED {
 		uint8_t modifiers;
 		uint8_t reserved;
 		uint8_t keys[6];

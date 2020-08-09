@@ -30,12 +30,12 @@ THE SOFTWARE.
 // +1 reportID, +1 modifier, +1 custom key
 #define NKRO_KEY_COUNT (8*13)
 
-typedef union{
+typedef union ATTRIBUTE_PACKED {
 	// Modifier + keymap + 1 custom key
 	uint8_t whole8[0];
 	uint16_t whole16[0];
 	uint32_t whole32[0];
-	struct{
+	struct ATTRIBUTE_PACKED {
 		uint8_t modifiers;
 		uint8_t keys[NKRO_KEY_COUNT / 8];
 		uint8_t key;

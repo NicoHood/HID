@@ -74,7 +74,7 @@ enum SystemKeycode : uint8_t {
 	HID_SYSTEM_DISPLAY_LCD_AUTOSCALE	= 0xB7,	// HID type OSC
 };
 
-typedef union{
+typedef union ATTRIBUTE_PACKED {
 	// Every usable system control key possible
 	uint8_t whole8[0];
 	uint8_t key;

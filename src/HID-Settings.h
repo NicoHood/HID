@@ -75,11 +75,16 @@ THE SOFTWARE.
 
 #if defined(ARDUINO_ARCH_AVR)
 
+// Use default alignment for AVR
+#define ATTRIBUTE_PACKED
+
 #include "PluggableUSB.h"
 
 #define EPTYPE_DESCRIPTOR_SIZE      uint8_t
 
 #elif defined(ARDUINO_ARCH_SAM)
+
+#define ATTRIBUTE_PACKED  __attribute__((packed, aligned(1)))
 
 #include "USB/PluggableUSB.h"
 
@@ -103,6 +108,8 @@ THE SOFTWARE.
 #define USB_Flush                   USBD_Flush
 
 #elif defined(ARDUINO_ARCH_SAMD)
+
+#define ATTRIBUTE_PACKED  __attribute__((packed, aligned(1)))
 
 #include "USB/PluggableUSB.h"
 

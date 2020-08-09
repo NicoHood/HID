@@ -51,7 +51,7 @@ THE SOFTWARE.
 #undef RAWHID_RX_SIZE
 #define RAWHID_RX_SIZE RAWHID_SIZE
 
-typedef union{
+typedef union ATTRIBUTE_PACKED {
 	// a RAWHID_TX_SIZE byte buffer for tx
 	uint8_t whole8[0];
 	uint16_t whole16[0];
@@ -59,7 +59,7 @@ typedef union{
 	uint8_t buff[RAWHID_TX_SIZE];
 } HID_RawKeyboardTXReport_Data_t;
 
-typedef union{
+typedef union ATTRIBUTE_PACKED {
 	// a RAWHID_TX_SIZE byte buffer for rx
 	uint8_t whole8[0];
 	uint16_t whole16[0];

@@ -39,14 +39,14 @@ THE SOFTWARE.
 #define GAMEPAD_DPAD_UP_LEFT 8
 
 
-typedef union {
+typedef union ATTRIBUTE_PACKED {
 	// 32 Buttons, 6 Axis, 2 D-Pads
 	uint8_t whole8[0];
 	uint16_t whole16[0];
 	uint32_t whole32[0];
 	uint32_t buttons;
 
-	struct{
+	struct ATTRIBUTE_PACKED {
 		uint8_t button1 : 1;
 		uint8_t button2 : 1;
 		uint8_t button3 : 1;
