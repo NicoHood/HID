@@ -68,7 +68,7 @@ static const uint8_t _hidMultiReportDescriptorSurfaceDial[] PROGMEM = {
     // 0x46, 0xb8, 0x0b, //     PHYSICAL_MAXIMUM (3000)
     // 0x16, 0xb8, 0x0b, //     LOGICAL_MINIMUM (3000)
     // 0x26, 0xb8, 0x0b, //     LOGICAL_MAXIMUM (3000)
-    // 0x81, 0x03        //     INPUT (Cnst,Var,Abs)
+    // 0x81, 0x03,        //     INPUT (Cnst,Var,Abs)
     0xc0,             //   END_COLLECTION
     0xc0              // END_COLLECTION
 };
