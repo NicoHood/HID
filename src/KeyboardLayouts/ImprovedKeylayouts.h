@@ -72,6 +72,7 @@ enum KeyboardLeds : uint8_t {
 #elif defined(LAYOUT_ICELANDIC)
 #elif defined(LAYOUT_IRISH)
 #elif defined(LAYOUT_ITALIAN)
+	#include "ImprovedKeylayoutsIT.h"
 #elif defined(LAYOUT_NORWEGIAN)
 #elif defined(LAYOUT_PORTUGUESE)
 #elif defined(LAYOUT_PORTUGUESE_BRAZILIAN)
