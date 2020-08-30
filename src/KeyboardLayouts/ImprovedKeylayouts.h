@@ -56,35 +56,8 @@ enum KeyboardLeds : uint8_t {
 	#pragma message "Using custom layout for keyboard modules"
 #endif
 
-#if defined(LAYOUT_US_ENGLISH)
-	#include "ImprovedKeylayoutsUS.h"
-#elif defined(LAYOUT_CANADIAN_FRENCH)
-#elif defined(LAYOUT_CANADIAN_MULTILINGUAL)
-#elif defined(LAYOUT_DANISH)
-#elif defined(LAYOUT_FINNISH)
-#elif defined(LAYOUT_FRENCH)
-#elif defined(LAYOUT_FRENCH_BELGIAN)
-#elif defined(LAYOUT_FRENCH_SWISS)
-#elif defined(LAYOUT_GERMAN)
-	#include "ImprovedKeylayoutsDE.h"
-#elif defined(LAYOUT_GERMAN_MAC)
-#elif defined(LAYOUT_GERMAN_SWISS)
-#elif defined(LAYOUT_ICELANDIC)
-#elif defined(LAYOUT_IRISH)
-#elif defined(LAYOUT_ITALIAN)
-#elif defined(LAYOUT_NORWEGIAN)
-#elif defined(LAYOUT_PORTUGUESE)
-#elif defined(LAYOUT_PORTUGUESE_BRAZILIAN)
-#elif defined(LAYOUT_SPANISH)
-#elif defined(LAYOUT_SPANISH_LATIN_AMERICA)
-#elif defined(LAYOUT_SWEDISH)
-#elif defined(LAYOUT_TURKISH)
-#elif defined(LAYOUT_UNITED_KINGDOM)
-#elif defined(LAYOUT_US_INTERNATIONAL)
-#endif
-
 // Hut1_12v2.pdf
-/*
+
 enum KeyboardKeycode : uint8_t {
 	KEY_RESERVED		=  0,
 	KEY_ERROR_ROLLOVER	=  1,
@@ -546,7 +519,7 @@ enum KeyboardKeycode : uint8_t {
     HID_KEYBOARD_RIGHT_ALT	= 0xE6,
     HID_KEYBOARD_RIGHT_GUI	= 0xE7,
 };
-*/
+
 
 /*
 static const uint16_t _asciimap[] PROGMEM =
@@ -682,3 +655,31 @@ static const uint16_t _asciimap[] PROGMEM =
 	KEY_RESERVED			// DEL
 };
 */
+
+#if defined(LAYOUT_US_ENGLISH)
+	#include "ImprovedKeylayoutsUS.h"
+#elif defined(LAYOUT_CANADIAN_FRENCH)
+#elif defined(LAYOUT_CANADIAN_MULTILINGUAL)
+#elif defined(LAYOUT_DANISH)
+#elif defined(LAYOUT_FINNISH)
+#elif defined(LAYOUT_FRENCH)
+#elif defined(LAYOUT_FRENCH_BELGIAN)
+#elif defined(LAYOUT_FRENCH_SWISS)
+#elif defined(LAYOUT_GERMAN)
+	#include "ImprovedKeylayoutsDE.h"
+#elif defined(LAYOUT_GERMAN_MAC)
+#elif defined(LAYOUT_GERMAN_SWISS)
+#elif defined(LAYOUT_ICELANDIC)
+#elif defined(LAYOUT_IRISH)
+#elif defined(LAYOUT_ITALIAN)
+	#include "ImprovedKeylayoutsIT.h"
+#elif defined(LAYOUT_NORWEGIAN)
+#elif defined(LAYOUT_PORTUGUESE)
+#elif defined(LAYOUT_PORTUGUESE_BRAZILIAN)
+#elif defined(LAYOUT_SPANISH)
+#elif defined(LAYOUT_SPANISH_LATIN_AMERICA)
+#elif defined(LAYOUT_SWEDISH)
+#elif defined(LAYOUT_TURKISH)
+#elif defined(LAYOUT_UNITED_KINGDOM)
+#elif defined(LAYOUT_US_INTERNATIONAL)
+#endif
