@@ -7,7 +7,7 @@ This project went through a lot of phases and has now reached a new Arduino ~~US
 with a lot of new functions like extended HID. It also supports HoodLoader2 (version 1 is no longer supported).
 The idea is to enable enhanced USB functions to almost all 'standard' Arduino boards.
 
-<a href="https://www.buymeacoffee.com/Mnwg9NrCK" target="_blank"><img src="https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png" alt="Buy Me A Coffee" style="height: auto !important;width: auto !important;" ></a>
+<a href="https://www.buymeacoffee.com/nicohood" target="_blank"><img src="https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png" alt="Buy Me A Coffee" style="height: auto !important;width: auto !important;" ></a>
 
 **Supported Arduinos (IDE 1.6.7 or higher!):**
 * Uno (with [HoodLoader2](https://github.com/NicoHood/HoodLoader2))
