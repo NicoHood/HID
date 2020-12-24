@@ -1,4 +1,4 @@
-Arduino HID Project 2.6.1
+Arduino HID Project 2.6.2
 =========================
 
 ![Header Picture](header.jpg)
@@ -53,6 +53,10 @@ www.nicohood.de
 Version History
 ===============
 ```
+2.6.2 Release (24.12.2020)
+* Fix SAMD alignment #211
+* Fix asciimap size check #228
+
 2.6.1 Release (13.07.2019)
 * Allow keyboard layout change within arduino sketch #176
 
