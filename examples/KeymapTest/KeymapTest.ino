@@ -3,7 +3,8 @@
   See the readme for credit to other people.
 
   KeymapTest Example
-  Test a keymap to make sure that all keys type the character they are ssupposed to
+  Test a keymap to make sure that all keys type the character they are supposed
+  to.
 
   See HID Project documentation for more information about the keyboard API:
   https://github.com/NicoHood/HID/wiki/Keyboard-API
