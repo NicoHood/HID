@@ -1,5 +1,5 @@
 /*
-Copyright (c) 2014-2015 NicoHood
+Copyright (c) 2014-2021 NicoHood
 See the readme for credit to other people.
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -25,7 +25,7 @@ THE SOFTWARE.
 #pragma once
 
 // Software version
-#define HID_PROJECT_VERSION 262
+#define HID_PROJECT_VERSION 270
 
 #if ARDUINO < 10607
 #error HID Project requires Arduino IDE 1.6.7 or greater. Please update your IDE.
