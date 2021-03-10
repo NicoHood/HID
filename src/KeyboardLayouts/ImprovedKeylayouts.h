@@ -675,6 +675,8 @@ static const uint16_t _asciimap[] PROGMEM =
     #include "ImprovedKeylayoutsCH.h"
 #elif defined(LAYOUT_ICELANDIC)
 #elif defined(LAYOUT_IRISH)
+    // Is this any different from the UK layout?
+    #include "ImprovedKeylayoutsUK.h"
 #elif defined(LAYOUT_ITALIAN)
     #include "ImprovedKeylayoutsIT.h"
 #elif defined(LAYOUT_NORWEGIAN)
@@ -686,5 +688,6 @@ static const uint16_t _asciimap[] PROGMEM =
 #elif defined(LAYOUT_SWEDISH)
 #elif defined(LAYOUT_TURKISH)
 #elif defined(LAYOUT_UNITED_KINGDOM)
+    #include "ImprovedKeylayoutsUK.h"
 #elif defined(LAYOUT_US_INTERNATIONAL)
 #endif
