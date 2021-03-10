@@ -87,7 +87,7 @@ static const uint16_t _asciimap[] PROGMEM =
     KEY_7,                              // 7
     KEY_8,                              // 8
     KEY_9,                              // 9
-    KEY_SEMICOLON|MOD_LEFT_SHIF         // :
+    KEY_SEMICOLON|MOD_LEFT_SHIFT,       // :
     KEY_SEMICOLON,                      // ;
     KEY_COMMA|MOD_LEFT_SHIFT,           // <
     KEY_EQUAL,                          // =
@@ -152,9 +152,9 @@ static const uint16_t _asciimap[] PROGMEM =
     KEY_X,                              // x
     KEY_Y,                              // y
     KEY_Z,                              // z
-    KEY_LEFT_BRACE|MOD_LEFT_SHI         // {
-    KEY_BACKSLASH|MOD_LEFT_SHIF         // |
-    KEY_RIGHT_BRACE|MOD_LEFT_SH         // }
+    KEY_LEFT_BRACE|MOD_LEFT_SHIFT,      // {
+    KEY_BACKSLASH|MOD_LEFT_SHIFT,       // |
+    KEY_RIGHT_BRACE|MOD_LEFT_SHIFT,     // }
     KEY_TILDE|MOD_LEFT_SHIFT,           // ~
     KEY_RESERVED,                       // DEL
     // 7-bit ASCII codes end here
