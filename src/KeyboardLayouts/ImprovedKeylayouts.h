@@ -663,6 +663,8 @@ static const uint16_t _asciimap[] PROGMEM =
 #elif defined(LAYOUT_DANISH)
     #include "ImprovedKeylayoutsDK.h"
 #elif defined(LAYOUT_FINNISH)
+    // Finnish layout is the same as Swedish
+    #include "ImprovedKeylayoutsSE.h"
 #elif defined(LAYOUT_FRENCH)
     #include "ImprovedKeylayoutsFR.h"
 #elif defined(LAYOUT_FRENCH_BELGIAN)
@@ -688,6 +690,7 @@ static const uint16_t _asciimap[] PROGMEM =
 #elif defined(LAYOUT_SPANISH)
 #elif defined(LAYOUT_SPANISH_LATIN_AMERICA)
 #elif defined(LAYOUT_SWEDISH)
+    #include "ImprovedKeylayoutsSE.h"
 #elif defined(LAYOUT_TURKISH)
 #elif defined(LAYOUT_UNITED_KINGDOM)
     #include "ImprovedKeylayoutsUK.h"
