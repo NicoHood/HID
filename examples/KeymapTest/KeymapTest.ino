@@ -3,14 +3,27 @@
   See the readme for credit to other people.
 
   KeymapTest Example
-  Test a keymap to make sure that all keys type the character they are supposed
-  to.
+  Test a keylayout to make sure that all keys type the character they are
+  supposed to.
 
   See HID Project documentation for more information about the keyboard API:
   https://github.com/NicoHood/HID/wiki/Keyboard-API
 */
 
+/* By default the US English layout is selected. To test a different keylayout,
+ * uncomment the following two lines and change the second to reflect your
+ * chosen layout. You can see the available layouts at the bottom of
+ * ImprovedKeylayouts.h in the library sources.
+ */
+//#define HID_CUSTOM_LAYOUT
+//#define LAYOUT_ITALIAN
+
 #include <HID-Project.h>
+
+/* Time to wait after each key press/release so that it gets picked up by the
+ * host system [ms].
+ */
+#define KEYDELAY 5
 
 void setup() {
   Serial.begin(115200);
@@ -36,13 +49,13 @@ void setup() {
     Serial.print(c);
     Serial.print(' ');
     BootKeyboard.press(c);
-    delay (5);
+    delay (KEYDELAY);
     BootKeyboard.release(c);
-    delay (5);
+    delay (KEYDELAY);
     BootKeyboard.press(KEY_ENTER);
-    delay (5);
+    delay (KEYDELAY);
     BootKeyboard.release(KEY_ENTER);
-    delay (5);
+    delay (KEYDELAY);
     while (!Serial.available()) {
     }
     char r = Serial.read();
