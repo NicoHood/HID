@@ -661,6 +661,7 @@ static const uint16_t _asciimap[] PROGMEM =
 #elif defined(LAYOUT_CANADIAN_FRENCH)
 #elif defined(LAYOUT_CANADIAN_MULTILINGUAL)
 #elif defined(LAYOUT_DANISH)
+    #include "ImprovedKeylayoutsDK.h"
 #elif defined(LAYOUT_FINNISH)
 #elif defined(LAYOUT_FRENCH)
     #include "ImprovedKeylayoutsFR.h"
