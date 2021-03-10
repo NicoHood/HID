@@ -27,15 +27,15 @@ THE SOFTWARE.
 #include "ImprovedKeylayouts.h"
 
 // Key aliases
-#define KEY_DK_FRACTION		KEY_TILDE
-#define KEY_DK_PLUS			KEY_MINUS		// LOL! :)
-#define KEY_DK_ACCENTS1		KEY_EQUAL
-#define KEY_DK_ACIRCLE		KEY_LEFT_BRACE
-#define KEY_DK_ACCENTS2		KEY_RIGHT_BRACE
-#define KEY_DK_AE			KEY_SEMICOLON
-#define KEY_DK_OSLASH		KEY_QUOTE
-#define KEY_DK_QUOTE		KEY_BACKSLASH
-#define KEY_DK_QUOTE		KEY_BACKSLASH
+#define KEY_DK_FRACTION     KEY_TILDE
+#define KEY_DK_PLUS         KEY_MINUS       // LOL! :)
+#define KEY_DK_ACCENTS1     KEY_EQUAL
+#define KEY_DK_ACIRCLE      KEY_LEFT_BRACE
+#define KEY_DK_ACCENTS2     KEY_RIGHT_BRACE
+#define KEY_DK_AE           KEY_SEMICOLON
+#define KEY_DK_OSLASH       KEY_QUOTE
+#define KEY_DK_QUOTE        KEY_BACKSLASH
+#define KEY_DK_QUOTE        KEY_BACKSLASH
 #define KEY_DK_MINUS        KEY_SLASH
 #define KEY_DK_LT_GT        KEY_NON_US
 
@@ -78,11 +78,11 @@ static const uint16_t _asciimap[] PROGMEM =
     KEY_SPACE,                                  // ' ' Space
     KEY_1|MOD_LEFT_SHIFT,                       // !
     KEY_2|MOD_LEFT_SHIFT,                       // "
-    KEY_3|MOD_LEFT_SHIFT,     		            // #
+    KEY_3|MOD_LEFT_SHIFT,                       // #
     KEY_4|MOD_RIGHT_ALT,                        // $
     KEY_5|MOD_LEFT_SHIFT,                       // %
     KEY_6|MOD_LEFT_SHIFT,                       // &
-    KEY_DK_QUOTE,                               // '            
+    KEY_DK_QUOTE,                               // '
     KEY_8|MOD_LEFT_SHIFT,                       // (
     KEY_9|MOD_LEFT_SHIFT,                       // )
     KEY_DK_QUOTE|MOD_LEFT_SHIFT,                // *
@@ -134,12 +134,12 @@ static const uint16_t _asciimap[] PROGMEM =
     KEY_X|MOD_LEFT_SHIFT,                       // X
     KEY_Y|MOD_LEFT_SHIFT,                       // Y
     KEY_Z|MOD_LEFT_SHIFT,                       // Z
-    KEY_8|MOD_RIGHT_ALT,        		        // [
+    KEY_8|MOD_RIGHT_ALT,                        // [
     KEY_DK_LT_GT|MOD_RIGHT_ALT,                 // bslash
-    KEY_9|MOD_RIGHT_ALT,         		        // ]
-    KEY_RESERVED,             				    // ^ (Dead key)
+    KEY_9|MOD_RIGHT_ALT,                        // ]
+    KEY_RESERVED,                               // ^ (Dead key)
     KEY_DK_MINUS|MOD_LEFT_SHIFT,                // _
-    KEY_RESERVED,      				            // ` (Dead key)
+    KEY_RESERVED,                               // ` (Dead key)
     KEY_A,                                      // a
     KEY_B,                                      // b
     KEY_C,                                      // c
@@ -166,10 +166,10 @@ static const uint16_t _asciimap[] PROGMEM =
     KEY_X,                                      // x
     KEY_Y,                                      // y
     KEY_Z,                                      // z
-    KEY_7|MOD_RIGHT_ALT, 						// {
-    KEY_DK_ACCENTS1|MOD_RIGHT_ALT,   	        // |
-    KEY_0|MOD_RIGHT_ALT,   						// }
-    KEY_RESERVED,                				// ~ (Dead key)
+    KEY_7|MOD_RIGHT_ALT,                        // {
+    KEY_DK_ACCENTS1|MOD_RIGHT_ALT,              // |
+    KEY_0|MOD_RIGHT_ALT,                        // }
+    KEY_RESERVED,                               // ~ (Dead key)
     KEY_RESERVED,                               // 127 - DEL
     // 7-bit ASCII codes end here
 
@@ -209,7 +209,7 @@ static const uint16_t _asciimap[] PROGMEM =
     KEY_RESERVED,                               // 160 - Non-breaking Space
     KEY_RESERVED,                               // 161 - Inverted Exclamation Mark
     KEY_RESERVED,                               // 162 - Cent
-    KEY_RESERVED,                 		        // 163 - British Pound Sign
+    KEY_RESERVED,                               // 163 - British Pound Sign
     KEY_5|MOD_RIGHT_ALT,                        // 164 - Euro Sign
     KEY_RESERVED,                               // 165 - Yen
     KEY_RESERVED,                               // 166 - Capital 's' Inverted Circumflex
@@ -222,7 +222,7 @@ static const uint16_t _asciimap[] PROGMEM =
     KEY_RESERVED,                               // 173 - Soft Hypen
     KEY_RESERVED,                               // 174 - Registered Trademark
     KEY_RESERVED,                               // 175 - Macron
-    KEY_IT_AGRAVE|MOD_LEFT_SHIFT,               // 176 - Degree Symbol
+    KEY_RESERVED,                               // 176 - Degree Symbol
     KEY_RESERVED,                               // 177 - Plus-Minus
     KEY_RESERVED,                               // 178 - Superscript '2'
     KEY_RESERVED,                               // 179 - Superscript '3'
@@ -270,32 +270,32 @@ static const uint16_t _asciimap[] PROGMEM =
     KEY_RESERVED,                               // 221 - Capital 'y' Acute
     KEY_RESERVED,                               // 222 - Capital Thorn
     KEY_RESERVED,                               // 223 - Eszett
-    KEY_IT_AGRAVE,                              // 224 - 'a' Grave
+    KEY_RESERVED,                               // 224 - 'a' Grave
     KEY_RESERVED,                               // 225 - 'a' Acute
     KEY_RESERVED,                               // 226 - 'a' Circumflex
     KEY_RESERVED,                               // 227 - 'a' Tilde
     KEY_RESERVED,                               // 228 - 'a' Umlaut
     KEY_DK_ACIRCLE,                             // 229 - 'a' Circle
-    KEY_DK_AE,               	                // 230 - 'ae'
-    KEY_IT_OGRAVE|MOD_LEFT_SHIFT,               // 231 - 'c' Cedilla
-    KEY_IT_EGRAVE,                              // 232 - 'e' Grave
-    KEY_IT_EGRAVE|MOD_LEFT_SHIFT,               // 233 - 'e' Acute
+    KEY_DK_AE,                                  // 230 - 'ae'
+    KEY_RESERVED,                               // 231 - 'c' Cedilla
+    KEY_RESERVED,                               // 232 - 'e' Grave
+    KEY_RESERVED,                               // 233 - 'e' Acute
     KEY_RESERVED,                               // 234 - 'e' Circumflex
     KEY_RESERVED,                               // 235 - 'e' Umlaut
-    KEY_IT_IGRAVE,                              // 236 - 'i' Grave
+    KEY_RESERVED,                               // 236 - 'i' Grave
     KEY_RESERVED,                               // 237 - 'i' Acute
     KEY_RESERVED,                               // 238 - 'i' Circumflex
     KEY_RESERVED,                               // 239 - 'i' Umlaut
     KEY_RESERVED,                               // 240 - Eth
     KEY_RESERVED,                               // 241 - 'n' Tilde
-    KEY_IT_OGRAVE,                              // 242 - 'o' Grave
+    KEY_RESERVED,                               // 242 - 'o' Grave
     KEY_RESERVED,                               // 243 - 'o' Acute
     KEY_RESERVED,                               // 244 - 'o' Circumflex
     KEY_RESERVED,                               // 245 - 'o' Tilde
     KEY_RESERVED,                               // 246 - 'o' Umlaut
     KEY_RESERVED,                               // 247 - Multiplication Sign
     KEY_DK_OSLASH,                              // 248 - 'o' Barred
-    KEY_IT_UGRAVE,                              // 249 - 'u' Grave
+    KEY_RESERVED,                               // 249 - 'u' Grave
     KEY_RESERVED,                               // 250 - 'u' Acute
     KEY_RESERVED,                               // 251 - 'u' Circumflex
     KEY_RESERVED,                               // 252 - 'u' Umlaut
