@@ -26,6 +26,19 @@ THE SOFTWARE.
 
 #include "ImprovedKeylayouts.h"
 
+// Key aliases
+#define KEY_PT_QUOTE        KEY_MINUS
+#define KEY_PT_GUILLS       KEY_EQUAL
+#define KEY_PT_PLUS         KEY_LEFT_BRACE
+#define KEY_PT_ACCENTS1     KEY_RIGHT_BRACE
+#define KEY_PT_ACCENTS2     KEY_BACKSLASH
+#define KEY_PT_CEDILLA      KEY_SEMICOLON
+#define KEY_PT_AO           KEY_QUOTE
+#define KEY_PT_BACKSLASH    KEY_TILDE
+#define KEY_PT_LT_GT        KEY_NON_US
+#define KEY_PT_MINUS        KEY_SLASH
+
+
 static const uint16_t _asciimap[] PROGMEM =
 {
     KEY_RESERVED,                       // NUL
@@ -63,20 +76,20 @@ static const uint16_t _asciimap[] PROGMEM =
 
     KEY_SPACE,                          // ' ' Space
     KEY_1|MOD_LEFT_SHIFT,               // !
-    KEY_QUOTE|MOD_LEFT_SHIFT,           // "
+    KEY_2|MOD_LEFT_SHIFT,               // "
     KEY_3|MOD_LEFT_SHIFT,               // #
     KEY_4|MOD_LEFT_SHIFT,               // $
     KEY_5|MOD_LEFT_SHIFT,               // %
-    KEY_7|MOD_LEFT_SHIFT,               // &
-    KEY_QUOTE,                          // '
-    KEY_9|MOD_LEFT_SHIFT,               // (
-    KEY_0|MOD_LEFT_SHIFT,               // )
-    KEY_8|MOD_LEFT_SHIFT,               // *
-    KEY_EQUAL|MOD_LEFT_SHIFT,           // +
+    KEY_6|MOD_LEFT_SHIFT,               // &
+    KEY_PT_QUOTE,                       // '
+    KEY_8|MOD_LEFT_SHIFT,               // (
+    KEY_9|MOD_LEFT_SHIFT,               // )
+    KEY_PT_PLUS|MOD_LEFT_SHIFT,         // *
+    KEY_PT_PLUS,                        // +
     KEY_COMMA,                          // ,
-    KEY_MINUS,                          // -
+    KEY_PT_MINUS,                       // -
     KEY_PERIOD,                         // .
-    KEY_SLASH,                          // /
+    KEY_7|MOD_LEFT_SHIFT,               // /
     KEY_0,                              // 0
     KEY_1,                              // 1
     KEY_2,                              // 2
@@ -87,13 +100,13 @@ static const uint16_t _asciimap[] PROGMEM =
     KEY_7,                              // 7
     KEY_8,                              // 8
     KEY_9,                              // 9
-    KEY_SEMICOLON|MOD_LEFT_SHIFT,       // :
-    KEY_SEMICOLON,                      // ;
-    KEY_COMMA|MOD_LEFT_SHIFT,           // <
-    KEY_EQUAL,                          // =
-    KEY_PERIOD|MOD_LEFT_SHIFT,          // >
-    KEY_SLASH|MOD_LEFT_SHIFT,           // ?
-    KEY_2|MOD_LEFT_SHIFT,               // @
+    KEY_PERIOD|MOD_LEFT_SHIFT,          // :
+    KEY_COMMA|MOD_LEFT_SHIFT,           // ;
+    KEY_PT_LT_GT,                       // <
+    KEY_0|MOD_LEFT_SHIFT,               // =
+    KEY_PT_LT_GT|MOD_LEFT_SHIFT,        // >
+    KEY_PT_QUOTE|MOD_LEFT_SHIFT,        // ?
+    KEY_2|MOD_RIGHT_ALT,                // @
     KEY_A|MOD_LEFT_SHIFT,               // A
     KEY_B|MOD_LEFT_SHIFT,               // B
     KEY_C|MOD_LEFT_SHIFT,               // C
@@ -120,12 +133,12 @@ static const uint16_t _asciimap[] PROGMEM =
     KEY_X|MOD_LEFT_SHIFT,               // X
     KEY_Y|MOD_LEFT_SHIFT,               // Y
     KEY_Z|MOD_LEFT_SHIFT,               // Z
-    KEY_LEFT_BRACE,                     // [
-    KEY_BACKSLASH,                      // bslash
-    KEY_RIGHT_BRACE,                    // ]
-    KEY_6|MOD_LEFT_SHIFT,               // ^
-    KEY_MINUS|MOD_LEFT_SHIFT,           // _
-    KEY_TILDE,                          // `
+    KEY_8|MOD_RIGHT_ALT,                // [
+    KEY_PT_BACKSLASH,                   // bslash
+    KEY_9|MOD_RIGHT_ALT,                // ]
+    KEY_RESERVED,                       // ^ (Dead key)
+    KEY_PT_MINUS|MOD_LEFT_SHIFT,        // _
+    KEY_RESERVED,                       // ` (Dead key)
     KEY_A,                              // a
     KEY_B,                              // b
     KEY_C,                              // c
@@ -152,11 +165,11 @@ static const uint16_t _asciimap[] PROGMEM =
     KEY_X,                              // x
     KEY_Y,                              // y
     KEY_Z,                              // z
-    KEY_LEFT_BRACE|MOD_LEFT_SHIFT,      // {
-    KEY_BACKSLASH|MOD_LEFT_SHIFT,       // |
-    KEY_RIGHT_BRACE|MOD_LEFT_SHIFT,     // }
-    KEY_TILDE|MOD_LEFT_SHIFT,           // ~
-    KEY_RESERVED,                       // DEL
+    KEY_7|MOD_RIGHT_ALT,                // {
+    KEY_PT_BACKSLASH|MOD_LEFT_SHIFT,    // |
+    KEY_0|MOD_RIGHT_ALT,                // }
+    KEY_RESERVED,                       // ~ (Dead key)
+    KEY_RESERVED,                       // 127 - DEL
     // 7-bit ASCII codes end here
 
     // The following characters belong to ISO-8859-15
@@ -195,20 +208,20 @@ static const uint16_t _asciimap[] PROGMEM =
     KEY_RESERVED,                       // 160 - Non-breaking Space
     KEY_RESERVED,                       // 161 - Inverted Exclamation Mark
     KEY_RESERVED,                       // 162 - Cent
-    KEY_RESERVED,                       // 163 - British Pound Sign
-    KEY_RESERVED,                       // 164 - Euro Sign
+    KEY_3|MOD_RIGHT_ALT,                // 163 - British Pound Sign
+    KEY_E|MOD_RIGHT_ALT,                // 164 - Euro Sign
     KEY_RESERVED,                       // 165 - Yen
     KEY_RESERVED,                       // 166 - Capital 's' Inverted Circumflex
-    KEY_RESERVED,                       // 167 - Section Sign
+    KEY_4|MOD_RIGHT_ALT,                // 167 - Section Sign
     KEY_RESERVED,                       // 168 - 's' Inverted Circumflex
     KEY_RESERVED,                       // 169 - Copyright Sign
-    KEY_RESERVED,                       // 170 - Superscript 'a'
-    KEY_RESERVED,                       // 171 - Open Guillemet
+    KEY_PT_AO|MOD_LEFT_SHIFT,           // 170 - Superscript 'a'
+    KEY_PT_GUILLS,                      // 171 - Open Guillemet
     KEY_RESERVED,                       // 172 - Logic Negation
     KEY_RESERVED,                       // 173 - Soft Hypen
     KEY_RESERVED,                       // 174 - Registered Trademark
     KEY_RESERVED,                       // 175 - Macron
-    KEY_RESERVED,                       // 176 - Degree Symbol
+    KEY_PT_AO,                          // 176 - Degree Symbol
     KEY_RESERVED,                       // 177 - Plus-Minus
     KEY_RESERVED,                       // 178 - Superscript '2'
     KEY_RESERVED,                       // 179 - Superscript '3'
@@ -219,7 +232,7 @@ static const uint16_t _asciimap[] PROGMEM =
     KEY_RESERVED,                       // 184 - 'z' Inverted Circumflex
     KEY_RESERVED,                       // 185 - Superscript '1'
     KEY_RESERVED,                       // 186 - Ordinal Indicator
-    KEY_RESERVED,                       // 187 - Closed Guillemet
+    KEY_PT_GUILLS|MOD_LEFT_SHIFT,       // 187 - Closed Guillemet
     KEY_RESERVED,                       // 188 - Capital 'oe'
     KEY_RESERVED,                       // 189 - 'oe'
     KEY_RESERVED,                       // 190 - Capital 'y' Umlaut
@@ -231,7 +244,7 @@ static const uint16_t _asciimap[] PROGMEM =
     KEY_RESERVED,                       // 196 - Capital 'a' Umlaut
     KEY_RESERVED,                       // 197 - Capital 'a' Circle
     KEY_RESERVED,                       // 198 - Capital 'ae'
-    KEY_RESERVED,                       // 199 - Capital 'c' Cedilla
+    KEY_PT_CEDILLA|MOD_LEFT_SHIFT,      // 199 - Capital 'c' Cedilla
     KEY_RESERVED,                       // 200 - Capital 'e' Grave
     KEY_RESERVED,                       // 201 - Capital 'e' Acute
     KEY_RESERVED,                       // 202 - Capital 'e' Circumflex
@@ -263,7 +276,7 @@ static const uint16_t _asciimap[] PROGMEM =
     KEY_RESERVED,                       // 228 - 'a' Umlaut
     KEY_RESERVED,                       // 229 - 'a' Circle
     KEY_RESERVED,                       // 230 - 'ae'
-    KEY_RESERVED,                       // 231 - 'c' Cedilla
+    KEY_PT_CEDILLA,                     // 231 - 'c' Cedilla
     KEY_RESERVED,                       // 232 - 'e' Grave
     KEY_RESERVED,                       // 233 - 'e' Acute
     KEY_RESERVED,                       // 234 - 'e' Circumflex
