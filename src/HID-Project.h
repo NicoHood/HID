@@ -47,10 +47,12 @@ THE SOFTWARE.
 #include "SingleReport/SingleSystem.h"
 #include "MultiReport/System.h"
 #include "SingleReport/RawHID.h"
+#ifndef KEYBOARD_h
 #include "SingleReport/BootKeyboard.h"
 #include "MultiReport/ImprovedKeyboard.h"
 #include "SingleReport/SingleNKROKeyboard.h"
 #include "MultiReport/NKROKeyboard.h"
+#endif
 #include "MultiReport/SurfaceDial.h"
 
 // Include Teensy HID afterwards to overwrite key definitions if used
