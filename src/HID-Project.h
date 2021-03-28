@@ -48,10 +48,13 @@ THE SOFTWARE.
 #include "MultiReport/System.h"
 #include "SingleReport/RawHID.h"
 #ifndef KEYBOARD_h
-#include "SingleReport/BootKeyboard.h"
-#include "MultiReport/ImprovedKeyboard.h"
-#include "SingleReport/SingleNKROKeyboard.h"
-#include "MultiReport/NKROKeyboard.h"
+  #pragma message "Using improved keyboard modules"
+  #include "SingleReport/BootKeyboard.h"
+  #include "MultiReport/ImprovedKeyboard.h"
+  #include "SingleReport/SingleNKROKeyboard.h"
+  #include "MultiReport/NKROKeyboard.h"
+#else
+  #pragma message "Using classic keyboard module"
 #endif
 #include "MultiReport/SurfaceDial.h"
 
