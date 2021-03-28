@@ -48,13 +48,13 @@ THE SOFTWARE.
 #include "MultiReport/System.h"
 #include "SingleReport/RawHID.h"
 #ifndef KEYBOARD_h
-  #pragma message "Using improved keyboard modules"
+  #pragma message "Using improved HID-Project keyboard modules"
   #include "SingleReport/BootKeyboard.h"
   #include "MultiReport/ImprovedKeyboard.h"
   #include "SingleReport/SingleNKROKeyboard.h"
   #include "MultiReport/NKROKeyboard.h"
 #else
-  #pragma message "Using classic keyboard module"
+  #pragma message "Using classic Arduino keyboard module"
 #endif
 #include "MultiReport/SurfaceDial.h"
 
