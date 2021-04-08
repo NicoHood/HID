@@ -1,4 +1,4 @@
-Arduino HID Project 2.7.0
+Arduino HID Project 2.8.0
 =========================
 
 ![Header Picture](header.jpg)
@@ -53,6 +53,9 @@ www.nicohood.de
 Version History
 ===============
 ```
+2.8.0 Release (08.04.2021)
+* Added lots of keyboard layout languages (Thanks @SukkoPera)
+
 2.7.0 Release (06.03.2021)
 * Fix SAMD compilation #244
 * Added support for Italien Keymap #231
