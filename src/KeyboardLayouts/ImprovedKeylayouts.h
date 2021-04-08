@@ -659,7 +659,9 @@ static const uint16_t _asciimap[] PROGMEM =
 #if defined(LAYOUT_US_ENGLISH)
     #include "ImprovedKeylayoutsUS.h"
 #elif defined(LAYOUT_CANADIAN_FRENCH)
+    #error Keyboard layout not yet supported. Feel free to open a PR to add a new layout.
 #elif defined(LAYOUT_CANADIAN_MULTILINGUAL)
+    #error Keyboard layout not yet supported. Feel free to open a PR to add a new layout.
 #elif defined(LAYOUT_DANISH)
     #include "ImprovedKeylayoutsDK.h"
 #elif defined(LAYOUT_FINNISH)
@@ -674,9 +676,11 @@ static const uint16_t _asciimap[] PROGMEM =
 #elif defined(LAYOUT_GERMAN)
     #include "ImprovedKeylayoutsDE.h"
 #elif defined(LAYOUT_GERMAN_MAC)
+    #error Keyboard layout not yet supported. Feel free to open a PR to add a new layout.
 #elif defined(LAYOUT_GERMAN_SWISS)
     #include "ImprovedKeylayoutsCH.h"
 #elif defined(LAYOUT_ICELANDIC)
+    #error Keyboard layout not yet supported. Feel free to open a PR to add a new layout.
 #elif defined(LAYOUT_IRISH)
     // Is this any different from the UK layout?
     #include "ImprovedKeylayoutsUK.h"
@@ -687,13 +691,19 @@ static const uint16_t _asciimap[] PROGMEM =
 #elif defined(LAYOUT_PORTUGUESE)
     #include "ImprovedKeylayoutsPT.h"
 #elif defined(LAYOUT_PORTUGUESE_BRAZILIAN)
+    #error Keyboard layout not yet supported. Feel free to open a PR to add a new layout.
 #elif defined(LAYOUT_SPANISH)
-	#include "ImprovedKeylayoutsES.h"
+	 #include "ImprovedKeylayoutsES.h"
 #elif defined(LAYOUT_SPANISH_LATIN_AMERICA)
+    #error Keyboard layout not yet supported. Feel free to open a PR to add a new layout.
 #elif defined(LAYOUT_SWEDISH)
     #include "ImprovedKeylayoutsSE.h"
 #elif defined(LAYOUT_TURKISH)
+    #error Keyboard layout not yet supported. Feel free to open a PR to add a new layout.
 #elif defined(LAYOUT_UNITED_KINGDOM)
     #include "ImprovedKeylayoutsUK.h"
 #elif defined(LAYOUT_US_INTERNATIONAL)
+    #error Keyboard layout not yet supported. Feel free to open a PR to add a new layout.
+#else
+    #error Keyboard layout not yet supported. Feel free to open a PR to add a new layout.
 #endif
