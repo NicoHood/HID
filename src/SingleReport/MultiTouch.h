@@ -37,8 +37,10 @@ public:
 	uint8_t getProtocol();
 	void wakeupHost();
 
+	virtual int sendReport(void *report, int length) final;
+	virtual int sendReport(HID_MultiTouchReport_Data_t &report) final;
+
 protected:
-	virtual int _sendReport() final;
 
 	// Implementation of the PUSBListNode
 	int getInterface(uint8_t* interfaceCount);
@@ -49,12 +51,7 @@ protected:
 	uint8_t protocol;
 	uint8_t idle;
 
-	uint8_t* featureReport;
-	int featureLength;
-
-private:
-	struct {
-		uint8_t reportID;
+	struct ATTRIBUTE_PACKED {
 		uint8_t contactCountMaximum;
 	} _ccmFeature;
 };

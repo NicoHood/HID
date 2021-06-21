@@ -7,7 +7,7 @@
   Open Microsoft Whiteboard, select a brush and press the button.
 
   See HID Project documentation for more infos
-  https://github.com/NicoHood/HID/wiki/Gamepad-API
+  https://github.com/NicoHood/HID/wiki
 */
 
 #include <HID-Project.h>

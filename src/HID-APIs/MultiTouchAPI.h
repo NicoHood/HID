@@ -36,37 +36,34 @@ THE SOFTWARE.
 // fingers identified by Windows will still be MAXFINGERS. More than MAXFINGERS
 // contacts may be ignored by Windows even with hybrid mode.
 
-#define _MT_STATE_INACTIVE 0
-#define _MT_STATE_CONTACT  1
-#define _MT_STATE_RELEASED 2
+
+// Bit-mask flags for 'status' in the HID report
+#define HID_MULTITOUCH_TOUCH_CONTACT 0x01
+#define HID_MULTITOUCH_TOUCH_IN_RANGE 0x02
 
 typedef struct ATTRIBUTE_PACKED {
-	uint8_t reportID;
-	uint8_t count;
-	struct ATTRIBUTE_PACKED {
-		uint8_t identifier;
-		uint8_t touch;
-		uint8_t pressure;
-		uint8_t x1, x0;
-		uint8_t y1, y0;
-	} contacts[HID_MULTITOUCH_REPORTFINGERS];
-} HID_MultiTouchReport_Data_t;
-
-typedef struct {
 	uint8_t status;
-	int8_t pressure;
-	int16_t x, y;
-} _finger_t;
+	uint8_t pressure;
+	uint16_t x;
+	uint16_t y;
+} HID_MultiTouch_Finger_t;
+
+typedef union ATTRIBUTE_PACKED {
+	uint8_t whole8[0];
+	uint16_t whole16[0];
+	uint32_t whole32[0];
+	struct ATTRIBUTE_PACKED {
+		uint8_t count;
+		struct ATTRIBUTE_PACKED {
+			uint8_t identifier;
+			HID_MultiTouch_Finger_t touch;
+		} contacts[HID_MULTITOUCH_REPORTFINGERS];
+	};
+} HID_MultiTouchReport_Data_t;
 
 class MultiTouchAPI
 {
 public:
-	MultiTouchAPI() {
-		_fingers_count = 0;
-		for (int i = 0; i < HID_MULTITOUCH_MAXFINGERS; i++) {
-			_fingers[i].status = _MT_STATE_INACTIVE;
-		}
-	}
 
 	inline void begin();
 
@@ -82,7 +79,7 @@ public:
 	 *                 is reported as hovering (in-range)
 	 * @return 1 if success. 0 if id is out-of-bounds
 	 */
-	inline int setFinger(uint8_t id, int16_t x, int16_t y, int8_t pressure=100);
+	inline int setFinger(uint8_t id, uint16_t x, uint16_t y, uint8_t pressure=100);
 
 	/**
 	 * Release finger in the internal data structure. You must call send
@@ -101,17 +98,17 @@ public:
 	 */
 	inline int send();
 
-protected:
-	/// Send the generated report. Needs to be implemented in a lower level
-	virtual int _sendReport() = 0;
+	/// Send generated report. Needs to be implemented in a lower level
+	virtual int sendReport(void *report, int length) = 0;
+	virtual int sendReport(HID_MultiTouchReport_Data_t &report) = 0;
 
-	/// Internal records of the current touch status
-	_finger_t _fingers[HID_MULTITOUCH_MAXFINGERS];
+protected:
+
+	/// Internal records of the current touch statuses. Status in this struct
+	/// is used only internally and differs from the one in the report
+	HID_MultiTouch_Finger_t _fingers[HID_MULTITOUCH_MAXFINGERS];
 	/// Number of active contacts, including just release contacts
 	uint8_t _fingers_count;
-
-	/// HID report to send. Not
-	HID_MultiTouchReport_Data_t _report;
 };
 
 // Implementation is inline

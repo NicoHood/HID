@@ -73,6 +73,16 @@ THE SOFTWARE.
 #define HID_REPORTID_SURFACEDIAL 10
 #endif
 
+#ifndef HID_REPORTID_MULTITOUCH
+#define HID_REPORTID_MULTITOUCH 11
+#endif
+
+#ifndef HID_REPORTID_MULTITOUCH_FEATURE
+#define HID_REPORTID_MULTITOUCH_FEATURE 12
+#endif
+
+
+
 #if defined(ARDUINO_ARCH_AVR)
 
 // Use default alignment for AVR

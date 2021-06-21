@@ -24,14 +24,17 @@ THE SOFTWARE.
 // Include guard
 #pragma once
 
-#define _LSB(v) ((v >> 8) & 0xff)
-#define _MSB(v) (v & 0xff)
+enum _finger_status_t {
+	_MT_STATE_INACTIVE = 0,
+	_MT_STATE_CONTACT,
+	_MT_STATE_RELEASED
+};
 
 void MultiTouchAPI::begin() {
 	send();
 }
 
-int MultiTouchAPI::setFinger(uint8_t id, int16_t x, int16_t y, int8_t pressure) {
+int MultiTouchAPI::setFinger(uint8_t id, uint16_t x, uint16_t y, uint8_t pressure) {
 	if (id >= HID_MULTITOUCH_MAXFINGERS) {
 		return 0;
 	}
@@ -55,30 +58,31 @@ int MultiTouchAPI::releaseFinger(uint8_t id) {
 
 int MultiTouchAPI::send() {
 	int ret = 0;
+	HID_MultiTouchReport_Data_t report;
 
 	// Craft report(s)
-	_report.count = _fingers_count;
+	report.count = _fingers_count;
 
 	int rptentry=0;
 	for (int i = 0; i < HID_MULTITOUCH_MAXFINGERS; i++) {
 		if (_fingers[i].status == _MT_STATE_INACTIVE)
 			continue;
 
-		_report.contacts[rptentry].identifier = i; // valid for first report only
+		report.contacts[rptentry].identifier = i; // valid for first report only
 
 		if (_fingers[i].status == _MT_STATE_RELEASED) {
 			// Released contacts need to be reported once with TipSW=0
-			_report.contacts[rptentry].touch = {};
+			report.contacts[rptentry].touch = {};
 			_fingers_count--;
 			_fingers[i].status = _MT_STATE_INACTIVE;
 		} else {
 			// Active contacts must be reported even when not moved
-			_report.contacts[rptentry].touch = _fingers[i].pressure > 0 ? 3 : 1;
-			_report.contacts[rptentry].x1 = _MSB(_fingers[i].x);
-			_report.contacts[rptentry].x0 = _LSB(_fingers[i].x);
-			_report.contacts[rptentry].y1 = _MSB(_fingers[i].y);
-			_report.contacts[rptentry].y0 = _LSB(_fingers[i].y);
-			_report.contacts[rptentry].pressure = _fingers[i].pressure;
+			report.contacts[rptentry].touch.status = HID_MULTITOUCH_TOUCH_IN_RANGE;
+			if (_fingers[i].pressure > 0)
+				report.contacts[rptentry].touch.status |= HID_MULTITOUCH_TOUCH_CONTACT;
+			report.contacts[rptentry].touch.x = _fingers[i].x;
+			report.contacts[rptentry].touch.y = _fingers[i].y;
+			report.contacts[rptentry].touch.pressure = _fingers[i].pressure;
 		}
 
 		rptentry++;
@@ -87,18 +91,18 @@ int MultiTouchAPI::send() {
 			// If there are more contacts, they will be sent in subsequent
 			// reports with contact count set to 0
 			// See "Hybrid Mode" on MSDN docs
-			ret += _sendReport();
+			ret += sendReport(report);
 			rptentry = 0;
-			_report.count = 0;
+			report.count = 0;
 		}
 	}
 
 	if (rptentry != 0) {
 		// Send remaining touches
 		for (; rptentry != HID_MULTITOUCH_REPORTFINGERS; rptentry++) {
-			_report.contacts[rptentry] = {};
+			report.contacts[rptentry] = {};
 		}
-		ret += _sendReport();
+		ret += sendReport(report);
 	}
 
 	return ret;

@@ -23,10 +23,6 @@ THE SOFTWARE.
 
 #include "MultiTouch.h"
 
-// HID Report identifiers
-#define _HID_REPORTID_TOUCH 0x01
-#define _HID_REPORTID_FEATURE 0x05
-
 // First part of the descriptor. It appears only once
 static const uint8_t _hidReportDescriptorTouchscreen_1[] PROGMEM = {
 	0x05, 0x0D,                    // USAGE_PAGE(Digitizers)
@@ -34,7 +30,6 @@ static const uint8_t _hidReportDescriptorTouchscreen_1[] PROGMEM = {
 	0xA1, 0x01,                    // COLLECTION(Application)
 
 	// define the actual amount of fingers that are concurrently touching the screen
-	0x85, _HID_REPORTID_TOUCH,     //   REPORT_ID (Touch)
 	0x09, 0x54,                    //   USAGE (Contact count)
 	0x25, 0x7f,                    //   LOGICAL_MAXIMUM (128)
 	0x95, 0x01,                    //   REPORT_COUNT(1)
@@ -95,7 +90,6 @@ static const uint8_t _hidReportDescriptorTouchscreen_2[] PROGMEM = {
 static const uint8_t _hidReportDescriptorTouchscreen_3[] PROGMEM = {
 	// define the maximum amount of fingers that the device supports
 	0x05, 0x0D,                    //   USAGE_PAGE(Digitizers)
-	0x85, _HID_REPORTID_FEATURE,   //   REPORT_ID (Feature)
 	0x09, 0x55,                    //   USAGE (Contact Count Maximum)
 	0x25, 0x7f,                    //   LOGICAL_MAXIMUM (127)
 	0xB1, 0x02,                    //   FEATURE (Data,Var,Abs)
@@ -104,28 +98,27 @@ static const uint8_t _hidReportDescriptorTouchscreen_3[] PROGMEM = {
 };
 
 
-MultiTouch_::MultiTouch_(void) : PluggableUSBModule(2, 1, epType), protocol(HID_REPORT_PROTOCOL), idle(1), featureReport((uint8_t *)&_ccmFeature), featureLength(sizeof(_ccmFeature))
-{
-	_report.reportID = _HID_REPORTID_TOUCH;
-	_ccmFeature.reportID = _HID_REPORTID_FEATURE;
+MultiTouch_::MultiTouch_(void) : PluggableUSBModule(1, 1, epType), protocol(HID_REPORT_PROTOCOL), idle(1) {
 	_ccmFeature.contactCountMaximum = HID_MULTITOUCH_MAXFINGERS;
 	epType[0] = EP_TYPE_INTERRUPT_IN;
 	PluggableUSB().plug(this);
 }
 
-int MultiTouch_::getInterface(uint8_t* interfaceCount)
-{
+int MultiTouch_::getInterface(uint8_t* interfaceCount) {
 	*interfaceCount += 1; // uses 1
 	HIDDescriptor hidInterface = {
 		D_INTERFACE(pluggedInterface, 1, USB_DEVICE_CLASS_HUMAN_INTERFACE, HID_SUBCLASS_NONE, HID_PROTOCOL_NONE),
-		D_HIDREPORT(sizeof(_hidReportDescriptorTouchscreen_1) + sizeof(_hidReportDescriptorTouchscreen_2) * HID_MULTITOUCH_REPORTFINGERS + sizeof(_hidReportDescriptorTouchscreen_3)),
+		D_HIDREPORT(
+			  sizeof(_hidReportDescriptorTouchscreen_1)
+			+ (sizeof(_hidReportDescriptorTouchscreen_2) * HID_MULTITOUCH_REPORTFINGERS)
+			+ sizeof(_hidReportDescriptorTouchscreen_3)
+		),
 		D_ENDPOINT(USB_ENDPOINT_IN(pluggedEndpoint), USB_ENDPOINT_TYPE_INTERRUPT, USB_EP_SIZE, 0x01)
 	};
 	return USB_SendControl(0, &hidInterface, sizeof(hidInterface));
 }
 
-int MultiTouch_::getDescriptor(USBSetup& setup)
-{
+int MultiTouch_::getDescriptor(USBSetup& setup) {
 	// Check if this is a HID Class Descriptor request
 	if (setup.bmRequestType != REQUEST_DEVICETOHOST_STANDARD_INTERFACE) { return 0; }
 	if (setup.wValueH != HID_REPORT_DESCRIPTOR_TYPE) { return 0; }
@@ -148,8 +141,7 @@ int MultiTouch_::getDescriptor(USBSetup& setup)
 	return ret;
 }
 
-bool MultiTouch_::setup(USBSetup& setup)
-{
+bool MultiTouch_::setup(USBSetup& setup) {
 	if (pluggedInterface != setup.wIndex) {
 		return false;
 	}
@@ -162,23 +154,13 @@ bool MultiTouch_::setup(USBSetup& setup)
 		if (request == HID_GET_REPORT) {
 			if(setup.wValueH == HID_REPORT_TYPE_FEATURE){
 				// The only feature is Contact Count Maximum
-				USB_SendControl(0, featureReport, featureLength);
+				USB_SendControl(0, &_ccmFeature, sizeof(_ccmFeature));
 				return true;
 			}
 			return true;
 		}
 		if (request == HID_GET_PROTOCOL) {
 			// TODO improve
-#ifdef __AVR__
-			UEDATX = protocol;
-#endif
-			return true;
-		}
-		if (request == HID_GET_IDLE) {
-			// TODO improve
-#ifdef __AVR__
-			UEDATX = idle;
-#endif
 			return true;
 		}
 	}
@@ -193,36 +175,8 @@ bool MultiTouch_::setup(USBSetup& setup)
 			idle = setup.wValueL;
 			return true;
 		}
-		if (request == HID_SET_REPORT)
-		{
-			// Check if data has the correct length afterwards
-			int length = setup.wLength;
-
-			// Feature (set feature report)
-			if(setup.wValueH == HID_REPORT_TYPE_FEATURE){
-				// No need to check for negative featureLength values,
-				// except the host tries to send more then 32k bytes.
-				// We dont have that much ram anyways.
-				if (length == featureLength) {
-					USB_RecvControl(featureReport, featureLength);
-					return true;
-				}
-				// TODO fake clear data?
-			}
-
-			// Output (not applicable)
-			else if(setup.wValueH == HID_REPORT_TYPE_OUTPUT){
-				return true;
-			}
-
-			// Input (set HID report)
-			else if(setup.wValueH == HID_REPORT_TYPE_INPUT)
-			{
-				if(length == sizeof(_report)){
-					USB_RecvControl(&_report, length);
-					return true;
-				}
-			}
+		if (request == HID_SET_REPORT) {
+			return true;
 		}
 	}
 
@@ -233,8 +187,12 @@ uint8_t MultiTouch_::getProtocol() {
 	return protocol;
 }
 
-int MultiTouch_::_sendReport() {
-	return USB_Send(pluggedEndpoint | TRANSFER_RELEASE, &_report, sizeof(_report));
+int MultiTouch_::sendReport(void *report, int length) {
+	return USB_Send(pluggedEndpoint | TRANSFER_RELEASE, report, length);
+}
+
+int MultiTouch_::sendReport(HID_MultiTouchReport_Data_t &report) {
+	return USB_Send(pluggedEndpoint | TRANSFER_RELEASE, &report, sizeof(HID_MultiTouchReport_Data_t));
 }
 
 void MultiTouch_::wakeupHost() {
