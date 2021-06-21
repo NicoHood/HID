@@ -27,18 +27,18 @@ THE SOFTWARE.
 #include <Arduino.h>
 #include "HID.h"
 #include "HID-Settings.h"
-#include "../HID-APIs/MultiTouchAPI.h"
+#include "../HID-APIs/TouchscreenAPI.h"
 
 
-class MultiTouch_ : public PluggableUSBModule, public MultiTouchAPI
+class Touchscreen_ : public PluggableUSBModule, public TouchscreenAPI
 {
 public:
-	MultiTouch_();
+	Touchscreen_();
 	uint8_t getProtocol();
 	void wakeupHost();
 
 	virtual int sendReport(void *report, int length) final;
-	virtual int sendReport(HID_MultiTouchReport_Data_t &report) final;
+	virtual int sendReport(HID_TouchscreenReport_Data_t &report) final;
 
 protected:
 
@@ -56,4 +56,4 @@ protected:
 	} _ccmFeature;
 };
 
-extern MultiTouch_ MultiTouch;
+extern Touchscreen_ Touchscreen;

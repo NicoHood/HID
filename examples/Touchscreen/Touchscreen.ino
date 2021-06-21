@@ -16,7 +16,7 @@ const int pinButton = 2;
 
 void setup() {
 	pinMode(pinButton, INPUT_PULLUP);
-	MultiTouch.begin();
+	Touchscreen.begin();
 }
 
 void loop() {
@@ -26,14 +26,14 @@ void loop() {
 
 	for (; x <= 8000; x+=10) {
 		for (int i = 0; i < 7; i++) {
-			MultiTouch.setFinger(i, x, y+i*1000, (i+1)*15);
+			Touchscreen.setFinger(i, x, y+i*1000, (i+1)*15);
 		}
-		MultiTouch.send();
+		Touchscreen.send();
 		delay(10);
 	}
 
 	for (int i = 0; i < 7; i++) {
-		MultiTouch.releaseFinger(i);
+		Touchscreen.releaseFinger(i);
 	}
-	MultiTouch.send();
+	Touchscreen.send();
 }

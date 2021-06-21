@@ -21,7 +21,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
 
-#include "MultiTouch.h"
+#include "Touchscreen.h"
 
 // First part of the descriptor. It appears only once
 static const uint8_t _hidReportDescriptorTouchscreen_1[] PROGMEM = {
@@ -98,19 +98,19 @@ static const uint8_t _hidReportDescriptorTouchscreen_3[] PROGMEM = {
 };
 
 
-MultiTouch_::MultiTouch_(void) : PluggableUSBModule(1, 1, epType), protocol(HID_REPORT_PROTOCOL), idle(1) {
-	_ccmFeature.contactCountMaximum = HID_MULTITOUCH_MAXFINGERS;
+Touchscreen_::Touchscreen_(void) : PluggableUSBModule(1, 1, epType), protocol(HID_REPORT_PROTOCOL), idle(1) {
+	_ccmFeature.contactCountMaximum = HID_TOUCHSCREEN_MAXFINGERS;
 	epType[0] = EP_TYPE_INTERRUPT_IN;
 	PluggableUSB().plug(this);
 }
 
-int MultiTouch_::getInterface(uint8_t* interfaceCount) {
+int Touchscreen_::getInterface(uint8_t* interfaceCount) {
 	*interfaceCount += 1; // uses 1
 	HIDDescriptor hidInterface = {
 		D_INTERFACE(pluggedInterface, 1, USB_DEVICE_CLASS_HUMAN_INTERFACE, HID_SUBCLASS_NONE, HID_PROTOCOL_NONE),
 		D_HIDREPORT(
 			  sizeof(_hidReportDescriptorTouchscreen_1)
-			+ (sizeof(_hidReportDescriptorTouchscreen_2) * HID_MULTITOUCH_REPORTFINGERS)
+			+ (sizeof(_hidReportDescriptorTouchscreen_2) * HID_TOUCHSCREEN_REPORTFINGERS)
 			+ sizeof(_hidReportDescriptorTouchscreen_3)
 		),
 		D_ENDPOINT(USB_ENDPOINT_IN(pluggedEndpoint), USB_ENDPOINT_TYPE_INTERRUPT, USB_EP_SIZE, 0x01)
@@ -118,7 +118,7 @@ int MultiTouch_::getInterface(uint8_t* interfaceCount) {
 	return USB_SendControl(0, &hidInterface, sizeof(hidInterface));
 }
 
-int MultiTouch_::getDescriptor(USBSetup& setup) {
+int Touchscreen_::getDescriptor(USBSetup& setup) {
 	// Check if this is a HID Class Descriptor request
 	if (setup.bmRequestType != REQUEST_DEVICETOHOST_STANDARD_INTERFACE) { return 0; }
 	if (setup.wValueH != HID_REPORT_DESCRIPTOR_TYPE) { return 0; }
@@ -133,7 +133,7 @@ int MultiTouch_::getDescriptor(USBSetup& setup) {
 	// Transmit HID descriptor. See comments next to the descriptor parts
 	int ret = 0;
 	ret += USB_SendControl(TRANSFER_PGM, _hidReportDescriptorTouchscreen_1, sizeof(_hidReportDescriptorTouchscreen_1));
-	for (int i = 0; i < HID_MULTITOUCH_REPORTFINGERS; i++) {
+	for (int i = 0; i < HID_TOUCHSCREEN_REPORTFINGERS; i++) {
 		ret += USB_SendControl(TRANSFER_PGM, _hidReportDescriptorTouchscreen_2, sizeof(_hidReportDescriptorTouchscreen_2));
 	}
 	ret += USB_SendControl(TRANSFER_PGM, _hidReportDescriptorTouchscreen_3, sizeof(_hidReportDescriptorTouchscreen_3));
@@ -141,7 +141,7 @@ int MultiTouch_::getDescriptor(USBSetup& setup) {
 	return ret;
 }
 
-bool MultiTouch_::setup(USBSetup& setup) {
+bool Touchscreen_::setup(USBSetup& setup) {
 	if (pluggedInterface != setup.wIndex) {
 		return false;
 	}
@@ -183,22 +183,22 @@ bool MultiTouch_::setup(USBSetup& setup) {
 	return false;
 }
 
-uint8_t MultiTouch_::getProtocol() {
+uint8_t Touchscreen_::getProtocol() {
 	return protocol;
 }
 
-int MultiTouch_::sendReport(void *report, int length) {
+int Touchscreen_::sendReport(void *report, int length) {
 	return USB_Send(pluggedEndpoint | TRANSFER_RELEASE, report, length);
 }
 
-int MultiTouch_::sendReport(HID_MultiTouchReport_Data_t &report) {
-	return USB_Send(pluggedEndpoint | TRANSFER_RELEASE, &report, sizeof(HID_MultiTouchReport_Data_t));
+int Touchscreen_::sendReport(HID_TouchscreenReport_Data_t &report) {
+	return USB_Send(pluggedEndpoint | TRANSFER_RELEASE, &report, sizeof(HID_TouchscreenReport_Data_t));
 }
 
-void MultiTouch_::wakeupHost() {
+void Touchscreen_::wakeupHost() {
 #ifdef __AVR__
 	USBDevice.wakeupHost();
 #endif
 }
 
-MultiTouch_ MultiTouch;
+Touchscreen_ Touchscreen;

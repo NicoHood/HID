@@ -52,6 +52,6 @@ THE SOFTWARE.
 #include "SingleReport/SingleNKROKeyboard.h"
 #include "MultiReport/NKROKeyboard.h"
 #include "MultiReport/SurfaceDial.h"
-#include "SingleReport/MultiTouch.h"
+#include "SingleReport/Touchscreen.h"
 
 // Include Teensy HID afterwards to overwrite key definitions if used

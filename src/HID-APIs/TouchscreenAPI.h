@@ -25,9 +25,9 @@ THE SOFTWARE.
 #pragma once
 
 /// Maximum amount of fingers supported
-#define HID_MULTITOUCH_MAXFINGERS 10
+#define HID_TOUCHSCREEN_MAXFINGERS 10
 /// Number of fingers in a single report
-#define HID_MULTITOUCH_REPORTFINGERS 2
+#define HID_TOUCHSCREEN_REPORTFINGERS 2
 
 // A report will always be the same size, even if you report fewer fingers than
 // REPORTFINGERS. The unused finger entries will simply be zero. If more fingers
@@ -38,15 +38,15 @@ THE SOFTWARE.
 
 
 // Bit-mask flags for 'status' in the HID report
-#define HID_MULTITOUCH_TOUCH_CONTACT 0x01
-#define HID_MULTITOUCH_TOUCH_IN_RANGE 0x02
+#define HID_TOUCHSCREEN_TOUCH_CONTACT 0x01
+#define HID_TOUCHSCREEN_TOUCH_IN_RANGE 0x02
 
 typedef struct ATTRIBUTE_PACKED {
 	uint8_t status;
 	uint8_t pressure;
 	uint16_t x;
 	uint16_t y;
-} HID_MultiTouch_Finger_t;
+} HID_Touchscreen_Finger_t;
 
 typedef union ATTRIBUTE_PACKED {
 	uint8_t whole8[0];
@@ -56,12 +56,12 @@ typedef union ATTRIBUTE_PACKED {
 		uint8_t count;
 		struct ATTRIBUTE_PACKED {
 			uint8_t identifier;
-			HID_MultiTouch_Finger_t touch;
-		} contacts[HID_MULTITOUCH_REPORTFINGERS];
+			HID_Touchscreen_Finger_t touch;
+		} contacts[HID_TOUCHSCREEN_REPORTFINGERS];
 	};
-} HID_MultiTouchReport_Data_t;
+} HID_TouchscreenReport_Data_t;
 
-class MultiTouchAPI
+class TouchscreenAPI
 {
 public:
 
@@ -100,16 +100,16 @@ public:
 
 	/// Send generated report. Needs to be implemented in a lower level
 	virtual int sendReport(void *report, int length) = 0;
-	virtual int sendReport(HID_MultiTouchReport_Data_t &report) = 0;
+	virtual int sendReport(HID_TouchscreenReport_Data_t &report) = 0;
 
 protected:
 
 	/// Internal records of the current touch statuses. Status in this struct
 	/// is used only internally and differs from the one in the report
-	HID_MultiTouch_Finger_t _fingers[HID_MULTITOUCH_MAXFINGERS];
+	HID_Touchscreen_Finger_t _fingers[HID_TOUCHSCREEN_MAXFINGERS];
 	/// Number of active contacts, including just release contacts
 	uint8_t _fingers_count;
 };
 
 // Implementation is inline
-#include "MultiTouchAPI.hpp"
+#include "TouchscreenAPI.hpp"

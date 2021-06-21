@@ -30,12 +30,12 @@ enum _finger_status_t {
 	_MT_STATE_RELEASED
 };
 
-void MultiTouchAPI::begin() {
+void TouchscreenAPI::begin() {
 	send();
 }
 
-int MultiTouchAPI::setFinger(uint8_t id, uint16_t x, uint16_t y, uint8_t pressure) {
-	if (id >= HID_MULTITOUCH_MAXFINGERS) {
+int TouchscreenAPI::setFinger(uint8_t id, uint16_t x, uint16_t y, uint8_t pressure) {
+	if (id >= HID_TOUCHSCREEN_MAXFINGERS) {
 		return 0;
 	}
 	if (_fingers[id].status == _MT_STATE_INACTIVE) {
@@ -48,23 +48,23 @@ int MultiTouchAPI::setFinger(uint8_t id, uint16_t x, uint16_t y, uint8_t pressur
 	return 1;
 }
 
-int MultiTouchAPI::releaseFinger(uint8_t id) {
-	if (id >= HID_MULTITOUCH_MAXFINGERS) {
+int TouchscreenAPI::releaseFinger(uint8_t id) {
+	if (id >= HID_TOUCHSCREEN_MAXFINGERS) {
 		return 0;
 	}
 	_fingers[id].status = _MT_STATE_RELEASED;
 	return 1;
 }
 
-int MultiTouchAPI::send() {
+int TouchscreenAPI::send() {
 	int ret = 0;
-	HID_MultiTouchReport_Data_t report;
+	HID_TouchscreenReport_Data_t report;
 
 	// Craft report(s)
 	report.count = _fingers_count;
 
 	int rptentry=0;
-	for (int i = 0; i < HID_MULTITOUCH_MAXFINGERS; i++) {
+	for (int i = 0; i < HID_TOUCHSCREEN_MAXFINGERS; i++) {
 		if (_fingers[i].status == _MT_STATE_INACTIVE)
 			continue;
 
@@ -77,16 +77,16 @@ int MultiTouchAPI::send() {
 			_fingers[i].status = _MT_STATE_INACTIVE;
 		} else {
 			// Active contacts must be reported even when not moved
-			report.contacts[rptentry].touch.status = HID_MULTITOUCH_TOUCH_IN_RANGE;
+			report.contacts[rptentry].touch.status = HID_TOUCHSCREEN_TOUCH_IN_RANGE;
 			if (_fingers[i].pressure > 0)
-				report.contacts[rptentry].touch.status |= HID_MULTITOUCH_TOUCH_CONTACT;
+				report.contacts[rptentry].touch.status |= HID_TOUCHSCREEN_TOUCH_CONTACT;
 			report.contacts[rptentry].touch.x = _fingers[i].x;
 			report.contacts[rptentry].touch.y = _fingers[i].y;
 			report.contacts[rptentry].touch.pressure = _fingers[i].pressure;
 		}
 
 		rptentry++;
-		if (rptentry == HID_MULTITOUCH_REPORTFINGERS) {
+		if (rptentry == HID_TOUCHSCREEN_REPORTFINGERS) {
 			// Report full. Send now.
 			// If there are more contacts, they will be sent in subsequent
 			// reports with contact count set to 0
@@ -99,7 +99,7 @@ int MultiTouchAPI::send() {
 
 	if (rptentry != 0) {
 		// Send remaining touches
-		for (; rptentry != HID_MULTITOUCH_REPORTFINGERS; rptentry++) {
+		for (; rptentry != HID_TOUCHSCREEN_REPORTFINGERS; rptentry++) {
 			report.contacts[rptentry] = {};
 		}
 		ret += sendReport(report);
