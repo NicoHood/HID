@@ -29,6 +29,10 @@ static const uint8_t _hidSingleReportDescriptorAbsoluteMouse[] PROGMEM = {
     0x09, 0x02,                      /* USAGE (Mouse) */
     0xA1, 0x01,                      /* COLLECTION (Application) */
 
+    /* Pointer and Physical are required by Apple Recovery */
+    0x09, 0x01,                      /*   USAGE (Pointer) */
+    0xa1, 0x00,                      /*   COLLECTION (Physical) */
+
 	/* 8 Buttons */
     0x05, 0x09,                      /*     USAGE_PAGE (Button) */
     0x19, 0x01,                      /*     USAGE_MINIMUM (Button 1) */
@@ -58,6 +62,7 @@ static const uint8_t _hidSingleReportDescriptorAbsoluteMouse[] PROGMEM = {
     0x81, 0x06,                      /*     INPUT (Data,Var,Rel) */
 
 	/* End */
+    0xc0,                           /* END_COLLECTION (Physical) */
     0xc0                            /* END_COLLECTION */ 
 };
 
