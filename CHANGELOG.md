@@ -7,6 +7,12 @@ This changlog uses the [ISO 8601 date format](https://www.iso.org/iso-8601-date-
 
 ## [Unreleased]
 
+## [2.8.2] - 2021-07-14
+
+### Fixed
+
+* Improved Windows 7 Absolute Mouse compatibility [#306](https://github.com/NicoHood/HID/issues/305) (Thanks [@mdevaev](https://github.com/mdevaev))
+
 ## [2.8.1] - 2021-07-14
 
 ### Changed
@@ -385,7 +391,8 @@ This changlog uses the [ISO 8601 date format](https://www.iso.org/iso-8601-date-
 
 * Initial Beta release
 
-[Unreleased]: https://github.com/NicoHood/HID/compare/2.8.1...HEAD
+[Unreleased]: https://github.com/NicoHood/HID/compare/2.8.2...HEAD
+[2.8.2]: https://github.com/NicoHood/HID/compare/2.8.1...2.8.2
 [2.8.1]: https://github.com/NicoHood/HID/compare/2.8.0...2.8.1
 [2.8.0]: https://github.com/NicoHood/HID/compare/2.7.0...2.8.0
 [2.7.0]: https://github.com/NicoHood/HID/compare/2.6.1...2.7.0
