@@ -1,5 +1,4 @@
-Arduino HID Project 2.8.0
-=========================
+# Arduino HID Project
 
 ![Header Picture](header.jpg)
 
@@ -36,16 +35,11 @@ The idea is to enable enhanced USB functions to almost all 'standard' Arduino bo
 
 See the [wiki](https://github.com/NicoHood/HID/wiki/Features) for more information about features etc.
 
-Wiki
-====
+## Wiki
 
 All documentation moved to the [wiki page](https://github.com/NicoHood/HID/wiki).
 
-An offline snapshot is available in [releases](https://github.com/NicoHood/HID/releases).
-
-
-Contact
-=======
+## Contact
 
 www.nicohood.de
 
