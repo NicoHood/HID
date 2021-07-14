@@ -78,8 +78,8 @@ void AbsoluteMouseAPI::moveTo(int x, int y, signed char wheel){
 	yAxis = y;
 	HID_MouseAbsoluteReport_Data_t report;
 	report.buttons = _buttons;
-	report.xAxis = x;
-	report.yAxis = y;
+	report.xAxis = ((long)x + 32768) / 2;
+	report.yAxis = ((long)y + 32768) / 2;
 	report.wheel = wheel;
 	SendReport(&report, sizeof(report));
 }

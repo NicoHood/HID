@@ -47,7 +47,7 @@ static const uint8_t _hidSingleReportDescriptorAbsoluteMouse[] PROGMEM = {
     0x05, 0x01,                      /*     USAGE_PAGE (Generic Desktop) */
     0x09, 0x30,                      /*     USAGE (X) */
     0x09, 0x31,                      /*     USAGE (Y) */
-	0x16, 0x00, 0x80,				 /* 	Logical Minimum (-32768) */
+	0x16, 0x00, 0x00,				 /* 	Logical Minimum (0); NOTE: Windows 7 can't handle negative value */
 	0x26, 0xFF, 0x7F,				 /* 	Logical Maximum (32767) */
 	0x75, 0x10,						 /* 	Report Size (16), */
 	0x95, 0x02,						 /* 	Report Count (2), */
