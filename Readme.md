@@ -49,6 +49,8 @@ Contact
 
 www.nicohood.de
 
+**If you have any questions, please ask at the [Github Discussions Page](https://github.com/NicoHood/HID/discussions).**
+
 
 Version History
 ===============
