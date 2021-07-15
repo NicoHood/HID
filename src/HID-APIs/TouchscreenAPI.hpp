@@ -30,7 +30,18 @@ enum _finger_status_t {
 	_MT_STATE_RELEASED
 };
 
+TouchscreenAPI::TouchscreenAPI() : _fingers_count(0), _fingers({}) {
+	// Empty. Default zero initialization
+}
+
 void TouchscreenAPI::begin() {
+	end();
+}
+
+void TouchscreenAPI::end() {
+	for (int i = 0; i < HID_TOUCHSCREEN_MAXFINGERS; i++) {
+		releaseFinger(i);
+	}
 	send();
 }
 
@@ -52,7 +63,9 @@ int TouchscreenAPI::releaseFinger(uint8_t id) {
 	if (id >= HID_TOUCHSCREEN_MAXFINGERS) {
 		return 0;
 	}
-	_fingers[id].status = _MT_STATE_RELEASED;
+	if (_fingers[id].status == _MT_STATE_CONTACT) {
+		_fingers[id].status = _MT_STATE_RELEASED;
+	}
 	return 1;
 }
 
@@ -65,8 +78,9 @@ int TouchscreenAPI::send() {
 
 	int rptentry=0;
 	for (int i = 0; i < HID_TOUCHSCREEN_MAXFINGERS; i++) {
-		if (_fingers[i].status == _MT_STATE_INACTIVE)
+		if (_fingers[i].status == _MT_STATE_INACTIVE) {
 			continue;
+		}
 
 		report.contacts[rptentry].identifier = i; // valid for first report only
 
@@ -78,8 +92,9 @@ int TouchscreenAPI::send() {
 		} else {
 			// Active contacts must be reported even when not moved
 			report.contacts[rptentry].touch.status = HID_TOUCHSCREEN_TOUCH_IN_RANGE;
-			if (_fingers[i].pressure > 0)
+			if (_fingers[i].pressure > 0) {
 				report.contacts[rptentry].touch.status |= HID_TOUCHSCREEN_TOUCH_CONTACT;
+			}
 			report.contacts[rptentry].touch.x = _fingers[i].x;
 			report.contacts[rptentry].touch.y = _fingers[i].y;
 			report.contacts[rptentry].touch.pressure = _fingers[i].pressure;
@@ -106,4 +121,8 @@ int TouchscreenAPI::send() {
 	}
 
 	return ret;
+}
+
+int TouchscreenAPI::sendReport(HID_TouchscreenReport_Data_t &report) {
+	return sendReport(&report, sizeof(HID_TouchscreenReport_Data_t));
 }

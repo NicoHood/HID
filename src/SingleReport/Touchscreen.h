@@ -38,7 +38,6 @@ public:
 	void wakeupHost();
 
 	virtual int sendReport(void *report, int length) final;
-	virtual int sendReport(HID_TouchscreenReport_Data_t &report) final;
 
 protected:
 

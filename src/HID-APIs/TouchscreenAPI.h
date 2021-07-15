@@ -65,7 +65,10 @@ class TouchscreenAPI
 {
 public:
 
+	inline TouchscreenAPI();
+
 	inline void begin();
+	inline void end();
 
 	/**
 	 * Set contact status for a finger in the internal data structure. You must
@@ -100,7 +103,7 @@ public:
 
 	/// Send generated report. Needs to be implemented in a lower level
 	virtual int sendReport(void *report, int length) = 0;
-	virtual int sendReport(HID_TouchscreenReport_Data_t &report) = 0;
+	inline int sendReport(HID_TouchscreenReport_Data_t &report);
 
 protected:
 

@@ -98,7 +98,7 @@ static const uint8_t _hidReportDescriptorTouchscreen_3[] PROGMEM = {
 };
 
 
-Touchscreen_::Touchscreen_(void) : PluggableUSBModule(1, 1, epType), protocol(HID_REPORT_PROTOCOL), idle(1) {
+Touchscreen_::Touchscreen_() : PluggableUSBModule(1, 1, epType), protocol(HID_REPORT_PROTOCOL), idle(1) {
 	_ccmFeature.contactCountMaximum = HID_TOUCHSCREEN_MAXFINGERS;
 	epType[0] = EP_TYPE_INTERRUPT_IN;
 	PluggableUSB().plug(this);
@@ -189,10 +189,6 @@ uint8_t Touchscreen_::getProtocol() {
 
 int Touchscreen_::sendReport(void *report, int length) {
 	return USB_Send(pluggedEndpoint | TRANSFER_RELEASE, report, length);
-}
-
-int Touchscreen_::sendReport(HID_TouchscreenReport_Data_t &report) {
-	return USB_Send(pluggedEndpoint | TRANSFER_RELEASE, &report, sizeof(HID_TouchscreenReport_Data_t));
 }
 
 void Touchscreen_::wakeupHost() {
