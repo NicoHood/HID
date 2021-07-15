@@ -31,7 +31,8 @@ The idea is to enable enhanced USB functions to almost all 'standard' Arduino bo
 * Gamepad (32 buttons, 4 16bit axis, 2 8bit axis, 2 D-Pads)
 * RawHID
 * SurfaceDial
-* Each device is available as single or multi report device (except RawHID)
+* Touchscreen (max 10 touches at the same time)
+* Each device is available as single or multi report device (except RawHID and Touchscreen)
 
 See the [wiki](https://github.com/NicoHood/HID/wiki/Features) for more information about features etc.
 
