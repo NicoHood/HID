@@ -3,12 +3,12 @@
 #include <Arduino.h>
 #include "HID-Settings.h"
 
-typedef union {
+typedef union ATTRIBUTE_PACKED {
     uint8_t whole8[0];
     uint16_t whole16[0];
     uint32_t whole32[0];
 
-    struct
+    struct ATTRIBUTE_PACKED
     {
         uint8_t button0 : 1;
         uint8_t button1 : 1;

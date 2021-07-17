@@ -54,7 +54,7 @@ void D3MouseAPI::rotate(String axis, int16_t rotation)
 		_xRot = rotation;
 	if (axis == "y")
 		_yRot = rotation;
-	if (axis == "y")
+	if (axis == "z")
 		_zRot = rotation;
 }
 
@@ -64,7 +64,7 @@ void D3MouseAPI::move(String axis, int16_t pos)
 		_x = pos;
 	if (axis == "y")
 		_y = pos;
-	if (axis == "y")
+	if (axis == "z")
 		_z = pos;
 }
 
