@@ -85,7 +85,7 @@ int BootMouse_::getDescriptor(USBSetup& setup)
 	if (setup.bmRequestType != REQUEST_DEVICETOHOST_STANDARD_INTERFACE) { return 0; }
 
 	if (setup.wValueH == HID_HID_DESCRIPTOR_TYPE) {
-		// Apple UEFI wants it
+		// Apple UEFI and USBCV wants it
 		HIDDescDescriptor desc = D_HIDREPORT(sizeof(_hidReportDescriptorMouse));
 		return USB_SendControl(0, &desc, sizeof(desc));
 	} else if (setup.wValueH == HID_REPORT_DESCRIPTOR_TYPE) {

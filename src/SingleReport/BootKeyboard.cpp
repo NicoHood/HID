@@ -90,18 +90,24 @@ int BootKeyboard_::getInterface(uint8_t* interfaceCount)
 
 int BootKeyboard_::getDescriptor(USBSetup& setup)
 {
-	// Check if this is a HID Class Descriptor request
-	if (setup.bmRequestType != REQUEST_DEVICETOHOST_STANDARD_INTERFACE) { return 0; }
-	if (setup.wValueH != HID_REPORT_DESCRIPTOR_TYPE) { return 0; }
-
 	// In a HID Class Descriptor wIndex cointains the interface number
 	if (setup.wIndex != pluggedInterface) { return 0; }
 
-	// Reset the protocol on reenumeration. Normally the host should not assume the state of the protocol
-	// due to the USB specs, but Windows and Linux just assumes its in report mode.
-	protocol = HID_REPORT_PROTOCOL;
+	// Check if this is a HID Class Descriptor request
+	if (setup.bmRequestType != REQUEST_DEVICETOHOST_STANDARD_INTERFACE) { return 0; }
 
-	return USB_SendControl(TRANSFER_PGM, _hidReportDescriptorKeyboard, sizeof(_hidReportDescriptorKeyboard));
+	if (setup.wValueH == HID_HID_DESCRIPTOR_TYPE) {
+		// Apple UEFI and USBCV wants it
+		HIDDescDescriptor desc = D_HIDREPORT(sizeof(_hidReportDescriptorKeyboard));
+		return USB_SendControl(0, &desc, sizeof(desc));
+	} else if (setup.wValueH == HID_REPORT_DESCRIPTOR_TYPE) {
+		// Reset the protocol on reenumeration. Normally the host should not assume the state of the protocol
+		// due to the USB specs, but Windows and Linux just assumes its in report mode.
+		protocol = HID_REPORT_PROTOCOL;
+		return USB_SendControl(TRANSFER_PGM, _hidReportDescriptorKeyboard, sizeof(_hidReportDescriptorKeyboard));
+	}
+
+	return 0;
 }
 
 bool BootKeyboard_::setup(USBSetup& setup)
