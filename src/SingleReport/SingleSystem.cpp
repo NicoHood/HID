@@ -102,7 +102,7 @@ bool SingleSystem_::setup(USBSetup& setup)
 			return true;
 		}
 		if (request == HID_SET_IDLE) {
-			idle = setup.wValueL;
+			idle = setup.wValueH;
 			return true;
 		}
 		if (request == HID_SET_REPORT)
