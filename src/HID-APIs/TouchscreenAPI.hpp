@@ -30,8 +30,8 @@ enum _finger_status_t {
 	_MT_STATE_RELEASED
 };
 
-TouchscreenAPI::TouchscreenAPI() : _fingers_count(0), _fingers({}) {
-	// Empty. Default zero initialization
+TouchscreenAPI::TouchscreenAPI() {
+	// Empty. Default zero initialization at loading. Do not manually instantiate
 }
 
 void TouchscreenAPI::begin() {
