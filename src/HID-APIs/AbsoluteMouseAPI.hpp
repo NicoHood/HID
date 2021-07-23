@@ -78,8 +78,12 @@ void AbsoluteMouseAPI::moveTo(int x, int y, signed char wheel){
 	yAxis = y;
 	HID_MouseAbsoluteReport_Data_t report;
 	report.buttons = _buttons;
-	report.xAxis = x;
-	report.yAxis = y;
+	// The range -32768...32767 is converted to 0...32767 because Windows 7
+	// does not support negative coordinates.
+	// Negative values are supported here for API compatibility reasons to keep (0,0) as a center of screen.
+	// See detauls in AbsoluteMouse sources and here: https://github.com/NicoHood/HID/pull/306
+	report.xAxis = ((int32_t)x + 32768) / 2;
+	report.yAxis = ((int32_t)y + 32768) / 2;
 	report.wheel = wheel;
 	SendReport(&report, sizeof(report));
 }

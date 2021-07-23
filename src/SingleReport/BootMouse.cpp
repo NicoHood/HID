@@ -29,6 +29,10 @@ static const uint8_t _hidReportDescriptorMouse[] PROGMEM = {
     0x09, 0x02,                      /* USAGE (Mouse) */
     0xa1, 0x01,                      /* COLLECTION (Application) */
 
+    /* Pointer and Physical are required by Apple Recovery */
+    0x09, 0x01,                      /*   USAGE (Pointer) */
+    0xa1, 0x00,                      /*   COLLECTION (Physical) */
+
 	/* 8 Buttons */
     0x05, 0x09,                      /*     USAGE_PAGE (Button) */
     0x19, 0x01,                      /*     USAGE_MINIMUM (Button 1) */
@@ -51,6 +55,7 @@ static const uint8_t _hidReportDescriptorMouse[] PROGMEM = {
     0x81, 0x06,                      /*     INPUT (Data,Var,Rel) */
 
 	/* End */
+    0xc0,                           /* END_COLLECTION (Physical) */
     0xc0                            /* END_COLLECTION */
 };
 
@@ -73,18 +78,24 @@ int BootMouse_::getInterface(uint8_t* interfaceCount)
 
 int BootMouse_::getDescriptor(USBSetup& setup)
 {
-	// Check if this is a HID Class Descriptor request
-	if (setup.bmRequestType != REQUEST_DEVICETOHOST_STANDARD_INTERFACE) { return 0; }
-	if (setup.wValueH != HID_REPORT_DESCRIPTOR_TYPE) { return 0; }
-
 	// In a HID Class Descriptor wIndex cointains the interface number
 	if (setup.wIndex != pluggedInterface) { return 0; }
 
-	// Reset the protocol on reenumeration. Normally the host should not assume the state of the protocol
-	// due to the USB specs, but Windows and Linux just assumes its in report mode.
-	protocol = HID_REPORT_PROTOCOL;
+	// Check if this is a HID Class Descriptor request
+	if (setup.bmRequestType != REQUEST_DEVICETOHOST_STANDARD_INTERFACE) { return 0; }
 
-	return USB_SendControl(TRANSFER_PGM, _hidReportDescriptorMouse, sizeof(_hidReportDescriptorMouse));
+	if (setup.wValueH == HID_HID_DESCRIPTOR_TYPE) {
+		// Apple UEFI wants it
+		HIDDescDescriptor desc = D_HIDREPORT(sizeof(_hidReportDescriptorMouse));
+		return USB_SendControl(0, &desc, sizeof(desc));
+	} else if (setup.wValueH == HID_REPORT_DESCRIPTOR_TYPE) {
+		// Reset the protocol on reenumeration. Normally the host should not assume the state of the protocol
+		// due to the USB specs, but Windows and Linux just assumes its in report mode.
+		protocol = HID_REPORT_PROTOCOL;
+		return USB_SendControl(TRANSFER_PGM, _hidReportDescriptorMouse, sizeof(_hidReportDescriptorMouse));
+	}
+
+	return 0;
 }
 
 bool BootMouse_::setup(USBSetup& setup)
@@ -103,7 +114,17 @@ bool BootMouse_::setup(USBSetup& setup)
 			return true;
 		}
 		if (request == HID_GET_PROTOCOL) {
-			// TODO: Send8(protocol);
+			// TODO improve
+#ifdef __AVR__
+			UEDATX = protocol;
+#endif
+			return true;
+		}
+		if (request == HID_GET_IDLE) {
+			// TODO improve
+#ifdef __AVR__
+			UEDATX = idle;
+#endif
 			return true;
 		}
 	}
@@ -115,7 +136,7 @@ bool BootMouse_::setup(USBSetup& setup)
 			return true;
 		}
 		if (request == HID_SET_IDLE) {
-			idle = setup.wValueL;
+			idle = setup.wValueH;
 			return true;
 		}
 		if (request == HID_SET_REPORT)
