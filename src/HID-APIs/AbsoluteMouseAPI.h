@@ -57,6 +57,7 @@ protected:
 	int16_t xAxis;
 	int16_t yAxis;
 	uint8_t _buttons;
+	bool win98_fix;
 	inline void buttons(uint8_t b);
 
 	inline int16_t qadd16(int16_t base, int16_t increment);
@@ -65,6 +66,8 @@ public:
 	inline AbsoluteMouseAPI(void);
 	inline void begin(void);
 	inline void end(void);
+	inline void setWin98FixEnabled(bool enabled);
+	inline bool isWin98FixEnabled(void);
 
 	inline void click(uint8_t b = MOUSE_LEFT);
 	inline void moveTo(int x, int y, signed char wheel = 0);

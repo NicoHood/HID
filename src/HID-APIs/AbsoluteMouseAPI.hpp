@@ -51,7 +51,7 @@ int16_t AbsoluteMouseAPI::qadd16(int16_t base, int16_t increment) {
 }
 
 AbsoluteMouseAPI::AbsoluteMouseAPI(void):
-xAxis(0), yAxis(0), _buttons(0)
+xAxis(0), yAxis(0), _buttons(0), win98_fix(false)
 {
 	// Empty
 }
@@ -64,6 +64,14 @@ void AbsoluteMouseAPI::begin(void){
 void AbsoluteMouseAPI::end(void){
 	_buttons = 0;
 	moveTo(xAxis, yAxis, 0);
+}
+
+void AbsoluteMouseAPI::setWin98FixEnabled(bool enabled){
+	win98_fix = enabled;
+}
+
+bool AbsoluteMouseAPI::isWin98FixEnabled(void){
+	return win98_fix;
 }
 
 void AbsoluteMouseAPI::click(uint8_t b){
@@ -84,6 +92,13 @@ void AbsoluteMouseAPI::moveTo(int x, int y, signed char wheel){
 	// See detauls in AbsoluteMouse sources and here: https://github.com/NicoHood/HID/pull/306
 	report.xAxis = ((int32_t)x + 32768) / 2;
 	report.yAxis = ((int32_t)y + 32768) / 2;
+	if (win98_fix) {
+		// Windows 98 contains a buggy driver.
+		// Yes, this is indeed exceeding the maximum value from the HID report.
+		// Yes, it really should work that way.
+		report.xAxis <<= 1;
+		report.yAxis <<= 1;
+	}
 	report.wheel = wheel;
 	SendReport(&report, sizeof(report));
 }
