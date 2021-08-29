@@ -145,10 +145,3 @@ bool SingleGamepad_::setup(USBSetup& setup)
 void SingleGamepad_::SendReport(void* data, int length){
 	USB_Send(pluggedEndpoint | TRANSFER_RELEASE, data, length);
 }
-
-SingleGamepad_ Gamepad1;
-SingleGamepad_ Gamepad2;
-SingleGamepad_ Gamepad3;
-SingleGamepad_ Gamepad4;
-
-
