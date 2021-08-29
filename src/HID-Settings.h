@@ -28,6 +28,11 @@ THE SOFTWARE.
 // Settings
 //================================================================================
 
+// Undefine this if 16 buttons are enough for your Gamepads
+#define HID_ENABLE_32BUTTONS
+
+// Undefine this is your Gamepads don't need a Z Axis
+#define HID_ENABLE_ZAXIS
 
 #define HID_REPORTID_NONE 0
 

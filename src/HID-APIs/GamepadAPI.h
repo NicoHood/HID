@@ -38,13 +38,18 @@ THE SOFTWARE.
 #define GAMEPAD_DPAD_LEFT 7
 #define GAMEPAD_DPAD_UP_LEFT 8
 
+#ifdef HID_ENABLE_32BUTTONS
+typedef uint32_t HID_Buttons_t;
+#else
+typedef uint16_t HID_Buttons_t;
+#endif
 
 typedef union ATTRIBUTE_PACKED {
 	// 32 Buttons, 6 Axis, 2 D-Pads
 	uint8_t whole8[0];
 	uint16_t whole16[0];
 	uint32_t whole32[0];
-	uint32_t buttons;
+	HID_Buttons_t buttons;
 
 	struct ATTRIBUTE_PACKED {
 		uint8_t button1 : 1;
@@ -65,6 +70,7 @@ typedef union ATTRIBUTE_PACKED {
 		uint8_t button15 : 1;
 		uint8_t button16 : 1;
 
+#ifdef HID_ENABLE_32BUTTONS
 		uint8_t button17 : 1;
 		uint8_t button18 : 1;
 		uint8_t button19 : 1;
@@ -82,6 +88,7 @@ typedef union ATTRIBUTE_PACKED {
 		uint8_t button30 : 1;
 		uint8_t button31 : 1;
 		uint8_t button32 : 1;
+#endif
 
 		int16_t	xAxis;
 		int16_t	yAxis;
@@ -89,9 +96,10 @@ typedef union ATTRIBUTE_PACKED {
 		int16_t	rxAxis;
 		int16_t	ryAxis;
 
+#ifdef HID_ENABLE_ZAXIS
 		int8_t	zAxis;
 		int8_t	rzAxis;
-
+#endif
 		uint8_t	dPad1 : 4;
 		uint8_t	dPad2 : 4;
 	};
@@ -108,13 +116,17 @@ public:
 	inline void release(uint8_t b);
 	inline void releaseAll(void);
 
-	inline void buttons(uint32_t b);
+	inline void buttons(HID_Buttons_t b);
 	inline void xAxis(int16_t a);
 	inline void yAxis(int16_t a);
+#ifdef HID_ENABLE_ZAXIS
 	inline void zAxis(int8_t a);
+#endif
 	inline void rxAxis(int16_t a);
 	inline void ryAxis(int16_t a);
+#ifdef HID_ENABLE_ZAXIS
 	inline void rzAxis(int8_t a);
+#endif
 	inline void dPad1(int8_t d);
 	inline void dPad2(int8_t d);
 
