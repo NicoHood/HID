@@ -90,7 +90,7 @@ static const uint16_t _asciimap[] PROGMEM =
 	KEY_DE_PLUS|MOD_LEFT_SHIFT,    	// *
 	KEY_DE_PLUS,    					// +
 	KEY_COMMA,          	// ,
-	KEY_MINUS,          	// -
+	KEY_DE_MINUS,          	// -
 	KEY_PERIOD,          	// .
 	KEY_7|MOD_LEFT_SHIFT,   // /
 	KEY_0,          		// 0
@@ -140,7 +140,7 @@ static const uint16_t _asciimap[] PROGMEM =
 	KEY_DE_SZ|MOD_RIGHT_ALT,          // bslash
 	KEY_9|MOD_RIGHT_ALT,        	// ]
 	KEY_6|MOD_LEFT_SHIFT,    		// ^
-	KEY_MINUS|MOD_LEFT_SHIFT,    	// _
+	KEY_DE_MINUS|MOD_LEFT_SHIFT,    	// _
 	KEY_DE_ACCENT|MOD_LEFT_SHIFT,      // `
 	KEY_A,          		// a
 	KEY_B,          		// b
