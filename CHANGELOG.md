@@ -395,7 +395,8 @@ This changlog uses the [ISO 8601 date format](https://www.iso.org/iso-8601-date-
 [2.8.2]: https://github.com/NicoHood/HID/compare/2.8.1...2.8.2
 [2.8.1]: https://github.com/NicoHood/HID/compare/2.8.0...2.8.1
 [2.8.0]: https://github.com/NicoHood/HID/compare/2.7.0...2.8.0
-[2.7.0]: https://github.com/NicoHood/HID/compare/2.6.1...2.7.0
+[2.7.0]: https://github.com/NicoHood/HID/compare/2.6.2...2.7.0
+[2.6.2]: https://github.com/NicoHood/HID/compare/2.6.1...2.6.2
 [2.6.1]: https://github.com/NicoHood/HID/compare/2.6.0...2.6.1
 [2.6.0]: https://github.com/NicoHood/HID/compare/2.5.0...2.6.0
 [2.5.0]: https://github.com/NicoHood/HID/compare/2.4.4...2.5.0
