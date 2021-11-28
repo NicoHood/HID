@@ -216,7 +216,7 @@ enum KeyboardKeycode : uint8_t {
     KEY_INTERNATIONAL9      = 0x8F, // Disabled (Ubuntu)
     KEY_LANG1               = 0x90, // Disabled (Ubuntu)
     KEY_LANG2               = 0x91, // Disabled (Ubuntu)
-    KEY_LANG3               = 0x92, // Katana (Ubuntu)
+    KEY_LANG3               = 0x92, // Katakana (Ubuntu)
     KEY_LANG4               = 0x93, // Hiragana (Ubuntu)
     KEY_LANG5               = 0x94, // Disabled (Ubuntu)
     KEY_LANG6               = 0x95, // Disabled (Ubuntu)
@@ -686,6 +686,8 @@ static const uint16_t _asciimap[] PROGMEM =
     #include "ImprovedKeylayoutsUK.h"
 #elif defined(LAYOUT_ITALIAN)
     #include "ImprovedKeylayoutsIT.h"
+#elif defined(LAYOUT_JAPANESE)
+    #include "ImprovedKeylayoutsJP.h"
 #elif defined(LAYOUT_NORWEGIAN)
     #include "ImprovedKeylayoutsNO.h"
 #elif defined(LAYOUT_PORTUGUESE)
