@@ -7,6 +7,12 @@ This changlog uses the [ISO 8601 date format](https://www.iso.org/iso-8601-date-
 
 ## [Unreleased]
 
+## [2.8.4] - 2022-09-23
+
+### Fixed
+
+* Fix `library.properties`, so the latest version will appear in the library manager.
+
 ## [2.8.3] - 2022-01-11
 
 ### Added
@@ -404,7 +410,8 @@ This changlog uses the [ISO 8601 date format](https://www.iso.org/iso-8601-date-
 
 * Initial Beta release
 
-[Unreleased]: https://github.com/NicoHood/HID/compare/2.8.3...HEAD
+[Unreleased]: https://github.com/NicoHood/HID/compare/2.8.4...HEAD
+[2.8.4]: https://github.com/NicoHood/HID/compare/2.8.3...2.8.4
 [2.8.3]: https://github.com/NicoHood/HID/compare/2.8.2...2.8.3
 [2.8.2]: https://github.com/NicoHood/HID/compare/2.8.1...2.8.2
 [2.8.1]: https://github.com/NicoHood/HID/compare/2.8.0...2.8.1
