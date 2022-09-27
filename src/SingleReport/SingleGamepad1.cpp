@@ -21,41 +21,6 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
 
-// Include guard
-#pragma once
+#include "SingleGamepad.h"
 
-#include <Arduino.h>
-#include "HID.h"
-#include "HID-Settings.h"
-#include "../HID-APIs/GamepadAPI.h"
-
-
-class SingleGamepad_ : public PluggableUSBModule, public GamepadAPI
-{
-public:
-    SingleGamepad_(void);
-
-protected:
-    // Implementation of the PUSBListNode
-    int getInterface(uint8_t* interfaceCount);
-    int getDescriptor(USBSetup& setup);
-    bool setup(USBSetup& setup);
-    
-    EPTYPE_DESCRIPTOR_SIZE epType[1];
-    uint8_t protocol;
-    uint8_t idle;
-    
-    virtual void SendReport(void* data, int length) override;
-};
-
-/* These are defined in individual files (SingleGamepadX.cpp) so that every
- * instance is only created by the compiler if it is references.
- *
- * See #266 for details.
- */
-extern SingleGamepad_ Gamepad1;
-extern SingleGamepad_ Gamepad2;
-extern SingleGamepad_ Gamepad3;
-extern SingleGamepad_ Gamepad4;
-extern SingleGamepad_ Gamepad5;
-extern SingleGamepad_ Gamepad6;
+SingleGamepad_ Gamepad1;
