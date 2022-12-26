@@ -47,6 +47,7 @@ typedef union ATTRIBUTE_PACKED {
 		int8_t xAxis;
 		int8_t yAxis;
 		int8_t wheel;
+        int8_t hWheel;
 	};
 } HID_MouseReport_Data_t;
 
