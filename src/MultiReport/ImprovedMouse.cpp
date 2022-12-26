@@ -52,7 +52,7 @@ static const uint8_t _hidMultiReportDescriptorMouse[] PROGMEM = {
     0x95, 0x03,                      /*     REPORT_COUNT (3) */
     0x81, 0x06,                      /*     INPUT (Data,Var,Rel) */
     
-    /* X, Y, Wheel Horizontal*/
+    /* Wheel Horizontal Support */
 	0x05, 0x0c,                      /*     USAGE PAGE (Consumer Devices) */
     0x0a, 0x38, 0x02,                /*     USAGE (AC Pan) */
     0x15, 0x81,                      /*     LOGICAL_MINIMUM (-127) */
