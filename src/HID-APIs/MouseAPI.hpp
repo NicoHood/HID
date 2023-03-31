@@ -48,14 +48,21 @@ void MouseAPI::click(uint8_t b)
 	move(0,0,0);
 }
 
-void MouseAPI::move(signed char x, signed char y, signed char wheel, signed char hWheel)
+void MouseAPI::move(signed char x, signed char y, signed char wheel)
 {
 	HID_MouseReport_Data_t report;
 	report.buttons = _buttons;
 	report.xAxis = x;
 	report.yAxis = y;
 	report.wheel = wheel;
-    report.hWheel = hWheel;
+	SendReport(&report, sizeof(report));
+}
+
+void MouseAPI::scroll(signed char wheel, signed char hWheel)
+{
+	HID_MouseReport_Data_t report;
+	report.wheel = wheel;
+	report.hWheel = hWheel;
 	SendReport(&report, sizeof(report));
 }
 
