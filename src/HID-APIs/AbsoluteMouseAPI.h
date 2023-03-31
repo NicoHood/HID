@@ -47,6 +47,7 @@ typedef union ATTRIBUTE_PACKED {
 		int16_t xAxis;
 		int16_t yAxis;
 		int8_t wheel;
+        int8_t hWheel;
 	};
 } HID_MouseAbsoluteReport_Data_t;
 
@@ -69,6 +70,7 @@ public:
 	inline void click(uint8_t b = MOUSE_LEFT);
 	inline void moveTo(int x, int y, signed char wheel = 0);
 	inline void move(int x, int y, signed char wheel = 0);
+	inline void scroll(signed char wheel = 0, signed char hWheel = 0);
 	inline void press(uint8_t b = MOUSE_LEFT);
 	inline void release(uint8_t b = MOUSE_LEFT);
 	inline void releaseAll(void);

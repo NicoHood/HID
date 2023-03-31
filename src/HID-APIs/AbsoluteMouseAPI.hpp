@@ -92,6 +92,13 @@ void AbsoluteMouseAPI::move(int x, int y, signed char wheel){
 	moveTo(qadd16(xAxis, x), qadd16(yAxis, y), wheel);
 }
 
+void AbsoluteMouseAPI::scroll(signed char wheel, signed char hWheel){
+	HID_MouseAbsoluteReport_Data_t report;
+	report.wheel = wheel;
+	report.hWheel = hWheel;
+	SendReport(&report, sizeof(report));
+}
+
 void AbsoluteMouseAPI::press(uint8_t b){
 	// press LEFT by default
 	buttons(_buttons | b);
