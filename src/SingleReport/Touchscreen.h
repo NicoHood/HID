@@ -1,5 +1,5 @@
 /*
-Copyright (c) 2014-2021 NicoHood
+Copyright (c) 2021 ilufang
 See the readme for credit to other people.
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -24,34 +24,35 @@ THE SOFTWARE.
 // Include guard
 #pragma once
 
-// Software version
-#define HID_PROJECT_VERSION 284
+#include <Arduino.h>
+#include "HID.h"
+#include "HID-Settings.h"
+#include "../HID-APIs/TouchscreenAPI.h"
 
-#if ARDUINO < 10607
-#error HID Project requires Arduino IDE 1.6.7 or greater. Please update your IDE.
-#endif
 
-#if !defined(USBCON)
-#error HID Project can only be used with an USB MCU.
-#endif
+class Touchscreen_ : public PluggableUSBModule, public TouchscreenAPI
+{
+public:
+	Touchscreen_();
+	uint8_t getProtocol();
+	void wakeupHost();
 
-// Include all HID libraries (.a linkage required to work) properly
-#include "SingleReport/SingleAbsoluteMouse.h"
-#include "MultiReport/AbsoluteMouse.h"
-#include "SingleReport/BootMouse.h"
-#include "MultiReport/ImprovedMouse.h"
-#include "SingleReport/SingleConsumer.h"
-#include "MultiReport/Consumer.h"
-#include "SingleReport/SingleGamepad.h"
-#include "MultiReport/Gamepad.h"
-#include "SingleReport/SingleSystem.h"
-#include "MultiReport/System.h"
-#include "SingleReport/RawHID.h"
-#include "SingleReport/BootKeyboard.h"
-#include "MultiReport/ImprovedKeyboard.h"
-#include "SingleReport/SingleNKROKeyboard.h"
-#include "MultiReport/NKROKeyboard.h"
-#include "MultiReport/SurfaceDial.h"
-#include "SingleReport/Touchscreen.h"
+	virtual int sendReport(void *report, int length) final;
 
-// Include Teensy HID afterwards to overwrite key definitions if used
+protected:
+
+	// Implementation of the PUSBListNode
+	int getInterface(uint8_t* interfaceCount);
+	int getDescriptor(USBSetup& setup);
+	bool setup(USBSetup& setup);
+
+	EPTYPE_DESCRIPTOR_SIZE epType[1];
+	uint8_t protocol;
+	uint8_t idle;
+
+	struct ATTRIBUTE_PACKED {
+		uint8_t contactCountMaximum;
+	} _ccmFeature;
+};
+
+extern Touchscreen_ Touchscreen;
