@@ -84,5 +84,6 @@ void Gamepad_::SendReport(void* data, int length)
 	HID().SendReport(HID_REPORTID_GAMEPAD, data, length);
 }
 
+#ifndef HID_DONT_CREATE_INSTANCES
 Gamepad_ Gamepad;
-
+#endif

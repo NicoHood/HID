@@ -38,5 +38,7 @@ public:
 protected: 
     virtual inline void SendReport(void* data, int length) override;
 };
-extern AbsoluteMouse_ AbsoluteMouse;
 
+#ifndef HID_DONT_CREATE_INSTANCES
+extern AbsoluteMouse_ AbsoluteMouse;
+#endif

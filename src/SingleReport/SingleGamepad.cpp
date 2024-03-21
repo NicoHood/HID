@@ -146,9 +146,9 @@ void SingleGamepad_::SendReport(void* data, int length){
 	USB_Send(pluggedEndpoint | TRANSFER_RELEASE, data, length);
 }
 
+#ifndef HID_DONT_CREATE_INSTANCES
 SingleGamepad_ Gamepad1;
 SingleGamepad_ Gamepad2;
 SingleGamepad_ Gamepad3;
 SingleGamepad_ Gamepad4;
-
-
+#endif

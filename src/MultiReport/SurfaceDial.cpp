@@ -84,4 +84,6 @@ void SurfaceDial_::SendReport(void *data, int length)
     HID().SendReport(HID_REPORTID_SURFACEDIAL, data, length);
 }
 
+#ifndef HID_DONT_CREATE_INSTANCES
 SurfaceDial_ SurfaceDial;
+#endif

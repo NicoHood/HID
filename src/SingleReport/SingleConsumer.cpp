@@ -116,6 +116,6 @@ void SingleConsumer_::SendReport(void* data, int length)
 	USB_Send(pluggedEndpoint | TRANSFER_RELEASE, data, length);
 }
 
+#ifndef HID_DONT_CREATE_INSTANCES
 SingleConsumer_ SingleConsumer;
-
-
+#endif

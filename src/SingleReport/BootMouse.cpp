@@ -160,6 +160,6 @@ void BootMouse_::SendReport(void* data, int length){
 	}
 }
 
+#ifndef HID_DONT_CREATE_INSTANCES
 BootMouse_ BootMouse;
-
-
+#endif

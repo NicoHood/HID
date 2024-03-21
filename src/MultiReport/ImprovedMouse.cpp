@@ -69,5 +69,6 @@ void Mouse_::SendReport(void* data, int length)
 	HID().SendReport(HID_REPORTID_MOUSE, data, length);
 }
 
+#ifndef HID_DONT_CREATE_INSTANCES
 Mouse_ Mouse;
-
+#endif

@@ -38,5 +38,7 @@ public:
 protected: 
     virtual inline void SendReport(void* data, int length) override;
 };
-extern SurfaceDial_ SurfaceDial;
 
+#ifndef HID_DONT_CREATE_INSTANCES
+extern SurfaceDial_ SurfaceDial;
+#endif

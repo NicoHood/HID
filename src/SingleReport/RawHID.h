@@ -175,4 +175,7 @@ protected:
 	uint8_t* featureReport;
 	int featureLength;
 };
+
+#ifndef HID_DONT_CREATE_INSTANCES
 extern RawHID_ RawHID;
+#endif

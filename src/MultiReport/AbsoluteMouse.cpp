@@ -75,5 +75,6 @@ void AbsoluteMouse_::SendReport(void* data, int length)
 	HID().SendReport(HID_REPORTID_MOUSE_ABSOLUTE, data, length);
 }
 
+#ifndef HID_DONT_CREATE_INSTANCES
 AbsoluteMouse_ AbsoluteMouse;
-
+#endif

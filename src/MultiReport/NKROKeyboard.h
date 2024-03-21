@@ -37,5 +37,7 @@ public:
 
     virtual int send(void) final;
 };
-extern NKROKeyboard_ NKROKeyboard;
 
+#ifndef HID_DONT_CREATE_INSTANCES
+extern NKROKeyboard_ NKROKeyboard;
+#endif
