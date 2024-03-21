@@ -73,5 +73,6 @@ int NKROKeyboard_::send(void)
 	return HID().SendReport(HID_REPORTID_NKRO_KEYBOARD, &_keyReport, sizeof(_keyReport));
 }
 
+#ifndef HID_DONT_CREATE_INSTANCES
 NKROKeyboard_ NKROKeyboard;
-
+#endif

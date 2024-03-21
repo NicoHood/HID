@@ -155,6 +155,6 @@ int SingleNKROKeyboard_::send(void){
 	return USB_Send(pluggedEndpoint | TRANSFER_RELEASE, &_keyReport, sizeof(_keyReport));
 }
 
+#ifndef HID_DONT_CREATE_INSTANCES
 SingleNKROKeyboard_ SingleNKROKeyboard;
-
-
+#endif

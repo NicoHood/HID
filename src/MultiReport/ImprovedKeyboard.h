@@ -38,5 +38,7 @@ public:
 
     virtual inline int send(void) final;
 };
-extern Keyboard_ Keyboard;
 
+#ifndef HID_DONT_CREATE_INSTANCES
+extern Keyboard_ Keyboard;
+#endif

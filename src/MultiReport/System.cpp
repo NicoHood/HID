@@ -54,5 +54,7 @@ void System_::SendReport(void* data, int length)
 	HID().SendReport(HID_REPORTID_SYSTEMCONTROL, data, length);
 }
 
-System_ System;
 
+#ifndef HID_DONT_CREATE_INSTANCES
+System_ System;
+#endif

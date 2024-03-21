@@ -53,5 +53,6 @@ void Consumer_::SendReport(void* data, int length)
 	HID().SendReport(HID_REPORTID_CONSUMERCONTROL, data, length);
 }
 
+#ifndef HID_DONT_CREATE_INSTANCES
 Consumer_ Consumer;
-
+#endif

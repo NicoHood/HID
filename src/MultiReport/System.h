@@ -38,5 +38,7 @@ public:
 protected: 
     virtual inline void SendReport(void* data, int length) override;
 };
-extern System_ System;
 
+#ifndef HID_DONT_CREATE_INSTANCES
+extern System_ System;
+#endif

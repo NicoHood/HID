@@ -38,5 +38,7 @@ public:
 protected: 
     virtual inline void SendReport(void* data, int length) override;
 };
-extern Gamepad_ Gamepad;
 
+#ifndef HID_DONT_CREATE_INSTANCES
+extern Gamepad_ Gamepad;
+#endif

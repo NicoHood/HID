@@ -81,5 +81,6 @@ void Keyboard_::wakeupHost(void){
 #endif
 }
 
+#ifndef HID_DONT_CREATE_INSTANCES
 Keyboard_ Keyboard;
-
+#endif

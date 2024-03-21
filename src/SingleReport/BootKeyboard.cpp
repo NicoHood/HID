@@ -211,7 +211,6 @@ void BootKeyboard_::wakeupHost(void){
 #endif
 }
 
-
+#ifndef HID_DONT_CREATE_INSTANCES
 BootKeyboard_ BootKeyboard;
-
-
+#endif

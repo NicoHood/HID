@@ -49,6 +49,7 @@ protected:
     
     virtual inline void SendReport(void* data, int length) override;
 };
+
+#ifndef HID_DONT_CREATE_INSTANCES
 extern SingleConsumer_ SingleConsumer;
-
-
+#endif

@@ -48,6 +48,7 @@ protected:
     
     virtual void SendReport(void* data, int length) override;
 };
+
+#ifndef HID_DONT_CREATE_INSTANCES
 extern BootMouse_ BootMouse;
-
-
+#endif

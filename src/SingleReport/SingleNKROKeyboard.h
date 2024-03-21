@@ -51,6 +51,7 @@ protected:
     
     uint8_t leds;
 };
+
+#ifndef HID_DONT_CREATE_INSTANCES
 extern SingleNKROKeyboard_ SingleNKROKeyboard;
-
-
+#endif

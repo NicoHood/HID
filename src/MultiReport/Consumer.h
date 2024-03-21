@@ -38,5 +38,7 @@ public:
 protected: 
     virtual inline void SendReport(void* data, int length) override;
 };
-extern Consumer_ Consumer;
 
+#ifndef HID_DONT_CREATE_INSTANCES
+extern Consumer_ Consumer;
+#endif

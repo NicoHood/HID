@@ -146,4 +146,6 @@ bool RawHID_::setup(USBSetup& setup)
 	return false;
 }
 
+#ifndef HID_DONT_CREATE_INSTANCES
 RawHID_ RawHID;
+#endif
