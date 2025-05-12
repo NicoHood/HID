@@ -676,7 +676,7 @@ static const uint16_t _asciimap[] PROGMEM =
 #elif defined(LAYOUT_GERMAN)
     #include "ImprovedKeylayoutsDE.h"
 #elif defined(LAYOUT_GERMAN_MAC)
-    #error Keyboard layout not yet supported. Feel free to open a PR to add a new layout.
+    #include "ImprovedKeylayoutsMacDE.h"
 #elif defined(LAYOUT_GERMAN_SWISS)
     #include "ImprovedKeylayoutsCH.h"
 #elif defined(LAYOUT_ICELANDIC)
