@@ -45,12 +45,12 @@ void GamepadAPI::write(void){
 
 
 void GamepadAPI::press(uint8_t b){ 
-	_report.buttons |= (uint32_t)1 << (b - 1); 
+	_report.buttons |= (HID_Buttons_t)1 << (b - 1); 
 }
 
 
 void GamepadAPI::release(uint8_t b){ 
-	_report.buttons &= ~((uint32_t)1 << (b - 1)); 
+	_report.buttons &= ~((HID_Buttons_t)1 << (b - 1)); 
 }
 
 
@@ -58,7 +58,7 @@ void GamepadAPI::releaseAll(void){
 	memset(&_report, 0x00, sizeof(_report)); 
 }
 
-void GamepadAPI::buttons(uint32_t b){ 
+void GamepadAPI::buttons(HID_Buttons_t b){ 
 	_report.buttons = b; 
 }
 
@@ -72,11 +72,11 @@ void GamepadAPI::yAxis(int16_t a){
 	_report.yAxis = a; 
 }
 
-
+#ifdef HID_ENABLE_ZAXIS
 void GamepadAPI::zAxis(int8_t a){ 
 	_report.zAxis = a; 
 }
-
+#endif
 
 void GamepadAPI::rxAxis(int16_t a){ 
 	_report.rxAxis = a; 
@@ -87,11 +87,11 @@ void GamepadAPI::ryAxis(int16_t a){
 	_report.ryAxis = a; 
 }
 
-
+#ifdef HID_ENABLE_ZAXIS
 void GamepadAPI::rzAxis(int8_t a){ 
 	_report.rzAxis = a; 
 }
-
+#endif
 
 void GamepadAPI::dPad1(int8_t d){ 
 	_report.dPad1 = d; 

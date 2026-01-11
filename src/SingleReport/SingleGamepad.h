@@ -47,9 +47,15 @@ protected:
     
     virtual void SendReport(void* data, int length) override;
 };
+
+/* These are defined in individual files (SingleGamepadX.cpp) so that every
+ * instance is only created by the compiler if it is references.
+ *
+ * See #266 for details.
+ */
 extern SingleGamepad_ Gamepad1;
 extern SingleGamepad_ Gamepad2;
 extern SingleGamepad_ Gamepad3;
 extern SingleGamepad_ Gamepad4;
-
-
+extern SingleGamepad_ Gamepad5;
+extern SingleGamepad_ Gamepad6;
