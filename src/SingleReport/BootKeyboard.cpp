@@ -127,14 +127,14 @@ bool BootKeyboard_::setup(USBSetup& setup)
 		}
 		if (request == HID_GET_PROTOCOL) {
 			// TODO improve
-#ifdef __AVR__
+#if defined(UEDATX)
 			UEDATX = protocol;
 #endif
 			return true;
 		}
 		if (request == HID_GET_IDLE) {
 			// TODO improve
-#ifdef __AVR__
+#if defined(UEDATX)
 			UEDATX = idle;
 #endif
 			return true;

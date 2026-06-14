@@ -82,6 +82,15 @@ THE SOFTWARE.
 
 #define EPTYPE_DESCRIPTOR_SIZE      uint8_t
 
+#elif defined(ARDUINO_ARCH_MEGAAVR)
+
+// Use default alignment for megaAVR (AVR-Dx/DU native USB via DxCore)
+#define ATTRIBUTE_PACKED
+
+#include "PluggableUSB.h"
+
+#define EPTYPE_DESCRIPTOR_SIZE      uint8_t
+
 #elif defined(ARDUINO_ARCH_SAM)
 
 #define ATTRIBUTE_PACKED  __attribute__((packed, aligned(1)))
